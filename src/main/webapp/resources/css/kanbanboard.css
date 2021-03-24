@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.kanbanboard_area{background-color: #F3F3F3;}
+.kanbanboard_area .row{margin: 0;}
+.kanbanboard_area .row .kanban_line{border-right: 1px solid black; width: 15%;  padding: 10px;}
+.kanbanboard_area .row .kanban_line .kanbanboard{width: 100%; height: 100%; border: 1px solid lightgray; background-color: white;}
+.kanbanboard_area .row .kanban_line .kanbanboard .kanbanboard_title{padding: 15px;  font-size: 17px;  font-weight: bold;}
+
+.kanbanboard_area .row .kanban_line .kanbanboard.type1{border-top: 10px solid #E8BF70;}
+.kanbanboard_area .row .kanban_line .kanbanboard.type2{border-top: 10px solid #70E8D9;}
+.kanbanboard_area .row .kanban_line .kanbanboard.type3{border-top: 10px solid #E88D70;}
+.kanbanboard_area .row .kanban_line .kanbanboard.type4{border-top: 10px solid #8592D6;}
+
+
+.kanbanboard_area .row .graph_area{width: 40%;}
+
+
+
+
+
+
+
+
+
+
+
+
+
