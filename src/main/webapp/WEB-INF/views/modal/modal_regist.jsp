@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +19,7 @@
 				
 	
 				<!-- Modal body -->
-				<form action="" method="" name="from_join">
+				<form action="${ pageContext.servletContext.contextPath }/regist" method="post">
 					<div class="modal-body">
 						<div class="login_info">
 							<span class="regist_icon">*</span>
@@ -40,7 +41,8 @@
 	
 					
 					<div class="login_btn_area">
-						<button id="join_btn" class="login_btn">회원가입</button>
+						<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+						<button id="join_btn" class="login_btn" type="submit">회원가입</button>
 					</div>
 				</form>	
 				<div class="modal_text_area">				
@@ -69,7 +71,7 @@
 
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 
 	$(function() {
 		
@@ -85,26 +87,26 @@
 			var f = document.from_join;
 
 			if(f.name.value == "") {
-				alert("이름 써");
+				alert("이름을 작성해 주세요.");
 				return;
 			}
 
 			if(f.email.value == "") {
-				alert("이메일써 써");
+				alert("이메일을 기재해 주세요.");
 				return;
 			}
 
 			if(!regExp.test(f.email.value)) {
-				alert("그건 이메일 양식이 아닌데 ?");
+				alert("이메일 양식으로 작성해 주세요.");
 				return;
 			}
 
 			if(f.password.value == "") {
-				alert("비밀번호 써");
+				alert("비밀번호를 입력해 주세요.");
 				return;
 			}
 			if(f.passwordcheck.value == "") {
-				alert("비밀번호 체크좀??");
+				alert("비밀번호를 확인해 주세요.");
 				return;
 			}
 
@@ -114,9 +116,9 @@
 			//	가입 폼 유효성 인증 완료 시
 			
 
-			alert("너 가입");
+			
 		});
 	});
-</script>
+</script> -->
 </body>
 </html>

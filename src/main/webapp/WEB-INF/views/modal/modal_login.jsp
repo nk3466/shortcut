@@ -17,7 +17,7 @@
 				</div>
 	
 				<!-- Modal body -->
-				<form action="" method="">
+				<form action="${ pageContext.servletContext.contextPath }/login" method="post">
 					<div class="modal-body">
 						<div class="login_info">
 							<input class="input_detail" type="text" name="email" placeholder="Email">	
@@ -33,8 +33,9 @@
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					</div>	 -->
 					<div class="login_btn_area">
-						<!-- <button class="login_btn">Login</button> -->
-						<a class="login_btn" href="http://kordzor.cafe24.com/final/project_board.html">Login</a>
+						<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+						<button class="login_btn" type="submit">Login</button>
+						<!-- <a class="login_btn" href="http://kordzor.cafe24.com/final/project_board.html">Login</a> -->
 					</div>
 				</form>	
 				<div class="modal_text_area">

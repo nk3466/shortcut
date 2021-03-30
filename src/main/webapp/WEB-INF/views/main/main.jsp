@@ -27,7 +27,7 @@
 					Work on big ideas, 
 				</div>
 				<div class="main_text1">
-					without the busywork	
+					without the busywork
 				</div>
 				<div class="main_line"></div>
 				<div class="main_text2">
@@ -51,6 +51,12 @@
 			</div>				
 		</div>
 	</div>
+	<script>
+		const message = '${ requestScope.message }';
+		if(message != null && message !== '') {
+			alert(message);
+		}
+	</script>
 	
 	<!-- 모달  -->
 	<jsp:include page="../modal/modal_login.jsp"></jsp:include>

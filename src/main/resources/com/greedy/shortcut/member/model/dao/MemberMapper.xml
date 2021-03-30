@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.greedy.shortcut.member.model.dao.MemberMapper">
+
+	<resultMap id="memberResultSet" type="MemberDTO">
+		<id column="MEMBER_NO" property="no" />
+		<result column="EMAIL" property="email" />
+		<result column="MEMBER_PWD" property="password" />
+		<result column="PHONE" property="phone" />
+		<result column="MEMBER_NAME" property="name" />
+		
+	</resultMap>
+	
+	<insert id="registMember" parameterType="MemberDTO">
+        INSERT 
+          INTO TBL_MEMBER A
+        (
+          A.MEMBER_NO, A.EMAIL, A.MEMBER_PWD
+        , A.MEMBER_NAME
+        ) 
+		VALUES
+		(
+		  SEQ_MEMBER_NO.NEXTVAL, #{email}, #{password}
+		, #{name}
+		)
+	</insert>
+	</mapper>
