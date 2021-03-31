@@ -24,4 +24,5 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.registMember(member) > 0? true: false;
 	}
 
+
 }

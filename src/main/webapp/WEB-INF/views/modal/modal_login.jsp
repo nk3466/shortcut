@@ -15,7 +15,7 @@
 				<div class="modal-header">
 					<div class="modal-title">Short Cut 에 오신걸 환영합니다.</div>						
 				</div>
-	
+				
 				<!-- Modal body -->
 				<form action="${ pageContext.servletContext.contextPath }/login" method="post">
 					<div class="modal-body">

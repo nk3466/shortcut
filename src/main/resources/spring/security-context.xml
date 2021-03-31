@@ -9,33 +9,69 @@
              
 <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
         
-<http auto-config="true" use-expressions="true">
-	<intercept-url pattern="WEB-INF/views/modal" access="hasAnyRole('ROLE_USER', 'ROLE_GUEST')"/> 
-	<!-- <intercept-url pattern="WEB_INF//**" access="hasRole('ROLE_ADMIN')"/>
- 	<intercept-url pattern="/modal/**" access="permitAll" />
-  	<intercept-url pattern="/**" access="permitAll"/> -->
+<!-- <http auto-config="true" use-expressions="true">
+	<intercept-url pattern="WEB-INF/resources/**" access="permitAll"/>
+	<intercept-url pattern="WEB-INF/modal" access="permitAll"/>
+	
   
   <form-login
   username-parameter="email"
   password-parameter="password"
   login-processing-url="/login"
-  login-page="/loginPage"
-  default-target-url="/"/>
+  login-page="/"
+  default-target-url="/"
+  authentication-failure-url="/"/>
   
   <logout
-  logout-url="/logout"
+  logout-url="/login"
   logout-success-url="/"
-  delete-cookies=""/>
-</http>
+  invalidate-session="true"
+  delete-cookies="true"/>
+  
+</http> -->
+<http auto-config="true" use-expressions="true">
+<!-- 정적 리소스는 모두 접근 허용 -->
+		<intercept-url pattern="/resources/**" access="permitAll" />
+
+		<!-- 로그인된 상태에서는 로그인이나 회원가입 화면에 접근 못하도록 함 -->
+		<intercept-url pattern="/login" access="isAnonymous()" />
+		<intercept-url pattern="/regist" access="isAnonymous()" />
+
+		<!-- 관리자페이지는 관리자만 접근 허용 -->
+		<intercept-url pattern="/admin/**" access="hasRole('admin')" />
+
+		<!-- 로그인 설정 -->
+		<form-login	
+			username-parameter="email" 
+			password-parameter="password"
+			login-processing-url="/login" 
+			login-page="/" default-target-url="/"
+			authentication-failure-url="/" />
+
+		<!-- 로그아웃 설정 -->
+		<logout 
+			logout-url="/logout"
+			logout-success-url="/"
+			invalidate-session="true"
+			delete-cookies="true" />
+	</http>
+
+	<!-- 권한이 없어서 금지된 URI 접속할 때 보여줄 페이지(403 에러 페이지 대체) -->
+	<!-- <access-denied-handler error-page="/" /> -->
 
 <authentication-manager>
-  <authentication-provider>
-    <user-service>
-      <user name="admin" password="{noop}admin" authorities="ROLE_ADMIN"/>
-      <user name="user" password="{noop}user" authorities="ROLE_USER"/>
-      <user name="guest" password="{noop}guest" authorities="ROLE_GUEST"/>
-    </user-service>
-  </authentication-provider>
+ <authentication-provider user-service-ref="userLoginService">
+ </authentication-provider>
 </authentication-manager>
+
+<beans:bean id="userLoginService" class="com.greedy.shortcut.member.model.service.userDetailsServiceCustom"></beans:bean>
+
+<!-- DB 연동 설정 -->
+<authentication-manager>
+	<authentication-provider ref="userLoginAuthenticationProvider">
+	</authentication-provider>
+</authentication-manager>
+
+<beans:bean id="userLoginAuthenticationProvider" class="com.greedy.shortcut.member.model.service.UserLoginAuthenticationProvider"></beans:bean>
 
 </beans:beans>

@@ -4,13 +4,19 @@ import java.io.File;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greedy.shortcut.common.exception.MemberRegistException;
@@ -21,6 +27,7 @@ import com.greedy.shortcut.member.model.service.MemberService;
 @RequestMapping("/*")
 public class MemberController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	private final MemberService memberService;
 	private final BCryptPasswordEncoder passwordEncoder;
 	
@@ -30,34 +37,9 @@ public class MemberController {
 		this.passwordEncoder = passwordEncoder;
 	}
 
-	@RequestMapping(value = "/loginPage")
-	public String login() {
-		return "loginPage";
-	}
-	
-	@RequestMapping(value = "/admin")
-	public String admin() {
-		return "admin";
-	}
-	
-	@RequestMapping(value = "/user")
-	public String user() {
-		return "user";
-	}
-	
-	@RequestMapping(value = "/")
-	public String all() {
-		return "/";
-	}
-	
-	@GetMapping("/regist")
-	public String registForm() {
-		return "regist";
-	}
 	
 	@PostMapping("/regist")
 	public String registMember(@ModelAttribute MemberDTO member, HttpServletRequest request, RedirectAttributes rttr)  {
-		
 		
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
 		
@@ -68,8 +50,9 @@ public class MemberController {
 		
 		rttr.addFlashAttribute("message", "회원 가입에 성공하셨습니다.");
 		
-		
 		return "redirect:/";
 		
 	}
+	
+	
 }

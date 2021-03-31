@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    <mapper namespace="com.greedy.shortcut.member.model.dao.MemberMapper">
+<mapper namespace="com.greedy.shortcut.member.model.dao.MemberMapper">
 
 	<resultMap id="memberResultSet" type="MemberDTO">
 		<id column="MEMBER_NO" property="no" />
@@ -26,4 +26,16 @@
 		, #{name}
 		)
 	</insert>
-	</mapper>
+	
+	<select id="selectUserInfoOne" resultMap="memberResultSet" parameterType="MemberDTO">
+        SELECT 
+               A.MEMBER_NO
+             , A.MEMBER_PWD
+             , A.MEMBER_NAME
+             , A.EMAIL
+             , A.PHONE
+          FROM TBL_MEMBER A 
+         WHERE A.EMAIL = #{email} 
+	</select>
+	
+</mapper>
