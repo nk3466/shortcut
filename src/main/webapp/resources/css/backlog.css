@@ -1,0 +1,130 @@
+@charset "UTF-8";
+.backlog_area{margin: 55px 100px;}
+.backlog_area .backlog_header_area{ margin-bottom: 20px;}
+.backlog_area .backlog_header_area .backlog_header{font-size: 25px; font-weight: bold;}
+.backlog_area .backlog_header_area .meeting_btn{float: right; border:1px solid lightgray; border-radius: 8px; background-color: white; font-size: 18px;     width: 125px;
+    height: 40px;  line-height: 40px;  text-align: center;  color: black;}
+
+
+.sprint_box_area{margin-bottom: 50px; height: 250px;}
+
+.sprint_box_area .sprint_text_btn{margin-bottom: 20px;}
+.sprint_box_area .sprint_text_btn .sprint_text{}
+.sprint_box_area .sprint_text_btn .btn_detail{float: right; background-color: white;}
+.sprint_box_area .sprint_text_btn .btn_detail.on{display: none;}
+
+
+
+
+.sprint_box_area .sprint_box{height: 100px; width: 100%; border: 1px solid lightgray;}
+.sprint_box_area .sprint_box.on{display: none;}
+.sprint_box_area .table_area{}
+.sprint_box_area .table_area .table_item{text-align: center;}
+.sprint_box_area .table_area .table_item .row{margin: 0; margin-bottom: 5px; border: 1px solid lightgray;}
+.sprint_box_area .table_area .table_item .row .table_detail{}
+.sprint_box_area .table_area .table_item .row .table_detail.type1{width: 10%}
+.sprint_box_area .table_area .table_item .row .table_detail.type2{width: 5%}
+.sprint_box_area .table_area .table_item .row .table_detail.type3{width: 45%}
+.sprint_box_area .table_area .table_item .row .table_detail.type4{width: 25%}
+
+
+.sprint_box_area .table_area .table_item .btn_detail{background-color: white; float: right;}
+
+
+.backlog_create_area{height: 300px; }
+.backlog_create_area .create_sprint_btn{text-align: right;}
+.backlog_create_area .create_sprint_btn .sprint_btn_detail{background-color: white;}
+.backlog_create_area .backlog_line{border: 1px solid lightgray; margin: 10px 0;}
+.backlog_create_area .create_backlog_btn{}
+.backlog_create_area .create_backlog_btn .backlog_btn_detail{border: 0; background-color: white;}
+
+.backlog_create_area .backlog_table_area{}
+.backlog_create_area .backlog_table_area .table_area{}
+.backlog_create_area .backlog_table_area .table_area .table_item{text-align: center;}
+.backlog_create_area .backlog_table_area .table_area .table_item .row{margin: 0; margin-bottom: 5px; border: 1px solid lightgray;}
+.backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail{}
+.backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail.type1{width: 10%}
+.backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail.type2{width: 5%}
+.backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail.type3{width: 45%}
+.backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail.type4{width: 25%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 모달 */
+.modal.fade{}
+.modal.fade .modal-dialog{max-width: 800px;}
+.modal.fade .modal-dialog .modal-content{}
+.modal.fade .modal-dialog .modal-content .modal-header{}
+.modal.fade .modal-dialog .modal-content .modal-header .header_detail{font-weight: bold; font-size: 17px;}
+
+.modal.fade .modal-dialog .modal-content .modal-body{}
+.modal.fade .modal-dialog .modal-content .modal-body .row{margin: 0;}
+.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info{width: 50%;}
+.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item{margin-bottom: 75px;}
+.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item .info_detail{color: lightgray; margin-bottom: 7px;}
+.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item .input_detail{ width: 80%; }
+
+.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea{width: 50%;}
+.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea .text_item{margin-bottom: 20px;}
+.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea .text_item .text_detail{color: lightgray; margin-bottom: 7px;}
+.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea .text_item .textarea_detail{width: 100%; height: 150px;}
+
+.modal.fade .modal-dialog .modal-content .modal-footer{}
+.modal.fade .modal-dialog .modal-content .modal-footer .btn_detail{background-color: white; border: 0;}
+
+
+/* 모달2 */
+
+.modal.fade{}
+.modal.fade .modal-dialog.type1{max-width: 500px;}
+.modal.fade .modal-dialog .modal-content{}
+.modal.fade .modal-dialog .modal-content .modal-header{}
+.modal.fade .modal-dialog .modal-content .modal-header .header_detail.type1{font-weight: bold; font-size: 21px;}
+
+.modal.fade .modal-dialog .modal-content .modal-body{}
+.modal.fade .modal-dialog .modal-content .modal-body .create_item{}
+.modal.fade .modal-dialog .modal-content .modal-body .create_item .item_name{}
+.modal.fade .modal-dialog .modal-content .modal-body .create_item .input_detail{width: 100%; height: 35px;}
+
+
+.modal.fade .modal-dialog .modal-content .modal-footer{}
+.modal.fade .modal-dialog .modal-content .modal-footer .btn_detail{background-color: white; border: 0;}
+
+
+
+/* 모달3 */
+
+.modal.fade{}
+.modal.fade .modal-dialog.type2{max-width: 500px;}
+.modal.fade .modal-dialog .modal-content{}
+.modal.fade .modal-dialog .modal-content .modal-header{}
+.modal.fade .modal-dialog .modal-content .modal-header .header_detail.type1{font-weight: bold; font-size: 21px;}
+.modal.fade .modal-dialog .modal-content .m_text{padding: 0 15px;}
+
+.modal.fade .modal-dialog .modal-content .modal-body{}
+.modal.fade .modal-dialog .modal-content .modal-body .sprint_item{ margin-bottom: 20px; }
+.modal.fade .modal-dialog .modal-content .modal-body .sprint_item .item_name{}
+.modal.fade .modal-dialog .modal-content .modal-body .sprint_item .input_detail{width: 100%; height: 35px;}
+.modal.fade .modal-dialog .modal-content .modal-body .sprint_item .textarea_detail{width: 100%; height: 150px;}
+
+.modal.fade .modal-dialog .modal-content .modal-footer{}
+.modal.fade .modal-dialog .modal-content .modal-footer .btn_detail{background-color: white; border: 0;}
+
+
+
+
+
+
+
+
