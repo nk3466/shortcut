@@ -17,11 +17,6 @@
 	<!-- 폰트어썸 -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
 
-	<!-- jQuery -->
-    <script src="https://code.jquery.com/jquery.min.js"></script>
-    <!-- google charts -->
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
 
 
 	<title>Short Cut</title>
