@@ -57,103 +57,20 @@
 						</div>					
 					</div>
 					<div class="board_list">
-						<a class="board_detail type" href="http://kordzor.cafe24.com/final/kanbanboard.html">
-							<img src="./img/board_icon.png">
+						<a class="board_detail type" href="${pageContext.servletContext.contextPath }/board/backlog">
+							<img src="${pageContext.servletContext.contextPath}/resources/img/board_icon.png">
 						</a>
 						<div class="board_text"  data-toggle="modal" data-target="#project_modify">
 							The joeun	
 						</div>					
 					</div>
-					<div class="board_list">
-						<a class="board_detail" href="#">
-							<i class="fas fa-plus"></i>
-						</a>
-						<div class="board_text">
-							new Project	
-						</div>					
-					</div>
-					<div class="board_list">
-						<a class="board_detail" href="#">
-							<i class="fas fa-plus"></i>
-						</a>
-						<div class="board_text">
-							new Project	
-						</div>					
-					</div>
+					
 				</div>
-				<div class="row">
-					<div class="board_list">
-						<a class="board_detail" href="#">
-							<i class="fas fa-plus"></i>
-						</a>
-						<div class="board_text">
-							new Project	
-						</div>					
-					</div>
-					<div class="board_list">
-						<a class="board_detail" href="#">
-							<i class="fas fa-plus"></i>
-						</a>
-						<div class="board_text">
-							new Project	
-						</div>					
-					</div>
-					<div class="board_list">
-						<a class="board_detail" href="#">
-							<i class="fas fa-plus"></i>
-						</a>
-						<div class="board_text">
-							new Project	
-						</div>					
-					</div>
-					<div class="board_list">
-						<a class="board_detail" href="#">
-							<i class="fas fa-plus"></i>
-						</a>
-						<div class="board_text">
-							new Project	
-						</div>					
-					</div>
-				</div>
-				<div class="row">
-						<div class="board_list">
-							<a class="board_detail" href="#">
-								<i class="fas fa-plus"></i>
-							</a>
-							<div class="board_text">
-								new Project	
-							</div>					
-						</div>
-						<div class="board_list">
-							<a class="board_detail" href="#">
-								<i class="fas fa-plus"></i>
-							</a>
-							<div class="board_text">
-								new Project	
-							</div>					
-						</div>
-						<div class="board_list">
-							<a class="board_detail" href="#">
-								<i class="fas fa-plus"></i>
-							</a>
-							<div class="board_text">
-								new Project	
-							</div>					
-						</div>
-						<div class="board_list">
-							<a class="board_detail" href="#">
-								<i class="fas fa-plus"></i>
-							</a>
-							<div class="board_text">
-								new Project	
-							</div>					
-						</div>
-					</div>
-				</div>			
-			</div>
+			</div>			
+		</div>
 
-		</div>	
-	</div>
+	</div>	
+
 
 
 <div class="modal fade" id="project_produce">
