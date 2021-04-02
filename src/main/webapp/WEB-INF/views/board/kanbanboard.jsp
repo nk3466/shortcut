@@ -30,158 +30,443 @@
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<div class="kanbanboard_area">
 		<div class="row">
-			<div class="kanban_line">
+			<div class="project_info_area">
+				<div class="project_info">					
+					<div class="info_item">						
+						<div class="item_name">
+							프로젝트명
+						</div>
+						<div class="item_detail">
+							Short Cut
+						</div>
+					</div>
+					<div class="info_item">						
+						<div class="item_name">
+							Backlog No
+						</div>
+						<div class="item_detail">
+							C001-9
+						</div>
+					</div>
+					<div class="info_item">						
+						<div class="item_name">
+							참여인원
+						</div>
+						<div class="item_detail">
+							<i class="fas fa-user-circle">김민기</i>
+							<i class="fas fa-user-circle">이남경</i>
+							<i class="fas fa-user-circle">정민서</i>
+							<i class="fas fa-user-circle">한미화</i>
+							<i class="fas fa-user-circle">미스터추</i>							
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<div class="kanban_item">
 				<div class="kanbanboard type1">
 					<div class="kanbanboard_title">
 						요청
 					</div>
+					<div class="board_item">
+						<div class="item type1">
+							SNS 로그인
+						</div>
+						<div class="item type2">
+							<span class="item_detail type">네이버</span>
+							<span class="item_detail type">google</span>
+							<span class="item_detail type">카카오톡</span>
+						</div>
+						<div class="item type3">
+							<i class="fas fa-user-circle">김민기</i>
+							<i class="fas fa-user-circle">이남경</i>
+						</div>
+					</div>
+					<div class="insert_card" data-toggle="modal" data-target="#myModal2">
+						<i class="fas fa-plus"></i>
+						카드 생성하기
+					</div>
 				</div>
 			</div>
-			<div class="kanban_line">
+			<div class="kanban_item">
 				<div class="kanbanboard type2">
 					<div class="kanbanboard_title">
 						진행중
 					</div>
+					<div class="board_item">
+						<div class="item type1">
+							SNS 로그인
+						</div>
+						<div class="item type2">
+							<span class="item_detail type1">네이버</span>
+							<span class="item_detail type1">google</span>
+							<span class="item_detail type1">카카오톡</span>
+						</div>
+						<div class="item type3">
+							<i class="fas fa-user-circle">김민기</i>
+							<i class="fas fa-user-circle">이남경</i>
+						</div>
+					</div>
+					<div class="board_item">
+						<div class="item type1">
+							SNS 로그인
+						</div>
+						<div class="item type2">
+							<span class="item_detail type1">네이버</span>
+							<span class="item_detail type1">google</span>
+							<span class="item_detail type1">카카오톡</span>
+						</div>
+						<div class="item type3">
+							<i class="fas fa-user-circle">김민기</i>
+							<i class="fas fa-user-circle">이남경</i>
+						</div>
+					</div>
+					<div class="board_item">
+						<div class="item type1">
+							SNS 로그인
+						</div>
+						<div class="item type2">
+							<span class="item_detail type1">네이버</span>
+							<span class="item_detail type1">google</span>
+							<span class="item_detail type1">카카오톡</span>
+						</div>
+						<div class="item type3">
+							<i class="fas fa-user-circle">김민기</i>
+							<i class="fas fa-user-circle">이남경</i>
+						</div>
+					</div>
+					<div class="board_item">
+						<div class="item type1">
+							SNS 로그인
+						</div>
+						<div class="item type2">
+							<span class="item_detail type1">네이버</span>
+							<span class="item_detail type1">google</span>
+							<span class="item_detail type1">카카오톡</span>
+						</div>
+						<div class="item type3">
+							<i class="fas fa-user-circle">김민기</i>
+							<i class="fas fa-user-circle">이남경</i>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="kanban_line">
+			<div class="kanban_item">
 				<div class="kanbanboard type3">
 					<div class="kanbanboard_title">
 						완료
 					</div>
+					<div class="board_item">
+						<div class="item type1">
+							SNS 로그인
+						</div>
+						<div class="item type2">
+							<span class="item_detail type2">네이버</span>
+							<span class="item_detail type2">google</span>
+							<span class="item_detail type2">카카오톡</span>
+						</div>
+						<div class="item type3">
+							<i class="fas fa-user-circle">김민기</i>
+							<i class="fas fa-user-circle">이남경</i>
+						</div>
+					</div>
+					<div class="board_item">
+						<div class="item type1">
+							SNS 로그인
+						</div>
+						<div class="item type2">
+							<span class="item_detail type2">네이버</span>
+							<span class="item_detail type2">google</span>
+							<span class="item_detail type2">카카오톡</span>
+						</div>
+						<div class="item type3">
+							<i class="fas fa-user-circle">김민기</i>
+							<i class="fas fa-user-circle">이남경</i>
+						</div>
+					</div>
+					<div class="board_item">
+						<div class="item type1">
+							SNS 로그인
+						</div>
+						<div class="item type2">
+							<span class="item_detail type2">네이버</span>
+							<span class="item_detail type2">google</span>
+							<span class="item_detail type2">카카오톡</span>
+						</div>
+						<div class="item type3">
+							<i class="fas fa-user-circle">김민기</i>
+							<i class="fas fa-user-circle">이남경</i>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="kanban_line">
+			<div class="kanban_item">
 				<div class="kanbanboard type4">
 					<div class="kanbanboard_title">
 						보류
 					</div>
+					<div class="board_item">
+						<div class="item type1">
+							SNS 로그인
+						</div>
+						<div class="item type2">
+							<span class="item_detail type3">네이버</span>
+							<span class="item_detail type3">google</span>
+							<span class="item_detail type3">카카오톡</span>
+						</div>
+						<div class="item type3">
+							<i class="fas fa-user-circle">김민기</i>
+							<i class="fas fa-user-circle">이남경</i>
+						</div>
+					</div>
 				</div>
-			</div>
-			<div class="graph_area">
-				<div id="Line_Controls_Chart">
-					<!-- 라인 차트 생성할 영역 -->
-					<div id="lineChartArea" style="padding:0px 20px 0px 0px;"></div>
-					<!-- 컨트롤바를 생성할 영역 -->
-					<div id="controlsArea" style="padding:0px 20px 0px 0px;"></div>
-				</div>	
-			</div>
-			
+			</div>			
+
 		</div>
 	</div>		
+
+
+
+
+
+  <!-- The Modal -->
+	<div class="modal fade" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-header type">
+				Short Cut
+			</div>
+			<div class="modal-content">						
+				<div class="modal-body">
+					<div class="row">
+						<div class="modal_list">
+							<i class="fas fa-pen"></i>
+							<a class="list_detail on" href="#myModal">글작성</a>
+						</div>
+						<div class="modal_list">
+							<i class="fas fa-check"></i>
+							<a class="list_detail" href="#">업무</a>
+						</div>
+						<div class="modal_list">
+							<i class="fas fa-calendar-week"></i>
+							<a class="list_detail" href="#">일정</a>
+						</div>
+						<div class="modal_list">
+							<i class="fas fa-tasks"></i>
+							<a class="list_detail" href="#">할일</a>
+						</div>						
+					</div>
+					<textarea class="text_detail"></textarea>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal_footer">										
+					<div class="modal_icon">
+						<i class="fas fa-paperclip"></i>
+					</div>
+					<div class="modal_icon">
+						<i class="fas fa-hashtag"></i>
+					</div>
+					<div class="modal_icon">
+						<i class="fas fa-user-plus"></i>
+					</div>
+					<div class="btn_area">
+						<button type="button" class="upload_btn">올리기</button>	
+					</div>														
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="modal fade" id="myModal1">
+		<div class="modal-dialog">
+			<div class="modal-header type">
+				Short Cut
+			</div>
+			<div class="modal-content">						
+				<div class="modal-body">
+					<div class="row">
+						<div class="modal_list">
+							<i class="fas fa-pen"></i>
+							<a class="list_detail" href="#myModal">글작성</a>
+						</div>
+						<div class="modal_list">
+							<i class="fas fa-check"></i>
+							<a class="list_detail" href="#">업무</a>
+						</div>
+						<div class="modal_list">
+							<i class="fas fa-calendar-week"></i>
+							<a class="list_detail on" href="#">일정</a>
+						</div>
+						<div class="modal_list">
+							<i class="fas fa-tasks"></i>
+							<a class="list_detail" href="#">할일</a>
+						</div>						
+					</div>
+
+					<div class="item_area">
+						<input class="input_detail" type="text" name="title" placeholder="제목 맞나 ..??">
+					</div>
+					<div class="item_area">
+						<i class="far fa-clock"></i>
+						<input class="input_detail type4" type="date" name="">
+						<input class="input_detail type5" type="time" name="">~<input class="input_detail type5" type="time" name="">
+					</div>
+					<div class="item_area">
+						<i class="fas fa-user-plus"></i>
+						<input class="input_detail type1" type="text" name="name" placeholder="Add Member">						
+						<input class="input_detail type2" type="button" name="name" value="Add">
+					</div>
+					<div class="item_area">
+						<i class="fas fa-map-marker-alt"></i>
+						<input class="input_detail type3" type="text" name="name" placeholder="장소를 입력하세요">						
+						
+					</div>
+					<div class="item_area">
+						<i class="fas fa-bell"></i>
+						<select class="select_detail">
+							<option>30분 전 미리 알림</option>
+							<option>하루 전 미리 알림</option>
+							<option>알리지 않음</option>
+						</select>					
+						
+					</div>
+
+					<div class="item_area type">
+						<i class="far fa-comment-alt"></i>
+						<textarea class="text_detail"></textarea>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal_footer">										
+					<div class="modal_icon">
+						<i class="fas fa-paperclip"></i>
+					</div>
+					<div class="modal_icon">
+						<i class="fas fa-hashtag"></i>
+					</div>					
+					<div class="btn_area">
+						<button type="button" class="upload_btn">올리기</button>	
+					</div>														
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+
+<div class="modal fade" id="myModal2">
+		<div class="modal-dialog">
+			<div class="modal-header type">
+				Short Cut
+			</div>
+			<div class="modal-content">						
+				<div class="modal-body">
+					<div class="row">
+						<div class="modal_list">
+							<i class="fas fa-pen"></i>
+							<a class="list_detail" href="#myModal">글작성</a>
+						</div>
+						<div class="modal_list">
+							<i class="fas fa-check"></i>
+							<a class="list_detail on" href="#">업무</a>
+						</div>
+						<div class="modal_list">
+							<i class="fas fa-calendar-week"></i>
+							<a class="list_detail" href="#">일정</a>
+						</div>
+						<div class="modal_list">
+							<i class="fas fa-tasks"></i>
+							<a class="list_detail" href="#">할일</a>
+						</div>						
+					</div>
+
+					<div class="item_area">
+						<i class="fas fa-user-circle"></i>
+						<div class="login_info">
+							<div class="info_detail">정민서</div>
+							<div class="info_detail type">2021-03-08 19:00</div>							
+						</div>
+						<i class="fas fa-ellipsis-v"></i>						
+					</div>
+
+					<div class="item_area">
+						<input class="input_detail" type="text" name="title" placeholder="제목 맞나 ..??">
+					</div>
+
+					<div class="item_area">						
+						<div class="row type">
+							<i class="fas fa-spinner"></i>
+							<div class="progress_list">요청</div>
+							<div class="progress_list">진행</div>
+							<div class="progress_list">피드백</div>
+							<div class="progress_list">완료</div>
+							<div class="progress_list">보류</div>
+						</div>						
+					</div>
+
+					<div class="item_area">
+						<i class="fas fa-user-plus"></i>
+						<input class="input_detail type1" type="text" name="name" placeholder="Add Member">						
+						<input class="input_detail type2" type="button" name="name" value="Add">
+					</div>
+					
+					
+					<div class="item_area">
+						<i class="far fa-calendar-plus"></i>
+						<input class="input_detail type4" type="date" name="">
+					</div>
+
+
+					<div class="item_area">
+						<i class="far fa-calendar-minus"></i>
+						<input class="input_detail type4" type="date" name="">
+					</div>
+
+					
+
+					<div class="item_area">
+						<i class="far fa-comment-alt"></i>
+						<textarea class="text_detail type"></textarea>
+					</div>
+
+					<div class="item_area type">
+						<i class="fas fa-list-ul">하위 업무</i>
+						<select>
+							<option class="option_detail">요청</option>
+							<option class="option_detail">요청</option>
+							<option class="option_detail">요청</option>
+							
+						</select>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal_footer">										
+					<div class="modal_icon">
+						<i class="fas fa-paperclip"></i>
+					</div>
+					<div class="modal_icon">
+						<i class="fas fa-hashtag"></i>
+					</div>					
+					<div class="btn_area">
+						<button type="button" class="upload_btn">올리기</button>	
+					</div>														
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
 	
 	
 </body>
-<script>
 
-  	var chartDrowFun = {
-
-	    chartDrow : function(){
-	        var chartData = '';
-
-	        //날짜형식 변경하고 싶으시면 이 부분 수정하세요.
-	        var chartDateformat 	= 'yyyy년MM월dd일';
-	        //라인차트의 라인 수
-	        var chartLineCount    = 10;
-	        //컨트롤러 바 차트의 라인 수
-	        var controlLineCount	= 10;
-
-
-	        function drawDashboard() {
-
-	          var data = new google.visualization.DataTable();
-	          //그래프에 표시할 컬럼 추가
-	          data.addColumn('datetime' , '날짜');
-	          data.addColumn('number'   , '남성');
-	          data.addColumn('number'   , '여성');
-	          data.addColumn('number'   , '전체');
-
-	          //그래프에 표시할 데이터
-	          var dataRow = [];
-
-	          for(var i = 0; i <= 29; i++){ //랜덤 데이터 생성
-	            var total   = Math.floor(Math.random() * 300) + 1;
-	            var man     = Math.floor(Math.random() * total) + 1;
-	            var woman   = total - man;
-
-	            dataRow = [new Date('2017', '09', i , '10'), man, woman , total];
-	            data.addRow(dataRow);
-	          }
-
-
-	            var chart = new google.visualization.ChartWrapper({
-	              chartType   : 'LineChart',
-	              containerId : 'lineChartArea', //라인 차트 생성할 영역
-	              options     : {
-	                              isStacked   : 'percent',
-	                              focusTarget : 'category',
-	                              height		  : 500,
-	                              width			  : '100%',
-	                              legend		  : { position: "top", textStyle: {fontSize: 13}},
-	                              pointSize		: 5,
-	                              tooltip		  : {textStyle : {fontSize:12}, showColorCode : true,trigger: 'both'},
-	                              hAxis			  : {format: chartDateformat, gridlines:{count:chartLineCount,units: {
-	                                                                  years : {format: ['yyyy년']},
-	                                                                  months: {format: ['MM월']},
-	                                                                  days  : {format: ['dd일']},
-	                                                                  hours : {format: ['HH시']}}
-	                                                                },textStyle: {fontSize:12}},
-	                vAxis			  : {minValue: 100,viewWindow:{min:0},gridlines:{count:-1},textStyle:{fontSize:12}},
-	                animation		: {startup: true,duration: 1000,easing: 'in' },
-	                annotations	: {pattern: chartDateformat,
-	                                textStyle: {
-	                                fontSize: 15,
-	                                bold: true,
-	                                italic: true,
-	                                color: '#871b47',
-	                                auraColor: '#d799ae',
-	                                opacity: 0.8,
-	                                pattern: chartDateformat
-	                              }
-	                            }
-	              }
-	            });
-
-	            var control = new google.visualization.ControlWrapper({
-	              controlType: 'ChartRangeFilter',
-	              containerId: 'controlsArea',  //control bar를 생성할 영역
-	              options: {
-	                  ui:{
-	                        chartType: 'LineChart',
-	                        chartOptions: {
-	                        chartArea: {'width': '60%','height' : 80},
-	                          hAxis: {'baselineColor': 'none', format: chartDateformat, textStyle: {fontSize:12},
-	                            gridlines:{count:controlLineCount,units: {
-	                                  years : {format: ['yyyy년']},
-	                                  months: {format: ['MM월']},
-	                                  days  : {format: ['dd일']},
-	                                  hours : {format: ['HH시']}}
-	                            }}
-	                        }
-	                  },
-	                    filterColumnIndex: 0
-	                }
-	            });
-
-	            var date_formatter = new google.visualization.DateFormat({ pattern: chartDateformat});
-	            date_formatter.format(data, 0);
-
-	            var dashboard = new google.visualization.Dashboard(document.getElementById('Line_Controls_Chart'));
-	            window.addEventListener('resize', function() { dashboard.draw(data); }, false); //화면 크기에 따라 그래프 크기 변경
-	            dashboard.bind([control], [chart]);
-	            dashboard.draw(data);
-
-	        }
-	          google.charts.setOnLoadCallback(drawDashboard);
-
-	      }
-	    }
-
-		$(document).ready(function(){
-		  google.charts.load('current', {'packages':['line','controls']});
-		  chartDrowFun.chartDrow(); //chartDrow() 실행
-		});
-  </script>
 
 
 
