@@ -55,7 +55,7 @@
 /* header */
 header {
   border-bottom: 1px solid #e4e4e4; 
-  display: flex;
+  display: flex!important;
   padding: 10px;
   height: 7%;
   box-sizing: border-box;
@@ -78,11 +78,11 @@ header > h1 > span {color: #a7a7a7; font-size: 24px; font-weight: 400; vertical-
   color: #5c5c5c;
 }
 .calendar_title .current-year-month {
-  font-size: 24px;
-  vertical-align: middle;
-  color: rgb(255, 82, 195);
-  display: inline-block;
-  margin: 0 20px;
+  font-size: 24px!important;
+  vertical-align: middle!important;
+  color: rgb(255, 82, 195)!important;
+  display: inline-block!important;
+  margin: 0 20px!important;
 }
 
 /* content left */

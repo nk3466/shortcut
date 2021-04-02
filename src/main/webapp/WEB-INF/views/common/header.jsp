@@ -17,13 +17,13 @@
 			</a>			
 		</div>
 		<div class="top_menu_area">			
-			<a class="menu_list" href="${ pageContext.servletContext.contextPath }">
+			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/mypage/mypage">
 				<i class="fas fa-cog"></i>
 			</a>
 			<a class="menu_list" href="#">
 				<i class="far fa-bell"></i>
 			</a>	
-			<a class="menu_list" href="${ pageContext.servletContext.contextPath }">
+			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/messenger/messenger">
 				<i class="far fa-envelope"></i>	
 			</a>		
 			<a class="menu_list" data-toggle="modal" data-target="#member_regist">회원가입</a>
@@ -32,7 +32,7 @@
 											
 			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/board/project_board">프로젝트</a>
 			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/mywork/mywork">내업무</a>
-			<a class="menu_list" href="#">ENGLISH</a>
+			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/meeting/meetinglog">한국어</a>
 		</div>
 	</div>
 </div>

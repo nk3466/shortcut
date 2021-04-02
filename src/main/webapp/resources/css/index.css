@@ -5,7 +5,7 @@
 .top_area .row .top_logo_area .logo_detail{width: 30px; height: 30px;}
 .top_area .row .top_logo_area .logo_text{font-size: 18px; font-weight: bold; color: #ed1745;}
 .top_area .row .top_menu_area{width: 80%; float: right;}
-.top_area .row .top_menu_area .menu_list{float: right; padding: 0 10px; color: #eb98aa; text-decoration: none;}
+.top_area .row .top_menu_area .menu_list{float: right; padding: 0 10px; color: #eb98aa; text-decoration: none; cursor: pointer;}
 .top_area .row .top_menu_area .menu_list .fa-bell{color: #eb98aa;}
 .top_area .row .top_menu_area .menu_list:hover{color:#ed1745;}
 .top_area .row .top_menu_area .menu_list .fa-bell:hover{color:#ed1745;}
