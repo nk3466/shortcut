@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/board/*")
-public class BoardController {
+public class ProjectBoardController {
 
-	@GetMapping("/kanbanboard")
-	public void kanbanboard() {}
-	
+	@GetMapping("project_board")
+	public void project() {}
 }

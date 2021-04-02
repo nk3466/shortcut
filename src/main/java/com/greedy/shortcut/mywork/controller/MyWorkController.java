@@ -1,14 +1,13 @@
-package com.greedy.shortcut.board.controller;
+package com.greedy.shortcut.mywork.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/board/*")
-public class BoardController {
+@RequestMapping("/mywork/*")
+public class MyWorkController {
 
-	@GetMapping("/kanbanboard")
-	public void kanbanboard() {}
-	
+	@GetMapping("/mywork")
+	public void mywork() {}
 }
