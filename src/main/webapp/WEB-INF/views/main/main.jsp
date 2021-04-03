@@ -62,6 +62,7 @@
 	<!-- 모달  -->
 	
 	<jsp:include page="../modal/modal_login.jsp"></jsp:include>
+	<jsp:include page="../modal/modal_logout.jsp"></jsp:include>
 	<jsp:include page="../modal/modal_password_find.jsp"></jsp:include>
 	<jsp:include page="../modal/modal_password_reconfirm.jsp"></jsp:include>
 	<jsp:include page="../modal/modal_password_reset.jsp"></jsp:include>

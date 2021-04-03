@@ -17,7 +17,7 @@
 				</div>
 				
 				<!-- Modal body -->
-				<form action="${ pageContext.servletContext.contextPath }/" method="post">
+				<form action="${ pageContext.servletContext.contextPath }/loginAsk" method="post">
 					<div class="modal-body">
 						<div class="login_info">
 							<input class="input_detail" type="text" name="email" placeholder="Email">	
