@@ -20,6 +20,7 @@
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"></jsp:include>
+	${requestScope.loginFailMsg}
 	<div class="main_content">
 		<div class="row">
 			<div class="main_text_area">

@@ -15,7 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-@Service
+@Service("userLoginAuthenticationProvider")
 public class UserLoginAuthenticationProvider implements AuthenticationProvider {
 
 	@Autowired
@@ -42,7 +42,7 @@ public class UserLoginAuthenticationProvider implements AuthenticationProvider {
 		UserDetailsVO userDetails = (UserDetailsVO) userDetailsServcie
 				.loadUserByUsername(userId);
 
-		
+		System.out.println("userDetails : " + userDetails);
 		
 		/* 인증 진행 */
 		
@@ -72,12 +72,12 @@ public class UserLoginAuthenticationProvider implements AuthenticationProvider {
 		}
 
 		// 다 썼으면 패스워드 정보는 지워줌 (객체를 계속 사용해야 하므로)
-		userDetails.setPassword(null);
+//		userDetails.setPassword(null);
 
 		/* 최종 리턴 시킬 새로만든 Authentication 객체 */
 		Authentication newAuth = new UsernamePasswordAuthenticationToken(
 				userDetails, null, userDetails.getAuthorities());
-
+		System.out.println("newAuth : " + newAuth);
 		return newAuth;
 	}
 

@@ -10,6 +10,8 @@ public interface MemberMapper {
 
 	MemberDTO selectUserInfoOne(String inputUserId);
 
+	Object selectUserInfoCount(String email);
+
 	
 	
 }

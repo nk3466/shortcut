@@ -17,7 +17,7 @@
 				</div>
 				
 				<!-- Modal body -->
-				<form action="${ pageContext.servletContext.contextPath }/login" method="post">
+				<form action="${ pageContext.servletContext.contextPath }/" method="post">
 					<div class="modal-body">
 						<div class="login_info">
 							<input class="input_detail" type="text" name="email" placeholder="Email">	
@@ -37,7 +37,7 @@
 						<button class="login_btn" type="submit">Login</button>
 						<!-- <a class="login_btn" href="http://kordzor.cafe24.com/final/project_board.html">Login</a> -->
 					</div>
-				</form>	
+				</form>
 				<div class="modal_text_area">
 					<div class="modal_text">
 						<a class="modal_text_detail" href="#" data-toggle="modal" data-target="#password_find">비밀번호 찾기</a> 

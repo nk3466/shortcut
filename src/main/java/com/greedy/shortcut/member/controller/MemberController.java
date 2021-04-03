@@ -1,25 +1,22 @@
 package com.greedy.shortcut.member.controller;
 
-import java.io.File;
+import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.greedy.shortcut.common.exception.MemberRegistException;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 import com.greedy.shortcut.member.model.service.MemberService;
 
@@ -54,5 +51,20 @@ public class MemberController {
 		
 	}
 	
+	/* 로그인 화면 요청 */
+	@RequestMapping("/")
+	public String loginView(HttpServletRequest request) {
+
+		// 요청 시점의 사용자 URI 정보를 Session의 Attribute에 담아서 전달(잘 지워줘야 함)
+		// 로그인이 틀려서 다시 하면 요청 시점의 URI가 로그인 페이지가 되므로 조건문 설정
+		String uri = request.getHeader("Referer");
+		System.out.println("uri : " + uri);
+		if (!uri.contains("/")) {
+			request.getSession().setAttribute("prevPage",
+					request.getHeader("Referer"));
+		}
+
+		return "/main/main";
+	}
 	
 }

@@ -2,7 +2,7 @@ package com.greedy.shortcut.member.model.dto;
 
 public class MemberDTO {
 	
-	private int no;
+	private Integer no;
 	private String email;
 	private String password;
 	private String phone;
@@ -10,7 +10,7 @@ public class MemberDTO {
 	
 	public MemberDTO() {}
 
-	public MemberDTO(int no, String email, String password, String phone, String name) {
+	public MemberDTO(Integer no, String email, String password, String phone, String name) {
 		super();
 		this.no = no;
 		this.email = email;
@@ -19,7 +19,7 @@ public class MemberDTO {
 		this.name = name;
 	}
 
-	public int getNo() {
+	public Integer getNo() {
 		return no;
 	}
 
@@ -39,7 +39,7 @@ public class MemberDTO {
 		return name;
 	}
 
-	public void setNo(int no) {
+	public void setNo(Integer no) {
 		this.no = no;
 	}
 

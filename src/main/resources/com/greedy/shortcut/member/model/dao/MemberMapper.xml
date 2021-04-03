@@ -38,4 +38,15 @@
          WHERE A.EMAIL = #{email} 
 	</select>
 	
+	<select id="selectUserInfoCount" resultMap="memberResultSet" parameterType="MemberDTO">
+        SELECT 
+               *
+          FROM TBL_MEMBER A
+         WHERE EXISTS
+         (
+           SELECT * FROM TBL_MEMBER B
+           WHERE A.EMAIL = #{email}
+         )
+	</select>
+	
 </mapper>
