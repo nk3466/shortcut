@@ -258,8 +258,8 @@
 			<groupId>org.mindrot</groupId> 
 			<artifactId>jbcrypt</artifactId> 
 			<version>0.3m</version> 
-<<<<<<< HEAD
-		</dependency>
+
+		</dependency> -->
 		
 		<!-- mockito프레임워크 사용을 위한 라이브러리 -->
 			<dependency>
@@ -282,16 +282,17 @@
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-			 <dependency>	<!-- WebAppConfiguration을 사용하기 위함 -->
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-        </dependency>
-        
-=======
-		</dependency> -->
+		
+		<!-- WebAppConfiguration을 사용하기 위함 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+	        
 
->>>>>>> cf4e651072df25e8a14b20e0c8cb306ec249cdcf
+	
+
 	</dependencies>
     <build>
         <plugins>

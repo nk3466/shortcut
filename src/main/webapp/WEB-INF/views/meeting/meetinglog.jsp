@@ -193,7 +193,7 @@
 			
 			
 			$.ajax({
-				url : "meetinglog",
+				url : "/meeting/meetinglog",
 				dataType : "json",
 				type : "POST",		
 				contentType: "application/json",
