@@ -38,8 +38,6 @@ public class MemberController {
 	@PostMapping("/regist")
 	public String registMember(@ModelAttribute MemberDTO member, HttpServletRequest request, RedirectAttributes rttr)  {
 		
-		member.setPassword(passwordEncoder.encode(member.getPassword()));
-		
 		System.out.println(member);
 		if(!memberService.registMember(member)) {
 			

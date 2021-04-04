@@ -26,7 +26,6 @@
 			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/messenger/messenger">
 				<i class="far fa-envelope"></i>	
 			</a>
-			
 			<c:choose>
 				<c:when test="${!empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
 				${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username} 님이 로그인 되었습니다.

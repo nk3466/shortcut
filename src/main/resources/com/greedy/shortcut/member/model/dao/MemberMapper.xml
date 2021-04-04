@@ -6,10 +6,10 @@
 
 	<resultMap id="memberResultSet" type="MemberDTO">
 		<id column="MEMBER_NO" property="no" />
+		<result column="MEMBER_NAME" property="name" />
 		<result column="EMAIL" property="email" />
 		<result column="MEMBER_PWD" property="password" />
 		<result column="PHONE" property="phone" />
-		<result column="MEMBER_NAME" property="name" />
 		
 	</resultMap>
 	
@@ -18,21 +18,21 @@
           INTO TBL_MEMBER A
         (
           A.MEMBER_NO, A.EMAIL, A.MEMBER_PWD
-        , A.MEMBER_NAME
+        , A.MEMBER_NAME, A.PHONE
         ) 
 		VALUES
 		(
 		  SEQ_MEMBER_NO.NEXTVAL, #{email}, #{password}
-		, #{name}
+		, #{name}, #{phone}
 		)
 	</insert>
 	
 	<select id="selectUserInfoOne" resultMap="memberResultSet" parameterType="MemberDTO">
         SELECT 
                A.MEMBER_NO
-             , A.MEMBER_PWD
              , A.MEMBER_NAME
              , A.EMAIL
+             , A.MEMBER_PWD
              , A.PHONE
           FROM TBL_MEMBER A 
          WHERE A.EMAIL = #{email} 

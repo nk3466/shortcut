@@ -254,11 +254,11 @@
 		    <version>5.4.1</version>
 		</dependency>
 		
-		<dependency> 
+		<!-- <dependency> 
 			<groupId>org.mindrot</groupId> 
 			<artifactId>jbcrypt</artifactId> 
 			<version>0.3m</version> 
-		</dependency>
+		</dependency> -->
 
 	</dependencies>
     <build>
