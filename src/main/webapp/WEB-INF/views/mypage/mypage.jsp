@@ -45,15 +45,15 @@
 					<div class="mypage_info_box">
 						<div class="info_item">
 							<div class="info_name">사용자 이름</div>
-							<input class="input_detail" type="text" name="">
+							<input class="input_detail" type="text" name="name">
 						</div>
 						<div class="info_item">
 							<div class="info_name">이메일</div>
-							<input class="input_detail" type="text" name="" readonly>
+							<input class="input_detail" type="text" name="email" readonly>
 						</div>
 						<div class="info_item">
 							<div class="info_name">휴대폰 번호</div>
-							<input class="input_detail" type="phone" name="" placeholder="휴대폰 번호를 입력해주세요!">
+							<input class="input_detail" type="text" name="phone" placeholder="휴대폰 번호를 입력해주세요!">
 						</div>
 					</div>	
 					<div class="mypage_right_btn">

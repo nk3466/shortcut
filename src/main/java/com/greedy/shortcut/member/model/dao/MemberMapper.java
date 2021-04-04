@@ -12,6 +12,8 @@ public interface MemberMapper {
 
 	Object selectUserInfoCount(String email);
 
+	MemberDTO getLoginUser(String name);
+
 	
 	
 }

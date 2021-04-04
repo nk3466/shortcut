@@ -21,13 +21,11 @@ public class UserDetailsVO implements UserDetails {
 	// setter
 	public void setUsername(String username) {
 		this.username = username;
-		System.out.println("VOusername : " + username);
 	}
 	
 	// setter
 	public void setPassword(String password) {
 		this.password = password;
-		System.out.println("VOsetpassword! : " + password);
 	}
 	
 	// setter

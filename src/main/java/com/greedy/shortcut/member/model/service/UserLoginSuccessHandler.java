@@ -54,22 +54,18 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 		
 		/* 로그인 버튼 눌러 접속했을 경우의 데이터 get */
 		String prevPage = (String) request.getSession().getAttribute("prevPage");
-		System.out.println("ㅇㅇ : " + prevPage);
 		if (prevPage != null) {
 			request.getSession().removeAttribute("prevPage");
 		}
-		System.out.println("아하 : " + prevPage);
 		
 		System.out.println(prevPage);
 		// null이 아니라면 강제 인터셉트 당했다는 것
 		if (savedRequest != null) {
 			uri = savedRequest.getRedirectUrl();
-			System.out.println("얍얍2 : " + uri);
 
 		// ""가 아니라면 직접 로그인 페이지로 접속한 것
 		} else if (prevPage != null && !prevPage.equals("")) {
 			uri = prevPage;
-			System.out.println("얍얍 : " + prevPage);
 		}
 
 		// 세 가지 케이스에 따른 URI 주소로 리다이렉트

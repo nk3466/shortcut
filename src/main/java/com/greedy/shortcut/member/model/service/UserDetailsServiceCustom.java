@@ -43,7 +43,6 @@ public class UserDetailsServiceCustom implements UserDetailsService {
 //			userDetails.setAuthorities(mapper.selectUserAuthOne(inputUserId));
 		}
 		
-		System.out.println("dfokdof:" +userDetails);
 		
 		return userDetails;
 	}

@@ -25,10 +25,8 @@ public class MemberServiceImpl implements MemberService {
 		Object userId = (Object) mapper.selectUserInfoCount(member.getEmail());
 		System.out.println("userCount : " + userId);
 		if(userId == member.getEmail()) {
-			System.out.println("1111111");
 			return false;
 		} else {
-			System.out.println("123456798");
 			member.setPassword(passwordEncoder.encode(member.getPassword()));
 			
 			return mapper.registMember(member) > 0? true: false;
