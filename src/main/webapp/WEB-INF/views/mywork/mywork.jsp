@@ -53,8 +53,8 @@
 	<div class="mywork_area">
 		<div class="mywork_header_list">
 			<div class="row">
-				<a class="header_list on" href="http://kordzor.cafe24.com/final/mywork.html">My work</a>
-				<a class="header_list" href="http://kordzor.cafe24.com/final/client.html">Client</a>
+				<a class="header_list on" href="${ pageContext.servletContext.contextPath }/mywork/mywork">My work</a>
+				<a class="header_list" href="${ pageContext.servletContext.contextPath }/mywork/client">Client</a>
 			</div>
 		</div>
 		<div class="chart_area">			
