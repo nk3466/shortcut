@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.shortcut.meeting.model.dto.MeetingDTO;
 
 
@@ -38,15 +37,13 @@ public class MeetingLogController {
 	
 	@PostMapping(value="/meetinglog", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public String meeting(HttpServletRequest request, Model model) throws JsonProcessingException {
+//	public String meeting(HttpServletRequest request, Model model) throws JsonProcessingException {
+	public String meeting(){
 		
-		String date2 = (String) model.getAttribute("meetingDate");
-		String date = request.getParameter("meetingDate");
+	
+		System.out.println("나오냥");
+	
 		
-		
-		System.out.println("요기 :" + date);
-		System.out.println("요기 :" + date2);
-		
-		return date;
+		return "";
 	}
 }

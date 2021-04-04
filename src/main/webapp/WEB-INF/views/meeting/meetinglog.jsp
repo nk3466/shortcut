@@ -159,7 +159,7 @@
 					<!-- Modal footer -->
 					<div class="modal_footer">								
 						<div class="btn_area">
-							<button type="button" id="upload" class="upload_btn">완료</button>	
+							<button id="upload" class="upload_btn">완료</button>	
 						</div>														
 					</div>
 				</form>
@@ -193,10 +193,8 @@
 			
 			
 			$.ajax({
-				url : "/meeting/meetinglog",
-				dataType : "json",
+				url : "${pageContext.servletContext.contextPath}/meeting/meetinglog",
 				type : "POST",		
-				contentType: "application/json",
 				data : {meetingDate : $date},
 				success : function(data, status, xhr){
 					console.log(data);
