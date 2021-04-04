@@ -14,7 +14,7 @@ public class MeetingLogController {
 	@GetMapping("meetinglog")
 	public void meetinglog(HttpServletRequest request) {
 		
-		String date = request.getParameter("datee");
+		String date = request.getParameter("meetingDate");
 		System.out.println(date);
 		
 	}
