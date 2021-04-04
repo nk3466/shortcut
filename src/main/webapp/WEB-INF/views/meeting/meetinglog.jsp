@@ -184,7 +184,7 @@
 		$("#upload").click(function(){
 			$.ajax({
 				url : "meetinglog",
-				data : "date : datee",
+				data : "meetingDate : meetingDate",
 				success : function(data, status, xhr){
 					console.log(data);
 				},

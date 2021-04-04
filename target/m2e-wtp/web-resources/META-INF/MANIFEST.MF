@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Built-By: skaro
+=======
+Built-By: WANGYU
+>>>>>>> cf4e651072df25e8a14b20e0c8cb306ec249cdcf
 Build-Jdk: 1.8.0_265
 Created-By: Maven Integration for Eclipse
 

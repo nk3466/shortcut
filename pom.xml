@@ -254,10 +254,11 @@
 		    <version>5.4.1</version>
 		</dependency>
 		
-		<dependency> 
+		<!-- <dependency> 
 			<groupId>org.mindrot</groupId> 
 			<artifactId>jbcrypt</artifactId> 
 			<version>0.3m</version> 
+<<<<<<< HEAD
 		</dependency>
 		
 		<!-- mockito프레임워크 사용을 위한 라이브러리 -->
@@ -287,6 +288,10 @@
             <version>4.0.1</version>
         </dependency>
         
+=======
+		</dependency> -->
+
+>>>>>>> cf4e651072df25e8a14b20e0c8cb306ec249cdcf
 	</dependencies>
     <build>
         <plugins>
