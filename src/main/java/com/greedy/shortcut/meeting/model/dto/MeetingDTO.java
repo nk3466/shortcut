@@ -3,10 +3,13 @@ package com.greedy.shortcut.meeting.model.dto;
 import java.sql.Date;
 import java.sql.Time;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class MeetingDTO {
 
 	private String title;
 	private String content;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd HH:mm:ss SSS", timezone = "Asia/Seoul")
 	private java.sql.Date meetingDate;
 	private java.sql.Time startTime;
 	private java.sql.Time endTime;
