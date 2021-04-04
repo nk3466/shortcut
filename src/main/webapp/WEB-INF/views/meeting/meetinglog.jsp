@@ -77,89 +77,92 @@
 	<div class="modal fade" id="conference">
 		<div class="modal-dialog">			
 			<div class="modal-content">
-				<div class="modal-body">
-					<div class="conference_item">
-						<div class="row">
-							<div class="item_type type">
-								회의날짜
+				<form action="${ pageContext.servletContext.contextPath }/meeting/meetinglog" method="post">
+					<div class="modal-body">
+						
+							<div class="conference_item">
+								<div class="row">
+									<div class="item_type type">
+										회의날짜
+									</div>
+									<div class="item_type">
+										<input class="input_detail" type="date" id="meetingDate" name="datee">
+									</div>
+									<div class="item_type">
+										<input class="input_detail" type="time" name="">
+										~
+										<input class="input_detail" type="time" name="">
+									</div>
+								</div>
+								<div class="modal_line"></div>
+								<div class="row">
+									<div class="item_type type">
+										프로젝트
+									</div>							
+									<div class="item_text">
+										ShortCut 애자일 협업툴
+									</div>							
+									<div class="item_type type1">
+										스프린트
+									</div>							
+									<div class="item_text">
+										C1009-1
+									</div>							
+								</div>
+								<div class="modal_line"></div>
+								<div class="row">
+									<div class="item_type type">
+										팀원추가
+									</div>
+									<div class="item_type">
+										<input class="input_detail" type="text" name="">
+										<button class="btn_detail">Add</button>
+									</div>
+									
+								</div>
+								<div class="modal_line"></div>
+								<div class="row">
+									<div class="item_type type">
+										참석자
+									</div>
+									<div class="item_type">
+										<span class="item_text">깅밍기</span>
+										<span class="item_text">깅밍기</span>
+										<span class="item_text">깅밍기</span>
+									</div>
+									
+								</div>
+								<div class="modal_line"></div>
+								<div class="row">
+									<div class="item_type type">
+										회의제목
+									</div>
+									<div class="item_type">
+										<input class="input_detail" type="text" id="titleName" name="title">
+									</div>
+									
+								</div>
+								<div class="row">
+									<div class="item_type type">
+										회의내용
+									</div>
+									<div class="item_type type3">
+										<textarea class="textarea_detail"></textarea>
+									</div>
+									
+								</div>
+		
 							</div>
-							<div class="item_type">
-								<input class="input_detail" type="date" name="datee">
-							</div>
-							<div class="item_type">
-								<input class="input_detail" type="time" name="">
-								~
-								<input class="input_detail" type="time" name="">
-							</div>
-						</div>
-						<div class="modal_line"></div>
-						<div class="row">
-							<div class="item_type type">
-								프로젝트
-							</div>							
-							<div class="item_text">
-								ShortCut 애자일 협업툴
-							</div>							
-							<div class="item_type type1">
-								스프린트
-							</div>							
-							<div class="item_text">
-								C1009-1
-							</div>							
-						</div>
-						<div class="modal_line"></div>
-						<div class="row">
-							<div class="item_type type">
-								팀원추가
-							</div>
-							<div class="item_type">
-								<input class="input_detail" type="text" name="">
-								<button class="btn_detail">Add</button>
-							</div>
-							
-						</div>
-						<div class="modal_line"></div>
-						<div class="row">
-							<div class="item_type type">
-								참석자
-							</div>
-							<div class="item_type">
-								<span class="item_text">깅밍기</span>
-								<span class="item_text">깅밍기</span>
-								<span class="item_text">깅밍기</span>
-							</div>
-							
-						</div>
-						<div class="modal_line"></div>
-						<div class="row">
-							<div class="item_type type">
-								회의제목
-							</div>
-							<div class="item_type">
-								<input class="input_detail" type="text" name="">
-							</div>
-							
-						</div>
-						<div class="row">
-							<div class="item_type type">
-								회의내용
-							</div>
-							<div class="item_type type3">
-								<textarea class="textarea_detail"></textarea>
-							</div>
-							
-						</div>
-
+						
 					</div>
-					
-				</div>
-
-				<!-- Modal footer -->
-				<div class="modal_footer">								
-					<div class="btn_area">
-						<button type="button" id="upload" class="upload_btn">완료</button>	
-					</div>														
-				</div>
+	
+					<!-- Modal footer -->
+					<div class="modal_footer">								
+						<div class="btn_area">
+							<button type="button" id="upload" class="upload_btn">완료</button>	
+						</div>														
+					</div>
+				</form>
 
 			</div>
 		</div>
@@ -179,21 +182,33 @@
 		})
 	})
 </script>
-<script type="text/javascript">
-	$(function() {
+<script type="text/javascript">	
 		$("#upload").click(function(){
+			
+			const $date = $("#meetingDate").val();
+			const $title = $("#titleName").val();
+			
+			console.log($date);
+			console.log($title);
+			
+			
 			$.ajax({
 				url : "meetinglog",
-				data : "meetingDate : meetingDate",
+				dataType : "json",
+				type : "POST",		
+				contentType: "application/json",
+				data : {meetingDate : $date},
 				success : function(data, status, xhr){
 					console.log(data);
+					
 				},
 				error : function(xhr, status, error){
 					console.log(error);
 				}
+				
 			})
-			
-		})
+		
+		
 	})
 </script>
 
