@@ -1,9 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: gram
-=======
-Built-By: Min Ki Kim
->>>>>>> feature/2021-04-04-minki-1
+Built-By: WANGYU
 Build-Jdk: 1.8.0_265
 Created-By: Maven Integration for Eclipse
 
