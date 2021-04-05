@@ -54,12 +54,14 @@
 			</div>
 
 			<div class="timeline_area">
-				<div id="timeline" style="height: 500px; /* display: none; */"></div>
+				<div id="timeline" style="height: 500px;  display: none;"></div>
 			</div>
-
+			
 			<div id="divResult">
 			
 			</div>
+			
+			<div id="cityData" data-toggle="modal" data-target="#myModal"></div>
 			
 			<input type="text" id="please1" value="tttt">
 			<input type="text" id="please2" value="cccc">
@@ -69,6 +71,30 @@
 		</div>
 	</div>
 	
+	<div class="modal fade" id="myModal">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	      
+	        <!-- Modal Header -->
+	        <div class="modal-header">
+	          <h4 class="modal-title">Modal Heading</h4>
+	          <button type="button" class="close" data-dismiss="modal">×</button>
+	        </div>
+	        
+	        <!-- Modal body -->
+	        <div class="modal-body">
+	          Modal body..
+	        </div>
+	        
+	        <!-- Modal footer -->
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+	        </div>
+	        
+	      </div>
+	    </div>
+	  </div>
+	
 	<script>
 		const $project1 = document.getElementById("project1");
 		const $timeline = document.getElementById("timeline");
@@ -77,7 +103,7 @@
 		$project1.addEventListener("click", getProject, true);
 		
 		function getProject() {
-			/* $timeline.style.display = "inline"; */
+			$timeline.style.display = "block"; 
 			
 			$.ajax({
 				url: "projectInfo",
@@ -119,14 +145,29 @@
         var container = document.getElementById('timeline');
         var chart = new google.visualization.Timeline(container);
         var dataTable = new google.visualization.DataTable();
-
-        dataTable.addColumn({ type: 'string', id: 'President' });
+        
+        const please3 = document.getElementById("please3").value;
+		const year1 = "2021";
+		const month1 = "5";
+		const day1 = "4";
+		const month2 = "5";
+		const day2 = "30";
+		
+		const month3 = "6";
+		const day3 = "4";
+		const month4 = "6";
+		const day4 = "30";
+        
+		const plusTag = document.createElement("div");
+		plusTag.innerHTML = "ah";
+		
+        dataTable.addColumn({ type: 'string', id: 'projectName' });
         dataTable.addColumn({ type: 'string', id: 'name' });
         dataTable.addColumn({ type: 'date', id: 'Start' });
         dataTable.addColumn({ type: 'date', id: 'End' });
         dataTable.addRows([
-          [ $("#please1").val(), $("#please2").val(), new Date(1620054000000),  new Date(1622300400000) ]]);/* , */
-/*           [ 'Adams',    "a",  new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
+          [ $("#please1").val(), $("#please2").val(), new Date(year1, month1, day1),  new Date(year1, month2, day2) ] ,
+          [ 'Adams',    "a",  new Date(year1, month3, day3),  new Date(year1, month4, day4) ]]);/*,
           [ 'Adams',    "a",  new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
           [ 'Adams',    "a",  new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
           [ 'Jefferson', "a",  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]); */
@@ -136,8 +177,66 @@
         	      backgroundColor: '#ffd'
         	    };
         
-        chart.draw(dataTable);
-      }
-    </script>
+        google.visualization.events.addListener(chart, 'ready', function() {
+        	var rowLabels = container.getElementsByTagName('text');
+        	Array.prototype.forEach.call(rowLabels, function(label) {
+        		
+         		if(label.getAttribute('text-anchor') === 'end') {
+        			label.addEventListener("click", displayDetails, false);
+        		}
+         		if(label.getAttribute('text-anchor') === 'end') {
+         	        label.setAttribute('fill', '#000000');
+        		}  
+        	});
+        });
+        
+        function displayDetails(sender) {
+        	
+        	sender.preventDefault();
+        	
+            $("#myModal").modal();
+        	
+        	/* document.getElementById('cityData').innerHTML = 'city data for' + sender.target.innerHTML; */
+        }
+          
+     	    chart.draw(dataTable);
+        }
+      </script>
+      <script>
+      
+/*       function getData() {
+			return new Promise(function(resolve, reject) {
+				$.get('gitTest2', function(response) {
+					if(response) {
+						resolve(response);
+					}
+					reject(new Error("Request is failed"));
+				});
+			});
+		}
+      
+      
+      function clickEvent(dataTable) {
+    	  
+    	  return new Promise(function(resolve, reject) {
+    		  
+	 	      console.log(dataTable);
+/* 		      const $df = dataTable.fg;
+		      console.log($df);
+		      
+		      for(let index in $df) {
+		    	    console.log($df[index]);
+		    	    console.log($df[index].c[1].v);
+		    	    
+		    	    $df[index].c[1].v.onmouseover("click", function() { 
+			      	alert(index);
+			      });
+		      }
+		      resolve(response);
+		      reject(new Error("Request is failed"));
+    	  });
+    	  
+      } */
+  </script>
 </body>
 </html>
