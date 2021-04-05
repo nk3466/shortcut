@@ -31,6 +31,25 @@ public class MyWorkController {
 		testList.add(new String("A"));
 		testList.add(new String("B"));
 		testList.add(new String("C"));
+		testList.add(new String("D"));
+		testList.add(new String("E"));
+		testList.add(new String("F"));
+		testList.add(new String("G"));
+		testList.add(new String("H"));
+		testList.add(new String("I"));
+		testList.add(new String("J"));
+		testList.add(new String("K"));
+		testList.add(new String("L"));
+		testList.add(new String("M"));
+		testList.add(new String("N"));
+		testList.add(new String("O"));
+		testList.add(new String("P"));
+		testList.add(new String("Q"));
+		testList.add(new String("R"));
+		testList.add(new String("S"));
+		testList.add(new String("T"));
+		testList.add(new String("U"));
+		testList.add(new String("V"));
 		
 		model.addAttribute("testList", testList);
 		
