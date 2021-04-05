@@ -19,4 +19,7 @@
 
 .modal.fade .modal-dialog .modal-content .modal-body .row .input_detail1.type{width: 80%; height: 40px; padding: 0 10px 0 35px; position: relative; border: 0;}
 
-
+.modal.fade .modal-dialog .modal-content .modal-body .row .select_detail.nk{width: 21%; border: 0;}
+.modal.fade .modal-dialog .modal-content .modal-body .row .input_detail2.nk{width: 27px; height: 27px; border-radius: 50px; background-color: #ed1745;}
+.modal.fade .modal-dialog .modal-content .modal-header .input_detail.nk{width: 80%; height: 40px; padding: 0 10px;}
+.modal.fade .modal-dialog .modal-content .modal-header .input_detail.nk1{width: 70%; height: 40px; padding: 0 10px;}
