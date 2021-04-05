@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -90,4 +91,41 @@ public class MyWorkController {
 		
 		return new ObjectMapper().writeValueAsString(projectTestList);
 	}
+	
+	@GetMapping(value="client/projectInfo/{flag}")
+	public String selectProjectInfo(Model model, @PathVariable("flag") int flag) {
+		
+		System.out.println("flag : " + flag);
+		
+		model.addAttribute("message", flag + "번 프로젝트");
+		
+		List<Object> testList = new ArrayList<>();
+		testList.add(new String("A"));
+		testList.add(new String("B"));
+		testList.add(new String("C"));
+		testList.add(new String("D"));
+		testList.add(new String("E"));
+		testList.add(new String("F"));
+		testList.add(new String("G"));
+		testList.add(new String("H"));
+		testList.add(new String("I"));
+		testList.add(new String("J"));
+		testList.add(new String("K"));
+		testList.add(new String("L"));
+		testList.add(new String("M"));
+		testList.add(new String("N"));
+		testList.add(new String("O"));
+		testList.add(new String("P"));
+		testList.add(new String("Q"));
+		testList.add(new String("R"));
+		testList.add(new String("S"));
+		testList.add(new String("T"));
+		testList.add(new String("U"));
+		testList.add(new String("V"));
+		
+		model.addAttribute("testList", testList);
+		
+		return "mywork/client";
+	}
+	
 }
