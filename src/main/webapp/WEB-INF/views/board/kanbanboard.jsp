@@ -16,8 +16,26 @@
 
 	<!-- 폰트어썸 -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+	
+	<!-- Jquery UI -->
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<style>
+	.board-placeholder {
+	border: 1px dotted black;
+	margin: 0 1em 1em 0;
+	height: 50px;
+	margin-left:auto;
+	margin-right:auto;
+	/* 노란색으로 표신되는 것이 주요 포인트 */
+	background-color: yellow;
+	}
+	/* 마우스 포인터을 손가락으로 변경 */
+	.card:not(.no-move) .board-header{
+	cursor: pointer;
+	}
 
-
+	</style>
 
 	<title>Short Cut</title>
 </head>
@@ -58,9 +76,10 @@
 					
 				</div>
 			</div>
-			<div class="kanban_item">
+			
+			<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type1">
-					<div class="kanbanboard_title">
+					<div class="kanbanboard_title board-header">
 						요청
 					</div>
 					<div class="board_item">
@@ -83,9 +102,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="kanban_item">
+			<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type2">
-					<div class="kanbanboard_title">
+					<div class="kanbanboard_title board-header">
 						진행중
 					</div>
 					<div class="board_item">
@@ -146,9 +165,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="kanban_item">
+			<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type3">
-					<div class="kanbanboard_title">
+					<div class="kanbanboard_title board-header">
 						완료
 					</div>
 					<div class="board_item">
@@ -166,7 +185,7 @@
 						</div>
 					</div>
 					<div class="board_item">
-						<div class="item type1">
+						<div class="item board-header">
 							SNS 로그인
 						</div>
 						<div class="item type2">
@@ -195,9 +214,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="kanban_item">
+			<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type4">
-					<div class="kanbanboard_title">
+					<div class="kanbanboard_title board-header">
 						보류
 					</div>
 					<div class="board_item">
@@ -461,6 +480,28 @@
 	
 	
 </body>
+<script type="text/javascript">
+$(function() {
+	$(".boardcolumn").sortable({
+		// 드래그 앤 드롭 단위 css 선택자
+		connectWith: ".boardcolumn",
+		// 움직이는 css 선택자
+		handle: ".board-header",
+		// 움직이지 못하는 css 선택자
+		cancel: ".no-move",
+		// 이동하려는 location에 추가 되는 클래스
+		placeholder: "board-placeholder"
+	});
+	// 해당 클래스 하위의 텍스트 드래그를 막는다.
+	$( ".boardcolumn .card" ).disableSelection();
+});
+
+$(".kanban_item").children('div').click(function(){
+	console.log("asdf")
+	
+})
+
+</script>
 
 
 
