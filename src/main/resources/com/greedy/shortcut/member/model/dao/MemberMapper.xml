@@ -55,5 +55,12 @@
 		     , A.PHONE = #{phone}
 		 WHERE A.MEM_ID = #{email}
 	</update>
+	
+	<update id="updateMember">
+		UPDATE MEMBER A 
+		   SET A.MEM_PWD = #{password}
+		 WHERE A.MEM_ID = #{email}
+	</update>
+		
 		
 </mapper>

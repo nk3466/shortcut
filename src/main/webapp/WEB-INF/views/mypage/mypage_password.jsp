@@ -44,18 +44,22 @@
 				<form action="${ pageContext.servletContext.contextPath }/changePassword" method="post">
 				<div class="mypage_info_area">
 					<div class="mypage_info_box">
-						<div class="info_item">
+						<!-- <div class="info_item">
 							<div class="info_name">현재 비밀번호 입력</div>
 							<input class="input_detail" type="password" name="currentPwd">
+						</div> -->
+						<div class="info_item">
+							<div class="info_name">이메일</div>
+							<input class="input_detail" type="text" name="email" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}" readonly>
 						</div>
 						<div class="info_item">
 							<div class="info_name">새 비밀번호 입력</div>
-							<input class="input_detail" type="password" name="changePwd">
+							<input class="input_detail" type="password" name="password">
 						</div>
-						<div class="info_item">
+						<!-- <div class="info_item">
 							<div class="info_name">새 비밀번호 확인</div>
 							<input class="input_detail" type="password" name="changePwdConfirm">
-						</div>
+						</div> -->
 					</div>	
 					<div class="mypage_right_btn">
 					<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">

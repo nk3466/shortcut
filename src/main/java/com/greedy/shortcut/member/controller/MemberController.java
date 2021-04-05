@@ -25,6 +25,7 @@ import com.greedy.shortcut.member.model.service.MemberService;
 @RequestMapping("/*")
 public class MemberController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	private final MemberService memberService;
 	private final BCryptPasswordEncoder passwordEncoder;
 	
@@ -73,4 +74,28 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping("changePassword")
+	public String memberUpdate(@ModelAttribute MemberDTO dto, Model model) {
+		
+			memberService.updateMember(dto);
+			return "redirect:/";
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

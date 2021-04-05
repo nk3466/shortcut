@@ -40,4 +40,10 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println(memberDTO);
 	}
 
+	@Override
+	public void updateMember(MemberDTO dto) {
+		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+		mapper.updateMember(dto);
+	}
+
 }

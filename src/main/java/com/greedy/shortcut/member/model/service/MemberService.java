@@ -10,4 +10,6 @@ public interface MemberService {
 
 	void ModifyMember(MemberDTO memberDTO);
 
+	void updateMember(MemberDTO dto);
+
 }
