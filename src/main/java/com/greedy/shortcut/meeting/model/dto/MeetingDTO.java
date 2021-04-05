@@ -7,69 +7,81 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class MeetingDTO {
 
-	private String title;
-	private String content;
+	private int meetingNO;
+	private String meetingName;
+	private String meetingText;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd HH:mm:ss SSS", timezone = "Asia/Seoul")
-	private java.sql.Date meetingDate;
-	private java.sql.Time startTime;
-	private java.sql.Time endTime;
+	private java.sql.Date enrollDate;
+	private String status;
+	private int sprintNo;
 	
 	public MeetingDTO() {}
 
-	public MeetingDTO(String title, String content, Date meetingDate, Time startTime, Time endTime) {
+	public MeetingDTO(int meetingNO, String meetingName, String meetingText, Date enrollDate, String status,
+			int sprintNo) {
 		super();
-		this.title = title;
-		this.content = content;
-		this.meetingDate = meetingDate;
-		this.startTime = startTime;
-		this.endTime = endTime;
+		this.meetingNO = meetingNO;
+		this.meetingName = meetingName;
+		this.meetingText = meetingText;
+		this.enrollDate = enrollDate;
+		this.status = status;
+		this.sprintNo = sprintNo;
 	}
 
-	public String getTitle() {
-		return title;
+	public int getMeetingNO() {
+		return meetingNO;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setMeetingNO(int meetingNO) {
+		this.meetingNO = meetingNO;
 	}
 
-	public String getContent() {
-		return content;
+	public String getMeetingName() {
+		return meetingName;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setMeetingName(String meetingName) {
+		this.meetingName = meetingName;
 	}
 
-	public java.sql.Date getMeetingDate() {
-		return meetingDate;
+	public String getMeetingText() {
+		return meetingText;
 	}
 
-	public void setMeetingDate(java.sql.Date meetingDate) {
-		this.meetingDate = meetingDate;
+	public void setMeetingText(String meetingText) {
+		this.meetingText = meetingText;
 	}
 
-	public java.sql.Time getStartTime() {
-		return startTime;
+	public java.sql.Date getEnrollDate() {
+		return enrollDate;
 	}
 
-	public void setStartTime(java.sql.Time startTime) {
-		this.startTime = startTime;
+	public void setEnrollDate(java.sql.Date enrollDate) {
+		this.enrollDate = enrollDate;
 	}
 
-	public java.sql.Time getEndTime() {
-		return endTime;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setEndTime(java.sql.Time endTime) {
-		this.endTime = endTime;
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public int getSprintNo() {
+		return sprintNo;
+	}
+
+	public void setSprintNo(int sprintNo) {
+		this.sprintNo = sprintNo;
 	}
 
 	@Override
 	public String toString() {
-		return "MeetingDTO [title=" + title + ", content=" + content + ", meetingDate=" + meetingDate + ", startTime="
-				+ startTime + ", endTime=" + endTime + "]";
+		return "MeetingDTO [meetingNO=" + meetingNO + ", meetingName=" + meetingName + ", meetingText=" + meetingText
+				+ ", enrollDate=" + enrollDate + ", status=" + status + ", sprintNo=" + sprintNo + "]";
 	}
+
 	
 	
 	

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +37,7 @@ public class MeetingLogController {
 	
 	@PostMapping(value="/meetinglog", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public void meeting(HttpServletRequest request){
+	public String meeting(HttpServletRequest request) throws JsonProcessingException{
 	
 		String title = request.getParameter("title");
 		String date = request.getParameter("meeting");
@@ -46,6 +45,6 @@ public class MeetingLogController {
 		System.out.println(date);
 		System.out.println(title);
 	
-		
+		return new ObjectMapper().writeValueAsString(meeting);
 	}
 }
