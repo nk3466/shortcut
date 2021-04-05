@@ -396,7 +396,7 @@
 					<div class="item_area">						
 						<div class="row type">
 							<i class="fas fa-spinner"></i>
-							<div class="progress_list">요청</div>
+							<div class="progress_list_selected">요청</div>
 							<div class="progress_list">진행</div>
 							<div class="progress_list">피드백</div>
 							<div class="progress_list">완료</div>

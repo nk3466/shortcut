@@ -50,7 +50,8 @@
 							
 			<div class="table_area">
 				<div class="table_item">
-					<a href="http://kordzor.cafe24.com/final/kanbanboard.html">
+				
+					<a href="${pageContext.servletContext.contextPath }/board/kanbanboard">
 						<div class="row">							
 							<div class="table_detail type1">ABC</div>
 							<div class="table_detail type1">입금</div>
