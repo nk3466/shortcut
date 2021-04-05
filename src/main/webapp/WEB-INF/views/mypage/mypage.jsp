@@ -32,10 +32,10 @@
 			<div class="mypage_left_area">				
 				<div class="mypage_btn_area">
 					<div class="btn_item">
-						<a class="btn_detail" href="http://kordzor.cafe24.com/final/mypage.html">계정 정보</a>
+						<a class="btn_detail" href="${ pageContext.servletContext.contextPath }/mypage/mypage">계정 정보</a>
 					</div>					
 					<div class="btn_item">
-						<a class="btn_detail" href="http://kordzor.cafe24.com/final/mypage_password.html">비밀번호 변경</a>
+						<a class="btn_detail" href="${ pageContext.servletContext.contextPath }/mypage/mypage_password">비밀번호 변경</a>
 					</div>				
 				</div>
 			</div>

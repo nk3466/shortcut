@@ -32,34 +32,38 @@
 			<div class="mypage_left_area">				
 				<div class="mypage_btn_area">
 					<div class="btn_item">
-						<a class="btn_detail" href="http://kordzor.cafe24.com/final/mypage.html">계정 정보</a>
+						<a class="btn_detail" href="${ pageContext.servletContext.contextPath }/mypage/mypage">계정 정보</a>
 					</div>					
 					<div class="btn_item">
-						<a class="btn_detail" href="http://kordzor.cafe24.com/final/mypage_password.html">비밀번호 변경</a>
+						<a class="btn_detail" href="${ pageContext.servletContext.contextPath }/mypage/mypage_password">비밀번호 변경</a>
 					</div>				
 				</div>
 			</div>
 			<div class="mypage_right_area">
 				<div class="mypage_right_header">비밀번호 변경</div>
+				<form action="${ pageContext.servletContext.contextPath }/changePassword" method="post">
 				<div class="mypage_info_area">
 					<div class="mypage_info_box">
 						<div class="info_item">
 							<div class="info_name">현재 비밀번호 입력</div>
-							<input class="input_detail" type="password" name="">
+							<input class="input_detail" type="password" name="currentPwd">
 						</div>
 						<div class="info_item">
-							<div class="info_name">변경할 비밀번호 입력</div>
-							<input class="input_detail" type="password" name="">
+							<div class="info_name">새 비밀번호 입력</div>
+							<input class="input_detail" type="password" name="changePwd">
 						</div>
-						
+						<div class="info_item">
+							<div class="info_name">새 비밀번호 확인</div>
+							<input class="input_detail" type="password" name="changePwdConfirm">
+						</div>
 					</div>	
 					<div class="mypage_right_btn">
-						<button class="mypage_btn_detail">변경</button>
+					<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+						<button class="mypage_btn_detail" type="submit">변경</button>
 						<button class="mypage_btn_detail">취소</button>
 					</div>
 				</div>
-				
-				
+				</form>
 			</div>
 		</div>
 	</div>
