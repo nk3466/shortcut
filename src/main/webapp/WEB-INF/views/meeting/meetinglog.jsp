@@ -86,8 +86,7 @@
 										회의날짜
 									</div>
 									<div class="item_type">
-										
-										<input class="input_detail" type="date" id="meetingDate" value="${_csrf.token}">
+										<input class="input_detail" type="date" id="meetingDate" name="meetingDate1">
 									</div>
 									<div class="item_type">
 										<input class="input_detail" type="time" name="">
@@ -160,7 +159,8 @@
 					<!-- Modal footer -->
 					<div class="modal_footer">								
 						<div class="btn_area">
-							<button id="upload" class="upload_btn">완료</button>	
+							<input name="${_csrf.parameterName}" type="hidden"  value="${_csrf.token}">
+							<button type="submit" id="upload" class="upload_btn">완료</button>	
 						</div>														
 					</div>
 				</form>
@@ -196,7 +196,7 @@
 			$.ajax({
 				url : "${pageContext.servletContext.contextPath}/meeting/meetinglog",
 				type : "POST",		
-				data : {meetingDate : $date},
+				data : {meeting : $date},
 				success : function(data, status, xhr){
 					console.log(data);
 					
