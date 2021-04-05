@@ -31,7 +31,7 @@
 			<span class="backlog_header">
 				Backlog			
 			</span>			
-			<a class="meeting_btn">Meeting Log</a>
+			<a class="meeting_btn" href="${ pageContext.servletContext.contextPath }/meeting/meetinglog">Meeting Log</a>
 			
 		</div>
 		
