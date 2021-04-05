@@ -77,7 +77,7 @@
 	<div class="modal fade" id="conference">
 		<div class="modal-dialog">			
 			<div class="modal-content">
-				<form action="${ pageContext.servletContext.contextPath }/meeting/meetinglog" method="post">
+				<form id="asdf" action="/meetinglog" method="post">
 					<div class="modal-body">
 						
 							<div class="conference_item">
@@ -160,7 +160,7 @@
 					<div class="modal_footer">								
 						<div class="btn_area">
 							<input name="${_csrf.parameterName}" type="hidden"  value="${_csrf.token}">
-							<button type="submit" id="upload" class="upload_btn">완료</button>	
+							<input type="button" id="upload" class="upload_btn" value="완료">	
 						</div>														
 					</div>
 				</form>
@@ -199,7 +199,7 @@
 				data : {meeting : $date},
 				success : function(data, status, xhr){
 					console.log(data);
-					
+					$("#asdf").submit();
 				},
 				error : function(xhr, status, error){
 					console.log(error);
