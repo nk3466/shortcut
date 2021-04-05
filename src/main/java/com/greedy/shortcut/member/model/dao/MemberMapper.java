@@ -3,6 +3,7 @@ package com.greedy.shortcut.member.model.dao;
 import java.util.List;
 
 import com.greedy.shortcut.member.model.dto.MemberDTO;
+import com.greedy.shortcut.member.model.service.UserDetailsVO;
 
 public interface MemberMapper {
 
@@ -12,8 +13,6 @@ public interface MemberMapper {
 
 	Object selectUserInfoCount(String email);
 
-	MemberDTO getLoginUser(String name);
+	void ModifyMember(MemberDTO memberDTO);
 
-	
-	
 }

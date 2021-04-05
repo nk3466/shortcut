@@ -36,6 +36,7 @@ public class UserDetailsServiceCustom implements UserDetailsService {
 			
 			userDetails.setUsername(userInfo.getEmail());
 			userDetails.setPassword(userInfo.getPassword());
+			userDetails.setName(userInfo.getName());
 			System.out.println("email : " + userInfo.getEmail());
 			System.out.println("password : " + userInfo.getPassword());
 			

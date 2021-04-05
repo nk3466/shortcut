@@ -41,15 +41,16 @@
 			</div>
 			<div class="mypage_right_area">
 				<div class="mypage_right_header">계정 정보</div>
+				<form action="${ pageContext.servletContext.contextPath }/update" method="post">
 				<div class="mypage_info_area">
 					<div class="mypage_info_box">
 						<div class="info_item">
 							<div class="info_name">사용자 이름</div>
-							<input class="input_detail" type="text" name="name">
+							<input class="input_detail" type="text" name="name" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}">
 						</div>
 						<div class="info_item">
 							<div class="info_name">이메일</div>
-							<input class="input_detail" type="text" name="email" readonly>
+							<input class="input_detail" type="text" name="email" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}" readonly>
 						</div>
 						<div class="info_item">
 							<div class="info_name">휴대폰 번호</div>
@@ -57,11 +58,12 @@
 						</div>
 					</div>	
 					<div class="mypage_right_btn">
-						<button class="mypage_btn_detail">변경</button>
+						<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+						<button class="mypage_btn_detail" type="submit">변경</button>
 						<button class="mypage_btn_detail">취소</button>
 					</div>
 				</div>
-				
+				</form>
 				<div class="member_quit">
 					<div class="member_text">
 						회원탈퇴를 원하시나요? 만일 원하신다면, <a href="#">이 곳을 눌러주세요</a>

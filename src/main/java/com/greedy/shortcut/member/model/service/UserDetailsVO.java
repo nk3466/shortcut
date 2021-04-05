@@ -16,7 +16,13 @@ public class UserDetailsVO implements UserDetails {
 	
 	private String username;	// ID
 	private String password;	// PW
+	private String name;
 	private List<GrantedAuthority> authorities;
+	
+	// setter
+		public void setName(String name) {
+			this.name = name;
+		}
 	
 	// setter
 	public void setUsername(String username) {
@@ -43,6 +49,10 @@ public class UserDetailsVO implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 	@Override
