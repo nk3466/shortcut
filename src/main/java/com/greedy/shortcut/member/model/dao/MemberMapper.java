@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Primary;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 import com.greedy.shortcut.member.model.service.UserDetailsVO;
 
-@Primary
 public interface MemberMapper {
 
 	int registMember(MemberDTO member);
