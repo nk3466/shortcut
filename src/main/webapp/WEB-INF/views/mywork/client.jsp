@@ -54,7 +54,10 @@
 			</div>
 
 			<div class="timeline_area">
-				<div id="timeline" style="height: 500px; width: 100%;" class="timeline_detail"></div>
+
+
+				<div id="timeline" style="height: 500px;  /* display: none; */"></div>
+
 			</div>
 			
 			<div id="divResult">
@@ -63,13 +66,15 @@
 			
 			<div id="cityData" data-toggle="modal" data-target="#myModal"></div>
 			
-			<input type="text" id="please1" value="tttt">
+			<input type="text" id="please1" value="Sprint1">
 			<input type="text" id="please2" value="cccc">
 			<input type="text" id="please3" value="1620054000000">
 			<input type="text" id="please4" value="1622300400000">
 
 		</div>
 	</div>
+	
+	<input type="text" value="3" name="flag" id="flag">
 	
 	<div class="modal fade" id="myModal">
 	    <div class="modal-dialog">
@@ -103,9 +108,12 @@
 		$project1.addEventListener("click", getProject, true);
 		
 		function getProject() {
-			$timeline.style.display = "block"; 
+			/* $timeline.style.display = "block";  */ 
 			
-			$.ajax({
+			location.href="${ pageContext.servletContext.contextPath}/mywork/client/projectInfo/2";
+			
+			/* 페이징처리느낌으로 가서 아작스 안써도...  */
+			/* $.ajax({
 				url: "projectInfo",
 				method: "GET",
 				success: function(data, status, xhr) {
@@ -132,7 +140,7 @@
 				error: function(xhr, status, error) {
 					console.log(error);
 				}
-			});
+			}); */
 			
 		}
 	</script>
@@ -147,35 +155,41 @@
         var dataTable = new google.visualization.DataTable();
         
         const please3 = document.getElementById("please3").value;
+        
 		const year1 = "2021";
+		
 		const month1 = "5";
 		const day1 = "4";
+		
 		const month2 = "5";
 		const day2 = "30";
 		
 		const month3 = "6";
 		const day3 = "4";
-		const month4 = "6";
+		
+		const month4 = "7";
 		const day4 = "30";
         
-		const plusTag = document.createElement("div");
-		plusTag.innerHTML = "ah";
-		
         dataTable.addColumn({ type: 'string', id: 'projectName' });
         dataTable.addColumn({ type: 'string', id: 'name' });
         dataTable.addColumn({ type: 'date', id: 'Start' });
         dataTable.addColumn({ type: 'date', id: 'End' });
         dataTable.addRows([
           [ $("#please1").val(), $("#please2").val(), new Date(year1, month1, day1),  new Date(year1, month2, day2) ] ,
-          [ 'Adams',    "a",  new Date(year1, month3, day3),  new Date(year1, month4, day4) ]]),
-          [ 'Jefferson', "a",  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]);
+          [ 'Sprint2',    "a",  new Date(year1, month1, day1),  new Date(year1, month3, day3) ],
+          [ 'Sprint2',    "DSADAS",  new Date(year1, month1, day1),  new Date(year1, month3, day3) ],
+          [ 'Sprint3',    "GRSGESW",  new Date(year1, month1, day1),  new Date(year1, month2, day2) ],
+          [ 'Sprint4', "aEEEEE",  new Date(year1, month2, day2),  new Date(year1, month4, day4) ]]);
+
 
         var options = {
-        	      timeline: { colorByRowLabel: true },
-        	      backgroundColor: '#ffd'
+        	      timeline: { 
+        	    	  colorByRowLabel: true/* ,
+        	    	  groupByRowLabel: false */
+        	    	  }
         	    };
-        
-        google.visualization.events.addListener(chart, 'ready', function() {
+        /* 첫 번째 텍스트 선택시 이벤트 */
+        /* google.visualization.events.addListener(chart, 'ready', function() {
         	var rowLabels = container.getElementsByTagName('text');
         	Array.prototype.forEach.call(rowLabels, function(label) {
         		
@@ -186,18 +200,27 @@
          	        label.setAttribute('fill', '#000000');
         		}  
         	});
+        }); */
+        
+        /* 타임라인 선택시 이벤트 */
+        google.visualization.events.addListener(chart, 'select', function() {
+        	selection = chart.getSelection();
+        	  if (selection.length > 0) {
+        		  displayDetails();
+        	    /* console.log(dataTable.getValue(selection[0].row, 0)); */
+        	  }
         });
         
         function displayDetails(sender) {
         	
-        	sender.preventDefault();
+        	/* sender.preventDefault(); */
         	
             $("#myModal").modal();
         	
         	/* document.getElementById('cityData').innerHTML = 'city data for' + sender.target.innerHTML; */
         }
           
-     	    chart.draw(dataTable);
+     	    chart.draw(dataTable, options);
         }
       </script>
       <script>
