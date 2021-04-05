@@ -88,13 +88,13 @@
 										회의날짜
 									</div>
 									<div class="item_type">
-										<input class="input_detail" type="date" id="meetingDate" name="meetingDate1">
+										<input class="input_detail" type="date" id="meetingDate" name="enrollDate">
 									</div>
-									<div class="item_type">
+									<!-- <div class="item_type">
 										<input class="input_detail" type="time" name="">
 										~
 										<input class="input_detail" type="time" name="">
-									</div>
+									</div> -->
 								</div>
 								<div class="modal_line"></div>
 								<div class="row">
@@ -129,8 +129,6 @@
 									</div>
 									<div class="item_type">
 										<span class="item_text">깅밍기</span>
-										<span class="item_text">깅밍기</span>
-										<span class="item_text">깅밍기</span>
 									</div>
 									
 								</div>
@@ -140,7 +138,7 @@
 										회의제목
 									</div>
 									<div class="item_type">
-										<input class="input_detail" type="text" id="titleName" name="title">
+										<input class="input_detail" type="text" id="titleName" name="meetingName">
 									</div>
 									
 								</div>
@@ -149,7 +147,7 @@
 										회의내용
 									</div>
 									<div class="item_type type3">
-										<textarea class="textarea_detail"></textarea>
+										<textarea class="textarea_detail" name="meetingText"></textarea>
 									</div>
 									
 								</div>
@@ -196,9 +194,6 @@
 		
 			
 		$("#upload").click(function(){
-			
-			
-			
 
 			const $date = $("#meetingDate").val();
 			const $title = $("#titleName").val();
