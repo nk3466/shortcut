@@ -10,4 +10,7 @@ public class MyPageController {
 
 	@GetMapping("/mypage")
 	public void mypage() {}
+	
+	@GetMapping("/mypage_password")
+	public void mypage_password() {}
 }
