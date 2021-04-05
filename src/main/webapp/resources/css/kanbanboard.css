@@ -78,7 +78,8 @@
 
 .modal.fade .modal-dialog .modal-content .modal-body .item_area .login_info .info_detail.type{font-size: 9px; color: gray;}
 .modal.fade .modal-dialog .modal-content .modal-body .item_area .row.type{margin: 0; text-align: center; border: 0; padding: 0;}
-.modal.fade .modal-dialog .modal-content .modal-body .item_area .row .progress_list{border:1px solid black; width: 70px;  height: 30px; margin-left: 10px; }
+.modal.fade .modal-dialog .modal-content .modal-body .item_area .row .progress_list{border:1px solid #969696; width: 70px;  height: 30px; margin-left: 10px; border-radius:5px; color:#969696;}
+.modal.fade .modal-dialog .modal-content .modal-body .item_area .row .progress_list_selected{border:1px solid #969696; width: 70px;  height: 30px; margin-left: 10px; border-radius:5px; background-color: #4aaefb; color:white;}
 .modal.fade .modal-dialog .modal-content .modal-body .item_area.type .text_detail.type{height: 100px;}
 .modal.fade .modal-dialog .modal-content .modal-body .item_area .fas.fa-list-ul{width: 100%;}
 .modal.fade .modal-dialog .modal-content .modal-body .item_area .option_detail{background-color: red}

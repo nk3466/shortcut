@@ -5,55 +5,55 @@
 <mapper namespace="com.greedy.shortcut.member.model.dao.MemberMapper">
 
 	<resultMap id="memberResultSet" type="MemberDTO">
-		<id column="MEMBER_NO" property="no" />
-		<result column="MEMBER_NAME" property="name" />
-		<result column="EMAIL" property="email" />
-		<result column="MEMBER_PWD" property="password" />
+		<id column="MEM_NO" property="no" />
+		<result column="MEM_NAME" property="name" />
+		<result column="MEM_ID" property="email" />
+		<result column="MEM_PWD" property="password" />
 		<result column="PHONE" property="phone" />
 		
 	</resultMap>
 	
 	<insert id="registMember" parameterType="MemberDTO">
         INSERT 
-          INTO TBL_MEMBER A
+          INTO MEMBER A
         (
-          A.MEMBER_NO, A.EMAIL, A.MEMBER_PWD
-        , A.MEMBER_NAME, A.PHONE
+          A.MEM_NO, A.MEM_ID, A.MEM_PWD
+        , A.MEM_NAME, A.PHONE
         ) 
 		VALUES
 		(
-		  SEQ_MEMBER_NO.NEXTVAL, #{email}, #{password}
+		  SEQ_MEM_NO.NEXTVAL, #{email}, #{password}
 		, #{name}, #{phone}
 		)
 	</insert>
 	
 	<select id="selectUserInfoOne" resultMap="memberResultSet" parameterType="MemberDTO">
         SELECT 
-               A.MEMBER_NO
-             , A.MEMBER_NAME
-             , A.EMAIL
-             , A.MEMBER_PWD
+               A.MEM_NO
+             , A.MEM_NAME
+             , A.MEM_ID
+             , A.MEM_PWD
              , A.PHONE
-          FROM TBL_MEMBER A 
-         WHERE A.EMAIL = #{email} 
+          FROM MEMBER A 
+         WHERE A.MEM_ID = #{email} 
 	</select>
 	
 	<select id="selectUserInfoCount" resultMap="memberResultSet" parameterType="MemberDTO">
         SELECT 
                *
-          FROM TBL_MEMBER A
+          FROM MEMBER A
          WHERE EXISTS
          (
-           SELECT * FROM TBL_MEMBER B
-           WHERE A.EMAIL = #{email}
+           SELECT * FROM MEMBER B
+           WHERE A.MEM_ID = #{email}
          )
 	</select>
 	
 	<update id="ModifyMember">
-		UPDATE TBL_MEMBER A 
-		   SET A.MEMBER_NAME = #{name}
+		UPDATE MEMBER A 
+		   SET A.MEM_NAME = #{name}
 		     , A.PHONE = #{phone}
-		 WHERE A.EMAIL = #{email}
+		 WHERE A.MEM_ID = #{email}
 	</update>
 		
 </mapper>
