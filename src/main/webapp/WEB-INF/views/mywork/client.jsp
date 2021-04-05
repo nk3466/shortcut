@@ -54,7 +54,7 @@
 			</div>
 
 			<div class="timeline_area">
-				<div id="timeline" style="height: 500px;  display: none;"></div>
+				<div id="timeline" style="height: 500px; width: 100%;" class="timeline_detail"></div>
 			</div>
 			
 			<div id="divResult">
@@ -167,10 +167,8 @@
         dataTable.addColumn({ type: 'date', id: 'End' });
         dataTable.addRows([
           [ $("#please1").val(), $("#please2").val(), new Date(year1, month1, day1),  new Date(year1, month2, day2) ] ,
-          [ 'Adams',    "a",  new Date(year1, month3, day3),  new Date(year1, month4, day4) ]]);/*,
-          [ 'Adams',    "a",  new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
-          [ 'Adams',    "a",  new Date(1797, 2, 4),  new Date(1801, 2, 4) ],
-          [ 'Jefferson', "a",  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]); */
+          [ 'Adams',    "a",  new Date(year1, month3, day3),  new Date(year1, month4, day4) ]]),
+          [ 'Jefferson', "a",  new Date(1801, 2, 4),  new Date(1809, 2, 4) ]]);
 
         var options = {
         	      timeline: { colorByRowLabel: true },

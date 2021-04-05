@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
@@ -77,7 +79,7 @@
 	<div class="modal fade" id="conference">
 		<div class="modal-dialog">			
 			<div class="modal-content">
-				<form id="asdf" action="/meetinglog" method="post">
+				<form id="asdf" action="${pageContext.servletContext.contextPath}/meeting/meetinglog" method="post">
 					<div class="modal-body">
 						
 							<div class="conference_item">
@@ -183,9 +185,21 @@
 		})
 	})
 </script>
-<script type="text/javascript">	
+<script type="text/javascript">
+		const token = $("meta[name='_csrf']").attr("content");
+		const header = $("meta[name='_csrf_header']").attr("content");
+		
+		$(document).ajaxSend(function(e, xhr, options) {
+		    xhr.setRequestHeader(header, token);
+		});
+		
+		
+			
 		$("#upload").click(function(){
 			
+			
+			
+
 			const $date = $("#meetingDate").val();
 			const $title = $("#titleName").val();
 			
