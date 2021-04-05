@@ -21,7 +21,7 @@
 
 		<!-- 관리자페이지는 관리자만 접근 허용 -->
 		<s:intercept-url pattern="/admin/**" access="hasRole('admin')" />
-
+		
 		<!-- 로그인 설정 -->
 		<s:form-login	
 			username-parameter="email" 

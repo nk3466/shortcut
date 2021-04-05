@@ -8,4 +8,6 @@ public interface MemberService {
 
 	boolean registMember(MemberDTO member);
 
+	void ModifyMember(MemberDTO memberDTO);
+
 }

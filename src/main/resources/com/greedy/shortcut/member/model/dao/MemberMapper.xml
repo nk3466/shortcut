@@ -49,4 +49,11 @@
          )
 	</select>
 	
+	<update id="ModifyMember">
+		UPDATE TBL_MEMBER A 
+		   SET A.MEMBER_NAME = #{name}
+		     , A.PHONE = #{phone}
+		 WHERE A.EMAIL = #{email}
+	</update>
+		
 </mapper>

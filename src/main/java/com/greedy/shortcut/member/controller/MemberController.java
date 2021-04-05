@@ -1,6 +1,7 @@
 package com.greedy.shortcut.member.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greedy.shortcut.member.model.dto.MemberDTO;
@@ -23,7 +25,6 @@ import com.greedy.shortcut.member.model.service.MemberService;
 @RequestMapping("/*")
 public class MemberController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	private final MemberService memberService;
 	private final BCryptPasswordEncoder passwordEncoder;
 	
@@ -62,6 +63,14 @@ public class MemberController {
 		}
 
 		return "/main/main";
+	}
+	
+	@RequestMapping("/update")
+	public String ModifyMember(HttpSession httpsession, RedirectAttributes rttr, MemberDTO memberDTO) throws Exception {
+		memberService.ModifyMember(memberDTO);
+		httpsession.invalidate();
+		
+		return "redirect:/";
 	}
 	
 }
