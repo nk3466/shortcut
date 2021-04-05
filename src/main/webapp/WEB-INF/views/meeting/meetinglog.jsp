@@ -86,7 +86,8 @@
 										회의날짜
 									</div>
 									<div class="item_type">
-										<input class="input_detail" type="date" id="meetingDate" name="datee">
+										
+										<input class="input_detail" type="date" id="meetingDate" value="${_csrf.token}">
 									</div>
 									<div class="item_type">
 										<input class="input_detail" type="time" name="">
