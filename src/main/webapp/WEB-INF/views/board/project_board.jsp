@@ -229,6 +229,7 @@
 		   );*/
 		   	
 		   var nk = $('form[name=projectMemberList]').serializeArray();
+		   var nk1 = [];
 		   
 		   for(let i = 0; i < idcount; i++){
 			   Email = $("#projectMember").find(".Email").eq(i).text();
@@ -236,7 +237,7 @@
 			   roll = $("#projectMember").find(".roll").eq(i).text();
 			   console.log("roll : " + roll);
 			   
-			   nk.push({ name : "Email",	value : Email}, 
+			   nk1.push({ name : "Email",	value : Email}, 
 						{ name : "roll",value : roll});
 				
 			   $form.append(makeTag(Email, Email));
@@ -251,7 +252,7 @@
 			   url :"${pageContext.servletContext.contextPath}/board/project_regist",
 			   type : "post",
 			   data : { 
-				   nk : nk,
+				   nk1 : nk1,
 				   projectName : projectName,
 				   projectStartDate : projectStartDate,
 				   projectEndDate : projectEndDate,
