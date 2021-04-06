@@ -48,10 +48,8 @@
 	</aop:config>
 	
 	<mybatis-spring:scan 
-<<<<<<< HEAD
 		base-package="com.greedy.shortcut.member.model.dao,
-		              com.greedy.shortcut.board.model.dao"/>
-=======
-		base-package="com.greedy.shortcut.member.model.dao, com.greedy.shortcut.mywork.model.dao"/>
->>>>>>> feature/2021-04-06-MINKI-2
+		              com.greedy.shortcut.board.model.dao,
+		              com.greedy.shortcut.mywork.model.dao"/>
+
 </beans>
