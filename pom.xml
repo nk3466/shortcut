@@ -283,12 +283,20 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
-		<!-- WebAppConfiguration을 사용하기 위함 -->
+		<!--  WebAppConfiguration을 사용하기 위함 
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.1</version>
-		</dependency>
+		</dependency> -->
+	        
+	    <!-- Servlet -->
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>3.1.0</version>
+		    <scope>provided</scope>
+		</dependency>    
 	        
 		
 		<!-- 메일 관련 api -->
