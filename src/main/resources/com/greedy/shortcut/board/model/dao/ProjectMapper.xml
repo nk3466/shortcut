@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.shortcut.board.model.dao.ProjectMapper">
+
+	<resultMap id="memberResultSet" type="MemberDTO">
+		<id column="MEM_NO" property="no" />
+		<result column="MEM_NAME" property="name" />
+		<result column="MEM_ID" property="email" />
+		<result column="MEM_PWD" property="password" />
+		<result column="PHONE" property="phone" />
+	</resultMap>
+	
+	<!-- <resultMap id="ProjectResultSet" type="ProjectDTO">
+	
+	</resultMap> -->
+	
+	<select id="selectMemberDupCheck" resultMap="memberResultSet" parameterType="MemberDTO">
+	 SELECT 
+            A.MEM_NO
+       FROM MEMBER A 
+      WHERE A.MEM_ID = #{email} 
+	</select>
+</mapper>

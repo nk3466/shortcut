@@ -1,31 +1,34 @@
 package com.greedy.shortcut.board.model.dto;
 
+import java.util.List;
+
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 public class ProjectAuthorityDTO {
 
-	private int projectRole;	//회원권한
+	private List projectRole;	//회원권한
 	private int projectNo;		//프로젝트번호
 	private int MemberNo;		//회원번호
 	private int projectRoleNo;	//권한 고유 번호
 	
-	private MemberDTO member;
+	private List<ProjectAuthorityDTO> memberList;
+	
 	private String memberId;
 	
 	public ProjectAuthorityDTO() {}
-	
-	public ProjectAuthorityDTO(int projectRole, int projectNo, int memberNo, int projectRoleNo, MemberDTO member,
-			String memberId) {
+
+	public ProjectAuthorityDTO(List projectRole, int projectNo, int memberNo, int projectRoleNo,
+			List<ProjectAuthorityDTO> memberList, String memberId) {
 		super();
 		this.projectRole = projectRole;
 		this.projectNo = projectNo;
 		MemberNo = memberNo;
 		this.projectRoleNo = projectRoleNo;
-		this.member = member;
+		this.memberList = memberList;
 		this.memberId = memberId;
 	}
 
-	public int getProjectRole() {
+	public List getProjectRole() {
 		return projectRole;
 	}
 
@@ -41,15 +44,15 @@ public class ProjectAuthorityDTO {
 		return projectRoleNo;
 	}
 
-	public MemberDTO getMember() {
-		return member;
+	public List<ProjectAuthorityDTO> getMemberList() {
+		return memberList;
 	}
 
 	public String getMemberId() {
 		return memberId;
 	}
 
-	public void setProjectRole(int projectRole) {
+	public void setProjectRole(List projectRole) {
 		this.projectRole = projectRole;
 	}
 
@@ -65,8 +68,8 @@ public class ProjectAuthorityDTO {
 		this.projectRoleNo = projectRoleNo;
 	}
 
-	public void setMember(MemberDTO member) {
-		this.member = member;
+	public void setMemberList(List<ProjectAuthorityDTO> memberList) {
+		this.memberList = memberList;
 	}
 
 	public void setMemberId(String memberId) {
@@ -76,7 +79,7 @@ public class ProjectAuthorityDTO {
 	@Override
 	public String toString() {
 		return "ProjectAuthorityDTO [projectRole=" + projectRole + ", projectNo=" + projectNo + ", MemberNo=" + MemberNo
-				+ ", projectRoleNo=" + projectRoleNo + ", member=" + member + ", memberId=" + memberId + "]";
+				+ ", projectRoleNo=" + projectRoleNo + ", memberList=" + memberList + ", memberId=" + memberId + "]";
 	}
 	
 	

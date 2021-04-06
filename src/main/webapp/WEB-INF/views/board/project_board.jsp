@@ -106,18 +106,18 @@
                <i class="fas fa-search"></i>
                <input class="input_detail1" type="text" id="email" placeholder="Add Member">
                <select class="select_detail nk" id="selectroll">
-                  <option>프로젝트 관리자</option>
-                  <option>팀원</option>
-                  <option>클라이언트</option>
+                  <option>Admin</option>
+                  <option>Member</option>
+                  <option>Client</option>
                </select>
                <input class="input_detail2 nk" type="button" id="addpersonButton" value="+">      
                <input class="input_detail2 nk" type="button" id="removepersonButton" value="-">      
             </div>
 
-				<table class="select_member" id="projectMember" border="1" style="width:100%; height:30px;">
+				<table class="select_member" id="projectMember" border="1" style="width:100%; height:30px; text-align: center">
 					<thead>
 					<tr>
-						<th style="width:60px;">인원 수</th>
+						<th style="width:60px; align-content: center;" >인원 수</th>
 						<th>이메일</th>
 						<th style="width:100px;">권한</th>
 					</tr>
@@ -148,18 +148,38 @@
 		var idcount = 0;
 		
 		$("#addpersonButton").click(function(){
+			
+		var email = $("#email").val();			//입력한 이메일
+		
 			if(!vali($("#email").val())){
+				/* 아이디 중복 체크 */
+				$.ajax({
+					url:"projectidDupCheck",
+					type:"post",
+					data:{email :email},
+					success:function(data){
+						console.log(data);
+						
+						/* 아이디가 있을 때 */
+						if(data !== 0){
+							var addMember = $("#projectMember tr:last");
+							var insertTr="";
+							 insertTr += '<tr id="addpersionList_' + (idcount++) +'">';
+							 insertTr += '<td class="num">'+  (idcount) + '</td>';
+							 insertTr += '<td class="Email">'+	document.getElementById("email").value + '</td>';
+							 insertTr += '<td class="roll">'+	document.getElementById("selectroll").value + '</td>';
+							 insertTr += '</tr>';
+							 $("#dynamicTbody").append(insertTr);
+							 $("#email").val('');	//입력 후 input  비워주기
+						}else{
+						alert("가입된 이메일주소가 아닙니다. 확인 해주세요~");
+						 $("#email").val('');
+						}
+						
+					}, error:function(data){
+					}
+				});
 				
-			var addMember = $("#projectMember tr:last");
-			var insertTr="";
-			 insertTr += '<tr id="addpersionList_' + (idcount++) +'">';
-			 insertTr += '<td class="num">'+  (idcount) + '</td>';
-			 insertTr += '<td class="Email">'+	document.getElementById("email").value + '</td>';
-			 insertTr += '<td class="roll">'+	document.getElementById("selectroll").value + '</td>';
-			 insertTr += '</tr>';
-			 
-			 $("#dynamicTbody").append(insertTr);
-			 $("#email").val('');
 		}else{
 			alert("이메일을 입력해주세요");
 		}
@@ -202,14 +222,14 @@
 		   console.log("projectEndDate : " + projectEndDate);
 		   console.log("projectColor : " + projectColor);
 		   
-		   var nk = $('form[name=projectMemberList]').serializeArray();
-		   
 		  /*  nk.push({name : "projectName", value : projectName},
 				   {name : "projectStartDate", value : projectStartDate},
 				   {name : "projectEndDate", value : projectEndDate},
 				   {name : "projectColor", value : projectColor} 
 		   );*/
 		   	
+		   var nk = $('form[name=projectMemberList]').serializeArray();
+		   
 		   for(let i = 0; i < idcount; i++){
 			   Email = $("#projectMember").find(".Email").eq(i).text();
 			   console.log("Email : " + Email);
@@ -231,11 +251,12 @@
 			   url :"${pageContext.servletContext.contextPath}/board/project_regist",
 			   type : "post",
 			   data : { 
+				   nk : nk,
 				   projectName : projectName,
 				   projectStartDate : projectStartDate,
 				   projectEndDate : projectEndDate,
-				   projectColor : projectColor,
-				   nk : nk },
+				   projectColor : projectColor
+				    },
 			   success : function(data, textStatus, xhr) {
 				   
 			   },

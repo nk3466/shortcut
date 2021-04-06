@@ -48,5 +48,6 @@
 	</aop:config>
 	
 	<mybatis-spring:scan 
-		base-package="com.greedy.shortcut.member.model.dao"/>
+		base-package="com.greedy.shortcut.member.model.dao,
+		              com.greedy.shortcut.board.model.dao"/>
 </beans>
