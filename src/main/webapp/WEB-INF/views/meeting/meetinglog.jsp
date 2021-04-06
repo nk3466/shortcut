@@ -117,8 +117,8 @@
 										팀원추가
 									</div>
 									<div class="item_type">
-										<input class="input_detail" type="text" name="">
-										<button class="btn_detail">Add</button>
+										<input class="input_detail" type="text" id="memberEmail" name="" placeholder="회의 참가자 추가">
+										<button type="button" id="memberAddBtn" class="btn_detail">Add</button>
 									</div>
 									
 								</div>
@@ -127,8 +127,8 @@
 									<div class="item_type type">
 										참석자
 									</div>
-									<div class="item_type">
-										<span class="item_text">깅밍기</span>
+									<div class="item_type" id="meetingMember">
+										
 									</div>
 									
 								</div>
@@ -175,49 +175,79 @@
 	$(function(){
 		$(".conference_update").click(function(e){
 			e.preventDefault();
-
 			
 			$("#conference").modal();
-			
 			
 		})
 	})
 </script>
 <script type="text/javascript">
-		const token = $("meta[name='_csrf']").attr("content");
-		const header = $("meta[name='_csrf_header']").attr("content");
+	const token = $("meta[name='_csrf']").attr("content");
+	const header = $("meta[name='_csrf_header']").attr("content");
+	
+	$(document).ajaxSend(function(e, xhr, options) {
+	    xhr.setRequestHeader(header, token);
+	});
+	
+	
 		
-		$(document).ajaxSend(function(e, xhr, options) {
-		    xhr.setRequestHeader(header, token);
-		});
-		
-		
-			
-		$("#upload").click(function(){
+	$("#upload").click(function(){
 
-			const $date = $("#meetingDate").val();
-			const $title = $("#titleName").val();
-			
-			console.log($date);
-			console.log($title);
-			
-			
-			$.ajax({
-				url : "${pageContext.servletContext.contextPath}/meeting/meetinglog",
-				type : "POST",		
-				data : {meeting : $date},
-				success : function(data, status, xhr){
-					console.log(data);
-					$("#asdf").submit();
-				},
-				error : function(xhr, status, error){
-					console.log(error);
-				}
-				
-			})
+		var $date = $("#meetingDate").val();
+		var $title = $("#titleName").val();
+		
+		console.log($date);
+		console.log($title);
 		
 		
+		$.ajax({
+			url : "${pageContext.servletContext.contextPath}/meeting/meetinglog",
+			type : "POST",		
+			data : {meeting : $date},
+			success : function(data, status, xhr){
+				console.log(data);
+				$("#asdf").submit();
+			},
+			error : function(xhr, status, error){
+				console.log(error);
+			}
+		})
 	})
+</script>
+<script type="text/javascript">
+	
+	var count = 0;
+	
+	$("#memberAddBtn").click(function(){
+		if(!emailNull($("#memberEmail").val())){
+			
+			/* const addMember = $("#projectMember span:last"); */
+			var insertSpan="";
+			insertSpan += '<span class="item_text">' + document.getElementById("memberEmail").value + '<i id="delBtn" class="fas fa-times-circle"></i>' + '</span>';
+			
+			$("#meetingMember").append(insertSpan);
+			$("#memberEamil").val('');
+		}
+	});
+	
+	
+	function emailNull(value){
+		if(value === null) return true;
+		if(typeof value === 'string' && value === '') return true;
+		if(typeof value === 'undefined') return true;
+		return false;
+	}
+	
+	
+
+	$(document).on('click','.item_text',function(){
+		
+		var $t = $(this);
+		
+		$t.remove();
+	}) 
+
+	
 </script>
 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/main.js"></script>

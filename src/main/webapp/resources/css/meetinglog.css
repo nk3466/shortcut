@@ -13,7 +13,10 @@
 .modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_type.type1{padding:0 15px;}
 .modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_type.type3{width: 86%;}
 .modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_type .input_detail{margin-left: 5px;}
-.modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_text{}
+.modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_text{padding-right:10px;}
+.modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_text .fa-times-circle{padding:0 3px; display:none; cursor: pointer;}
+.modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_text:hover .fa-times-circle{display:inline-block;}
+
 .modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_type .btn_detail{background-color: white;}
 .modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_type .textarea_detail{margin-left: 5px; width: 100%;}
 .modal.fade .modal-dialog .modal-content .modal-body .conference_item .modal_line{border: 1px solid lightgray; margin-bottom: 10px;}
