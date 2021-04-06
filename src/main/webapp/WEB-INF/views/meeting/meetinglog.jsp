@@ -79,7 +79,7 @@
 	<div class="modal fade" id="conference">
 		<div class="modal-dialog">			
 			<div class="modal-content">
-				<form id="asdf" action="${pageContext.servletContext.contextPath}/meeting/meetinglog" method="post">
+				<form action="${pageContext.servletContext.contextPath}/meeting/meetinglog" method="post">
 					<div class="modal-body">
 						
 							<div class="conference_item">
@@ -90,11 +90,7 @@
 									<div class="item_type">
 										<input class="input_detail" type="date" id="meetingDate" name="enrollDate">
 									</div>
-									<!-- <div class="item_type">
-										<input class="input_detail" type="time" name="">
-										~
-										<input class="input_detail" type="time" name="">
-									</div> -->
+									
 								</div>
 								<div class="modal_line"></div>
 								<div class="row">
@@ -189,28 +185,29 @@
 	    xhr.setRequestHeader(header, token);
 	});
 	
-	
-	
-	
 		
 	$("#upload").click(function(){
 
-		
 		var $enrollDate = $("#meetingDate").val();
 		var $meetingName = $("#titleName").val();
 		var $meetingText = $("#meetingContent").val();
 		
-		console.log($date);
-		console.log($title);
+		console.log($enrollDate);
+		console.log($meetingName);
+		console.log($meetingText);
 		
 		
 		$.ajax({
 			url : "${pageContext.servletContext.contextPath}/meeting/meetinglog",
 			type : "POST",		
-			data : {meeting : $date},
+			data : {
+					enrollDate : $enrollDate,
+					meetingName : $meetingName,
+					meetingText : $meetingText
+					},
 			success : function(data, status, xhr){
 				console.log(data);
-				$("#asdf").submit();
+				
 			},
 			error : function(xhr, status, error){
 				console.log(error);

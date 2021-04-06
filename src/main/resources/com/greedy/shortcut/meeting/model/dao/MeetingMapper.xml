@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greedy.shortcut.meeting.model.dao.MeetingMapper">
+	
+	<resultMap type="MeetingDTO" id="MeetingResultSet">
+		<id column="MEET_NO" property="meetingNO"/>
+		<result column="MEET_NAME" property="meetingName"/>
+		<result column="MEET_TXT" property="meetingText"/>
+		<result column="MEET_ENROLL_DATE" property="enrollDate"/>
+		<result column="MEET_DEL_YN" property="status"/>
+		<result column="SPR_NO" property="sprintNo"/>
+	</resultMap>
+	
+	<insert id="insertMeeting" parameterType="MeetingDTO">
+		INSERT
+		  INTO MEETING A
+		(
+		  A.MEET_NO, A.MEET_NAME, A.MEET_TXT
+		, A.MEET_ENROLL_DATE, SPR_NO
+		)  
+		VALUES
+		(
+		  SEQ_MEET_NO.NEXTVAL, #{meetingName}, #{meetingText}
+		, #{enrollDate}, 1
+		)
+	</insert>
+	
+	
+	
+	
+</mapper>
