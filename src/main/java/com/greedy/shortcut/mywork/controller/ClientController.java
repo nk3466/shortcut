@@ -19,13 +19,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.shortcut.mywork.model.dto.ProjectInfoTest;
 
 @Controller
-@RequestMapping("/mywork/*")
-public class MyWorkController {
+@RequestMapping("/*")
+public class ClientController {
 
-	@GetMapping("/mywork")
-	public void mywork() {}
-	
-	@GetMapping("/client")
+	@GetMapping("mywork/client")
 	public String client(Model model) {
 		
 		List<Object> testList = new ArrayList<>();
@@ -57,7 +54,7 @@ public class MyWorkController {
 		return "mywork/client";
 	}
 	
-	@GetMapping(value="/projectInfo", produces="application/json; charset=UTF-8")
+	@GetMapping(value="mywork/projectInfo", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public String getProjectInfo() throws JsonProcessingException {
 		
@@ -92,7 +89,7 @@ public class MyWorkController {
 		return new ObjectMapper().writeValueAsString(projectTestList);
 	}
 	
-	@GetMapping(value="client/projectInfo/{flag}")
+	@GetMapping(value="mywork/client/projectInfo/{flag}")
 	public String selectProjectInfo(Model model, @PathVariable("flag") int flag) {
 		
 		System.out.println("flag : " + flag);
