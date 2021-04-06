@@ -33,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
 		} else {
 			member.setPassword(passwordEncoder.encode(member.getPassword()));
 			member.setEmail_approval_key(createKey());
-			sendingMailId("rab_boy@naver.com", "ㅇㅇ", "");
+			sendingMailId(member.getEmail(), createKey(), "");
 			return mapper.registMember(member) > 0? true: false;
 		}
 		
@@ -63,10 +63,10 @@ public class MemberServiceImpl implements MemberService {
 		
 		return key;
 	}
-
-	@Override
-	public void sendMail(MemberDTO member) {
-		new SendingMail("cjhoon1992@gmail.com" , "1234", "asdf");
-	}
+//
+//	@Override
+//	public void sendMail(MemberDTO member) {
+//		new SendingMail("cjhoon1992@gmail.com" , "1234", "asdf");
+//	}
 
 }
