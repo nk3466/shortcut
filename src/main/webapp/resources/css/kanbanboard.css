@@ -39,7 +39,7 @@
 .modal.fade .modal-dialog .modal-header.type{background-color: #75D5AC; padding:10px 15px; color: white; font-weight: bold;}
 .modal.fade .modal-dialog .modal-content{border: 1px solid #ed1745;}
 .modal.fade .modal-dialog .modal-content .modal-body{}
-.modal.fade .modal-dialog .modal-content .modal-body .row{margin: 0;  padding-bottom: 10px;   border-bottom: 1px solid lightgray; margin-bottom: 10px;}
+.modal.fade .modal-dialog .modal-content .modal-body .row{margin: 0;  padding-bottom: 10px;   border-bottom: 1px solid lightgray; margin-bottom: 10px; justify-content: center;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .modal_list{float: left; width: 25%; text-align: center;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .modal_list .list_detail{text-decoration: none; color: black;}
 
