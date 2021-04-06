@@ -40,13 +40,13 @@
 			<div class="client_line"></div>
 			<div class="select_project">
 				<div class="row">
-					<c:forEach var="i" items="${ requestScope.testList }">
+					<c:forEach var="project" items="${ requestScope.projectList }">
 						<div class="project_list">
-							<a class="list_detail" id="project1">
+							<a class="list_detail" id="project1" style="background-color: ${project.pjtColor};">
 								<img class="img_detail" src="${ pageContext.servletContext.contextPath }/resources/img/board_icon.png">
 							</a>
 							<div class="board_text" >
-								<c:out value="${ i }"/>	
+								<c:out value="${ project.pjtName }"/>	
 							</div>					
 						</div>
 					</c:forEach>
@@ -54,14 +54,10 @@
 			</div>
 
 			<div class="timeline_area">
-
-
 				<div id="timeline" style="height: 500px;  /* display: none; */"></div>
-
 			</div>
 			
 			<div id="divResult">
-			
 			</div>
 			
 			<div id="cityData" data-toggle="modal" data-target="#myModal"></div>
@@ -75,7 +71,6 @@
 	</div>
 	
 	<input type="text" value="3" name="flag" id="flag">
-	<input type="button" value="session값" name="sessionTest" id="sessionTest">
 	
 	<!-- modal -->
 	<div class="modal fade" id="myModal">
@@ -112,7 +107,7 @@
 		function getProject() {
 			/* $timeline.style.display = "block";  */ 
 			
-			location.href="${ pageContext.servletContext.contextPath}/mywork/client/projectInfo/2";
+			location.href="${ pageContext.servletContext.contextPath}/mywork/client/projectInfo/${requestScope.projectList}";
 			
 			/* 페이징처리느낌으로 가서 아작스 안써도...  */
 			/* $.ajax({

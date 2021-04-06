@@ -25,9 +25,6 @@ public class ClientServiceImpl implements ClientService {
 		return clientMapper.selectProjectList(email);
 	}
 
-	@Override
-	public MemberDTO selectMem() {
-		return clientMapper.selectMem();
-	}
+
 
 }

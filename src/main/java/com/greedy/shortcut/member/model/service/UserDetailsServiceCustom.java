@@ -27,7 +27,7 @@ public class UserDetailsServiceCustom implements UserDetailsService {
 		
 		// 사용자 정보 select
 		MemberDTO userInfo = mapper.selectUserInfoOne(inputUserId);
-		System.out.println("userInfo : " + userInfo);
+//		System.out.println("userInfo : " + userInfo);
 		
 		/* loginMember(request, userInfo); */
 		
@@ -43,7 +43,7 @@ public class UserDetailsServiceCustom implements UserDetailsService {
 			userDetails.setPassword(userInfo.getPassword());
 			userDetails.setName(userInfo.getName());
 			System.out.println("email : " + userInfo.getEmail());
-			System.out.println("password : " + userInfo.getPassword());
+//			System.out.println("password : " + userInfo.getPassword());
 			
 			// 사용자 권한 select해서 받아온 List<String> 객체 주입
 //			userDetails.setAuthorities(mapper.selectUserAuthOne(inputUserId));
@@ -53,11 +53,11 @@ public class UserDetailsServiceCustom implements UserDetailsService {
 		return userDetails;
 	}
 	
-	public void loginMember(HttpServletRequest request, MemberDTO loginMember) {
-		HttpSession session = request.getSession();
-		session.setAttribute("loginMember", loginMember);
-		System.out.println(loginMember);
-	}
+//	public void loginMember(HttpServletRequest request, MemberDTO loginMember) {
+//		HttpSession session = request.getSession();
+//		session.setAttribute("loginMember", loginMember);
+//		System.out.println(loginMember);
+//	}
 
 	
 }

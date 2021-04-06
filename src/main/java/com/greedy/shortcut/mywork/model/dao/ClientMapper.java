@@ -9,5 +9,4 @@ public interface ClientMapper {
 
 	List<ClientProjectDTO> selectProjectList(String email);
 	
-	MemberDTO selectMem();
 }

@@ -21,7 +21,7 @@
 		
 	</resultMap>
 
-<!-- 	<select id="selectProjectList" resultMap="projectResultMap" parameterType="_int">
+ 	<select id="selectProjectList" resultMap="projectResultMap" parameterType="MemberDTO">
 		SELECT
 		       A.PJT_NO
 		     , A.PJT_NAME
@@ -31,13 +31,19 @@
 		     , A.PJT_END_DATE
 		     , A.PJT_COLOR
 		  FROM PROJECT A
-		 WHERE A.MEM_NO = #{}
-	</select> -->
+		  JOIN MEMBER B ON (A.MEM_NO = B.MEM_NO)
+		 WHERE B.MEM_ID = #{email}
+	</select> 
 
-	<select id="selectMem" resultMap="memberResultSet" parameterType="MemberDTO">
-		SELECT
-		       *
-		  FROM MEMBER
+	<select id="selectMemberInfo" resultMap="memberResultSet" parameterType="MemberDTO">
+        SELECT 
+               A.MEM_NO
+             , A.MEM_NAME
+             , A.MEM_ID
+             , A.MEM_PWD
+             , A.PHONE
+          FROM MEMBER A 
+         WHERE A.MEM_ID = #{email}
 	</select>
 
 </mapper>

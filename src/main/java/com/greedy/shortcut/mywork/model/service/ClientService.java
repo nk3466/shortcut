@@ -9,5 +9,4 @@ public interface ClientService {
 
 	List<ClientProjectDTO> selectProjectList(String email);
 	
-	MemberDTO selectMem();
 }

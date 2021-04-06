@@ -4,12 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.greedy.shortcut.member.model.dto.MemberDTO;
+import com.greedy.shortcut.mywork.model.dto.ClientProjectDTO;
 import com.greedy.shortcut.mywork.model.dto.ProjectInfoTest;
 import com.greedy.shortcut.mywork.model.service.ClientService;
 
@@ -41,36 +39,38 @@ public class ClientController {
 	@GetMapping("mywork/client")
 	public String client(Model model, HttpServletRequest request/* , Principal principal */) {
 		
-		MemberDTO selectMem = clientService.selectMem(); 
-		System.out.println("selectMem : " + selectMem);
-		
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = (UserDetails) principal;
-		System.out.println("username : " + userDetails.getUsername());
-		System.out.println("password : " + userDetails.getPassword());
-		System.out.println("toString : " + userDetails.toString());
+		String email = userDetails.getUsername();
+//		System.out.println("username : " + userDetails.getUsername());
+//		System.out.println("password : " + userDetails.getPassword());
+//		System.out.println("toString : " + userDetails.toString());
 //		String email = principal.getName();
 //		Object cl = principal.getClass();
 //		System.out.println("cl : " + cl);
 		
 		/* session 값 확인하기 */
-		HttpSession session = request.getSession();
-		String session_name = "";
-		String session_value = "";
-		Enumeration enum_01 = session.getAttributeNames(); 
-		int i = 0;
-		while(enum_01.hasMoreElements()) {
-			i++;
-			session_name = enum_01.nextElement().toString();
-			session_value = session.getAttribute(session_name).toString();
-			System.out.println("SESSION NAME[ " + session_name + " ] SESSION VALUE[ " + session_value + " ]");
-		}
+//		HttpSession session = request.getSession();
+//		String session_name = "";
+//		String session_value = "";
+//		Enumeration enum_01 = session.getAttributeNames(); 
+//		int i = 0;
+//		while(enum_01.hasMoreElements()) {
+//			i++;
+//			session_name = enum_01.nextElement().toString();
+//			session_value = session.getAttribute(session_name).toString();
+//			System.out.println("SESSION NAME[ " + session_name + " ] SESSION VALUE[ " + session_value + " ]");
+//		}
 		/*====*/
 		
 		/*
 		 * List<ClientProjectDTO> projectList = clientService.selectProjectList(email);
 		 * for(ClientProjectDTO project : projectList) { System.out.println(project); }
 		 */
+		List<ClientProjectDTO> projectList = clientService.selectProjectList(email);
+		for(ClientProjectDTO project : projectList) {
+			System.out.println(project);
+		}
 		
 		List<Object> testList = new ArrayList<>();
 		testList.add(new String("A"));
@@ -96,7 +96,7 @@ public class ClientController {
 		testList.add(new String("U"));
 		testList.add(new String("V"));
 		
-		model.addAttribute("testList", testList);
+		model.addAttribute("projectList", projectList);
 		
 		return "mywork/client";
 	}

@@ -6,7 +6,7 @@
 .myproject_area .select_project{}
 .myproject_area .select_project .row{margin: 0;}
 .myproject_area .select_project .row .project_list{ margin-right: 30px; }
-.myproject_area .select_project .row .project_list .list_detail{width: 80px;  height: 80px;  background-color: skyblue;  display: inline-block; text-align: center;
+.myproject_area .select_project .row .project_list .list_detail{width: 80px;  height: 80px; display: inline-block; text-align: center;
     line-height: 80px; border-radius: 10px;}
 .myproject_area .select_project .row .project_list:hover{opacity: 0.5;}
 .myproject_area .select_project .row .project_list .list_detail .img_detail{width: 40px; height: 40px;}

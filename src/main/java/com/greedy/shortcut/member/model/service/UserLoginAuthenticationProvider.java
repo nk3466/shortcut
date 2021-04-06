@@ -8,11 +8,15 @@ import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Service;
+
+import com.greedy.shortcut.member.filter.SessionFilter;
 
 
 @Service("userLoginAuthenticationProvider")
@@ -21,7 +25,9 @@ public class UserLoginAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
 	// DB의 값을 가져다주는 커스터마이징 클래스
 	UserDetailsService userDetailsServcie;
-
+//	SessionFilter sessionFilter;
+//	HttpSecurity http;
+	
 	// 패스워드 암호화 객체
 	@Autowired
 	BCryptPasswordEncoder pwEncoding;
@@ -35,14 +41,16 @@ public class UserLoginAuthenticationProvider implements AuthenticationProvider {
 		String userId = authentication.getName();
 		String userPw = (String) authentication.getCredentials();
 		
-		System.out.println(userId);
-		System.out.println(userPw);
+//		System.out.println(userId);
+//		System.out.println(userPw);
 
 		/* DB에서 가져온 정보 (커스터마이징 가능) */
 		UserDetailsVO userDetails = (UserDetailsVO) userDetailsServcie
 				.loadUserByUsername(userId);
 
-		System.out.println("userDetails : " + userDetails);
+//		System.out.println("userDetails : " + userDetails);
+		
+		//http.addFilterAfter(sessionFilter, UsernamePasswordAuthenticationFilter.class);
 		
 		/* 인증 진행 */
 		
@@ -77,7 +85,8 @@ public class UserLoginAuthenticationProvider implements AuthenticationProvider {
 		/* 최종 리턴 시킬 새로만든 Authentication 객체 */
 		Authentication newAuth = new UsernamePasswordAuthenticationToken(
 				userDetails, null, userDetails.getAuthorities());
-		System.out.println("newAuth : " + newAuth);
+//		System.out.println("newAuth : " + newAuth);
+		
 		return newAuth;
 	}
 
