@@ -7,16 +7,21 @@ public class MemberDTO {
 	private String password;
 	private String phone;
 	private String name;
+	private String email_approval_status;
+	private String email_approval_key;
 	
 	public MemberDTO() {}
 
-	public MemberDTO(Integer no, String email, String password, String phone, String name) {
+	public MemberDTO(Integer no, String email, String password, String phone, String name, String email_approval_status,
+			String email_approval_key) {
 		super();
 		this.no = no;
 		this.email = email;
 		this.password = password;
 		this.phone = phone;
 		this.name = name;
+		this.email_approval_status = email_approval_status;
+		this.email_approval_key = email_approval_key;
 	}
 
 	public Integer getNo() {
@@ -39,6 +44,14 @@ public class MemberDTO {
 		return name;
 	}
 
+	public String getEmail_approval_status() {
+		return email_approval_status;
+	}
+
+	public String getEmail_approval_key() {
+		return email_approval_key;
+	}
+
 	public void setNo(Integer no) {
 		this.no = no;
 	}
@@ -59,12 +72,20 @@ public class MemberDTO {
 		this.name = name;
 	}
 
+	public void setEmail_approval_status(String email_approval_status) {
+		this.email_approval_status = email_approval_status;
+	}
+
+	public void setEmail_approval_key(String email_approval_key) {
+		this.email_approval_key = email_approval_key;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberDTO [no=" + no + ", email=" + email + ", password=" + password + ", phone=" + phone + ", name="
-				+ name + "]";
+				+ name + ", email_approval_status=" + email_approval_status + ", email_approval_key="
+				+ email_approval_key + "]";
 	}
 
-	
 	
 }
