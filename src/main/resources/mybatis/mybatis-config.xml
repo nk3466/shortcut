@@ -5,6 +5,7 @@
  <configuration>
  	<typeAliases>
  		<typeAlias alias="MemberDTO" type="com.greedy.shortcut.member.model.dto.MemberDTO"/>
+ 		<typeAlias alias="ClientProjectDTO" type="com.greedy.shortcut.mywork.model.dto.ClientProjectDTO"/>
  	</typeAliases>
  	
  </configuration>
