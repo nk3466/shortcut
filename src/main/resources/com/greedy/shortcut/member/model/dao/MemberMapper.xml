@@ -18,12 +18,12 @@
           INTO MEMBER A
         (
           A.MEM_NO, A.MEM_ID, A.MEM_PWD
-        , A.MEM_NAME, A.PHONE
+        , A.MEM_NAME, A.PHONE, A.EMAIL_APPROVAL_KEY
         ) 
 		VALUES
 		(
 		  SEQ_MEM_NO.NEXTVAL, #{email}, #{password}
-		, #{name}, #{phone}
+		, #{name}, #{phone}, #{email_approval_key}
 		)
 	</insert>
 	

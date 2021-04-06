@@ -11,5 +11,9 @@ public interface MemberService {
 	void ModifyMember(MemberDTO memberDTO);
 
 	void updateMember(MemberDTO dto);
+	
+	String createKey();
+	
+	void sendMail(MemberDTO member);
 
 }
