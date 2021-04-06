@@ -13,7 +13,7 @@ public interface MemberService {
 	void updateMember(MemberDTO dto);
 	
 	String createKey();
-	
-	void sendMail(MemberDTO member);
+//	
+//	void sendMail(MemberDTO member);
 
 }

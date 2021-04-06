@@ -57,11 +57,11 @@ public class SendMail2 {
 
             // Text
             massageText = "<div align=\"center\">"
-                             + "<div style=\"\"><h1>즐거운 여행 매칭 서비스 요기가요!</h1>"
+                             + "<div style=\"\"><h1>Short Cut!</h1>"
                              + "<br>"
-                             + "<div style=\"font-size: 15px\" \"font-weight: bold \">비밀번호 변경 재설정을 위해 아래 링크를 통해 접근해주세요<br>"
+                             + "<div style=\"font-size: 15px\" \"font-weight: bold \">회원 가입을 위해 아래 링크를 통해 접근해주세요<br>"
                              + "<br><a href='http://127.0.0.1:8001/we/newPassword?token="+ token +"'><h3>비밀번호 재설정하기 </h3> </a>"
-                             + "<br><p>우리가요 운영팀 드림</p>"
+                             + "<br><p>Short cut 운영팀</p>"
                              + "<hr>"
                              + "</div> <br>"
                              + "본 메일은 발신전용 메일이므로 회신이 되지 않습니다.</div>" 
