@@ -75,7 +75,9 @@
 	</div>
 	
 	<input type="text" value="3" name="flag" id="flag">
+	<input type="button" value="session값" name="sessionTest" id="sessionTest">
 	
+	<!-- modal -->
 	<div class="modal fade" id="myModal">
 	    <div class="modal-dialog">
 	      <div class="modal-content">
