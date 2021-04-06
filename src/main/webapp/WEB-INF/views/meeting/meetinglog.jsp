@@ -117,7 +117,7 @@
 										팀원추가
 									</div>
 									<div class="item_type">
-										<input class="input_detail" type="text" id="memberEmail" name="" placeholder="회의 참가자 추가">
+										<input class="input_detail" type="text" id="memberEmail" name="" placeholder="회의 참가자 추가" onclick="this.value=''">
 										<button type="button" id="memberAddBtn" class="btn_detail">Add</button>
 									</div>
 									
@@ -147,7 +147,7 @@
 										회의내용
 									</div>
 									<div class="item_type type3">
-										<textarea class="textarea_detail" name="meetingText"></textarea>
+										<textarea id="meetingContent" class="textarea_detail" name="meetingText"></textarea>
 									</div>
 									
 								</div>
@@ -190,11 +190,15 @@
 	});
 	
 	
+	
+	
 		
 	$("#upload").click(function(){
 
-		var $date = $("#meetingDate").val();
-		var $title = $("#titleName").val();
+		
+		var $enrollDate = $("#meetingDate").val();
+		var $meetingName = $("#titleName").val();
+		var $meetingText = $("#meetingContent").val();
 		
 		console.log($date);
 		console.log($title);
