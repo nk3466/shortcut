@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.greedy.shortcut.mywork.model.dao.ClientMapper">
+
+	<resultMap id="projectResultMap" type="ClientProjectDTO">
+		<id property="pjtNo" column="PJT_NO"/>
+		<result property="pjtName" column="PJT_NAME"/>
+		<result property="pjtStartDate" column="PJT_START_DATE"/>
+		<result property="pjtDelYn" column="PJT_DEL_YN"/>
+		<result property="memNo" column="MEM_NO"/>
+		<result property="pjtEndDate" column="PJT_END_DATE"/>
+		<result property="pjtColor" column="PJT_COLOR"/>
+	</resultMap>
+	
+	<resultMap id="memberResultSet" type="MemberDTO">
+		<id column="MEM_NO" property="no" />
+		<result column="MEM_NAME" property="name" />
+		<result column="MEM_ID" property="email" />
+		<result column="MEM_PWD" property="password" />
+		<result column="PHONE" property="phone" />
+		
+	</resultMap>
+
+<!-- 	<select id="selectProjectList" resultMap="projectResultMap" parameterType="_int">
+		SELECT
+		       A.PJT_NO
+		     , A.PJT_NAME
+		     , A.PJT_START_DATE
+		     , A.PJT_DEL_YN
+		     , A.MEM_NO
+		     , A.PJT_END_DATE
+		     , A.PJT_COLOR
+		  FROM PROJECT A
+		 WHERE A.MEM_NO = #{}
+	</select> -->
+
+	<select id="selectMem" resultMap="memberResultSet" parameterType="MemberDTO">
+		SELECT
+		       *
+		  FROM MEMBER
+	</select>
+
+</mapper>

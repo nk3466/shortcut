@@ -1,6 +1,7 @@
 package com.greedy.shortcut.member.model.service;
 
-import java.util.Enumeration;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +13,8 @@ import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 @Service("userLoginService")
 public class UserDetailsServiceCustom implements UserDetailsService {
+	
+	private HttpServletRequest request;
 	
 	@Autowired
 	private MemberMapper mapper;
@@ -25,6 +28,8 @@ public class UserDetailsServiceCustom implements UserDetailsService {
 		// 사용자 정보 select
 		MemberDTO userInfo = mapper.selectUserInfoOne(inputUserId);
 		System.out.println("userInfo : " + userInfo);
+		
+		/* loginMember(request, userInfo); */
 		
 		// 사용자 정보 없으면 null 처리
 		if(userInfo == null) {
@@ -46,6 +51,12 @@ public class UserDetailsServiceCustom implements UserDetailsService {
 		
 		
 		return userDetails;
+	}
+	
+	public void loginMember(HttpServletRequest request, MemberDTO loginMember) {
+		HttpSession session = request.getSession();
+		session.setAttribute("loginMember", loginMember);
+		System.out.println(loginMember);
 	}
 
 	
