@@ -16,6 +16,11 @@
  		
  		<typeAlias alias="ProjectAndAuthorityDTO" type="com.greedy.shortcut.board.model.dto.ProjectAndAuthorityDTO"/>
 
+ 		<typeAlias alias="ClientCardDTO" type="com.greedy.shortcut.mywork.model.dto.ClientCardDTO"/>
+
+ 		<typeAlias alias="MyworkResponseCardAndTaskDTO" type="com.greedy.shortcut.mywork.model.dto.MyworkResponseCardAndTaskDTO"/>
+ 		
+ 		
  	</typeAliases>
  	
  </configuration>
