@@ -1,14 +1,12 @@
 package com.greedy.shortcut.member.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.greedy.shortcut.common.mail.SendMail2.sendingMailId;
-import com.greedy.shortcut.common.mail.SendingMail;
 import com.greedy.shortcut.member.model.dao.MemberMapper;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
@@ -51,29 +49,5 @@ public class MemberServiceImpl implements MemberService {
 		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
 		mapper.updateMember(dto);
 	}
-
-	@Override
-	public void selectMember(MemberDTO dto) {
-		mapper.selectMember(dto);
-	}
-
-	
-//	@Override
-//	public String createKey() {
-//		
-//		String key = "";
-//		Random random = new Random();
-//		
-//		for(int i = 0; i < 8; i++) {
-//			key += random.nextInt(10);
-//		}
-//		
-//		return key;
-//	}
-//
-//	@Override
-//	public void sendMail(MemberDTO member) {
-//		new SendingMail("cjhoon1992@gmail.com" , "1234", "asdf");
-//	}
 
 }

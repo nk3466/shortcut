@@ -62,10 +62,4 @@
 		 WHERE A.MEM_ID = #{email}
 	</update>
 		
-	<select id="selectMember" parameterType="MemberDTO" resultMap="memberResultSet">
-		SELECT
-		       *
-	   FROM MEMBER
- </select>
-		
 </mapper>

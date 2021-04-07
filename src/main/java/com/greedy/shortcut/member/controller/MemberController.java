@@ -77,13 +77,6 @@ public class MemberController {
 			httpsession.invalidate();
 			return "redirect:/";
 	}
-	@RequestMapping("/board/kabanboard")
-	public String selectMember(@ModelAttribute MemberDTO dto, Model model, HttpSession httpsession) {
-			List<MemberDTO> memberList = null;
-			memberService.selectMember(dto);
-			System.out.println(dto);
-			return "redirect:/board/kanbanboard";
-	}
 }
 	
 

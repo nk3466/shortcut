@@ -14,10 +14,4 @@ public interface MemberService {
 
 	void updateMember(MemberDTO dto);
 
-	void selectMember(MemberDTO dto);
-
-//	String createKey();
-//	
-//	void sendMail(MemberDTO member);
-
 }
