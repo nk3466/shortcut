@@ -1,9 +1,13 @@
 package com.greedy.shortcut.board.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.greedy.shortcut.board.model.dao.ProjectMapper;
+import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
+import com.greedy.shortcut.board.model.dto.ProjectDTO;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 @Service("projectBoardService")
@@ -29,5 +33,29 @@ public class ProjectBoardServiceImpl implements ProjectBoardService{
 		}
 		
 	}
+
+	@Override
+	public boolean insertProject(ProjectDTO project, List<ProjectAuthorityDTO> projectMemberList) {
+
+		return mapper.insertPoject(project, projectMemberList) > 0? true : false;
+	}
+
+	
+	@Override
+	public boolean insertProjectMember(ProjectDTO project, List<ProjectAuthorityDTO> projectMemberList) {
+		
+		String projectNo =  Integer.toString(mapper.selectProjectNum(project));
+		
+		System.out.println(projectNo);
+		
+		if(!projectNo.isEmpty()) {
+			return mapper.insertProjectMember(projectMemberList, projectNo) > 0? true : false;
+		}else {
+			
+			return false;
+		}
+	
+	}
+
 
 }

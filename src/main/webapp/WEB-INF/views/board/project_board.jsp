@@ -98,7 +98,9 @@
          <div class="modal-header">
             <p>프로젝트 색상</p>
          <input class="input_detail  nk1" type="color" id="projectColor">  
-         </div>        
+         </div> 
+         
+                
          <!-- Modal body -->
          
          <div class="modal-body">
@@ -120,6 +122,13 @@
 						<th style="width:60px; align-content: center;" >인원 수</th>
 						<th>이메일</th>
 						<th style="width:100px;">권한</th>
+						<th style="width:100px; display:none">회원번호</th>
+					</tr>
+					<tr>
+						<th>1</th>
+						<th  class="Email">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}</th>
+						<th class="roll">Admin</th>
+						<th class="memberNo" style="display:none">1</th>
 					</tr>
 					</thead>
 					<tbody  id="dynamicTbody">
@@ -145,7 +154,7 @@
 		});
 
 		/* 멤버 수 count */
-		var idcount = 0;
+		var idcount = 1;
 		
 		$("#addpersonButton").click(function(){
 			
@@ -159,7 +168,6 @@
 					data:{email :email},
 					success:function(data){
 						console.log(data);
-						
 						/* 아이디가 있을 때 */
 						if(data !== 0){
 							var addMember = $("#projectMember tr:last");
@@ -168,6 +176,7 @@
 							 insertTr += '<td class="num">'+  (idcount) + '</td>';
 							 insertTr += '<td class="Email">'+	document.getElementById("email").value + '</td>';
 							 insertTr += '<td class="roll">'+	document.getElementById("selectroll").value + '</td>';
+							 insertTr += '<td class="memberNo" style="display:none">' + data + '</td>';
 							 insertTr += '</tr>';
 							 $("#dynamicTbody").append(insertTr);
 							 $("#email").val('');	//입력 후 input  비워주기
@@ -228,36 +237,46 @@
 				   {name : "projectColor", value : projectColor} 
 		   );*/
 		   	
-		   var nk = $('form[name=projectMemberList]').serializeArray();
-		   var nk1 = [];
+		   var nk1 = $('form[name=projectMemberList]').serializeArray();
+		   var nk2 = [];
 		   
-		   for(let i = 0; i < idcount; i++){
-			   Email = $("#projectMember").find(".Email").eq(i).text();
-			   console.log("Email : " + Email);
-			   roll = $("#projectMember").find(".roll").eq(i).text();
-			   console.log("roll : " + roll);
+		    for(let i = 0; i < idcount; i++){
+			   memberId = $("#projectMember").find(".Email").eq(i).text();
+			   console.log("Email : " + memberId);
+			   projectRole = $("#projectMember").find(".roll").eq(i).text();
+			   memberNo = $("#projectMember").find(".memberNo").eq(i).text();
+			   if(projectRole === 'Admin'){
+				   projectRole = 1;
+			   }else if(projectRole === 'Member'){
+				   projectRole = 2;
+			   }else if(projectRole === 'Client'){
+				   projectRole = 3;
+			   }
+			   console.log("roll : " + projectRole);
 			   
-			   nk1.push({ name : "Email",	value : Email}, 
-						{ name : "roll",value : roll});
+			   nk1.push({  name : "memberNo", value : memberNo}, 
+						{ name : "projectRole",value : projectRole}
+						);
 				
-			   $form.append(makeTag(Email, Email));
-			   $form.append(makeTag(roll, roll));
-		   }
+			   $form.append(makeTag(memberId, memberId));
+			   $form.append(makeTag(projectRole, projectRole));
+		   } 
 		   
-		   console.table(nk);
-		   console.log(typeof nk);
 		   
-	
+		   console.table("얍 " + nk1);
+		   
+		   
 		   $.ajax({
 			   url :"${pageContext.servletContext.contextPath}/board/project_regist",
 			   type : "post",
-			   data : { 
+			   data :  {
 				   nk1 : nk1,
 				   projectName : projectName,
 				   projectStartDate : projectStartDate,
 				   projectEndDate : projectEndDate,
 				   projectColor : projectColor
 				    },
+			
 			   success : function(data, textStatus, xhr) {
 				   
 			   },
