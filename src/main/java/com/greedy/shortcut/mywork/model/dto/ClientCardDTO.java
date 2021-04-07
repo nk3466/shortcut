@@ -7,7 +7,7 @@ public class ClientCardDTO implements java.io.Serializable {
 	private int crdNo;
 	private String crdName;
 	private java.sql.Date crdEnrollDate;
-	private String crdDelNo;
+	private String crdDelYn;
 	private int brdNo;
 	private int crdOrder;
 	private int crdType;
@@ -16,13 +16,13 @@ public class ClientCardDTO implements java.io.Serializable {
 	
 	public ClientCardDTO() {}
 
-	public ClientCardDTO(int crdNo, String crdName, Date crdEnrollDate, String crdDelNo, int brdNo, int crdOrder,
+	public ClientCardDTO(int crdNo, String crdName, Date crdEnrollDate, String crdDelYn, int brdNo, int crdOrder,
 			int crdType, int memNo, String crdTxt) {
 		super();
 		this.crdNo = crdNo;
 		this.crdName = crdName;
 		this.crdEnrollDate = crdEnrollDate;
-		this.crdDelNo = crdDelNo;
+		this.crdDelYn = crdDelYn;
 		this.brdNo = brdNo;
 		this.crdOrder = crdOrder;
 		this.crdType = crdType;
@@ -54,12 +54,12 @@ public class ClientCardDTO implements java.io.Serializable {
 		this.crdEnrollDate = crdEnrollDate;
 	}
 
-	public String getCrdDelNo() {
-		return crdDelNo;
+	public String getCrdDelYn() {
+		return crdDelYn;
 	}
 
-	public void setCrdDelNo(String crdDelNo) {
-		this.crdDelNo = crdDelNo;
+	public void setCrdDelYn(String crdDelYn) {
+		this.crdDelYn = crdDelYn;
 	}
 
 	public int getBrdNo() {
@@ -105,7 +105,7 @@ public class ClientCardDTO implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "ClientCardDTO [crdNo=" + crdNo + ", crdName=" + crdName + ", crdEnrollDate=" + crdEnrollDate
-				+ ", crdDelNo=" + crdDelNo + ", brdNo=" + brdNo + ", crdOrder=" + crdOrder + ", crdType=" + crdType
+				+ ", crdDelYn=" + crdDelYn + ", brdNo=" + brdNo + ", crdOrder=" + crdOrder + ", crdType=" + crdType
 				+ ", memNo=" + memNo + ", crdTxt=" + crdTxt + "]";
 	}
 	
