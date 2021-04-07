@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.greedy.shortcut.meeting.model.dto.AttendListDTO;
 import com.greedy.shortcut.meeting.model.dto.MeetingDTO;
 import com.greedy.shortcut.meeting.model.service.MeetingService;
 
@@ -36,15 +37,16 @@ public class MeetingLogController {
 	
 	@PostMapping(value="/meetinglog", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public String meeting(@ModelAttribute MeetingDTO meeting, RedirectAttributes rttr){
+	public String meeting(@ModelAttribute MeetingDTO meeting, RedirectAttributes rttr, @ModelAttribute AttendListDTO memberList) throws JsonProcessingException{
 	
 		if(!meetingService.insertMeeting(meeting)) {
 			
 		}
 		System.out.println("meeting : " + meeting);
+		System.out.println("memberList : " + memberList);
 		
 		rttr.addFlashAttribute("message","회의 내용이 등록 되었습니다.");
 		
-		return "redirect:/";
+		return new ObjectMapper().writeValueAsString(meeting);
 	}
 }
