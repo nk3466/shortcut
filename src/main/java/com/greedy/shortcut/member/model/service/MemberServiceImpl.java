@@ -32,8 +32,8 @@ public class MemberServiceImpl implements MemberService {
 			return false;
 		} else {
 			member.setPassword(passwordEncoder.encode(member.getPassword()));
-			member.setEmail_approval_key(createKey());
-			sendingMailId(member.getEmail(), createKey(), "");
+//			member.setEmail_approval_key(createKey());
+//			sendingMailId(member.getEmail(), createKey(), "");
 			return mapper.registMember(member) > 0? true: false;
 		}
 		
@@ -51,18 +51,18 @@ public class MemberServiceImpl implements MemberService {
 		mapper.updateMember(dto);
 	}
 
-	@Override
-	public String createKey() {
-		
-		String key = "";
-		Random random = new Random();
-		
-		for(int i = 0; i < 8; i++) {
-			key += random.nextInt(10);
-		}
-		
-		return key;
-	}
+//	@Override
+//	public String createKey() {
+//		
+//		String key = "";
+//		Random random = new Random();
+//		
+//		for(int i = 0; i < 8; i++) {
+//			key += random.nextInt(10);
+//		}
+//		
+//		return key;
+//	}
 //
 //	@Override
 //	public void sendMail(MemberDTO member) {
