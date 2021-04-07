@@ -37,7 +37,7 @@
 		</h1>
 		<div class="calendar_title">
 			<button class="prev">&#60;</button>
-			<span id="asdf" class="current-year-month"></span>
+			<span class="current-year-month"></span>
 			<button class="next">&#62;</button>
 		</div>
 	</header>
@@ -185,28 +185,69 @@
 	    xhr.setRequestHeader(header, token);
 	});
 	
+	
 		
 	$("#upload").click(function(){
 
-		var $enrollDate = $("#meetingDate").val();
-		var $meetingName = $("#titleName").val();
-		var $meetingText = $("#meetingContent").val();
+		var enrollDate = $("#meetingDate").val();						// input date 값
+		var enrollDate1 = enrollDate.substring(0,5);					//date 값의 년도 
+		var enrollDate2 = enrollDate.substring(5,8);					//date 값의 월
+		var enrollDate3 = enrollDate.substring(8,10);					//date 값의 일
+		var enrollDate4 = enrollDate2.replace(/(^0+)/, "");				//0제외
+		var enrollDate5 = enrollDate3.replace(/(^0+)/, "");				//0제외
+		var enrollDate6 = enrollDate1 + enrollDate4 + enrollDate5;		//더하기
+		var indexnum = parseInt(enrollDate5) - 5;						//달력 인덱스값(정수로 파싱)
+		var indexnum2 = parseInt(enrollDate5) - 1;						//달력 뷰에 값넣기 위한 인덱스
 		
-		console.log($enrollDate);
-		console.log($meetingName);
-		console.log($meetingText);
+		
+		var meetDate = $("div[id^='202']"); 			 				//달력 div에 각각의 id값 가져오기
+		var meetDate2 = meetDate.index() + indexnum; 	 				//입력한 date 값과  맞추기
+		var meetDate3 = meetDate.eq(meetDate2);  						//몇번째 인덱스값과 같은지 비교
+		var enrollDate7 = meetDate3.attr("id");							//요소 속성값 가져오기
+		var meetinginfo = meetDate.eq(indexnum2);								
+		
+		/* console.log(meetinginfo); */
+		
+		var meetingName = $("#titleName").val();
+		var meetingText = $("#meetingContent").val();
+		
+		/* console.log(meetDate)
+		console.log(meetDate2)
+		console.log(meetDate3)
+		console.log(enrollDate);
+		console.log(enrollDate1);
+		console.log(enrollDate2);
+		console.log(enrollDate3);
+		console.log(enrollDate4);
+		console.log(enrollDate5);
+		console.log(enrollDate6);
+		console.log(enrollDate7);
+		console.log(meetingName);
+		console.log(meetingText); */
+		
+		
 		
 		
 		$.ajax({
 			url : "${pageContext.servletContext.contextPath}/meeting/meetinglog",
-			type : "POST",		
+			type : "POST",	
+			dataType : "json",
 			data : {
-					enrollDate : $enrollDate,
-					meetingName : $meetingName,
-					meetingText : $meetingText
+					enrollDate : enrollDate,
+					meetingName : meetingName,
+					meetingText : meetingText
 					},
 			success : function(data, status, xhr){
-				console.log(data);
+					console.log(enrollDate6 === enrollDate7);
+					
+					if(enrollDate6 === enrollDate7){
+						var insertDiv="";
+						insertDiv +='<div class="mtinfo">' + meetingName + '</div>';
+						
+						meetinginfo.append(insertDiv);
+						
+						$("#upload").submit();
+					}
 				
 			},
 			error : function(xhr, status, error){
@@ -214,6 +255,8 @@
 			}
 		})
 	})
+	
+	
 </script>
 <script type="text/javascript">
 	
@@ -224,7 +267,7 @@
 			
 			/* const addMember = $("#projectMember span:last"); */
 			var insertSpan="";
-			insertSpan += '<span class="item_text">' + document.getElementById("memberEmail").value + '<i id="delBtn" class="fas fa-times-circle"></i>' + '</span>';
+			insertSpan += '<span class="item_text on">' + document.getElementById("memberEmail").value + '<i id="delBtn" class="fas fa-times-circle"></i>' + '</span>';
 			
 			$("#meetingMember").append(insertSpan);
 			$("#memberEamil").val('');
@@ -241,12 +284,20 @@
 	
 	
 
-	$(document).on('click','.item_text',function(){
+	$(document).on('click','.item_text.on',function(){
 		
 		var $t = $(this);
 		
 		$t.remove();
 	}) 
+	
+	
+	
+	
+
+
+
+
 
 	
 </script>
