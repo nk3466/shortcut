@@ -41,12 +41,7 @@
 							<span class="regist_icon">*</span>
 							<input class="input_detail" type="text" name="phone" placeholder="연락처">	
 						</div>											
-						<div class="login_info">
-							<span class="regist_icon">*</span>
-							<input class="input_detail" type="text" name="approvalNo" placeholder="인증번호">	
-						</div>											
 					</div>
-	
 					
 					<div class="login_btn_area">
 						<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
