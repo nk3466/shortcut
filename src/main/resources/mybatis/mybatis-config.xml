@@ -8,8 +8,12 @@
 
  		<typeAlias alias="ClientProjectDTO" type="com.greedy.shortcut.mywork.model.dto.ClientProjectDTO"/>
 
- 		<typeAlias alias="MeetingDTO" type="com.greedy.shortcut.meeting.model.dto.MeetingDTO"/>
+ 		<typeAlias alias="ClientProjectAndSprintDTO" type="com.greedy.shortcut.mywork.model.dto.ClientProjectAndSprintDTO"/>
 
+ 		<typeAlias alias="ClientSprintDTO" type="com.greedy.shortcut.mywork.model.dto.ClientSprintDTO"/>
+ 		
+ 		<typeAlias alias="MeetingDTO" type="com.greedy.shortcut.meeting.model.dto.MeetingDTO"/>
+ 		
  	</typeAliases>
  	
  </configuration>
