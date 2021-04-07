@@ -1,5 +1,6 @@
 package com.greedy.shortcut.mywork.controller;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -124,13 +125,20 @@ public class ClientController {
 		int totalSprintCount = clientService.selectSprintCount(pjtNo);
 		System.out.println("totalSprintCount : " + totalSprintCount);
 		
+		DateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 		String assemblyString = "";
 		String result = "";
+
 		for(int i = 0; i < totalSprintCount; i++) {
+
+			String[] startDateArray = dtFormat.format(projectInfo.getSprintList().get(i).getSprStartDate()).split("-"); 
+			String[] endDateArray = dtFormat.format(projectInfo.getSprintList().get(i).getSprEndDate()).split("-"); 
+			
 			assemblyString += "[ \"" + projectInfo.getSprintList().get(i).getSprName() + "\"" + ", "
 					        + "\"" + projectInfo.getSprintList().get(i).getSprGoal() + "\"" + ", "
-					        + "\"" + projectInfo.getSprintList().get(i).getSprStartDate() + "\"" + ", "
-					        + "\"" + projectInfo.getSprintList().get(i).getSprEndDate() + "\"" + "]"; 
+					        + "new Date(" + Integer.parseInt(startDateArray[0]) + ", " + Integer.parseInt(startDateArray[1]) + ", " + Integer.parseInt(startDateArray[2]) + ")" + ", "
+					        + "new Date(" + Integer.parseInt(endDateArray[0]) + ", " + Integer.parseInt(endDateArray[1]) + ", " + Integer.parseInt(endDateArray[2]) + ")" + "]"; 
 			
 			if(!(i == (totalSprintCount - 1))) {
 				assemblyString += ", ";

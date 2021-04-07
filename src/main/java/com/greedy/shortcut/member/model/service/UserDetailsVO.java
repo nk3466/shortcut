@@ -17,7 +17,16 @@ public class UserDetailsVO implements UserDetails {
 	private String username;	// ID
 	private String password;	// PW
 	private String name;
+	private int no;
 	private List<GrantedAuthority> authorities;
+	
+	public int getNo() {
+		return this.no;
+	}
+	
+	public void setNo(int no) {
+		this.no = no;
+	}
 	
 	// setter
 		public void setName(String name) {
