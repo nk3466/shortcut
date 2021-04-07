@@ -27,18 +27,22 @@
 				<i class="far fa-envelope"></i>	
 			</a>
 			<c:choose>
+				
 				<c:when test="${!empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
-				${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username} 님이 로그인 되었습니다.
-				<a class="menu_list" data-toggle="modal" data-target="#member_logout">로그아웃</a>
+					<a class="menu_list" data-toggle="modal" data-target="#member_logout">로그아웃</a>
+					<a class="menu_list">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username} 님이 로그인 되었습니다.</a>	
 				</c:when>
+				
 				<c:otherwise>
-				<a class="menu_list" data-toggle="modal" data-target="#member_regist">회원가입</a>
-				<a class="menu_list" data-toggle="modal" data-target="#member_login">로그인</a>
+					<a class="menu_list" data-toggle="modal" data-target="#member_regist">회원가입</a>
+					<a class="menu_list" data-toggle="modal" data-target="#member_login">로그인</a>
 				</c:otherwise>
 			</c:choose>
 			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/board/project_board">프로젝트</a>
 			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/mywork/mywork">내업무</a>
 			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/meeting/meetinglog">한국어</a>
+			<a class="menu_list">${requestScope.loginFailMsg}</a>
+			
 		</div>
 	</div>
 </div>
