@@ -23,6 +23,8 @@
  		<typeAlias alias="ClientSprintDTO" type="com.greedy.shortcut.mywork.model.dto.ClientSprintDTO"/>
  		
  		<typeAlias alias="MeetingDTO" type="com.greedy.shortcut.meeting.model.dto.MeetingDTO"/>
+
+ 		<typeAlias alias="ClientCardTaskAndCardAndMemberDTO" type="com.greedy.shortcut.mywork.model.dto.ClientCardTaskAndCardAndMemberDTO"/>
  		
  	</typeAliases>
  	

@@ -100,7 +100,8 @@
 			
 			<h1>나와</h1>
 			<input type="text" name="totalSprintCount" id="totalSprintCount" value="${ requestScope.totalSprintCount }">
-			
+			<h2>no나와</h2>
+			<input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}">
 			<textarea>
 				 ${ requestScope.projectInfo.sprintList[0].sprNo }
 			</textarea>

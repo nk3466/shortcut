@@ -39,7 +39,28 @@
 		<result property="sprDelYn" column="SPR_DEL_YN"/>
 		<result property="blgNo" column="BLG_NO"/>
 	</resultMap>
+	
+<!--  	<resultMap id="" type="">
+		<association property=""/>
+		<association property=""/>
+		<association property=""/>
+	</resultMap> -->
 
+	<!-- 	SELECT
+               A.TK_PROGRESS
+             , A.CRD_NO
+             , A.MEM_NO
+             , A.TK_START_DATE
+             , A.TK_END_DATE
+             , B.CRD_TXT
+             , E.MEM_NAME
+          FROM CRD_TASK A
+          JOIN CARD B ON(A.CRD_NO = B.CRD_NO)
+          JOIN BOARD C ON(B.BRD_NO = C.BRD_NO)
+          JOIN SPRINT D ON(D.SPR_NO = C.SPR_NO)
+          JOIN MEMBER E ON(E.MEM_NO = A.MEM_NO)
+         WHERE D.SPR_NO = #{sprNo}
+ -->
 	<sql id="pjSql">
 	    	   PJT_NO
    	         , PJT_NAME
@@ -133,5 +154,22 @@
           JOIN MEMBER D ON(C.MEM_NO = D.MEM_NO)
          WHERE C.PJT_NO = #{pjtNo}
 	</select>
+	
+	<!-- <select id="selectCardTask" resultMap="" parameterType="_int">
+		SELECT
+               A.TK_PROGRESS
+             , A.CRD_NO
+             , A.MEM_NO
+             , A.TK_START_DATE
+             , A.TK_END_DATE
+             , B.CRD_TXT
+             , E.MEM_NAME
+          FROM CRD_TASK A
+          JOIN CARD B ON(A.CRD_NO = B.CRD_NO)
+          JOIN BOARD C ON(B.BRD_NO = C.BRD_NO)
+          JOIN SPRINT D ON(D.SPR_NO = C.SPR_NO)
+          JOIN MEMBER E ON(E.MEM_NO = A.MEM_NO)
+         WHERE D.SPR_NO = #{sprNo}
+	</select> -->
 
 </mapper>
