@@ -1,5 +1,6 @@
 package com.greedy.shortcut.member.model.service;
 
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,12 @@ public class MemberServiceImpl implements MemberService {
 		mapper.updateMember(dto);
 	}
 
+	@Override
+	public void selectMember(MemberDTO dto) {
+		mapper.selectMember(dto);
+	}
+
+	
 //	@Override
 //	public String createKey() {
 //		

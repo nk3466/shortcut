@@ -27,7 +27,6 @@
 				<i class="far fa-envelope"></i>	
 			</a>
 			<c:choose>
-				
 				<c:when test="${!empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
 					<a class="menu_list" data-toggle="modal" data-target="#member_logout">로그아웃</a>
 					<a class="menu_list">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username} 님이 로그인 되었습니다.</a>	
