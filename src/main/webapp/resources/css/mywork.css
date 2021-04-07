@@ -30,6 +30,9 @@
 .container.schedule_area .schedule_item .row .item_type5{border: 1px solid lightgray; width: 50%; }
 .container.schedule_area .schedule_item .row .item_type5 .item_name{border-bottom: 1px solid lightgray; height: 40px; line-height: 40px; text-align: center;}
 .container.schedule_area .schedule_item .row .item_type5 .item_content{height: 80px;}
+.container.schedule_area .schedule_item .row .item_type6{width: 100%; }
+.container.schedule_area .schedule_item .row .item_type6 .item_name{border-bottom: 1px solid lightgray; height: 40px; line-height: 40px; text-align: center;}
+.container.schedule_area .schedule_item .row .item_type6 .item_content{height: 15px; text-align:center}
 
 
 
