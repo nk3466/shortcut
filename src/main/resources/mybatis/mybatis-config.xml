@@ -10,6 +10,12 @@
 
  		<typeAlias alias="MeetingDTO" type="com.greedy.shortcut.meeting.model.dto.MeetingDTO"/>
 
+ 		<typeAlias alias="ProjectDTO" type="com.greedy.shortcut.board.model.dto.ProjectDTO"/>
+
+ 		<typeAlias alias="ProjectAuthorityDTO" type="com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO"/>
+ 		
+ 		<typeAlias alias="ProjectAndAuthorityDTO" type="com.greedy.shortcut.board.model.dto.ProjectAndAuthorityDTO"/>
+
  	</typeAliases>
  	
  </configuration>

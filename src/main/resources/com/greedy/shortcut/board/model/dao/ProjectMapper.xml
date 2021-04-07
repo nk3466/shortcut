@@ -12,9 +12,34 @@
 		<result column="PHONE" property="phone" />
 	</resultMap>
 	
-	<!-- <resultMap id="ProjectResultSet" type="ProjectDTO">
+ 	<resultMap id="ProjectResultSet" type="ProjectDTO">
+		<id column="PJT_NO" property="pjtNo"/>
+		<result column="PJT_NAME" property="projectName"/>
+		<result column="PJT_START_DATE" property="projectStartDate"/>
+		<result column="PJT_DEL_YN" property="projectDelYN"/>
+		<result column="MEM_NO" property="memberNo"/>
+		<result column="PJT_END_DATE" property="projectEndDate"/>
+		<result column="PJT_COLOR" property="projectColor"/>
+	</resultMap>
 	
-	</resultMap> -->
+	 <resultMap id="AuthorityResultSet" type="ProjectAuthorityDTO">
+		<id column="PA_NO" property="projectRoleNo"/>	<!-- 권한고유번호 -->
+		<result column="PA_ROLE" property="projectRole"/><!-- 	회원권한 -->
+		<result column="PJT_NO" property="projectNo"/>		<!-- 프로젝트번호  -->
+		<result column="MEM_NO" property="MemberNo"/>	
+	</resultMap> 
+	
+	<resultMap type="ProjectAndAuthorityDTO" id="ProjectAndAuthorityResultSet">
+		<id column="PJT_NO" property="pjtNo"/>
+		<id column="PA_NO" property="projectRoleNo"/>
+		<result column="PJT_NAME" property="projectName"/>
+		<result column="PJT_START_DATE" property="projectStartDate"/>
+		<result column="PJT_DEL_YN" property="projectDelYN"/>
+		<result column="MEM_NO" property="memberNo"/>
+		<result column="PJT_END_DATE" property="projectEndDate"/>
+		<result column="PJT_COLOR" property="projectColor"/>
+		<result column="PA_ROLE" property="projectRole"/>
+	</resultMap>
 	
 	<select id="selectMemberDupCheck" resultMap="memberResultSet" parameterType="MemberDTO">
 	 SELECT 
@@ -22,4 +47,30 @@
        FROM MEMBER A 
       WHERE A.MEM_ID = #{email} 
 	</select>
-</mapper>
+	
+	 <insert id="insertPoject" parameterType="ProjectDTO">
+	INSERT
+	  INTO PROJECT A
+	  (
+	     A.PJT_NO, A.PJT_NAME, A.PJT_START_DATE,
+	     A.PJT_DEL_YN, A.PJT_END_DATE, A.PJT_COLOR
+	    )
+	  VALUES
+	  (
+	    SEQ_PJT_NO.NEXTVAL, #{projectName}, #{projectStartDate},
+	    'N', #{projectEndDate}, #{projectColor}
+	  )
+	</insert>
+	
+	 <select id="selectProjectNum" resultMap="memberResultSet" parameterType="MemberDTO">
+	SELECT 
+            A.PJT_NO
+       FROM PROJECT A 
+      WHERE A.PJT_NAME = #{projectName}
+         AND A.PJT_START_DATE = #{projectStartDate}
+         AND A.PJT_END_DATE = #{projectEndDate}
+         AND A.PJT_COLOR = #{projectColor}
+	</select> 
+	<!-- <insert id="insertProjectMember" parameterType="ProjectAuthorityDTO">
+	</insert> -->
+ </mapper>

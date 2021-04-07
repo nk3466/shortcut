@@ -1,12 +1,14 @@
 package com.greedy.shortcut.board.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.ProjectDTO;
@@ -39,13 +43,14 @@ public class ProjectBoardController {
 	public void project() {
 	}
 
-	@PostMapping("/project_regist")
+	@PostMapping(value="/project_regist" , produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public String registProject(@ModelAttribute ProjectDTO project,
-			@ModelAttribute ProjectAuthorityDTO projectAuthority, HttpServletRequest request) {
-
+	public String registProject(HttpSession httpsession,		
+			@ModelAttribute ProjectDTO project,
+			HttpServletRequest request, RedirectAttributes rttr) {
+		
 		System.out.println(project);
-		System.out.println(projectAuthority);
+		
 		/* model key value 값 출력 */
 		SortedMap<String, String[]> projectMake = Collections
 				.synchronizedSortedMap(new TreeMap<String, String[]>(request.getParameterMap()));
@@ -60,22 +65,34 @@ public class ProjectBoardController {
 				}
 			}
 		}
-
-		
-		SimpleDateFormat qwe = new SimpleDateFormat("yyyy-mm-dd");
-
-		/*
-		 * for(int i = 0; i < projectMake.get(key); i++) {
-		 * 
-		 * }
-		 */
+		/*회원 정보 담기*/
+		 List<ProjectAuthorityDTO> projectMemberList = new ArrayList<>();
 		 
-		//projectAuthority.getMember().setEmail(((String[]) projectMake.get("nk[0][value]"))[0]); // 멤버 이메일
-		// projectAuthority.set
-		// project.setProjectStartDate(java.sql.Date.valueOf(((String[])projectMake.get("nk[1][value]"))[0]));
-		// //project 시작 날짜
-
-		return "";
+		 for(int i = 0; i < (projectMake.size() - 4)/2; i++) {
+			 System.out.println("와?");
+			 
+			// project.setMemberNo(Integer.parseInt(((String[]) projectMake.get("nk1[" + i + "][value]"))[0]));
+			 ProjectAuthorityDTO projectAuthority = new ProjectAuthorityDTO();
+			  
+			 projectAuthority.setMemberNo(Integer.parseInt(((String[]) projectMake.get("nk1[" + i + "][value]"))[0]));
+			 i++;
+			 projectAuthority.setProjectRole(Integer.parseInt(((String[]) projectMake.get("nk1[" + i + "][value]"))[0]));
+			 
+			 projectMemberList.add(projectAuthority);
+		 }
+			/*
+			 * projectAuthority.setMemberId(httpsession.getId());
+			 * projectAuthority.setProjectRole(1); projectMemberList.add(projectAuthority);
+			 */
+		 System.out.println(projectMemberList);
+		 
+		 if(!projectBoardService.insertProject(project, projectMemberList) || !projectBoardService.insertProjectMember(project, projectMemberList)) {
+			 rttr.addFlashAttribute("message","프로젝트 생성이 취소되었습니다.");
+				return "redirect:/";
+		 }
+			 rttr.addFlashAttribute("message","프로젝트가 생성되었습니다.");
+			 
+		return "/board/backlog";
 	}
 	/* 이메일 유무  체크*/
 	@PostMapping(value="projectidDupCheck", produces = "application/json; charset=UTF-8")
