@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.greedy.shortcut.mywork.model.dto.ClientProjectAndSprintDTO;
 import com.greedy.shortcut.mywork.model.dto.ClientProjectDTO;
 import com.greedy.shortcut.mywork.model.dto.ProjectInfoTest;
 import com.greedy.shortcut.mywork.model.service.ClientService;
@@ -72,35 +73,12 @@ public class ClientController {
 			System.out.println(project);
 		}
 		
-		List<Object> testList = new ArrayList<>();
-		testList.add(new String("A"));
-		testList.add(new String("B"));
-		testList.add(new String("C"));
-		testList.add(new String("D"));
-		testList.add(new String("E"));
-		testList.add(new String("F"));
-		testList.add(new String("G"));
-		testList.add(new String("H"));
-		testList.add(new String("I"));
-		testList.add(new String("J"));
-		testList.add(new String("K"));
-		testList.add(new String("L"));
-		testList.add(new String("M"));
-		testList.add(new String("N"));
-		testList.add(new String("O"));
-		testList.add(new String("P"));
-		testList.add(new String("Q"));
-		testList.add(new String("R"));
-		testList.add(new String("S"));
-		testList.add(new String("T"));
-		testList.add(new String("U"));
-		testList.add(new String("V"));
-		
 		model.addAttribute("projectList", projectList);
 		
 		return "mywork/client";
 	}
 	
+	/* TEST 용 */
 	@GetMapping(value="mywork/projectInfo", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public String getProjectInfo() throws JsonProcessingException {
@@ -127,7 +105,6 @@ public class ClientController {
 		System.out.println(s2);
 		System.out.println(e2);
 		
-		
 		projectTestList.add(new ProjectInfoTest("project1", "test1", stDate, enDate));
 		//System.out.println(projectTestList);
 		//System.out.println(projectTestList.get(0));
@@ -136,38 +113,37 @@ public class ClientController {
 		return new ObjectMapper().writeValueAsString(projectTestList);
 	}
 	
-	@GetMapping(value="mywork/client/projectInfo/{flag}")
-	public String selectProjectInfo(Model model, @PathVariable("flag") int flag) {
+	@GetMapping(value="mywork/client/projectInfo/{pjtNo}")
+	public String selectProjectInfo(Model model, @PathVariable("pjtNo") int pjtNo) {
 		
-		System.out.println("flag : " + flag);
+		List<ClientProjectDTO> projectList = clientService.selectProjectList2(pjtNo);
 		
-		model.addAttribute("message", flag + "번 프로젝트");
+		ClientProjectAndSprintDTO projectInfo = clientService.selectOneProjectByPjNo(pjtNo);
+		System.out.println("projectInfo : " + projectInfo);
 		
-		List<Object> testList = new ArrayList<>();
-		testList.add(new String("A"));
-		testList.add(new String("B"));
-		testList.add(new String("C"));
-		testList.add(new String("D"));
-		testList.add(new String("E"));
-		testList.add(new String("F"));
-		testList.add(new String("G"));
-		testList.add(new String("H"));
-		testList.add(new String("I"));
-		testList.add(new String("J"));
-		testList.add(new String("K"));
-		testList.add(new String("L"));
-		testList.add(new String("M"));
-		testList.add(new String("N"));
-		testList.add(new String("O"));
-		testList.add(new String("P"));
-		testList.add(new String("Q"));
-		testList.add(new String("R"));
-		testList.add(new String("S"));
-		testList.add(new String("T"));
-		testList.add(new String("U"));
-		testList.add(new String("V"));
+		int totalSprintCount = clientService.selectSprintCount(pjtNo);
+		System.out.println("totalSprintCount : " + totalSprintCount);
 		
-		model.addAttribute("testList", testList);
+		String assemblyString = "";
+		String result = "";
+		for(int i = 0; i < totalSprintCount; i++) {
+			assemblyString += "[ \"" + projectInfo.getSprintList().get(i).getSprName() + "\"" + ", "
+					        + "\"" + projectInfo.getSprintList().get(i).getSprGoal() + "\"" + ", "
+					        + "\"" + projectInfo.getSprintList().get(i).getSprStartDate() + "\"" + ", "
+					        + "\"" + projectInfo.getSprintList().get(i).getSprEndDate() + "\"" + "]"; 
+			
+			if(!(i == (totalSprintCount - 1))) {
+				assemblyString += ", ";
+			}  
+		}
+		
+		result += "[" + assemblyString + "]";
+		System.out.println("result : " + result);
+		
+		model.addAttribute("projectList", projectList);                                                                                                                                                                                                                                                                                                      
+		model.addAttribute("projectInfo", projectInfo);
+		model.addAttribute("totalSprintCount", totalSprintCount);
+		model.addAttribute("result", result);
 		
 		return "mywork/client";
 	}

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,12 +40,15 @@
 			</div>
 			<div class="client_line"></div>
 			<div class="select_project">
-				<div class="row">
+				<div class="row" id="pjSelectOne">
 					<c:forEach var="project" items="${ requestScope.projectList }">
 						<div class="project_list">
-							<a class="list_detail" id="project1" style="background-color: ${project.pjtColor};">
+							<a class="list_detail" style="background-color: ${project.pjtColor};">
 								<img class="img_detail" src="${ pageContext.servletContext.contextPath }/resources/img/board_icon.png">
 							</a>
+							<div style="display: none;">
+								<c:out value="${ project.pjtNo }"/>
+							</div>
 							<div class="board_text" >
 								<c:out value="${ project.pjtName }"/>	
 							</div>					
@@ -52,25 +56,85 @@
 					</c:forEach>
 				</div>
 			</div>
-
-			<div class="timeline_area">
-				<div id="timeline" style="height: 500px;  /* display: none; */"></div>
-			</div>
+			<c:if test="${ !empty requestScope.projectInfo }">
+				<div class="timeline_area">
+					<div id="timeline" style="height: 500px;"></div>
+				</div>
+			</c:if>
 			
 			<div id="divResult">
 			</div>
 			
+			   A.PJT_NO
+		     , A.PJT_NAME
+		     , A.PJT_START_DATE
+		     , A.PJT_DEL_YN
+		     , A.MEM_NO
+		     , A.PJT_END_DATE
+		     , A.PJT_COLOR 
+             , C.SPR_NO
+   	         , C.SPR_NAME
+             , C.SPR_START_DATE
+	         , C.SPR_END_DATE
+	         , C.SPR_GOAL
+	         , C.SPR_DEL_YN
+	         , C.BLG_NO
+			
 			<div id="cityData" data-toggle="modal" data-target="#myModal"></div>
 			
-			<input type="text" id="please1" value="Sprint1">
-			<input type="text" id="please2" value="cccc">
-			<input type="text" id="please3" value="1620054000000">
-			<input type="text" id="please4" value="1622300400000">
-
+			<input type="text" value="${ projectInfo.pjtNo }">
+			<input type="text" value="${ projectInfo.pjtName }">
+			<input type="text" value="${ projectInfo.pjtStartDate }">
+			<input type="text" value="${ projectInfo.pjtDelYn }">
+			<input type="text" value="${ projectInfo.memNo }">
+			<input type="text" value="${ projectInfo.pjtEndDate }">
+			<input type="text" value="${ projectInfo.pjtColor }">
+			<%-- <input type="text" value="${ fn:projectInfo.pjtColor }"> --%>
+			<c:set var="myArray" value="${fn:split('one,two,three',',')}" />
+			<input type="text" id="" value="개수 ${ fn:length(myArray) }">
+			<c:set var="myArray2" value="${fn:split('${ reqeustScope.projectInfo.sprintList }','],')}" />
+			<c:forEach var="j" items="${ myArray2 }">
+				<input type="text" value="${ j }">
+			</c:forEach>
+			<input type="text" id="sprintSize" value="길이  ${ fn:length('${ reqeustScope.projectInfo.sprintList }' ) }">
+			
+			<h1>나와</h1>
+			<input type="text" name="totalSprintCount" id="totalSprintCount" value="${ requestScope.totalSprintCount }">
+			
+			<textarea>
+				 ${ requestScope.projectInfo.sprintList[0].sprNo }
+			</textarea>
+			
+				<table border="1px">
+					<c:forEach var="sprint" items="${ requestScope.projectInfo.sprintList }">
+					 	<tr>
+						 	<td>
+							   <c:out value="${ sprint.sprNo }"/>
+							</td>
+							<td>
+							    <c:out value="${ sprint.sprName }"/>
+							</td>
+							<td>
+							    <c:out value="${ sprint.sprStartDate }"/>
+							</td>
+							<td>
+							    <c:out value="${ sprint.sprEndDate }"/>
+							</td>
+							<td>
+							    <c:out value="${ sprint.sprGoal }"/>
+							</td>
+							<td>
+							    <c:out value="${ sprint.sprDelYn }"/>
+							</td>
+							<td>
+							    <c:out value="${ sprint.blgNo }"/>
+							</td>
+						</tr> 
+					</c:forEach> 
+				</table>
+				
 		</div>
 	</div>
-	
-	<input type="text" value="3" name="flag" id="flag">
 	
 	<!-- modal -->
 	<div class="modal fade" id="myModal">
@@ -93,55 +157,28 @@
 	          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 	        </div>
 	        
-	      </div>
+	        </div>
 	    </div>
-	  </div>
+	</div>
+	<!-- modal end -->
 	
 	<script>
-		const $project1 = document.getElementById("project1");
-		const $timeline = document.getElementById("timeline");
-		const $divResult = document.getElementById("divResult");
-		
-		$project1.addEventListener("click", getProject, true);
-		
-		function getProject() {
-			/* $timeline.style.display = "block";  */ 
-			
-			location.href="${ pageContext.servletContext.contextPath}/mywork/client/projectInfo/${requestScope.projectList}";
-			
-			/* 페이징처리느낌으로 가서 아작스 안써도...  */
-			/* $.ajax({
-				url: "projectInfo",
-				method: "GET",
-				success: function(data, status, xhr) {
-
-					$divResult.html = "";
-					
-					for(let index in data) {
-							
-						const anchor1 = document.createElement("P");
-						anchor1.innerHTML = data[index].projectName;
-						const anchor2 = document.createElement("P");
-						anchor2.innerHTML = data[index].content;
-						const anchor3 = document.createElement("p");
-						anchor3.innerHTML = data[index].startDate;
-						const anchor4 = document.createElement("p");
-						anchor4.innerHTML = data[index].endDate;
-						
-						$divResult.appendChild(anchor1);
-						$divResult.appendChild(anchor2);
-						$divResult.appendChild(anchor3);
-						$divResult.appendChild(anchor4);
-					}
-				},
-				error: function(xhr, status, error) {
-					console.log(error);
-				}
-			}); */
-			
-		}
+		/* 프로젝트 선택 */
+	    if(document.getElementById("pjSelectOne")) {
+	    	
+	  	  const $pjSelectOne = document.getElementById("pjSelectOne");
+	  	  const $pjList = $pjSelectOne.childNodes;
+	  	  
+	  	  for(let i = 0; i < $pjList.length; i++) {
+	  		  
+	  		  $pjList[i].onclick = function() {
+	  			  const no = this.childNodes[3].innerText;
+	  			  location.href="${ pageContext.servletContext.contextPath}/mywork/client/projectInfo/" + no;
+	  		  }
+	  	  }
+	  	  
+	    }
 	</script>
-	
 	<script type="text/javascript">
       google.charts.load('current', {'packages':['timeline']});
       google.charts.setOnLoadCallback(drawChart);
@@ -151,7 +188,7 @@
         var chart = new google.visualization.Timeline(container);
         var dataTable = new google.visualization.DataTable();
         
-        const please3 = document.getElementById("please3").value;
+        const totalSprintCount = document.getElementById("totalSprintCount");
         
 		const year1 = "2021";
 		
@@ -171,13 +208,18 @@
         dataTable.addColumn({ type: 'string', id: 'name' });
         dataTable.addColumn({ type: 'date', id: 'Start' });
         dataTable.addColumn({ type: 'date', id: 'End' });
-        dataTable.addRows([
-          [ $("#please1").val(), $("#please2").val(), new Date(year1, month1, day1),  new Date(year1, month2, day2) ] ,
-          [ 'Sprint2',    "a",  new Date(year1, month1, day1),  new Date(year1, month3, day3) ],
-          [ 'Sprint2',    "DSADAS",  new Date(year1, month1, day1),  new Date(year1, month3, day3) ],
-          [ 'Sprint3',    "GRSGESW",  new Date(year1, month1, day1),  new Date(year1, month2, day2) ],
-          [ 'Sprint4', "aEEEEE",  new Date(year1, month2, day2),  new Date(year1, month4, day4) ]]);
+        dataTable.addRows(${ requestScope.result }); /*([
+        	
+	          [ '${ requestScope.projectInfo.sprintList[spIndex].sprName }', 's', new Date('${ requestScope.projectInfo.sprintList[spIndex].sprStartDate }'),  new Date('${ requestScope.projectInfo.sprintList[spIndex].sprEndDate }') ] ,
+ 	          [ 'Sprint2',    "a",  new Date(year1, month1, day1),  new Date(year1, month3, day3) ],
+	          [ 'Sprint2',    "DSADAS",  new Date(year1, month1, day1),  new Date(year1, month3, day3) ],
+	          [ 'Sprint3',    "GRSGESW",  new Date(year1, month1, day1),  new Date(year1, month2, day2) ],
+	          [ 'Sprint4', "aEEEEE",  new Date(year1, month2, day2),  new Date(year1, month4, day4) ] 
+          
+          ]); */
 
+         /*  String ext = originFileName.substring(originFileName.lastIndexOf(".")); */
+          
 
         var options = {
         	      timeline: { 
@@ -220,7 +262,50 @@
      	    chart.draw(dataTable, options);
         }
       </script>
+      
       <script>
+      /* 		const $project1 = document.getElementById("project1");
+		const $timeline = document.getElementById("timeline");
+		const $divResult = document.getElementById("divResult");
+		
+		$project1.addEventListener("click", getProject, true); */
+		
+		function getProject() {
+			/* $timeline.style.display = "block";  */ 
+			
+			location.href="${ pageContext.servletContext.contextPath}/mywork/client/projectInfo/${requestScope.projectList}";
+			
+			/* 페이징처리느낌으로 가서 아작스 안써도...  */
+			/* $.ajax({
+				url: "projectInfo",
+				method: "GET",
+				success: function(data, status, xhr) {
+
+					$divResult.html = "";
+					
+					for(let index in data) {
+							
+						const anchor1 = document.createElement("P");
+						anchor1.innerHTML = data[index].projectName;
+						const anchor2 = document.createElement("P");
+						anchor2.innerHTML = data[index].content;
+						const anchor3 = document.createElement("p");
+						anchor3.innerHTML = data[index].startDate;
+						const anchor4 = document.createElement("p");
+						anchor4.innerHTML = data[index].endDate;
+						
+						$divResult.appendChild(anchor1);
+						$divResult.appendChild(anchor2);
+						$divResult.appendChild(anchor3);
+						$divResult.appendChild(anchor4);
+					}
+				},
+				error: function(xhr, status, error) {
+					console.log(error);
+				}
+			}); */
+			
+		}
       
 /*       function getData() {
 			return new Promise(function(resolve, reject) {
