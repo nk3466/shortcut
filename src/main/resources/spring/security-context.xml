@@ -15,6 +15,7 @@
 		<!-- 정적 리소스는 모두 접근 허용 -->
 		<s:intercept-url pattern="/resources/**" access="permitAll" />
 		<s:intercept-url pattern="/meeting/meetinglog" access="permitAll"/>
+		<s:intercept-url pattern="/board/**" access="permitAll"/>
 		
 		<!-- 로그인된 상태에서는 로그인이나 회원가입 화면에 접근 못하도록 함 -->
 		<s:intercept-url pattern="/loginView*" access="isAnonymous()" />

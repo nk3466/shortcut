@@ -1,9 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%
+	Date nowTime = new Date();
+	SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
+%>
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="_csrf" content="${_csrf.token}">
+<meta name="_csrf_header" content="${_csrf.headerName}">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css"
@@ -262,8 +270,8 @@
 					<div class="item_area">
 						<i class="fas fa-user-circle"></i>
 						<div class="login_info">
-							<div class="info_detail">정민서</div>
-							<div class="info_detail type">2021-03-08 19:00</div>
+							<div class="info_detail">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}</div>
+							<div class="info_detail type"><%= sf.format(nowTime) %></div>
 						</div>
 					</div>
 
@@ -277,22 +285,22 @@
 					<div class="item_area work_btn on">
 						<i class="fas fa-spinner"></i>
 						<div class="btn-group">
-							<button class="button on">요청</button>
-							<button class="button on">진행</button>
-							<button class="button">피드백</button>
-							<button class="button">완료</button>
-							<button class="button">보류</button>
+							<button class="button on" name="request">요청</button>
+							<button class="button on" name="progress">진행</button>
+							<button class="button" name="feedback">피드백</button>
+							<button class="button" name="completion">완료</button>
+							<button class="button" name="hold">보류</button>
 						</div>
 
 					</div>
-
+				<%-- <form action="${ pageContext.servletContext.contextPath }/board" method="get"> --%>
 					<div class="item_area work_btn on">
-						<i class="fas fa-user-plus"></i> <input class="input_detail type1"
-							type="text" name="name" placeholder="Add Member"> <input
-							class="input_detail type2" type="button" name="name" value="Add">
+						<i class="fas fa-user-plus"></i> 
+						<input class="input_detail type1" id="selectmember" type="text" name="addMember" placeholder="Add Member" 
+						value=""> 
+						<input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버추가">
 					</div>
-
-
+				<!-- </form> -->
 					<div class="item_area work_btn on">
 						<i class="far fa-calendar-plus"></i> <input
 							class="input_detail type4" type="date" name=""> &nbsp; -
@@ -390,5 +398,19 @@
 	})
 	
 	
+</script>
+<script>
+	$("#addMember").click(function() {
+		$.ajax({
+			url: "${pageContext.servletContext.contextPath}/board/kabanboard",
+			type: "get",
+			success: function(data,status, xhr) {
+				console.log(data);
+			},
+			error: function(xhr, status, error) {
+				console.log(error);
+			}
+		});
+	});
 </script>
 </html>

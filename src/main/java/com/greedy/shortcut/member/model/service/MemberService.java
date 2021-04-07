@@ -1,5 +1,7 @@
 package com.greedy.shortcut.member.model.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.greedy.shortcut.member.model.dto.MemberDTO;
@@ -11,7 +13,9 @@ public interface MemberService {
 	void ModifyMember(MemberDTO memberDTO);
 
 	void updateMember(MemberDTO dto);
-	
+
+	void selectMember(MemberDTO dto);
+
 //	String createKey();
 //	
 //	void sendMail(MemberDTO member);
