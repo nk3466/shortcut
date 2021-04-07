@@ -210,6 +210,8 @@
 		
 		var meetingName = $("#titleName").val();
 		var meetingText = $("#meetingContent").val();
+		/* var chamga[] = $("#memberEmail").val(); */
+		
 		
 		/* console.log(meetDate)
 		console.log(meetDate2)
@@ -238,16 +240,16 @@
 					meetingText : meetingText
 					},
 			success : function(data, status, xhr){
-					console.log(enrollDate6 === enrollDate7);
+				console.log(enrollDate6 === enrollDate7);
+				
+				if(enrollDate6 === enrollDate7){
+					var insertDiv="";
+					insertDiv +='<div class="mtinfo">' + meetingName + '</div>';
 					
-					if(enrollDate6 === enrollDate7){
-						var insertDiv="";
-						insertDiv +='<div class="mtinfo">' + meetingName + '</div>';
-						
-						meetinginfo.append(insertDiv);
-						
-						$("#upload").submit();
-					}
+					meetinginfo.append(insertDiv);
+					
+					$("#conference").modal("hide");
+				}
 				
 			},
 			error : function(xhr, status, error){
@@ -291,13 +293,6 @@
 		$t.remove();
 	}) 
 	
-	
-	
-	
-
-
-
-
 
 	
 </script>
