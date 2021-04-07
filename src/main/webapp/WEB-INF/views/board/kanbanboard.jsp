@@ -397,6 +397,13 @@
 		})
 	})
 	
+	 $(function() {
+          $('.button').click(function() {
+              $('.button').removeAttr("style");
+              $(this).css("background", "#8592D6");
+          });
+      });
+	
 	
 </script>
 <script>
