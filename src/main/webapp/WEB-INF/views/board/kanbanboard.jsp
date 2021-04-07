@@ -298,6 +298,7 @@
 						<i class="fas fa-user-plus"></i> 
 						<input class="input_detail type1" id="selectmember" type="text" name="addMember" placeholder="Add Member" 
 						value=""> 
+						<div id="member"></div>
 						<input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버추가">
 					</div>
 				<!-- </form> -->
@@ -407,17 +408,35 @@
 	
 </script>
 <script>
-	$("#addMember").click(function() {
-		$.ajax({
-			url: "${pageContext.servletContext.contextPath}/board/kabanboard",
-			type: "get",
-			success: function(data,status, xhr) {
-				console.log(data);
-			},
-			error: function(xhr, status, error) {
-				console.log(error);
-			}
-		});
-	});
+/* 시큐리티 권한  */
+const token = $("meta[name='_csrf']").attr("content");
+const header = $("meta[name='_csrf_header']").attr("content");
+
+$(document).ajaxSend(function(e, xhr, options) {
+    xhr.setRequestHeader(header, token);
+});
+
+$("#addMember").click(function(){
+    $.ajax({
+        type:"POST",
+        url:"${pageContext.servletContext.contextPath}/board/kanbanboard",
+        success:function(data, status, xhr)
+        {
+        	console.log(data);
+            let memberList=data;
+            let res="";
+            var selectMember = document.getElementById("selectmember").value;
+        	var member = document.getElementById("member");
+            for(let i=0;i<memberList.length;i++)
+            {
+            	const nike = document.createElement("input");
+            	nike.value = memberList[i].name;
+            	member.readOnly = true
+            	member.appendChild(nike);
+  
+            }
+        }
+      });
+});
 </script>
 </html>

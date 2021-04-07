@@ -20,6 +20,4 @@ public interface MemberMapper {
 
 	void updateMember(MemberDTO dto);
 
-	void selectMember(MemberDTO dto);
-
 }
