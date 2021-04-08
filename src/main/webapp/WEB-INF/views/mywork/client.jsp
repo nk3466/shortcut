@@ -188,7 +188,9 @@
         var options = {
         	      timeline: { 
         	    	  colorByRowLabel: true,
-        	    	  groupByRowLabel: false 
+        	    	  groupByRowLabel: false,
+        	    	  /* rowLabelStyle: {fontName: 'Arial', fontSize: 25, color: '#000000' }, */
+        	    	  barLabelStyle: { fontName: 'Arial', fontSize: 9, color: '#ffffff' }
         	    	  }
         	    };
         /* 첫 번째 텍스트 선택시 이벤트 */

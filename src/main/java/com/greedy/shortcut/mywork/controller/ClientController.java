@@ -193,10 +193,7 @@ public class ClientController {
 				
 				/* 자른 년, 월, 일을 int형으로 다시 바꾸고 문자열로 만들기 */
 				assemblyString += "[ \"" + sprintAndTaskList.get(i).getSprintName() + "\"" + ", "
-						+ "\"" /*
-								 * + sprintAndTaskList.get(i).getSprintAndCardTaskList().get(j).getMemberDTO().
-								 * getName() + " - "
-								 */
+						        + "\"" + sprintAndTaskList.get(i).getSprintAndCardTaskList().get(j).getMemberDTO().getName() + "-"
 						        + sprintAndTaskList.get(i).getSprintAndCardTaskList().get(j).getCardDTO().getCrdTxt() + "\"" + ", "
 						        + "new Date(" + Integer.parseInt(startDateArray[0]) + ", " + Integer.parseInt(startDateArray[1]) + ", " + Integer.parseInt(startDateArray[2]) + ")" + ", "
 						        + "new Date(" + Integer.parseInt(endDateArray[0]) + ", " + Integer.parseInt(endDateArray[1]) + ", " + Integer.parseInt(endDateArray[2]) + ")" + "]"; 
