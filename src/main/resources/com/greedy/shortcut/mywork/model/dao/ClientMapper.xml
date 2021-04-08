@@ -40,27 +40,25 @@
 		<result property="blgNo" column="BLG_NO"/>
 	</resultMap>
 	
-<!--  	<resultMap id="" type="">
-		<association property=""/>
-		<association property=""/>
-		<association property=""/>
-	</resultMap> -->
+  	<resultMap id="ctcmResultMap" type="ClientCardTaskAndCardAndMemberDTO">
+  		<association property="cardTaskDTO" resultMap="cardTaskResultMap"/>
+  		<association property="cardDTO" resultMap="cardResultMap"/>
+  		<association property="memberDTO" resultMap="memberResultMap"/>
+  	</resultMap>
+  	<resultMap id="cardTaskResultMap" type="CardTaskDTO">
+  		<id property="crdNo" column="CRD_NO"/>
+  		<result property="progress" column="TK_PROGRESS"/>
+  		<result property="memNo" column="MEM_NO"/>
+  		<result property="startDate" column="TK_START_DATE"/>
+  		<result property="endDate" column="TK_END_DATE"/>
+	</resultMap>
+	<resultMap id="cardResultMap" type="ClientCardDTO">
+		<result property="crdTxt" column="CRD_TXT"/>
+	</resultMap>
+	<resultMap id="memberResultMap" type="MemberDTO">
+		<result property="name" column="MEM_NAME"/>
+	</resultMap>
 
-	<!-- 	SELECT
-               A.TK_PROGRESS
-             , A.CRD_NO
-             , A.MEM_NO
-             , A.TK_START_DATE
-             , A.TK_END_DATE
-             , B.CRD_TXT
-             , E.MEM_NAME
-          FROM CRD_TASK A
-          JOIN CARD B ON(A.CRD_NO = B.CRD_NO)
-          JOIN BOARD C ON(B.BRD_NO = C.BRD_NO)
-          JOIN SPRINT D ON(D.SPR_NO = C.SPR_NO)
-          JOIN MEMBER E ON(E.MEM_NO = A.MEM_NO)
-         WHERE D.SPR_NO = #{sprNo}
- -->
 	<sql id="pjSql">
 	    	   PJT_NO
    	         , PJT_NAME
@@ -155,7 +153,7 @@
          WHERE C.PJT_NO = #{pjtNo}
 	</select>
 	
-	<!-- <select id="selectCardTask" resultMap="" parameterType="_int">
+	<select id="selectBarInfo" resultMap="ctcmResultMap" parameterType="_int">
 		SELECT
                A.TK_PROGRESS
              , A.CRD_NO
@@ -170,6 +168,6 @@
           JOIN SPRINT D ON(D.SPR_NO = C.SPR_NO)
           JOIN MEMBER E ON(E.MEM_NO = A.MEM_NO)
          WHERE D.SPR_NO = #{sprNo}
-	</select> -->
+	</select>
 
 </mapper>

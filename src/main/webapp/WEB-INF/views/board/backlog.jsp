@@ -115,9 +115,13 @@
 		<div class="sprint_box_area">			
 			<div class="sprint_text_btn">
 				<span class="sprint_text">Sprint 1</span>					
-				<button class="btn_detail">Write Retrospect</button>			
+				<button class="btn_detail" onclick="retrospect();">Write Retrospect</button>			
 			</div>				
-			
+			<script>
+				function retrospect() {
+					location.href = "${ pageContext.servletContext.contextPath }/board/backlog/retrospect";
+				}
+			</script>
 								
 			
 			

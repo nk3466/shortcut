@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 import com.greedy.shortcut.mywork.model.dao.ClientMapper;
+import com.greedy.shortcut.mywork.model.dto.ClientCardTaskAndCardAndMemberDTO;
 import com.greedy.shortcut.mywork.model.dto.ClientProjectAndSprintDTO;
 import com.greedy.shortcut.mywork.model.dto.ClientProjectDTO;
 
@@ -38,6 +39,11 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public int selectSprintCount(int pjtNo) {
 		return clientMapper.selectSprintCount(pjtNo);
+	}
+
+	@Override
+	public List<ClientCardTaskAndCardAndMemberDTO> selectBarInfo(int sprNo) {
+		return clientMapper.selectBarInfo(sprNo);
 	}
 
 
