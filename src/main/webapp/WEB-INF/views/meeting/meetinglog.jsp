@@ -188,6 +188,42 @@
 	
 		
 	$("#upload").click(function(){
+		
+		
+		var count = 0;
+		
+		$("#memberAddBtn").click(function(){
+			if(!emailNull($("#memberEmail").val())){
+				
+				/* const addMember = $("#projectMember span:last"); */
+				var insertSpan="";
+				insertSpan += '<span class="item_text on">' + document.getElementById("memberEmail").value + '<i id="delBtn" class="fas fa-times-circle"></i>' + '</span>';
+				
+				$("#meetingMember").append(insertSpan);
+				$("#memberEamil").val('');
+			}
+		});
+		
+		
+		function emailNull(value){
+			if(value === null) return true;
+			if(typeof value === 'string' && value === '') return true;
+			if(typeof value === 'undefined') return true;
+			return false;
+		}
+		
+		
+
+		$(document).on('click','.item_text.on',function(){
+			
+			var $t = $(this);
+			
+			$t.remove();
+		}) 
+		
+		
+		
+		
 
 		var enrollDate = $("#meetingDate").val();						// input date 값
 		var enrollDate1 = enrollDate.substring(0,5);					//date 값의 년도 
@@ -260,42 +296,7 @@
 	
 	
 </script>
-<script type="text/javascript">
-	
-	var count = 0;
-	
-	$("#memberAddBtn").click(function(){
-		if(!emailNull($("#memberEmail").val())){
-			
-			/* const addMember = $("#projectMember span:last"); */
-			var insertSpan="";
-			insertSpan += '<span class="item_text on">' + document.getElementById("memberEmail").value + '<i id="delBtn" class="fas fa-times-circle"></i>' + '</span>';
-			
-			$("#meetingMember").append(insertSpan);
-			$("#memberEamil").val('');
-		}
-	});
-	
-	
-	function emailNull(value){
-		if(value === null) return true;
-		if(typeof value === 'string' && value === '') return true;
-		if(typeof value === 'undefined') return true;
-		return false;
-	}
-	
-	
 
-	$(document).on('click','.item_text.on',function(){
-		
-		var $t = $(this);
-		
-		$t.remove();
-	}) 
-	
-
-	
-</script>
 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/main.js"></script>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/data.js"></script>
