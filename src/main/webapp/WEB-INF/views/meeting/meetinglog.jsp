@@ -187,20 +187,41 @@
 	
 	
 		
-	$("#upload").click(function(){
-		
-		
-		var count = 0;
+		var count = 1;
 		
 		$("#memberAddBtn").click(function(){
+			
+			var memberId = $("memberEmail").val();
+			
+			console.log(memberId);
+			
 			if(!emailNull($("#memberEmail").val())){
 				
-				/* const addMember = $("#projectMember span:last"); */
-				var insertSpan="";
-				insertSpan += '<span class="item_text on">' + document.getElementById("memberEmail").value + '<i id="delBtn" class="fas fa-times-circle"></i>' + '</span>';
+				$.ajax({
+					url:"selectProjectMember",
+					type:"POST",
+					data:{ name : memberId},
+					success: function(data){
+						console.log(data)
+						if(data !==0){
+							
+							var insertSpan="";
+							insertSpan += '<span class="item_text on">' + document.getElementById("memberEmail").value + '<i id="delBtn" class="fas fa-times-circle"></i>' + '</span>';
+							
+							$("#meetingMember").append(insertSpan);
+							$("#memberEamil").val('');
+							
+						} else {
+							alert("프로젝트 참여인원이 아닙니다. ");
+							$("#memberEamil").val('');
+						}
+					},
+					error:function(data){
+						console.log(error);
+					}
+					
+				})
 				
-				$("#meetingMember").append(insertSpan);
-				$("#memberEamil").val('');
 			}
 		});
 		
@@ -221,7 +242,7 @@
 			$t.remove();
 		}) 
 		
-		
+	$("#upload").click(function(){
 		
 		
 
@@ -248,21 +269,7 @@
 		var meetingText = $("#meetingContent").val();
 		/* var chamga[] = $("#memberEmail").val(); */
 		
-		
-		/* console.log(meetDate)
-		console.log(meetDate2)
-		console.log(meetDate3)
-		console.log(enrollDate);
-		console.log(enrollDate1);
-		console.log(enrollDate2);
-		console.log(enrollDate3);
-		console.log(enrollDate4);
-		console.log(enrollDate5);
-		console.log(enrollDate6);
-		console.log(enrollDate7);
-		console.log(meetingName);
-		console.log(meetingText); */
-		
+	
 		
 		
 		

@@ -13,6 +13,22 @@
 		<result column="SPR_NO" property="sprintNo"/>
 	</resultMap>
 	
+	<resultMap type="MemberDTO" id="MemberResultSet">
+		<id column="MEM_NO" property="no" />
+		<result column="MEM_NAME" property="name" />
+		<result column="MEM_ID" property="email" />
+		<result column="MEM_PWD" property="password" />
+		<result column="PHONE" property="phone" />
+		<result column="PJT_NO" property="projectNo"/>
+	</resultMap>
+	
+	 <resultMap id="AuthorityResultSet" type="ProjectAuthorityDTO">
+		<id column="PA_NO" property="projectRoleNo"/>	<!-- 권한고유번호 -->
+		<result column="PA_ROLE" property="projectRole"/><!-- 	회원권한 -->
+		<result column="PJT_NO" property="projectNo"/>		<!-- 프로젝트번호  -->
+		<result column="MEM_NO" property="memberNo"/>	
+	</resultMap> 
+	
 	<insert id="insertMeeting" parameterType="MeetingDTO">
 		INSERT
 		  INTO MEETING A
@@ -27,7 +43,13 @@
 		)
 	</insert>
 	
-	
+	<select id="selectProjectMember" parameterType="MemberDTO">
+		SELECT
+		       A.MEM_NAME
+		  FROM MEMBER A 
+		  JOIN PJT_AUTHORITY B ON (B.MEM_NO = A.MEM_NO)
+		 WHERE B.PJT_NO = #{projectNo}
+	</select>
 	
 	
 </mapper>

@@ -39,8 +39,6 @@
 	  showMain();
 	  currentDateget();
 	  resetInsert();
-	  console.log(today.getFullYear());
-	  console.log('test');
 	  
 	  
 	  
