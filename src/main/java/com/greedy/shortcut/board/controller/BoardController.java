@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.service.CardService;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
@@ -30,11 +32,15 @@ public class BoardController {
 
 	@RequestMapping(value = "/board/kanbanboard", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public List<MemberDTO> selectMember(@ModelAttribute MemberDTO member, HttpServletRequest request) {
+	public List<ProjectAuthorityDTO> selectMember(@ModelAttribute ProjectAuthorityDTO pAuth, HttpServletRequest request) {
 		
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		System.out.println("memberNo" + memberNo);
 		
-		List<MemberDTO> memberList = cardService.selectMember(member);
-		System.out.println(memberList);
+		List<ProjectAuthorityDTO> memberList = cardService.selectMember(memberNo);
+		
+//		List<ProjectAuthorityDTO> pMemberList = cardService.selectMember(pAuth, memberNo);
+//		System.out.println(pMemberList);
 		return memberList;
 	}
 

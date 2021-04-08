@@ -22,7 +22,7 @@ public class ProjectAuthorityDTO {
 		super();
 		this.projectRole = projectRole;
 		this.projectNo = projectNo;
-		MemberNo = memberNo;
+		this.MemberNo = memberNo;
 		this.projectRoleNo = projectRoleNo;
 		//this.memberList = memberList;
 		this.memberId = memberId;
