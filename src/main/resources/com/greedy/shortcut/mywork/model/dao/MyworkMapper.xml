@@ -42,15 +42,16 @@
 	
 	
 	
-	<select id="selectTaskTypeCount" resultType="_int">
+	<select id="selectTaskTypeCount" parameterType="hashmap" resultType="_int">
        SELECT
               COUNT(*)
          FROM CRD_TASK
-        WHERE MEM_NO = 1
-        <if test= "type lte 0">
+        WHERE MEM_NO = #{memNo}
+        <if test= "type gte 1">
          AND TK_PROGRESS = #{type}
         </if>
 	</select>
+	
 	
 
 	<select id="selectUserInfoOne" resultMap="memberResultSet" parameterType="MemberDTO">
@@ -66,10 +67,10 @@
 	
 	
 	
-	<select id="selectTaskList" resultMap="cardAndTaskResultSet" parameterType="hashmap">
+	
+	<select id="selectTaskTypeList" resultMap="cardAndTaskResultSet" parameterType="hashmap">
          SELECT 
-              D.RUM
-            , D.TK_PROGRESS
+              D.TK_PROGRESS
             , D.CRD_NO
             , D.MEM_NO
             , D.TK_START_DATE
@@ -97,6 +98,7 @@
                            JOIN CARD B ON (A.CRD_NO = B.CRD_NO )
                           WHERE A.MEM_NO = #{memNo}
                             AND B.CRD_TYPE = 2
+                            AND A.TK_PROGRESS = #{type}
                         ) F
               )D 
       WHERE D.RUM BETWEEN #{startRow} AND #{endRow} 

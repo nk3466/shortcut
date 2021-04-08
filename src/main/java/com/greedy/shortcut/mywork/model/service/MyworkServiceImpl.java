@@ -1,5 +1,6 @@
 package com.greedy.shortcut.mywork.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,30 @@ public class MyworkServiceImpl implements MyworkService{
 	public List<MyworkResponseCardAndTaskDTO> selectTaskList(Integer no) {
 		
 		return myworkMapper.selectTaskList(no);
+	}
+
+	@Override
+	public int selectTaskTypeCount(Integer no, int i) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("memNo", no);
+		map.put("type", i);
+		
+		System.out.println("no: " + no + ", type: "+ i);
+		
+		return myworkMapper.selectTaskTypeCount(map);
+	}
+
+	@Override
+	public List<MyworkResponseCardAndTaskDTO> selectTaskTypeList(Integer no, int i, int j, int k) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("memNo", no);
+		map.put("type", i);
+		map.put("startRow", j);
+		map.put("endRow", k);
+
+		
+		return myworkMapper.selectTaskTypeList(map);
 	}
 
 }
