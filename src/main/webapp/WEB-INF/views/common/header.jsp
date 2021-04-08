@@ -37,7 +37,8 @@
 					<a class="menu_list" data-toggle="modal" data-target="#member_login">로그인</a>
 				</c:otherwise>
 			</c:choose>
-			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/board/project_board">프로젝트</a>
+			<input type="text" id="ABC" style="display: none;" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}">
+			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/board/project_board/${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}">프로젝트</a>
 			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/mywork/mywork">내업무</a>
 			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/meeting/meetinglog">한국어</a>
 			<a class="menu_list">${requestScope.loginFailMsg}</a>

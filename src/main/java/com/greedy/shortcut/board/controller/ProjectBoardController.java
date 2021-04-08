@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,12 +43,14 @@ public class ProjectBoardController {
 		this.projectBoardService = projectBoardService;
 	}
 
-	@GetMapping("project_board")
-	public String project(Model model, HttpServletRequest request) {
+	@GetMapping("project_board/{no}")
+	public String project(Model model, HttpServletRequest request, @PathVariable("no") int no) {
 		
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails userDetails = (UserDetails) principal;
 		String email = userDetails.getUsername();
+		
+		System.out.println("no :" + no);
 		
 		List<ProjectDTO> projectList = projectBoardService.selectProjectList(email);
 		for(ProjectDTO project : projectList) {

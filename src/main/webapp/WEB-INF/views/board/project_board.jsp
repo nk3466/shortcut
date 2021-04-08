@@ -169,7 +169,10 @@
 		$(document).ajaxSend(function(e, xhr, options) {
 		    xhr.setRequestHeader(header, token);
 		});
-
+		
+		var memberNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
+		   console.log(memberNo);
+		
 		/* 멤버 수 count */
 		var idcount = 1;
 		/* console.log("엇??" +  ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}); */
@@ -235,7 +238,8 @@
 				return hiddenTag
 			}
 			
-		   //var memberNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
+		   var memberNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
+		   console.log(memberNo);
 		   
 			const projectMemberList = document.getElementById('dynamicTbody').innerHTML;
 			var $form = $('<form></form>');

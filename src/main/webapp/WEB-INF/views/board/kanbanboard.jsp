@@ -440,9 +440,8 @@ $("#addMember").one("click", function(){
             	nike.innerHTML = nike.value = memberList[i].name;
             	member.appendChild(nike);
             }
-			/*  $("#member").children('button').onclick = function({
-            //	var  
-            //}) */
+			$("#member").children('button').onclick = function(
+        );
         }
       });
 });
