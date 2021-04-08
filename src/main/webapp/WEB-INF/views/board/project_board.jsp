@@ -50,7 +50,7 @@
             </div>
             <div class="project_line2"></div>
 
-            <div class="row">
+            <div class="row" >
                <div class="board_list">
                   <a class="board_detail" href="#" data-toggle="modal" data-target="#project_produce">
                      <i class="fas fa-plus"></i>
@@ -63,14 +63,17 @@
                   <a class="board_detail type" href="${pageContext.servletContext.contextPath }/board/backlog">
                      <img src="${pageContext.servletContext.contextPath}/resources/img/board_icon.png" style="height:70px; width:70px;">
                   </a> --%>
+                  <div id="pjSelectOne">
+                  <!-- 프로젝트 수정을 하기 위함 -->
                   <div class="board_text"  data-toggle="modal" data-target="#project_modify">
                      The joeun   
                   </div> 
+                  </div>
                   <c:forEach var="project" items="${ requestScope.projectList }">
                   <div class="board_list">
 						<!-- <div class="board_text"  data-toggle="modal" data-target="#project_modify"> -->
 						
-							<a class="board_detail type" style="background-color: ${project.projectColor};" href="${pageContext.servletContext.contextPath }/board/backlog">
+							<a class="board_detail type" style="background-color: ${project.projectColor};" href="${pageContext.servletContext.contextPath }/board/backlog/ ">
 								<img src="${ pageContext.servletContext.contextPath }/resources/img/board_icon.png" style="height:70px; width:70px;">
 							</a>
 							<div style="display: none;">
@@ -84,8 +87,8 @@
 						
 					<!-- </div> -->
 					          
-               </div>
                
+              </div>
             </div>
          </div>         
       </div>
@@ -160,7 +163,24 @@
       </div>
    </div>
 </div>
-
+<!-- <script>
+if(document.getElementById("pjSelectOne")) {
+	
+	  const $pjSelectOne = document.getElementById("pjSelectOne");
+	  console.log($pjSelectOne);
+	  const $pjList = $pjSelectOne.childNodes;
+	  
+			console.log("오호?" + $pjList[5]);
+	  for(let i = 0; i < $pjList.length; i++) {
+		  
+		  $pjList[i].onclick = function() {
+			  const no = this.childNodes[3].innerText;
+			  location.href="${ pageContext.servletContext.contextPath}/mywork/client/projectInfo/" + no;
+		  }
+	  }
+	  
+  }
+</script> -->
 <script>
 		/* 시큐리티 권한  */
 		const token = $("meta[name='_csrf']").attr("content");
@@ -183,7 +203,7 @@
 			if(!vali($("#email").val())){
 				/* 아이디 중복 체크 */
 				$.ajax({
-					url:"projectidDupCheck",
+					url:"${pageContext.servletContext.contextPath}/board/projectidDupCheck",
 					type:"post",
 					data:{email :email},
 					success:function(data){

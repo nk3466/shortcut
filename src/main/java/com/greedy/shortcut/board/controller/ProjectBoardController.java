@@ -114,7 +114,7 @@ public class ProjectBoardController {
 		//return "/board/backlog";
 	}
 	/* 이메일 유무  체크*/
-	@PostMapping(value="projectidDupCheck", produces = "application/json; charset=UTF-8")
+	@PostMapping(value="/projectidDupCheck" , produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public int idprojectcheck(@ModelAttribute MemberDTO member, HttpServletRequest request) {
 		

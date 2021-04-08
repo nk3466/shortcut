@@ -97,7 +97,7 @@
 	
 	<select id="selectProjectList" resultMap="ProjectResultSet" parameterType="MemberDTO">
 		SELECT
-		       A.PJT_NO
+		       DISTINCT A.PJT_NO
 		     , A.PJT_NAME
 		     , A.PJT_START_DATE
 		     , A.PJT_DEL_YN
