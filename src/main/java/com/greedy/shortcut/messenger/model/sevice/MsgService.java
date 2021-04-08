@@ -14,5 +14,7 @@ public interface MsgService {
 
 	List<MessengerDTO> selectReceive();
 
+	List<MessengerDTO> selectSend();
+
 
 }

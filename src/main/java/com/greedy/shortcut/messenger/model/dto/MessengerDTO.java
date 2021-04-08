@@ -3,6 +3,7 @@ package com.greedy.shortcut.messenger.model.dto;
 import java.sql.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.greedy.shortcut.board.model.dto.ProjectDTO;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
@@ -15,6 +16,7 @@ public class MessengerDTO {
 	private String msgTo;             //받은사람
 	private String txt;               //내용
 	private String del;               //삭제여부
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd HH:mm:ss SSS", timezone = "Asia/Seoul")
 	private java.sql.Date date;       //생성날짜
 	
 	private String memName;           //회원이름

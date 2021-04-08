@@ -62,7 +62,7 @@
 							<div class="recv_header">프로젝트명</div>
 							<div class="recv_header">구분</div>
 							<div class="recv_header">내용</div>
-							<div class="recv_header">보낸 사람</div>
+							<div class="recv_header">받은 사람</div>
 							<div class="recv_header">보낸 날짜</div>
 						</div>
 						<div class="row">

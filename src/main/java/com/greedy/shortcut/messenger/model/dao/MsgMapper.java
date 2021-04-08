@@ -14,4 +14,6 @@ public interface MsgMapper {
 
 	List<MessengerDTO> selectReceive();
 
+	List<MessengerDTO> selectSend();
+
 }

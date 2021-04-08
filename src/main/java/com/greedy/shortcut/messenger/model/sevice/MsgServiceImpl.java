@@ -33,4 +33,10 @@ public class MsgServiceImpl implements MsgService {
 		return msgMapper.selectReceive();
 	}
 
+	@Override
+	public List<MessengerDTO> selectSend() {
+
+		return msgMapper.selectSend();
+	}
+
 }

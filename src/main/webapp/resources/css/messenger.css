@@ -26,7 +26,7 @@
 .messenger_area .row .messenger_right_area .messenger_list .row .item_list .item_detail{ font-weight: bold;  font-size: 30px;  padding: 50px; color: #ED1745; text-align: center;}
 .messenger_area .row .messenger_right_area .messenger_list .messenger_line{border: 1px solid lightgray;  margin: 20px 0;}
 .messenger_area .row .messenger_right_area .messenger_list .send_area{border-radius: 10px; border: 1px solid lightgray; width: 100%;  padding: 20px 40px;}
-.messenger_area .row .messenger_right_area .messenger_list .send_area .row{margin: 0; border-bottom: 1px solid lightgray; padding-bottom: 15px; line-height: 50px;
+.messenger_area .row .messenger_right_area .messenger_list .send_area .row{margin: 0; border-bottom: 1px solid lightgray; padding-bottom: 10px; line-height: 30px;
  margin-bottom: 15px;}
 .messenger_area .row .messenger_right_area .messenger_list .send_area .row .send_itme{font-size: 25px; padding: 0 15px; width: 25%;}
 .messenger_area .row .messenger_right_area .messenger_list .send_area .row .send_itme_detail{width: 30%; font-size: large;}

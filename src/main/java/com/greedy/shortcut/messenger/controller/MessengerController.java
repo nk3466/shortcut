@@ -55,7 +55,7 @@ public String selectReceiveList(Model model) {
 	@GetMapping("messenger_inbox_send")
 	public String selectSend(Model model) {
 		
-		List<MessengerDTO> msgList = msgService.selectReceive();
+		List<MessengerDTO> msgList = msgService.selectSend();
 		System.out.println(msgList);
 		
 		model.addAttribute("msgList", msgList);
