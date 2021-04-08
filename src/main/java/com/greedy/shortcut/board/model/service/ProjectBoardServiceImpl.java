@@ -72,8 +72,8 @@ public class ProjectBoardServiceImpl implements ProjectBoardService{
 
 	/* 프로젝트 조회 */
 	@Override
-	public List<ProjectDTO> selectProjectList(String email) {
-		return mapper.selectProjectList(email);
+	public List<ProjectDTO> selectProjectList(int no) {
+		return mapper.selectProjectList(no);
 	}
 
 

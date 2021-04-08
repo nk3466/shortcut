@@ -14,6 +14,6 @@ public interface ProjectBoardService {
 	
 	boolean insertProjectMember(ProjectDTO project, List<ProjectAuthorityDTO> projectMemberList);
 
-	List<ProjectDTO> selectProjectList(String email);
+	List<ProjectDTO> selectProjectList(int no);
 
 }

@@ -63,9 +63,9 @@
                   <a class="board_detail type" href="${pageContext.servletContext.contextPath }/board/backlog">
                      <img src="${pageContext.servletContext.contextPath}/resources/img/board_icon.png" style="height:70px; width:70px;">
                   </a> --%>
-                  <!-- <div class="board_text"  data-toggle="modal" data-target="#project_modify">
+                  <div class="board_text"  data-toggle="modal" data-target="#project_modify">
                      The joeun   
-                  </div> -->  
+                  </div> 
                   <c:forEach var="project" items="${ requestScope.projectList }">
                   <div class="board_list">
 						<!-- <div class="board_text"  data-toggle="modal" data-target="#project_modify"> -->
@@ -318,25 +318,61 @@
 
          <!-- Modal Header -->
          <div class="modal-header">
-            <input class="input_detail" type="text" name="name" placeholder="Add Project Title">            
+            <input class="input_detail" type="text" id="projectName" placeholder="Add Project Title">            
          </div>
          
-
+		<div class="modal-header">
+			<div>시작 날짜</div>
+            <input class="input_detail nk" type="date" id="projectStartDate">         
+         </div>
+         
+         <div class="modal-header">
+            <p>종료 날짜</p>
+         <input class="input_detail  nk" type="date" id="projectEndDate">  
+         </div>
+         
+         <div class="modal-header">
+            <p>프로젝트 색상</p>
+         <input class="input_detail  nk1" type="color" id="projectColor">  
+         </div> 
+         
+                
          <!-- Modal body -->
          
          <div class="modal-body">
             <div class="row">
                <i class="fas fa-search"></i>
-               <input class="input_detail1 type" type="text" name="name" placeholder="">
-               
-               <input class="input_detail2" type="button" name="name" value="Add">      
+               <input class="input_detail1" type="text" id="email" placeholder="Add Member">
+               <select class="select_detail nk" id="selectroll">
+                  <option>Admin</option>
+                  <option>Member</option>
+                  <option>Client</option>
+               </select>
+               <input class="input_detail2 nk" type="button" id="addpersonButton" value="+">      
+               <input class="input_detail2 nk" type="button" id="removepersonButton" value="-">      
             </div>
 
-            <div class="select_member"></div>                                                            
+				<table class="select_member" id="projectMember" border="1" style="width:100%; height:30px; text-align: center">
+					<thead>
+					<tr>
+						<th style="width:60px; align-content: center;" >인원 수</th>
+						<th>이메일</th>
+						<th style="width:100px;">권한</th>
+						<th style="width:100px; display:none">회원번호</th>
+					</tr>
+					<tr>
+						<th>1</th>
+						<th  class="Email">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}</th>
+						<th class="roll">Admin</th>
+						<th class="memberNo" style="display:none">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}</th>
+					</tr>
+					</thead>
+					<tbody  id="dynamicTbody">
+					</tbody>
+				</table>
          </div>
-
             
-            
+         
          
          <div class="modal_btn_area">
             <button class="btn_detail type">Revise Project</button>

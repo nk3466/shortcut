@@ -18,5 +18,5 @@ public interface ProjectMapper {
 	/* 프로젝트 멤버 등록 */
 	int insertProjectMember(ProjectAuthorityDTO projectAuthorityDTO);
 
-	List<ProjectDTO> selectProjectList(String email);
+	List<ProjectDTO> selectProjectList(int no);
 }

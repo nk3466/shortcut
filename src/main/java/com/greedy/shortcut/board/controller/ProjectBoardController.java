@@ -52,7 +52,7 @@ public class ProjectBoardController {
 		
 		System.out.println("no :" + no);
 		
-		List<ProjectDTO> projectList = projectBoardService.selectProjectList(email);
+		List<ProjectDTO> projectList = projectBoardService.selectProjectList(no);
 		for(ProjectDTO project : projectList) {
 			System.out.println(project);
 		}
