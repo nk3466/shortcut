@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.greedy.shortcut.common.paging.PageInfoDTO;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 import com.greedy.shortcut.mywork.model.dao.MyworkMapper;
 import com.greedy.shortcut.mywork.model.dto.ClientCardDTO;
@@ -55,15 +56,17 @@ public class MyworkServiceImpl implements MyworkService{
 	}
 
 	@Override
-	public List<MyworkResponseCardAndTaskDTO> selectTaskTypeList(Integer no, int i, int j, int k) {
+	public List<MyworkResponseCardAndTaskDTO> selectTaskTypeList(Integer no, int i, PageInfoDTO PageInfo) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("memNo", no);
 		map.put("type", i);
-		map.put("startRow", j);
-		map.put("endRow", k);
+		map.put("startRow", PageInfo.getStartRow());
+		map.put("endRow",  PageInfo.getEndRow());
 
 		
 		return myworkMapper.selectTaskTypeList(map);
 	}
+
+
 
 }
