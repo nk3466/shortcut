@@ -43,12 +43,12 @@
 		)
 	</insert>
 	
-	<select id="selectProjectMember" parameterType="MemberDTO">
+	<select id="selectProjectMember" resultMap="MemberResultSet" parameterType="MemberDTO">
 		SELECT
 		       A.MEM_NAME
 		  FROM MEMBER A 
 		  JOIN PJT_AUTHORITY B ON (B.MEM_NO = A.MEM_NO)
-		 WHERE B.PJT_NO = #{projectNo}
+		 WHERE B.PJT_NO = 4
 	</select>
 	
 	

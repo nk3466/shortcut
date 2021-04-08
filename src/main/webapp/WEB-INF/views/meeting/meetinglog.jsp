@@ -108,7 +108,7 @@
 									</div>							
 								</div>
 								<div class="modal_line"></div>
-								<div class="row">
+							<!-- 	<div class="row">
 									<div class="item_type type">
 										팀원추가
 									</div>
@@ -118,7 +118,7 @@
 									</div>
 									
 								</div>
-								<div class="modal_line"></div>
+								<div class="modal_line"></div> -->
 								<div class="row">
 									<div class="item_type type">
 										참석자
@@ -189,40 +189,33 @@
 		
 		var count = 1;
 		
-		$("#memberAddBtn").click(function(){
-			
-			var memberId = $("memberEmail").val();
-			
-			console.log(memberId);
-			
-			if(!emailNull($("#memberEmail").val())){
-				
-				$.ajax({
-					url:"selectProjectMember",
-					type:"POST",
-					data:{ name : memberId},
-					success: function(data){
-						console.log(data)
-						if(data !==0){
+		$(".conference_update").click(function(){
+			$.ajax({
+				url:"selectProjectMember",
+				type:"POST",					
+				success: function(data, status, xhr){
+					console.log(data)
+					if(data !==0){
+						
+						let memberList = data; 
+						let list="";
+						
+						for(let i = 0; i < memberList.length; i++){
 							
 							var insertSpan="";
-							insertSpan += '<span class="item_text on">' + document.getElementById("memberEmail").value + '<i id="delBtn" class="fas fa-times-circle"></i>' + '</span>';
+							insertSpan += '<span class="item_text on">' + memberList[i].name + '<i id="delBtn" class="fas fa-times-circle"></i>' + '</span>';
 							
 							$("#meetingMember").append(insertSpan);
-							$("#memberEamil").val('');
-							
-						} else {
-							alert("프로젝트 참여인원이 아닙니다. ");
-							$("#memberEamil").val('');
 						}
-					},
-					error:function(data){
-						console.log(error);
-					}
-					
-				})
+					} 
+				},
+				error:function(data){
+					console.log(error);
+				}
 				
-			}
+			})
+			
+			
 		});
 		
 		
