@@ -12,10 +12,18 @@
 		<result column="PHONE" property="phone" />
 	</resultMap>
 
-	<select id="selectMember" resultMap="memberResultSet" parameterType="MemberDTO">
+	<!-- <select id="selectMember" resultMap="memberResultSet" parameterType="MemberDTO">
 	 SELECT 
             A.MEM_NAME
        FROM MEMBER A
+	</select> -->
+	
+	<select id="selectMember" resultMap="memberResultSet" parameterType="MemberDTO">
+	 SELECT
+		       A.MEM_NAME
+		  FROM MEMBER A 
+		  JOIN PJT_AUTHORITY B ON (B.MEM_NO = A.MEM_NO)
+		 WHERE B.PJT_NO = 5
 	</select>
 	
  </mapper>
