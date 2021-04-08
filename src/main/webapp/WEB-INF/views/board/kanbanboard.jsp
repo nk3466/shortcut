@@ -377,7 +377,6 @@
 	});
 
 	$(".kanban_item").children('div').click(function() {
-		console.log("asdf")
 
 	})
 
@@ -432,7 +431,8 @@ $("#addMember").one("click", function(){
             for(let i = 0; i < memberList.length; i++)
             {
             	const nike = document.createElement("button");
-            	member.style.fontSize = 13+"px";
+            	
+            	member.style.fontSize = 12+"px";
             	member.style.padding = 5+"px";
             	nike.style.backgroundColor = "#fce4ec";
             	nike.style.color = "black";
@@ -445,24 +445,44 @@ $("#addMember").one("click", function(){
         var $mem = document.getElementById("member");
         var $mem1 = document.getElementById("choisemember");
         const $mems = $mem.childNodes;
-        console.log($mems[0]);
         
         for(let i = 0; i < memberList.length; i++) {
         	$mems[i].onclick = function() {
         		const nikes = document.createElement("button");
         		
-        		nikes.id = "ac";
-        		
-        		$mem.style.fontSize = 13+"px";
-        		$mem.style.padding = 5+"px";
+        		nikes.style.fontSize = 10+"px";
+        		nikes.style.padding = 5+"px";
         		nikes.style.backgroundColor = "#eeffff";
         		nikes.style.color = "black";
         		nikes.style.margin = 5+"px";
         		nikes.innerHTML = nikes.value = memberList[i].name;
         		$mem1.appendChild(nikes);
         		
-        		var $ac = document.getElementById("ac");
-        		$ac.onclick = this.remove();
+        		$(document).on('click','#bc',function(e){
+        			e.preventDefault();
+        			
+                	var t = $(this);
+                	
+                	t.toggleClass();
+                	
+        			
+        		})
+        		
+        		
+          		if(nikes.style.backgroundColor = "#eeffff") {
+        			nikes.id = "bc";
+	        		var $bc = document.getElementById("bc");
+	        		$bc.onclick = this.remove();
+        		}
+        		
+        		nikes.id = "ac";
+        		
+        		if(nikes.id = "ac") {
+	        		var $ac = document.getElementById("ac");
+	        		$ac.onclick = this.remove();
+	        		nikes.id = "bc";
+        		} 
+        		
         	}
         	
         	
