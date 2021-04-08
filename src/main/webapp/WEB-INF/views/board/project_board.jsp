@@ -255,7 +255,6 @@
 		   );*/
 		   	
 		   var nk1 = $('form[name=projectMemberList]').serializeArray();
-		   var nk2 = [];
 		   var projectMaker = $("#projectMember").find(".memberNo").eq(0).text();
 		    for(let i = 0; i < idcount; i++){
 			   memberId = $("#projectMember").find(".Email").eq(i).text();
@@ -296,11 +295,13 @@
 				    },
 			
 			   success : function(data, textStatus, xhr) {
-				   
+				   alert("프로젝트 생성이 완료되었습니다.");
+					location.href = "${pageContext.servletContext.contextPath}/board/backlog";
 			   },
 				error : function(xhr, status, error) {
 					console.log(error);
-				//	location.href = "${pageContext.servletContext.contextPath}/main";
+					alert("프로젝트 생성이 취소되었습니다.");
+					location.href = "${pageContext.servletContext.contextPath}/board/project_board";
 				}
 		   });
 		})

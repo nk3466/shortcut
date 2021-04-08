@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.ProjectDTO;
 import com.greedy.shortcut.board.model.service.ProjectBoardService;
@@ -61,7 +63,7 @@ public class ProjectBoardController {
 	@ResponseBody
 	public String registProject(HttpSession httpsession,		
 			@ModelAttribute ProjectDTO project,
-			HttpServletRequest request, RedirectAttributes rttr) {
+			HttpServletRequest request, RedirectAttributes rttr) throws JsonProcessingException {
 		
 		System.out.println(project);
 		
@@ -102,11 +104,11 @@ public class ProjectBoardController {
 		 
 		 if(!projectBoardService.insertProject(project) || !projectBoardService.insertProjectMember(project, projectMemberList)) {
 			 rttr.addFlashAttribute("message","프로젝트 생성이 취소되었습니다.");
-				return "redirect:/";
+				return new ObjectMapper().writeValueAsString(project);
 		 }
 			 rttr.addFlashAttribute("message","프로젝트가 생성되었습니다.");
-			 
-		return "/board/backlog";
+			 return new ObjectMapper().writeValueAsString(project);
+		//return "/board/backlog";
 	}
 	/* 이메일 유무  체크*/
 	@PostMapping(value="projectidDupCheck", produces = "application/json; charset=UTF-8")

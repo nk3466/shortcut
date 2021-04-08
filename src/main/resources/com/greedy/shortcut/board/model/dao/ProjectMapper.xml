@@ -71,7 +71,19 @@
          AND A.PJT_END_DATE = #{projectEndDate}
          AND A.PJT_COLOR = #{projectColor}
 	</select> 
-	 <insert id="insertProjectMember" parameterType="ProjectAuthorityDTO">
+	
+	<insert id="insertProjectMember" parameterType="ProjectAuthorityDTO">
+		INSERT
+		   INTO PJT_AUTHORITY
+		   (
+		   PA_ROLE, PJT_NO, MEM_NO, PA_NO
+		   )
+		   VALUES
+		   (
+		    #{projectRole}, #{projectNo}, #{memberNo}, SEQ_PA_NO.NEXTVAL
+		    )
+	</insert>
+	<!--  <insert id="insertProjectMember" parameterType="ProjectAuthorityDTO">
 	 INSERT
 	   INTO PJT_AUTHORITY
 	   (PA_ROLE, PJT_NO, MEM_NO, PA_NO)
@@ -81,7 +93,7 @@
 	   #{item.projectRole}, #{item.projectNo}, #{item.memberNo}, SEQ_PA_NO.NEXTVAL
 	   </foreach>
 	   )
-	</insert> 
+	</insert>  -->
 	
 	<select id="selectProjectList" resultMap="ProjectResultSet" parameterType="MemberDTO">
 		SELECT

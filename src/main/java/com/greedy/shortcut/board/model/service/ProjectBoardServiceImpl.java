@@ -49,12 +49,19 @@ public class ProjectBoardServiceImpl implements ProjectBoardService{
 		
 		System.out.println(project1);
 		int projectNo = project1.getPjtNo();
-
-		//projectMemberList.add(project1.getPjtNo());
+		for(int i = 0; i < projectMemberList.size();i++) {
+			
+			projectMemberList.get(i).setProjectNo(projectNo);
+		}
 		
-		  if(!Integer.toString(projectNo).isEmpty()) { return
-		  mapper.insertProjectMember(projectMemberList, projectNo) > 0? true : false;
-		  
+		System.out.println("야호" + projectMemberList);
+		//projectMemberList.add(e)
+		  if(!Integer.toString(projectNo).isEmpty()) { 
+			  for(int i = 0; i < projectMemberList.size(); i++) {
+				  mapper.insertProjectMember(projectMemberList.get(i));
+			  }
+			  //return  mapper.insertProjectMember(projectMemberList) > 0? true : false;
+		 
 		  }else {
 		  
 		  }
