@@ -1,21 +1,28 @@
 package com.greedy.shortcut.mywork.controller;
 
 import java.security.Principal;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.greedy.shortcut.common.paging.PageInfoDTO;
+import com.greedy.shortcut.common.paging.Pagenation;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
-import com.greedy.shortcut.mywork.model.dto.ClientCardDTO;
-import com.greedy.shortcut.mywork.model.dto.ClientTaskDTO;
 import com.greedy.shortcut.mywork.model.dto.MyworkResponseCardAndTaskDTO;
 import com.greedy.shortcut.mywork.model.service.MyworkService;
-
+import static com.greedy.shortcut.common.paging.Pagenation.getPageInfo;
 @Controller
 @RequestMapping("/*")
 public class MyworkController {
@@ -69,16 +76,23 @@ public class MyworkController {
 		List<MyworkResponseCardAndTaskDTO> cardProgress2List = new ArrayList<>();
 		List<MyworkResponseCardAndTaskDTO> cardProgress3List = new ArrayList<>();
 		List<MyworkResponseCardAndTaskDTO> cardProgress4List = new ArrayList<>();
-		cardProgress1List = myworkService.selectTaskTypeList(member.getNo(), 1, 1, 3);
-		cardProgress2List = myworkService.selectTaskTypeList(member.getNo(), 2, 1, 3);
-		cardProgress3List = myworkService.selectTaskTypeList(member.getNo(), 3, 1, 3);
-		cardProgress4List = myworkService.selectTaskTypeList(member.getNo(), 4, 1, 3);
+		
+		PageInfoDTO reqPageInfo = Pagenation.getPageInfo(1, reqCardCount, 3, 5);
+		PageInfoDTO doingPageInfo = Pagenation.getPageInfo(1, doingCardCount, 3, 5);
+		PageInfoDTO donePageInfo = Pagenation.getPageInfo(1, doneCardCount, 3, 5);
+		PageInfoDTO waitPageInfo = Pagenation.getPageInfo(1, waitCardCount, 3, 5);
+		
+		cardProgress1List = myworkService.selectTaskTypeList(member.getNo(), 1, reqPageInfo);
+		cardProgress2List = myworkService.selectTaskTypeList(member.getNo(), 2, doingPageInfo);
+		cardProgress3List = myworkService.selectTaskTypeList(member.getNo(), 3, donePageInfo);
+		cardProgress4List = myworkService.selectTaskTypeList(member.getNo(), 4, waitPageInfo);
 		
 		System.out.println("cardProgress1List : " + cardProgress1List);
 		System.out.println("cardProgress2List : " + cardProgress2List);
 		System.out.println("cardProgress3List : " + cardProgress3List);
 		System.out.println("cardProgress4List : " + cardProgress4List);
 		
+		PageInfoDTO pageInfo = Pagenation.getPageInfo(1, doingCardCount, 3, 5);
 //		//List<ClientCardDTO> cardList = new ArrayList<>();
 //		//cardList = myworkService.selectCardList(member.getNo()); 
 //		List<MyworkResponseCardAndTaskDTO> cardList = new ArrayList<>();
@@ -100,12 +114,54 @@ public class MyworkController {
 //			}
 //		}
 //		
+		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("allCardCount", allCardCount);
+		model.addAttribute("reqCardCount", reqCardCount);
+		model.addAttribute("doingCardCount", doingCardCount);
+		model.addAttribute("doneCardCount", doneCardCount);
+		model.addAttribute("waitCardCount", waitCardCount);
 		model.addAttribute("cardProgress1List",cardProgress1List);
 		model.addAttribute("cardProgress2List",cardProgress2List);
 		model.addAttribute("cardProgress3List",cardProgress3List);
 		model.addAttribute("cardProgress4List",cardProgress4List);
 		
 		return "mywork/mywork";
+		
+		
+	}
+	
+	@PostMapping(value="/mywork/requestPaging", produces ="application/json; charset=UTF-8")
+	@ResponseBody
+	public String requestPaging(Principal principal, Model model,  @RequestParam Map<String, String> parameters) throws JsonProcessingException {
+		String currentPage = parameters.get("currentPage");
+		int memNo = Integer.parseInt(parameters.get("memNo"));
+		int pageNo = 1;
+		int limit = 3;
+		int buttonAmount = 5;
+		
+		if(currentPage != null && !"".equals(currentPage)) {
+			pageNo = Integer.parseInt(currentPage);
+		}
+		
+		if(pageNo <= 0) {
+			pageNo = 1;
+		}
+		System.out.println("pageNo : " + pageNo);
+		System.out.println("memNo:" + memNo);
+		
+		/* 진행중 카드 갯수 조회 */
+		int totalCount = myworkService.selectTaskTypeCount(memNo, 2);
+		
+		/* 페이지 정보 생성*/
+		PageInfoDTO pageInfo = Pagenation.getPageInfo(pageNo, totalCount, limit, buttonAmount);
+		
+		
+		
+		/* 진행중 카드 리스트 조회 */
+		List<MyworkResponseCardAndTaskDTO> cardProgress2List = myworkService.selectTaskTypeList(memNo, 2, pageInfo);
+		
+		System.out.println("cardProgress2List : " +cardProgress2List);
+		return new ObjectMapper().writeValueAsString(cardProgress2List);
 		
 		
 	}
