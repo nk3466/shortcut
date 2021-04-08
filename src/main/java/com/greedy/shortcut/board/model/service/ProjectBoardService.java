@@ -10,8 +10,10 @@ public interface ProjectBoardService {
 
 	int idprojectcheck(MemberDTO member);
 
-	boolean insertProject(ProjectDTO project, List<ProjectAuthorityDTO> projectMemberList);
+	boolean insertProject(ProjectDTO project);
 	
 	boolean insertProjectMember(ProjectDTO project, List<ProjectAuthorityDTO> projectMemberList);
+
+	List<ProjectDTO> selectProjectList(String email);
 
 }
