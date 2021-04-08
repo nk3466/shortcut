@@ -19,17 +19,17 @@
 
 
 
-.messenger_area .row .messenger_right_area{width: 55%; padding: 30px; box-shadow: 0 0px 31px 10px lightgrey inset; margin-left: 5%; height: 950px;}
+.messenger_area .row .messenger_right_area{width: 60%; padding: 30px; box-shadow: 0 0px 31px 10px #FFCCD7 inset; margin: 0 auto; height: 950px;}
 .messenger_area .row .messenger_right_area .messenger_list{}
-.messenger_area .row .messenger_right_area .messenger_list .row{margin: 0;}
+.messenger_area .row .messenger_right_area .messenger_list .row{margin: 0; justify-content: center;}
 .messenger_area .row .messenger_right_area .messenger_list .row .item_list{}
-.messenger_area .row .messenger_right_area .messenger_list .row .item_list .item_detail{ font-weight: bold;  font-size: 19px;  padding-right: 15px; color: black;}
+.messenger_area .row .messenger_right_area .messenger_list .row .item_list .item_detail{ font-weight: bold;  font-size: 30px;  padding: 50px; color: #ED1745; text-align: center;}
 .messenger_area .row .messenger_right_area .messenger_list .messenger_line{border: 1px solid lightgray;  margin: 20px 0;}
 .messenger_area .row .messenger_right_area .messenger_list .send_area{border-radius: 10px; border: 1px solid lightgray; width: 100%;  padding: 20px 40px;}
-.messenger_area .row .messenger_right_area .messenger_list .send_area .row{margin: 0; border-bottom: 1px solid lightgray; height: 50px; line-height: 50px;
+.messenger_area .row .messenger_right_area .messenger_list .send_area .row{margin: 0; border-bottom: 1px solid lightgray; padding-bottom: 15px; line-height: 50px;
  margin-bottom: 15px;}
-.messenger_area .row .messenger_right_area .messenger_list .send_area .row .send_itme{font-size: 18px; padding: 0 15px; width: 20%;}
-.messenger_area .row .messenger_right_area .messenger_list .send_area .row .send_itme_detail{}
+.messenger_area .row .messenger_right_area .messenger_list .send_area .row .send_itme{font-size: 25px; padding: 0 15px; width: 25%;}
+.messenger_area .row .messenger_right_area .messenger_list .send_area .row .send_itme_detail{width: 30%; font-size: large;}
 
 .messenger_area .row .messenger_right_area .messenger_list .send_area .row.type{border: 0; height: 100%; position: relative;}
 .messenger_area .row .messenger_right_area .messenger_list .send_area .row.type .textarea_detail{width: 85%; height: 400px;}
@@ -40,18 +40,19 @@
 
 /* 받은 쪽지함 */
 .messenger_area .row .messenger_right_area .messenger_receiver_area{padding: 10px 15px; height: 750px;}
-.messenger_area .row .messenger_right_area .messenger_receiver_area .row.type{margin: 0; border: 1px solid lightgray; margin-bottom: 10px;}
-.messenger_area .row .messenger_right_area .messenger_receiver_area .row.type .recv_header{width: 20%; text-align: center; font-size: 19px; font-weight: bold;  padding: 10px; background-color: #eb98aa; color: white;}
+.messenger_area .row .messenger_right_area .messenger_receiver_area .row.type{margin: 0;  margin-bottom: 10px;}
+.messenger_area .row .messenger_right_area .messenger_receiver_area .row.type .recv_header{width: 15%; text-align: center; font-size: 19px; font-weight: bold;  padding: 10px; background-color: #eb98aa; color: white;}
 .messenger_area .row .messenger_right_area .messenger_receiver_area .row {margin-bottom: 10px;}
-.messenger_area .row .messenger_right_area .messenger_receiver_area .row .recv_item{width: 20%; text-align: center; font-size: 19px; font-weight: bold;  padding: 10px; background-color: ghostwhite;}
+.messenger_area .row .messenger_right_area .messenger_receiver_area .row .recv_item{width: 15%; text-align: center; font-size: 19px; font-weight: bold;  padding: 10px; background-color: ghostwhite;}
 
 
 
 /* 검색 */
 .msg_search_area{width: 50%; margin: 0 auto;}
 .msg_search_area .row{margin: 0;}
-.msg_search_area .row .input_detail{width: 60%; margin: 0 5%; padding: 0 10px;}
+.msg_search_area .row .input_detail{width: 60%; margin: 0 5%; padding: 0 10px; margin-bottom: 15px;}
 .msg_search_area .row .btn_detail{background-color: white;}
+
 
 
 

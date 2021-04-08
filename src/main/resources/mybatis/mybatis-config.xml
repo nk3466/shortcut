@@ -25,10 +25,15 @@
  		<typeAlias alias="MeetingDTO" type="com.greedy.shortcut.meeting.model.dto.MeetingDTO"/>
 
  		<typeAlias alias="ClientCardTaskAndCardAndMemberDTO" type="com.greedy.shortcut.mywork.model.dto.ClientCardTaskAndCardAndMemberDTO"/>
- 	
+
 		<typeAlias alias="CardTaskDTO" type="com.greedy.shortcut.board.model.dto.CardTaskDTO"/>
 
 		<typeAlias alias="ReviewDTO" type="com.greedy.shortcut.retrospect.model.dto.ReviewDTO"/>
+
+ 		<typeAlias alias="MessengerDTO" type="com.greedy.shortcut.messenger.model.dto.MessengerDTO"/>
+
+ 		<typeAlias alias="PmDTO" type="com.greedy.shortcut.messenger.model.dto.PmDTO"/>
+
  		
  	</typeAliases>
  	
