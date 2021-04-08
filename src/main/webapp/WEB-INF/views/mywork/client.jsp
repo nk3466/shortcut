@@ -62,34 +62,16 @@
 				</div>
 			</c:if>
 			
-			<div id="divResult">
-			</div>
-			
-			   A.PJT_NO
-		     , A.PJT_NAME
-		     , A.PJT_START_DATE
-		     , A.PJT_DEL_YN
-		     , A.MEM_NO
-		     , A.PJT_END_DATE
-		     , A.PJT_COLOR 
-             , C.SPR_NO
-   	         , C.SPR_NAME
-             , C.SPR_START_DATE
-	         , C.SPR_END_DATE
-	         , C.SPR_GOAL
-	         , C.SPR_DEL_YN
-	         , C.BLG_NO
-			
 			<div id="cityData" data-toggle="modal" data-target="#myModal"></div>
 			
-			<input type="text" value="${ projectInfo.pjtNo }">
+			<%-- <input type="text" value="${ projectInfo.pjtNo }">
 			<input type="text" value="${ projectInfo.pjtName }">
 			<input type="text" value="${ projectInfo.pjtStartDate }">
 			<input type="text" value="${ projectInfo.pjtDelYn }">
 			<input type="text" value="${ projectInfo.memNo }">
 			<input type="text" value="${ projectInfo.pjtEndDate }">
 			<input type="text" value="${ projectInfo.pjtColor }">
-			<%-- <input type="text" value="${ fn:projectInfo.pjtColor }"> --%>
+			<input type="text" value="${ fn:projectInfo.pjtColor }">
 			<c:set var="myArray" value="${fn:split('one,two,three',',')}" />
 			<input type="text" id="" value="개수 ${ fn:length(myArray) }">
 			<c:set var="myArray2" value="${fn:split('${ reqeustScope.projectInfo.sprintList }','],')}" />
@@ -132,7 +114,7 @@
 							</td>
 						</tr> 
 					</c:forEach> 
-				</table>
+				</table> --%>
 				
 		</div>
 	</div>
@@ -189,23 +171,7 @@
         var chart = new google.visualization.Timeline(container);
         var dataTable = new google.visualization.DataTable();
         
-        const totalSprintCount = document.getElementById("totalSprintCount");
-        
-		const year1 = "2021";
-		
-		const month1 = "5";
-		const day1 = "4";
-		
-		const month2 = "5";
-		const day2 = "30";
-		
-		const month3 = "6";
-		const day3 = "4";
-		
-		const month4 = "7";
-		const day4 = "30";
-        
-        dataTable.addColumn({ type: 'string', id: 'projectName' });
+        dataTable.addColumn({ type: 'string', id: 'sprintName' });
         dataTable.addColumn({ type: 'string', id: 'name' });
         dataTable.addColumn({ type: 'date', id: 'Start' });
         dataTable.addColumn({ type: 'date', id: 'End' });
@@ -219,13 +185,10 @@
           
           ]); */
 
-         /*  String ext = originFileName.substring(originFileName.lastIndexOf(".")); */
-          
-
         var options = {
         	      timeline: { 
-        	    	  colorByRowLabel: true/* ,
-        	    	  groupByRowLabel: false */
+        	    	  colorByRowLabel: true,
+        	    	  groupByRowLabel: false 
         	    	  }
         	    };
         /* 첫 번째 텍스트 선택시 이벤트 */

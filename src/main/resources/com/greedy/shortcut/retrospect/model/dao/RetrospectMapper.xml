@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.greedy.shortcut.retrospect.model.dao.RetrospectMapper">
+
+	<resultMap id="reviewResultMap" type="ReviewDTO">
+		<id property="reviewNo" column="REVIEW_NO"/>
+		<result property="reviewLikeTxt" column="REVIEW_LIKE_TXT"/>
+		<result property="reviewLearnTxt" column="REVIEW_LEARN_TXT"/>
+		<result property="reviewMissTxt" column="REVIEW_MISS_TXT"/>
+		<result property="sprNo" column="SPR_NO"/>
+		<result property="memNo" column="MEM_NO"/>
+	</resultMap>
+
+	<select id="selectReview" resultMap="reviewResultMap">
+		SELECT
+		      A.REVIEW_NO
+		    , A.REVIEW_LIKE_TXT
+		    , A.REVIEW_LEARN_TXT
+		    , A.REVIEW_MISS_TXT
+		    , A.SPR_NO
+		    , A.MEM_NO
+		 FROM REVIEW A
+		WHERE A.SPR_NO = 1
+	</select>
+
+</mapper>

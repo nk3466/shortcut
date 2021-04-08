@@ -1,29 +1,29 @@
 package com.greedy.shortcut.mywork.model.dto;
 
-import com.greedy.shortcut.board.model.dto.CardDTO;
+import com.greedy.shortcut.board.model.dto.CardTaskDTO;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 public class ClientCardTaskAndCardAndMemberDTO {
 
-	private CardDTO card;
+	private CardTaskDTO cardTaskDTO;
 	private ClientCardDTO cardDTO;
 	private MemberDTO memberDTO;
 	
 	public ClientCardTaskAndCardAndMemberDTO() {}
 
-	public ClientCardTaskAndCardAndMemberDTO(CardDTO card, ClientCardDTO cardDTO, MemberDTO memberDTO) {
+	public ClientCardTaskAndCardAndMemberDTO(CardTaskDTO cardTaskDTO, ClientCardDTO cardDTO, MemberDTO memberDTO) {
 		super();
-		this.card = card;
+		this.cardTaskDTO = cardTaskDTO;
 		this.cardDTO = cardDTO;
 		this.memberDTO = memberDTO;
 	}
 
-	public CardDTO getCard() {
-		return card;
+	public CardTaskDTO getCardTaskDTO() {
+		return cardTaskDTO;
 	}
 
-	public void setCard(CardDTO card) {
-		this.card = card;
+	public void setCardTaskDTO(CardTaskDTO cardTaskDTO) {
+		this.cardTaskDTO = cardTaskDTO;
 	}
 
 	public ClientCardDTO getCardDTO() {
@@ -44,9 +44,10 @@ public class ClientCardTaskAndCardAndMemberDTO {
 
 	@Override
 	public String toString() {
-		return "ClientCardTaskAndCardAndMember [card=" + card + ", cardDTO=" + cardDTO + ", memberDTO=" + memberDTO
-				+ "]";
+		return "ClientCardTaskAndCardAndMemberDTO [cardTaskDTO=" + cardTaskDTO + ", cardDTO=" + cardDTO + ", memberDTO="
+				+ memberDTO + "]";
 	}
+
 	
 	
 }
