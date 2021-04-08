@@ -105,7 +105,8 @@
 		     , A.PJT_END_DATE
 		     , A.PJT_COLOR
 		  FROM PROJECT A
-		  JOIN MEMBER B ON (A.MEM_NO = B.MEM_NO)
-		 WHERE B.MEM_ID = #{email}
+		 JOIN PJT_AUTHORITY C ON(A.PJT_NO = C.PJT_NO)
+		 WHERE C.MEM_NO = #{no}
+		   AND C.PA_ROLE = 1 OR C.PA_ROLE = 2
 	</select> 
  </mapper>

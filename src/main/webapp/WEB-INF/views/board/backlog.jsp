@@ -9,7 +9,7 @@
 
 	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
 	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/backlog.css">
-	
+	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/modal.css">
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -31,10 +31,9 @@
 			<span class="backlog_header">
 				Backlog			
 			</span>			
+		<div class="meeting_btn"  data-toggle="modal" data-target="#project_produce_Detail">Edit Project</div>
 			<a class="meeting_btn" href="${ pageContext.servletContext.contextPath }/meeting/meetinglog">Meeting Log</a>
-			
 		</div>
-		
 
 		<div class="sprint_box_area">			
 			<div class="sprint_text_btn">
@@ -59,7 +58,8 @@
 							<div class="table_detail type2">5</div>
 							<div class="table_detail type3">로그인, 입금 페이지 열기, 10달러 입금. 잔액 조회 페이지 이동. 잔액 확인</div>
 							<div class="table_detail type4">지금은 암호화를 고려하지 않아도 됨</div>					
-						</div>						
+						</div>		
+										
 					</a>
 				</div>
 			</div>				
@@ -289,5 +289,75 @@
 		</div>
 	</div>
 	
+<div class="modal fade" id="project_produce_Detail">
+   <div class="modal-dialog">
+      <div class="modal-content">
+
+         <!-- Modal Header -->
+         <div class="modal-header">
+            <input class="input_detail" type="text" id="projectName" placeholder="Add Project Title">            
+         </div>
+         
+		<div class="modal-header">
+			<div>시작 날짜</div>
+            <input class="input_detail nk" type="date" id="projectStartDate">         
+         </div>
+         
+         <div class="modal-header">
+            <p>종료 날짜</p>
+         <input class="input_detail  nk" type="date" id="projectEndDate">  
+         </div>
+         
+         <div class="modal-header">
+            <p>프로젝트 색상</p>
+         <input class="input_detail  nk1" type="color" id="projectColor">  
+         </div> 
+         
+                
+         <!-- Modal body -->
+         
+         <div class="modal-body">
+            <div class="row">
+               <i class="fas fa-search"></i>
+               <input class="input_detail1" type="text" id="email" placeholder="Add Member">
+               <select class="select_detail nk" id="selectroll">
+                  <option>Admin</option>
+                  <option>Member</option>
+                  <option>Client</option>
+               </select>
+               <input class="input_detail2 nk" type="button" id="addpersonButton" value="+">      
+               <input class="input_detail2 nk" type="button" id="removepersonButton" value="-">      
+            </div>
+
+				<table class="select_member" id="projectMember" border="1" style="width:100%; height:30px; text-align: center">
+					<thead>
+					<tr>
+						<th style="width:60px; align-content: center;" >인원 수</th>
+						<th>이메일</th>
+						<th style="width:100px;">권한</th>
+						<th style="width:100px; display:none">회원번호</th>
+					</tr>
+					<tr>
+						<th>1</th>
+						<th  class="Email">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}</th>
+						<th class="roll">Admin</th>
+						<th class="memberNo" style="display:none">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}</th>
+					</tr>
+					</thead>
+					<tbody  id="dynamicTbody">
+					</tbody>
+				</table>
+         </div>
+            
+         
+         <div class="modal_btn_area">
+            <button class="btn_detail" id="createProject">Create Project</button>
+         </div>            
+      </div>
+   </div>
+</div>
+
+	
+
 </body>
 </html>

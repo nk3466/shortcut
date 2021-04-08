@@ -3,7 +3,7 @@
 .backlog_area .backlog_header_area{ margin-bottom: 20px;}
 .backlog_area .backlog_header_area .backlog_header{font-size: 25px; font-weight: bold;}
 .backlog_area .backlog_header_area .meeting_btn{float: right; border:1px solid lightgray; border-radius: 8px; background-color: white; font-size: 18px;     width: 125px;
-    height: 40px;  line-height: 40px;  text-align: center;  color: black;}
+    height: 40px;  line-height: 40px;  text-align: center; margin-left: 15px; color: black;}
 
 
 .sprint_box_area{margin-bottom: 50px; height: 250px;}
