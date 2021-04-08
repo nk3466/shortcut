@@ -11,19 +11,20 @@
 		<result column="MEM_PWD" property="password" />
 		<result column="PHONE" property="phone" />
 	</resultMap>
-
-	<!-- <select id="selectMember" resultMap="memberResultSet" parameterType="MemberDTO">
-	 SELECT 
-            A.MEM_NAME
-       FROM MEMBER A
-	</select> -->
 	
-	<select id="selectMember" resultMap="memberResultSet" parameterType="MemberDTO">
-	 SELECT
+	<resultMap id="AuthorityResultSet" type="ProjectAuthorityDTO">
+		<id column="PA_NO" property="projectRoleNo"/>	<!-- 권한고유번호 -->
+		<result column="PA_ROLE" property="projectRole"/><!-- 	회원권한 -->
+		<result column="PJT_NO" property="projectNo"/>		<!-- 프로젝트번호  -->
+		<result column="MEM_NO" property="memberNo"/>	
+	</resultMap> 
+	
+	<select id="selectMember" resultMap="AuthorityResultSet" parameterType="ProjectAuthorityDTO">
+		SELECT
 		       A.MEM_NAME
-		  FROM MEMBER A 
-		  JOIN PJT_AUTHORITY B ON (B.MEM_NO = A.MEM_NO)
-		 WHERE B.PJT_NO = 5
+		  FROM MEMBER A
+		  JOIN PJT_AUTHORITY B ON (A.MEM_NO = B.MEM_NO)
+		 WHERE A.MEM_NO = 2
 	</select>
-	
+		
  </mapper>

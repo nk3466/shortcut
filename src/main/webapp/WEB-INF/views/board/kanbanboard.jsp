@@ -301,6 +301,7 @@
 						<div id="choisemember"></div>
 						<input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회">
 						<div id="member"></div>
+						<p class="memberNo" style="display:none">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}</p>
 					</div>
 				<!-- </form> -->
 					<div class="item_area work_btn on">
@@ -411,6 +412,7 @@
 /* 시큐리티 권한  */
 const token = $("meta[name='_csrf']").attr("content");
 const header = $("meta[name='_csrf_header']").attr("content");
+var memberNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
 
 $(document).ajaxSend(function(e, xhr, options) {
     xhr.setRequestHeader(header, token);
@@ -420,9 +422,11 @@ $("#addMember").one("click", function(){
     $.ajax({
         type:"POST",
         url:"${pageContext.servletContext.contextPath}/board/kanbanboard",
+        data: {memberNo: memberNo},
         success:function(data, status, xhr)
         {
         	console.log(data);
+        	console.log(memberNo);
             let memberList=data;
             let res="";
             	
@@ -437,7 +441,7 @@ $("#addMember").one("click", function(){
             	nike.style.backgroundColor = "#fce4ec";
             	nike.style.color = "black";
             	nike.style.margin = 5+"px";
-            	nike.innerHTML = nike.value = memberList[i].name;
+            	nike.innerHTML = nike.value = memberList[i].memberNo;
             	member.appendChild(nike);
             	
             }

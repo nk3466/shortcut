@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.greedy.shortcut.board.model.dao.CardMapper;
+import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 @Service("cardService")
@@ -19,8 +20,10 @@ public class CardServiceImpl implements CardService {
 	}
 
 	@Override
-	public List<MemberDTO> selectMember(MemberDTO member) {
-		return cardMapper.selectMember(member);
+	public List<ProjectAuthorityDTO> selectMember(int memberNo) {
+		return cardMapper.selectMember(memberNo);
 	}
+
+
 
 }
