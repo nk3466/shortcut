@@ -11,10 +11,12 @@ public interface ProjectMapper {
 	MemberDTO selectMemberDupCheck(String inputUserId);
 	
 	/* 프로젝트 생성 */
-	int insertPoject(ProjectDTO project, List<ProjectAuthorityDTO> projectMemberList);
+	int insertPoject(ProjectDTO project);
 	
-	int selectProjectNum(ProjectDTO project);
+	ProjectDTO selectProjectNum(ProjectDTO project);
 	
 	/* 프로젝트 멤버 등록 */
-	int insertProjectMember(List<ProjectAuthorityDTO> projectMemberList, String projectNo);
+	int insertProjectMember(List<ProjectAuthorityDTO> projectMemberList, int projectNo);
+
+	List<ProjectDTO> selectProjectList(String email);
 }

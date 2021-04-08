@@ -26,10 +26,10 @@
 		<id column="PA_NO" property="projectRoleNo"/>	<!-- 권한고유번호 -->
 		<result column="PA_ROLE" property="projectRole"/><!-- 	회원권한 -->
 		<result column="PJT_NO" property="projectNo"/>		<!-- 프로젝트번호  -->
-		<result column="MEM_NO" property="MemberNo"/>	
+		<result column="MEM_NO" property="memberNo"/>	
 	</resultMap> 
 	
-	<resultMap type="ProjectAndAuthorityDTO" id="ProjectAndAuthorityResultSet">
+	<!-- <resultMap type="ProjectAndAuthorityDTO" id="ProjectAndAuthorityResultSet">
 		<id column="PJT_NO" property="pjtNo"/>
 		<id column="PA_NO" property="projectRoleNo"/>
 		<result column="PJT_NAME" property="projectName"/>
@@ -39,7 +39,7 @@
 		<result column="PJT_END_DATE" property="projectEndDate"/>
 		<result column="PJT_COLOR" property="projectColor"/>
 		<result column="PA_ROLE" property="projectRole"/>
-	</resultMap>
+	</resultMap> -->
 	
 	<select id="selectMemberDupCheck" resultMap="memberResultSet" parameterType="MemberDTO">
 	 SELECT 
@@ -52,17 +52,17 @@
 	INSERT
 	  INTO PROJECT A
 	  (
-	     A.PJT_NO, A.PJT_NAME, A.PJT_START_DATE,
+	     A.PJT_NO, A.PJT_NAME, A.PJT_START_DATE, MEM_NO,
 	     A.PJT_DEL_YN, A.PJT_END_DATE, A.PJT_COLOR
 	    )
 	  VALUES
 	  (
-	    SEQ_PJT_NO.NEXTVAL, #{projectName}, #{projectStartDate},
+	    SEQ_PJT_NO.NEXTVAL, #{projectName}, #{projectStartDate}, #{memberNo},
 	    'N', #{projectEndDate}, #{projectColor}
 	  )
 	</insert>
 	
-	 <select id="selectProjectNum" resultMap="memberResultSet" parameterType="MemberDTO">
+	 <select id="selectProjectNum" resultMap="ProjectResultSet" parameterType="ProjectDTO">
 	SELECT 
             A.PJT_NO
        FROM PROJECT A 
@@ -71,6 +71,29 @@
          AND A.PJT_END_DATE = #{projectEndDate}
          AND A.PJT_COLOR = #{projectColor}
 	</select> 
-	<!-- <insert id="insertProjectMember" parameterType="ProjectAuthorityDTO">
-	</insert> -->
+	 <insert id="insertProjectMember" parameterType="ProjectAuthorityDTO">
+	 INSERT
+	   INTO PJT_AUTHORITY
+	   (PA_ROLE, PJT_NO, MEM_NO, PA_NO)
+	   VALUES
+	   (
+	   <foreach collection="list" item="item" separator=",">
+	   #{item.projectRole}, #{item.projectNo}, #{item.memberNo}, SEQ_PA_NO.NEXTVAL
+	   </foreach>
+	   )
+	</insert> 
+	
+	<select id="selectProjectList" resultMap="ProjectResultSet" parameterType="MemberDTO">
+		SELECT
+		       A.PJT_NO
+		     , A.PJT_NAME
+		     , A.PJT_START_DATE
+		     , A.PJT_DEL_YN
+		     , A.MEM_NO
+		     , A.PJT_END_DATE
+		     , A.PJT_COLOR
+		  FROM PROJECT A
+		  JOIN MEMBER B ON (A.MEM_NO = B.MEM_NO)
+		 WHERE B.MEM_ID = #{email}
+	</select> 
  </mapper>

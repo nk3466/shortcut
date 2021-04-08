@@ -35,26 +35,38 @@ public class ProjectBoardServiceImpl implements ProjectBoardService{
 	}
 
 	@Override
-	public boolean insertProject(ProjectDTO project, List<ProjectAuthorityDTO> projectMemberList) {
+	public boolean insertProject(ProjectDTO project) {
 
-		return mapper.insertPoject(project, projectMemberList) > 0? true : false;
+		return mapper.insertPoject(project) > 0? true : false;
 	}
 
 	
 	@Override
 	public boolean insertProjectMember(ProjectDTO project, List<ProjectAuthorityDTO> projectMemberList) {
 		
-		String projectNo =  Integer.toString(mapper.selectProjectNum(project));
+		ProjectDTO project1 =  mapper.selectProjectNum(project);
 		
-		System.out.println(projectNo);
 		
-		if(!projectNo.isEmpty()) {
-			return mapper.insertProjectMember(projectMemberList, projectNo) > 0? true : false;
-		}else {
-			
-			return false;
-		}
+		System.out.println(project1);
+		int projectNo = project1.getPjtNo();
+
+		//projectMemberList.add(project1.getPjtNo());
+		
+		  if(!Integer.toString(projectNo).isEmpty()) { return
+		  mapper.insertProjectMember(projectMemberList, projectNo) > 0? true : false;
+		  
+		  }else {
+		  
+		  }
+		 
+		return false;
 	
+	}
+
+	/* 프로젝트 조회 */
+	@Override
+	public List<ProjectDTO> selectProjectList(String email) {
+		return mapper.selectProjectList(email);
 	}
 
 

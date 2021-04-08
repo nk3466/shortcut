@@ -59,20 +59,37 @@
                      new Project   
                   </div>               
                </div>
-               <div class="board_list">
+              <%--  <div class="board_list">
                   <a class="board_detail type" href="${pageContext.servletContext.contextPath }/board/backlog">
                      <img src="${pageContext.servletContext.contextPath}/resources/img/board_icon.png" style="height:70px; width:70px;">
-                  </a>
-                  <div class="board_text"  data-toggle="modal" data-target="#project_modify">
+                  </a> --%>
+                  <!-- <div class="board_text"  data-toggle="modal" data-target="#project_modify">
                      The joeun   
-                  </div>               
+                  </div> -->  
+                  <c:forEach var="project" items="${ requestScope.projectList }">
+                  <div class="board_list">
+						<!-- <div class="board_text"  data-toggle="modal" data-target="#project_modify"> -->
+						
+							<a class="board_detail type" style="background-color: ${project.projectColor};" href="${pageContext.servletContext.contextPath }/board/backlog">
+								<img src="${ pageContext.servletContext.contextPath }/resources/img/board_icon.png" style="height:70px; width:70px;">
+							</a>
+							<div style="display: none;">
+								<c:out value="${ project.pjtNo }"/>
+							</div>
+							<div class="board_text" >
+								<c:out value="${ project.projectName }"/>	
+							</div>	
+						</div>
+							</c:forEach>				
+						
+					<!-- </div> -->
+					          
                </div>
                
             </div>
          </div>         
       </div>
 
-   </div>   
 
 
 
@@ -128,7 +145,7 @@
 						<th>1</th>
 						<th  class="Email">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}</th>
 						<th class="roll">Admin</th>
-						<th class="memberNo" style="display:none">1</th>
+						<th class="memberNo" style="display:none">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}</th>
 					</tr>
 					</thead>
 					<tbody  id="dynamicTbody">
@@ -155,7 +172,7 @@
 
 		/* 멤버 수 count */
 		var idcount = 1;
-		
+		/* console.log("엇??" +  ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}); */
 		$("#addpersonButton").click(function(){
 			
 		var email = $("#email").val();			//입력한 이메일
@@ -218,10 +235,10 @@
 				return hiddenTag
 			}
 			
+		   //var memberNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
+		   
 			const projectMemberList = document.getElementById('dynamicTbody').innerHTML;
-			
 			var $form = $('<form></form>');
-		   //var projectMaker = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}
 		   var projectName = document.getElementById("projectName").value;
 		   var projectStartDate = document.getElementById("projectStartDate").value;
 		   var projectEndDate = document.getElementById("projectEndDate").value;
@@ -239,7 +256,7 @@
 		   	
 		   var nk1 = $('form[name=projectMemberList]').serializeArray();
 		   var nk2 = [];
-		   
+		   var projectMaker = $("#projectMember").find(".memberNo").eq(0).text();
 		    for(let i = 0; i < idcount; i++){
 			   memberId = $("#projectMember").find(".Email").eq(i).text();
 			   console.log("Email : " + memberId);
@@ -254,7 +271,7 @@
 			   }
 			   console.log("roll : " + projectRole);
 			   
-			   nk1.push({  name : "memberNo", value : memberNo}, 
+			   nk1.push({ name : "memberNo", value : memberNo}, 
 						{ name : "projectRole",value : projectRole}
 						);
 				
@@ -271,6 +288,7 @@
 			   type : "post",
 			   data :  {
 				   nk1 : nk1,
+				   memberNo : projectMaker,
 				   projectName : projectName,
 				   projectStartDate : projectStartDate,
 				   projectEndDate : projectEndDate,

@@ -1,6 +1,5 @@
 package com.greedy.shortcut.board.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,10 +12,12 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,7 +41,20 @@ public class ProjectBoardController {
 	}
 
 	@GetMapping("project_board")
-	public void project() {
+	public String project(Model model, HttpServletRequest request) {
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+		String email = userDetails.getUsername();
+		
+		List<ProjectDTO> projectList = projectBoardService.selectProjectList(email);
+		for(ProjectDTO project : projectList) {
+			System.out.println(project);
+		}
+		
+		model.addAttribute("projectList", projectList);
+		
+		return "board/project_board";
 	}
 
 	@PostMapping(value="/project_regist" , produces="application/json; charset=UTF-8")
@@ -86,7 +100,7 @@ public class ProjectBoardController {
 			 */
 		 System.out.println(projectMemberList);
 		 
-		 if(!projectBoardService.insertProject(project, projectMemberList) || !projectBoardService.insertProjectMember(project, projectMemberList)) {
+		 if(!projectBoardService.insertProject(project) || !projectBoardService.insertProjectMember(project, projectMemberList)) {
 			 rttr.addFlashAttribute("message","프로젝트 생성이 취소되었습니다.");
 				return "redirect:/";
 		 }
@@ -103,4 +117,5 @@ public class ProjectBoardController {
 		int result = projectBoardService.idprojectcheck(member);
 		return result;
 	}
+	
 }
