@@ -15,4 +15,8 @@ public interface MyworkService {
 
 	List<MyworkResponseCardAndTaskDTO> selectTaskList(Integer no);
 
+	int selectTaskTypeCount(Integer no, int i);
+
+	List<MyworkResponseCardAndTaskDTO> selectTaskTypeList(Integer no, int i, int j, int k);
+
 }

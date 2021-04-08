@@ -1,5 +1,6 @@
 package com.greedy.shortcut.mywork.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.greedy.shortcut.member.model.dto.MemberDTO;
@@ -14,6 +15,11 @@ public interface MyworkMapper {
 	List<MyworkResponseCardAndTaskDTO> selectTaskList(Integer no);
 
 	List<ClientCardDTO> selectCardList(Integer no);
+
+
+	int selectTaskTypeCount(HashMap<String, Object> map);
+
+	List<MyworkResponseCardAndTaskDTO> selectTaskTypeList(HashMap<String, Object> map);
 	
 
 }

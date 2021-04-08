@@ -29,7 +29,7 @@ public class MyworkController {
 	
 	@GetMapping("mywork/mywork")
 	public String Mywork(Principal principal, Model model) {
-		/*1. 전체 카드 개수  */ // selectAllCardCount (memNo)
+		/*1. 전체 카드 개수  */ // selectTaskTypeCount (memNo)
 		/*2. 요청 전체 카드 개수 */ // selectTaskTypeCount(memNo, int type)
 		/*3. 진행 전체 카드 개수  */ // selectTaskTypeCount(memNo, int type)
 		/*4. 완료 전체 카드 개수  */ // selectTaskTypeCount(memNo, int type)
@@ -46,30 +46,60 @@ public class MyworkController {
 		String userName = principal.getName();
 		System.out.println("userName: " + userName);
 		
+		/* 회원 정보 조회 */
 		MemberDTO member = myworkService.selectUserInfoOne(userName);
 		System.out.println("member : " + member);
 		
-		//List<ClientCardDTO> cardList = new ArrayList<>();
-		//cardList = myworkService.selectCardList(member.getNo()); 
-		List<MyworkResponseCardAndTaskDTO> cardList = new ArrayList<>();
+		/* 전체 카드 개수 조회  */
+		
+		int allCardCount = myworkService.selectTaskTypeCount(member.getNo(), 0);
+		int reqCardCount = myworkService.selectTaskTypeCount(member.getNo(), 1);
+		int doingCardCount = myworkService.selectTaskTypeCount(member.getNo(), 2);
+		int doneCardCount = myworkService.selectTaskTypeCount(member.getNo(), 3);
+		int waitCardCount = myworkService.selectTaskTypeCount(member.getNo(), 4);
+		
+		System.out.println("전체: " + allCardCount);
+		System.out.println("요청: " + reqCardCount);
+		System.out.println("진행: " + doingCardCount);
+		System.out.println("완료: " + doneCardCount);
+		System.out.println("보류: " + waitCardCount);
+		
+		/* 카드 리스트 불러오기 */
 		List<MyworkResponseCardAndTaskDTO> cardProgress1List = new ArrayList<>();
 		List<MyworkResponseCardAndTaskDTO> cardProgress2List = new ArrayList<>();
 		List<MyworkResponseCardAndTaskDTO> cardProgress3List = new ArrayList<>();
 		List<MyworkResponseCardAndTaskDTO> cardProgress4List = new ArrayList<>();
+		cardProgress1List = myworkService.selectTaskTypeList(member.getNo(), 1, 1, 3);
+		cardProgress2List = myworkService.selectTaskTypeList(member.getNo(), 2, 1, 3);
+		cardProgress3List = myworkService.selectTaskTypeList(member.getNo(), 3, 1, 3);
+		cardProgress4List = myworkService.selectTaskTypeList(member.getNo(), 4, 1, 3);
 		
-		cardList = myworkService.selectTaskList(member.getNo()); 
+		System.out.println("cardProgress1List : " + cardProgress1List);
+		System.out.println("cardProgress2List : " + cardProgress2List);
+		System.out.println("cardProgress3List : " + cardProgress3List);
+		System.out.println("cardProgress4List : " + cardProgress4List);
 		
-		for(MyworkResponseCardAndTaskDTO card : cardList) {
-			System.out.println("card: " + card);
-			switch(card.getTkProgress()) {
-			case 1: cardProgress1List.add(card); break;
-			case 2: cardProgress2List.add(card); break;
-			case 3: cardProgress3List.add(card); break;
-			case 4: cardProgress4List.add(card); break;
-			default : /* 에러 페이지 발생 필요 */
-			}
-		}
-		
+//		//List<ClientCardDTO> cardList = new ArrayList<>();
+//		//cardList = myworkService.selectCardList(member.getNo()); 
+//		List<MyworkResponseCardAndTaskDTO> cardList = new ArrayList<>();
+//		List<MyworkResponseCardAndTaskDTO> cardProgress1List = new ArrayList<>();
+//		List<MyworkResponseCardAndTaskDTO> cardProgress2List = new ArrayList<>();
+//		List<MyworkResponseCardAndTaskDTO> cardProgress3List = new ArrayList<>();
+//		List<MyworkResponseCardAndTaskDTO> cardProgress4List = new ArrayList<>();
+//		
+//		cardList = myworkService.selectTaskList(member.getNo()); 
+//		
+//		for(MyworkResponseCardAndTaskDTO card : cardList) {
+//			System.out.println("card: " + card);
+//			switch(card.getTkProgress()) {
+//			case 1: cardProgress1List.add(card); break;
+//			case 2: cardProgress2List.add(card); break;
+//			case 3: cardProgress3List.add(card); break;
+//			case 4: cardProgress4List.add(card); break;
+//			default : /* 에러 페이지 발생 필요 */
+//			}
+//		}
+//		
 		model.addAttribute("cardProgress1List",cardProgress1List);
 		model.addAttribute("cardProgress2List",cardProgress2List);
 		model.addAttribute("cardProgress3List",cardProgress3List);

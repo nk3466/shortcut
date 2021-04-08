@@ -155,9 +155,9 @@
 							기간
 						</div>
 						<div class="item_content">
-						<%-- <c:forEach var="req_cardList" items="${ requestScope.cardProgress2List }">
+						<c:forEach var="req_cardList" items="${ requestScope.cardProgress2List }">
 							<span><c:out value="${ req_cardList.tkStartDate }"/></span> <br>
-						</c:forEach> --%>
+						</c:forEach> 
 						</div>
 					</div>
 					
