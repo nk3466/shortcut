@@ -296,10 +296,11 @@
 				<%-- <form action="${ pageContext.servletContext.contextPath }/board" method="get"> --%>
 					<div class="item_area work_btn on">
 						<i class="fas fa-user-plus"></i> 
-						<input class="input_detail type1" id="selectmember" type="text" name="addMember" placeholder="Add Member" 
-						value=""> 
+						<!-- <input class="input_detail type1" id="selectmember" type="text" name="addMember" placeholder="Add Member" 
+						value="">  -->
+						<div id="choisemember"></div>
+						<input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회">
 						<div id="member"></div>
-						<input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버추가">
 					</div>
 				<!-- </form> -->
 					<div class="item_area work_btn on">
@@ -416,7 +417,7 @@ $(document).ajaxSend(function(e, xhr, options) {
     xhr.setRequestHeader(header, token);
 });
 
-$("#addMember").click(function(){
+$("#addMember").one("click", function(){
     $.ajax({
         type:"POST",
         url:"${pageContext.servletContext.contextPath}/board/kanbanboard",
@@ -425,16 +426,23 @@ $("#addMember").click(function(){
         	console.log(data);
             let memberList=data;
             let res="";
-            var selectMember = document.getElementById("selectmember").value;
+            	
+            var choisemember = document.getElementById("choisemember");
         	var member = document.getElementById("member");
-            for(let i=0;i<memberList.length;i++)
+            for(let i = 0; i< memberList.length; i++)
             {
-            	const nike = document.createElement("input");
-            	nike.value = memberList[i].name;
-            	member.readOnly = true
+            	const nike = document.createElement("button");
+            	member.style.fontSize = 13+"px";
+            	member.style.padding = 5+"px";
+            	nike.style.backgroundColor = "#fce4ec";
+            	nike.style.color = "black";
+            	nike.style.margin = 5+"px";
+            	nike.innerHTML = nike.value = memberList[i].name;
             	member.appendChild(nike);
-  
             }
+			/*  $("#member").children('button').onclick = function({
+            //	var  
+            //}) */
         }
       });
 });
