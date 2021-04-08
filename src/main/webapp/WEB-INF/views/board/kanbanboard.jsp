@@ -429,7 +429,7 @@ $("#addMember").one("click", function(){
             	
             var choisemember = document.getElementById("choisemember");
         	var member = document.getElementById("member");
-            for(let i = 0; i< memberList.length; i++)
+            for(let i = 0; i < memberList.length; i++)
             {
             	const nike = document.createElement("button");
             	member.style.fontSize = 13+"px";
@@ -439,10 +439,36 @@ $("#addMember").one("click", function(){
             	nike.style.margin = 5+"px";
             	nike.innerHTML = nike.value = memberList[i].name;
             	member.appendChild(nike);
+            	
             }
-			$("#member").children('button').onclick = function(
-        );
+        
+        var $mem = document.getElementById("member");
+        var $mem1 = document.getElementById("choisemember");
+        const $mems = $mem.childNodes;
+        console.log($mems[0]);
+        
+        for(let i = 0; i < memberList.length; i++) {
+        	$mems[i].onclick = function() {
+        		const nikes = document.createElement("button");
+        		
+        		nikes.id = "ac";
+        		
+        		$mem.style.fontSize = 13+"px";
+        		$mem.style.padding = 5+"px";
+        		nikes.style.backgroundColor = "#eeffff";
+        		nikes.style.color = "black";
+        		nikes.style.margin = 5+"px";
+        		nikes.innerHTML = nikes.value = memberList[i].name;
+        		$mem1.appendChild(nikes);
+        		
+        		var $ac = document.getElementById("ac");
+        		$ac.onclick = this.remove();
+        	}
+        	
+        	
         }
+        
+    }
       });
 });
 </script>
