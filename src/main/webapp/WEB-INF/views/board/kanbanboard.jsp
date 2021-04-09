@@ -20,6 +20,8 @@
 	href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
@@ -35,18 +37,19 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
 .board-placeholder {
-	border: 1px dotted black;
+	border: 1px dotted;
 	margin: 0 1em 1em 0;
-	height: 50px;
-	margin-left: auto;
-	margin-right: auto;
+	height: 10px;
+	background-color:darkgray;
 	/* 노란색으로 표신되는 것이 주요 포인트 */
-	background-color: yellow;
+	
+	pisition: absolute;
 }
 /* 마우스 포인터을 손가락으로 변경 */
 .card:not(.no-move) .board-header {
 	cursor: pointer;
 	justify-content: center;
+	cursor: move;
 }
 /* 일정, 업무 버튼 */
 .work_btn.on {
@@ -84,9 +87,12 @@
 	<jsp:include page="../common/header.jsp"></jsp:include>
 	<div class="kanbanboard_area">
 		<div class="row">
+		
+		<!-- 보뜨 정보 (스프린트명, 인원) -->
 			<div class="project_info_area">
 				<div class="project_info">
 					<div class="info_item">
+					
 						<div class="item_name">프로젝트명</div>
 						<div class="item_detail">Short Cut</div>
 					</div>
@@ -103,16 +109,50 @@
 								class="fas fa-user-circle">미스터추</i>
 						</div>
 					</div>
-
+					
 				</div>
-			</div>
+			</div> <!-- 보드 정보 영역 끝 -->
+			
+			
+			<!--<c:forEach var="msgList" items="${requestScope.msgList }">
+							<div class="recv_item"><c:out value="${ msgList.no }"/></div>
+							<div class="recv_item"><c:out value="${ msgList.pjtName }"/></div>
+							<div class="recv_item"><c:out value="${ msgList.type }"/></div>
+							<div class="recv_item"><c:out value="${ msgList.txt }"/></div>
+							<div class="recv_item"><c:out value="${ msgList.memName }"/></div>
+							<div class="recv_item"><c:out value="${ msgList.date }"/></div>
+                         </c:forEach> -->
 
+				<!-- 카드1 -->
 			<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type1">
-					<div class="kanbanboard_title board-header">요청</div>
-					<div class="board_item">
-						<div class="item type1">SNS 로그인</div>
-						<div class="item type2">
+					<div class="kanbanboard_title board-header card no-move">요청</div>
+					<div class="board_item card">
+						<div class="item type1 card-header bg-white">SNS 로그인</div>
+						<div class="item type2 card-body">
+							<span class="item_detail type">네이버</span> <span
+								class="item_detail type">google</span> <span
+								class="item_detail type">카카오톡</span>
+						</div>
+						<div class="item type3">
+							<i class="fas fa-user-circle">김민기</i> <i
+								class="fas fa-user-circle">이남경</i>
+						</div>
+					</div>
+					<div class="insert_card" data-toggle="modal"
+						data-target="#myModal2">
+						<i class="fas fa-plus"></i> 카드 생성하기
+					</div>
+			</div>
+				</div><!-- 카드1 끝 -->
+				
+				<!-- 카드2 -->
+			<div class="kanban_item boardcolumn">
+				<div class="kanbanboard type2">
+					<div class="kanbanboard_title board-header card no-move">진행중</div>
+					<div class="board_item card">
+						<div class="item type1 card-header bg-white">SNS 로그인</div>
+						<div class="item type2 card-body">
 							<span class="item_detail type">네이버</span> <span
 								class="item_detail type">google</span> <span
 								class="item_detail type">카카오톡</span>
@@ -127,118 +167,53 @@
 						<i class="fas fa-plus"></i> 카드 생성하기
 					</div>
 				</div>
-			</div>
-			<div class="kanban_item boardcolumn">
-				<div class="kanbanboard type2">
-					<div class="kanbanboard_title board-header">진행중</div>
-					<div class="board_item">
-						<div class="item type1">SNS 로그인</div>
-						<div class="item type2">
-							<span class="item_detail type1">네이버</span> <span
-								class="item_detail type1">google</span> <span
-								class="item_detail type1">카카오톡</span>
-						</div>
-						<div class="item type3">
-							<i class="fas fa-user-circle">김민기</i> <i
-								class="fas fa-user-circle">이남경</i>
-						</div>
-					</div>
-					<div class="board_item">
-						<div class="item type1">SNS 로그인</div>
-						<div class="item type2">
-							<span class="item_detail type1">네이버</span> <span
-								class="item_detail type1">google</span> <span
-								class="item_detail type1">카카오톡</span>
-						</div>
-						<div class="item type3">
-							<i class="fas fa-user-circle">김민기</i> <i
-								class="fas fa-user-circle">이남경</i>
-						</div>
-					</div>
-					<div class="board_item">
-						<div class="item type1">SNS 로그인</div>
-						<div class="item type2">
-							<span class="item_detail type1">네이버</span> <span
-								class="item_detail type1">google</span> <span
-								class="item_detail type1">카카오톡</span>
-						</div>
-						<div class="item type3">
-							<i class="fas fa-user-circle">김민기</i> <i
-								class="fas fa-user-circle">이남경</i>
-						</div>
-					</div>
-					<div class="board_item">
-						<div class="item type1">SNS 로그인</div>
-						<div class="item type2">
-							<span class="item_detail type1">네이버</span> <span
-								class="item_detail type1">google</span> <span
-								class="item_detail type1">카카오톡</span>
-						</div>
-						<div class="item type3">
-							<i class="fas fa-user-circle">김민기</i> <i
-								class="fas fa-user-circle">이남경</i>
-						</div>
-					</div>
-				</div>
-			</div>
+			</div><!-- 카드2 -->
+			
+			<!-- 카드3 -->
 			<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type3">
-					<div class="kanbanboard_title board-header">완료</div>
-					<div class="board_item">
-						<div class="item type1">SNS 로그인</div>
-						<div class="item type2">
-							<span class="item_detail type2">네이버</span> <span
-								class="item_detail type2">google</span> <span
-								class="item_detail type2">카카오톡</span>
+					<div class="kanbanboard_title board-header card no-move">완료</div>
+					<div class="board_item card">
+						<div class="item type1 card-header bg-white">SNS 로그인</div>
+						<div class="item type2 card-body">
+							<span class="item_detail type">네이버</span> <span
+								class="item_detail type">google</span> <span
+								class="item_detail type">카카오톡</span>
 						</div>
 						<div class="item type3">
 							<i class="fas fa-user-circle">김민기</i> <i
 								class="fas fa-user-circle">이남경</i>
 						</div>
 					</div>
-					<div class="board_item">
-						<div class="item board-header">SNS 로그인</div>
-						<div class="item type2">
-							<span class="item_detail type2">네이버</span> <span
-								class="item_detail type2">google</span> <span
-								class="item_detail type2">카카오톡</span>
-						</div>
-						<div class="item type3">
-							<i class="fas fa-user-circle">김민기</i> <i
-								class="fas fa-user-circle">이남경</i>
-						</div>
-					</div>
-					<div class="board_item">
-						<div class="item type1">SNS 로그인</div>
-						<div class="item type2">
-							<span class="item_detail type2">네이버</span> <span
-								class="item_detail type2">google</span> <span
-								class="item_detail type2">카카오톡</span>
-						</div>
-						<div class="item type3">
-							<i class="fas fa-user-circle">김민기</i> <i
-								class="fas fa-user-circle">이남경</i>
-						</div>
+					<div class="insert_card" data-toggle="modal"
+						data-target="#myModal2">
+						<i class="fas fa-plus"></i> 카드 생성하기
 					</div>
 				</div>
-			</div>
+			</div><!-- 카드3 끝 -->
+			
+			<!-- 카드4 -->
 			<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type4">
-					<div class="kanbanboard_title board-header">보류</div>
-					<div class="board_item">
-						<div class="item type1">SNS 로그인</div>
-						<div class="item type2">
-							<span class="item_detail type3">네이버</span> <span
-								class="item_detail type3">google</span> <span
-								class="item_detail type3">카카오톡</span>
+					<div class="kanbanboard_title board-header card no-move">>완료</div>
+					<div class="board_item card">
+						<div class="item type1 card-header bg-white">SNS 로그인</div>
+						<div class="item type2 card-body">
+							<span class="item_detail type">네이버</span> <span
+								class="item_detail type">google</span> <span
+								class="item_detail type">카카오톡</span>
 						</div>
 						<div class="item type3">
 							<i class="fas fa-user-circle">김민기</i> <i
 								class="fas fa-user-circle">이남경</i>
 						</div>
 					</div>
+					<div class="insert_card" data-toggle="modal"
+						data-target="#myModal2">
+						<i class="fas fa-plus"></i> 카드 생성하기
+					</div>
 				</div>
-			</div>
+			</div><!-- 카드4 끝-->
 
 		</div>
 	</div>
@@ -368,8 +343,7 @@
 			connectWith : ".boardcolumn",
 			// 움직이는 css 선택자
 			handle : ".board-header",
-			// 움직이지 못하는 css 선택자
-			cancel : ".no-move",
+			
 			// 이동하려는 location에 추가 되는 클래스
 			placeholder : "board-placeholder"
 		});
@@ -377,9 +351,16 @@
 		$(".boardcolumn .card").disableSelection();
 	});
 
-	$(".kanban_item").children('div').click(function() {
-
-	})
+	/* 한미화 */
+	$(function() {
+	$(".kanbanboard").sortable({
+		connectWith: ".kanbanboard",
+		handle: ".card-header",
+		cancle : ".no-move",
+		placeholder: "card-placeholder"
+	});
+	$(".insert_card").disableSelection();
+});o
 
 	/* 일정, 업무 버튼 */
 	var count1 = 0;
