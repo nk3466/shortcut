@@ -162,12 +162,12 @@ public class ClientController {
 		
 		/* 업무의 수가 항상 같을 수는 없으니 각 스프린트당 업무의 수를 구해주어야 한다. 밑에 반복문에서 최댓값으로 반복 횟수를 정한다. */
 		int max = 0;
-		List<Integer> temp = null;
+		List<Integer> temp = new ArrayList();
 		for(int i = 0; i < sprintAndTaskList.size(); i++) {
-			temp = new ArrayList();
+			System.out.println(i + " " + sprintAndTaskList.get(i).getSprintAndCardTaskList().size());
 			temp.add(sprintAndTaskList.get(i).getSprintAndCardTaskList().size());
 		}
-		
+		System.out.println("temp : " + temp);
 		max = Collections.max(temp);
 		System.out.println("max : " + max);
 		
@@ -177,13 +177,13 @@ public class ClientController {
 		/* 구글 차트 String 조합하기 */
 		String assemblyString = "";
 		String result = "";
-		
+		System.out.println("sprintAndTaskList.size() : " + sprintAndTaskList.size());
 		for(int i = 0; i < sprintAndTaskList.size(); i++) {
 			for(int j = 0; j < max; j++) {
 				
 				/* break - 각 업무 수가 다 찼을 때는 break */
 				int eachAmount = sprintAndTaskList.get(i).getSprintAndCardTaskList().size();
-				if(eachAmount - 1 == j) {
+				if(eachAmount == j) {
 					break;
 				}
 				

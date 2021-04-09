@@ -36,6 +36,7 @@
  		
  		<typeAlias alias="AttendListDTO" type="com.greedy.shortcut.meeting.model.dto.AttendListDTO"/>
 
+ 		<typeAlias alias="BacklogDTO" type="com.greedy.shortcut.board.model.dto.BacklogDTO"/>
  		
  	</typeAliases>
  	

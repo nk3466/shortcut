@@ -114,35 +114,69 @@
 
 
 		<div class="sprint_box_area">			
-			<div class="sprint_text_btn">
-				<span class="sprint_text">Sprint 1</span>					
-				<button class="btn_detail" onclick="retrospect();">Write Retrospect</button>			
-			</div>				
-			<script>
-				function retrospect() {
-					location.href = "${ pageContext.servletContext.contextPath }/board/backlog/retrospect";
-				}
-			</script>
-								
 			
+			<div class="sprint_text_btn">
+				<span class="sprint_text">Sprint Review</span>					
+			</div>	
 			
 			<div class="sprint_box on"></div>
-							
+			
 			<div class="table_area">
 				<div class="table_item">
-					<!-- <a href="http://kordzor.cafe24.com/final/kanbanboard.html"> -->
+					<div class="row">
+						<table style="width: 100%;">
+							<thead>
+								<tr>
+									<th class="">No</th>
+									<th class="">이름</th>
+									<th class="">우선순위</th>
+									<th class="">종료날짜</th>
+									<th class="">데모방식</th>
+									<th class="">비고</th>
+									<th>리뷰 작성 / 수정</th>
+									<th>기록</th>
+								</tr>
+							</thead>
+							<tbody>
+							<c:forEach var="finishSprint" items="${ requestScope.finishSprintList }">
+								<tr>
+									<td class="">${ finishSprint.blgNo }</td>
+									<td class="">${ finishSprint.blgName }</td>
+									<td class="">${ finishSprint.blgPri }</td>
+									<td class="">${ finishSprint.sprEndDate }</td>
+									<td class="">${ finishSprint.blgDemoMemo }</td>
+									<td class="">${ finishSprint.blgRefMemo }</td>
+									<td><button class="btn_detail_retro" onclick="retrospect();">리뷰 작성</button></td>
+									<td><button class="btn_detail_retro">기록</button></td>
+								</tr>
+							</c:forEach>
+							</tbody>
+						</table>
+					</div>
+					
+				
+<%-- 					<c:forEach var="finishSprint" items="${ requestScope.finishSprintList }">
 						<div class="row">							
-							<div class="table_detail type1">ABC</div>
-							<div class="table_detail type1">입금</div>
-							<div class="table_detail type2">30</div>
-							<div class="table_detail type2">5</div>
-							<div class="table_detail type3">로그인, 입금 페이지 열기, 10달러 입금. 잔액 조회 페이지 이동. 잔액 확인</div>
-							<div class="table_detail type4">지금은 암호화를 고려하지 않아도 됨</div>	
+							<div class="table_detail type1">${ finishSprint.blgNo }</div>
+							<div class="table_detail type1">${ finishSprint.blgName }</div>
+							<div class="table_detail type2">${ finishSprint.blgPri }</div>
+							<div class="table_detail type2">${ finishSprint.sprEndDate }</div>
+							<div class="table_detail type3">${ finishSprint.blgDemoMemo }</div>
+							<div class="table_detail type4">${ finishSprint.blgRefMemo }</div>	
+						</div>
+						<div style="border: 1px solid black;">
+							<button class="retrospectBtn" onclick="retrospect();">리뷰 작성</button>			
+							<button class="retrospectBtn">기록</button>			
 						</div>						
-						<button class="btn_detail">기록</button>			
-					<!-- </a> -->
+					</c:forEach> --%>
+					<script>
+						function retrospect() {
+							location.href = "${ pageContext.servletContext.contextPath }/board/backlog/retrospect";
+						}
+					</script>
 				</div>
-			</div>				
+			</div>
+							
 		</div>
 
 	</div>

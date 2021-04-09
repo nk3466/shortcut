@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.greedy.shortcut.board.model.dto.BacklogDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.ProjectDTO;
 import com.greedy.shortcut.board.model.service.BacklogService;
-import com.greedy.shortcut.board.model.service.ProjectBoardService;
+
 
 @Controller
 @RequestMapping("/board/*")
@@ -28,6 +29,7 @@ public class BacklogBoardController {
 		this.backlogService = backlogService;
 	}
 
+
 	@GetMapping("backlog/{pjtNo}")
 	public String project(Model model, @PathVariable("pjtNo") int pjtNo) {
 		
@@ -40,7 +42,16 @@ public class BacklogBoardController {
 		for(ProjectAuthorityDTO member : memberList) {
 			System.out.println("프로젝트 멤버 :" + member);
 		}
-		
+
+		/* 종료된 백로그(스프린트) */
+		System.out.println("pjtNo : " + pjtNo);
+		List<BacklogDTO> finishSprintList = backlogService.selectFinishSprint(pjtNo);
+		for(BacklogDTO backlog : finishSprintList) {
+			System.out.println(backlog);
+		}
+		model.addAttribute("finishSprintList", finishSprintList);
+		/* 종료된 백로그(스프린트) */
+
 		model.addAttribute("projectList", project);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pjtNo", pjtNo);
