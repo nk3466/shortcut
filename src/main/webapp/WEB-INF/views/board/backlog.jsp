@@ -2,9 +2,13 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
     <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
+	<meta name="_csrf" content="${_csrf.token}">
+	<meta name="_csrf_header" content="${_csrf.headerName}">
+
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -341,11 +345,11 @@
 				</div>
 		         <div class="modal-header">
 		         	<div class="item_detail">기존 시작 날짜 </div>
-		         	<input class="input_detail nk type" type="text" placeholder="${projectList.projectStartDate } " readonly style="border : 0;"/>
+		         	<input class="input_detail nk type" type="text" id="projectStartDate" placeholder="${projectList.projectStartDate } " readonly style="border : 0;"/>
 		         </div>
          		<div class="modal-header">
 		         	<div class="item_detail">기존 종료 날짜</div>
-		         	<input class="input_detail nk type" type="text" placeholder="${projectList.projectEndDate } " readonly style="border : 0;"/>
+		         	<input class="input_detail nk type" type="text" id="projectEndDate" placeholder="${projectList.projectEndDate } " readonly style="border : 0;"/>
 		         </div>
 		         <div class="modal-header">
 		            <div class="item_detail">프로젝트 색상</div>
@@ -355,19 +359,19 @@
          	<div class="right_area">
 				<div class="modal-header">
 					<div class="item_detail">프로젝트 이름</div>
-					<input class="input_detail nk type" type="text" id="projectName" placeholder="수정할 프로젝트 이름">            
+					<input class="input_detail nk type" type="text" id="projectNameEdit" placeholder="수정할 프로젝트 이름">            
 				</div>
 				<div class="modal-header">
 					<div class="item_detail">수정 시작 날짜</div>
-		            <input class="input_detail nk type" type="date" id="projectStartDate"  placeholder="${projectList.projectStartDate }">         
+		            <input class="input_detail nk type" type="date" id="projectStartDateEdit"  placeholder="${projectList.projectStartDate }">         
 		         </div>
 		         <div class="modal-header">
 		            <div class="item_detail">수정 종료 날짜</div>
-		         	<input class="input_detail nk type" type="date" id="projectEndDate">  
+		         	<input class="input_detail nk type" type="date" id="projectEndDateEdit">  
 		         </div>
 		         <div class="modal-header">
 		            <div class="item_detail">수정할 프로젝트 색상</div>
-		        	<input class="input_detail nk type" type="color" id="projectColor">  
+		        	<input class="input_detail nk type" type="color" id="projectColorEdit">  
 		         </div> 
          	</div>
          </div>
@@ -378,20 +382,20 @@
          <div class="modal-body">
             <div class="row">
                <i class="fas fa-search"></i>
-               <input class="input_detail1" type="text" id="email" placeholder="Add Member">
-               <select class="select_detail nk" id="selectroll">
+               <input class="input_detail1" type="text" id="emailEdit" placeholder="Add Member" style="width:66%;">
+               <select class="select_detail nk" id="selectrollEdit">
                   <option>Admin</option>
                   <option>Member</option>
                   <option>Client</option>
                </select>
-               <input class="input_detail2 nk" type="button" id="addpersonButton" value="+">      
-               <input class="input_detail2 nk" type="button" id="removepersonButton" value="-">      
+               <input class="input_detail2 nk" type="button" id="addpersonButtonEdit" value="+">      
+               <input class="input_detail2 nk" type="button" id="removepersonButtonEdit" value="-">      
             </div>
 
 				<table class="select_member" id="projectMember" border="1" style="width:100%; height:30px; text-align: center">
 					<thead>
 					<tr>
-						<th style="width:60px; align-content: center;" >인원 수</th>
+						<th style="width:60px; align-content: center;" >번호</th>
 						<th>이메일</th>
 						<th style="width:100px;">권한</th>
 						<th style="width:100px; display:none">회원번호</th>
@@ -405,9 +409,10 @@
 					</thead>
 					<tbody  id="dynamicTbody">
 					<c:if test="${ !empty requestScope.memberList }">
-					  <c:forEach items="${memberList}" var="member" >
+					  <c:forEach items="${memberList}" var="member" varStatus="st">
 					  <tr>
-						<th>1</th>
+					  <c:set var="countMember" value="${ st.count +1}"  />	<!-- st가 1부터 시작하여 1을 더하여 출력 -->
+						<th>${countMember }</th>
 						<th class="Email">${member.memberId}</th>
 						<th class="roll">
 						<c:choose>
@@ -418,7 +423,7 @@
 						
 						</th>
 						<th class="memberNo" style="display:none">${member.memberNo}</th>
-						<tr>
+						</tr>
 						</c:forEach>
 					</c:if> 
 					</tbody>
@@ -435,8 +440,185 @@
 </div>
 </body>
 <script>
-		$("#removepersonButton").click(function(){
-			$("#projectMember tr:last").remove();
+		/* 시큐리티 권한  */
+		const token = $("meta[name='_csrf']").attr("content");
+		const header = $("meta[name='_csrf_header']").attr("content");
+		
+		$(document).ajaxSend(function(e, xhr, options) {
+		    xhr.setRequestHeader(header, token);
 		});
+		var start = ${projectList.projectStartDate };
+		var End = ${projectList.projectEndDate };
+		
+		//삭제 버튼 클릭
+		$("#removepersonButtonEdit").click(function(){
+			$("#dynamicTbody tr:last").remove();
+		});
+		
+		/* 이메일 null 체크 */
+		function vali(value){
+		    if (value === null) return true; 
+		    if (typeof value === 'string' && value === '') return true;
+		    if (typeof value === 'undefined') return true;
+		    return false;
+		}
+		var idcount = 1;
+		/* 인원추가 */
+		$("#addpersonButtonEdit").click(function(){
+			
+			var email = $("#emailEdit").val();			//입력한 이메일
+			
+				if(!vali($("#emailEdit").val())){
+					/* 아이디 중복 체크 */
+					$.ajax({
+						url:"${pageContext.servletContext.contextPath}/board/projectidDupCheckEdit",
+						type:"post",
+						data:{email :email},
+						success:function(data){
+							console.log(data);
+							/* 아이디가 있을 때 */
+							if(data !== 0){
+								var addMember = $("#projectMember tr:last");
+								var insertTr="";
+								 insertTr += '<tr id="addpersionList_' + (idcount++) +'">';
+								 insertTr += '<td class="num">'+  (idcount) + '</td>';
+								 insertTr += '<td class="Email">'+	document.getElementById("emailEdit").value + '</td>';
+								 insertTr += '<td class="roll">'+	document.getElementById("selectrollEdit").value + '</td>';
+								 insertTr += '<td class="memberNo" style="display:none">' + data + '</td>';
+								 insertTr += '</tr>';
+								 $("#dynamicTbody").append(insertTr);
+								 $("#emailEdit").val('');	//입력 후 input  비워주기
+							}else{
+							alert("가입된 이메일주소가 아닙니다. 확인 해주세요~");
+							 $("#emailEdit").val('');
+							}
+							
+						}, error:function(data){
+						}
+					});
+					
+			}else{
+				alert("이메일을 입력해주세요");
+			}
+				});
+		
+		/* 프로젝트 수정 버튼 클릭 */
+		$("#editProject").click(function(){ 
+			function makeTag(name, value){
+				var hiddenTag = document.createElement('input');
+				hiddenTag.setAttribute("type", "hidden")
+				hiddenTag.setAttribute("name", name)
+				hiddenTag.setAttribute("value", value)
+				return hiddenTag
+			}
+			
+		   var memberNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
+		   console.log(memberNo);
+		   
+			const projectMemberList = document.getElementById('dynamicTbody').innerHTML;
+			var $form = $('<form></form>');
+		   var projectName = document.getElementById("projectNameEdit").value;
+		   var projectStartDate = document.getElementById("projectStartDateEdit").value;
+		   var projectEndDate = document.getElementById("projectEndDateEdit").value.defaultValue = "2999-12-31";
+		   var projectColor = document.getElementById("projectColorEdit").value;
+		   console.log("projectName : " + projectName);
+		   console.log("projectStartDate : " + projectStartDate);
+		   console.log("projectEndDate : " + projectEndDate);
+		   console.log("projectColor : " + projectColor);
+		   
+		  		   	
+		   var nk1 = $('form[name=projectMemberList]').serializeArray();
+		   var projectMaker = $("#projectMember").find(".memberNo").eq(0).text();
+		    for(let i = 0; i < idcount; i++){
+			   memberId = $("#projectMember").find(".Email").eq(i).text();
+			   console.log("Email : " + memberId);
+			   projectRole = $("#projectMember").find(".roll").eq(i).text().trim();
+			   memberNo = $("#projectMember").find(".memberNo").eq(i).text();
+			   if(projectRole === 'Admin'){
+				   projectRole = 1;
+			   }else if(projectRole === 'Member'){
+				   projectRole = 2;
+			   }else if(projectRole === 'Client'){
+				   projectRole = 3;
+			   }
+			   console.log("roll : " + projectRole);
+			   
+			   nk1.push({ name : "memberNo", value : memberNo}, 
+						{ name : "projectRole",value : projectRole}
+						);
+				
+			   $form.append(makeTag(memberId, memberId));
+			   $form.append(makeTag(projectRole, projectRole));
+		   } 
+		   
+		   
+		   console.table("얍 " + nk1);
+		   
+		   
+		   $.ajax({
+			   url :"${pageContext.servletContext.contextPath}/board/backlog/project_edit",
+			   type : "post",
+			   data :  {
+				   nk1 : nk1,
+				   memberNo : projectMaker,
+				   projectName : projectName,
+				   projectStartDate : projectStartDate,
+				   projectEndDate : projectEndDate,
+				   projectColor : projectColor
+				    },
+			
+			   success : function(data, textStatus, xhr) {
+				   alert("프로젝트 수정이 완료되었습니다.");
+					location.href = "${pageContext.servletContext.contextPath}/board/backlog/" + ${ requestScope.pjtNo };
+			   },
+				error : function(xhr, status, error) {
+					console.log(error);
+					alert("프로젝트 수정이 취소되었습니다.");
+					location.href = "${pageContext.servletContext.contextPath}/board/backlog";
+				}
+		   });
+		})
+		</script>
+		<script>
+		
+		var projectStartDate = "${projectList.projectStartDate }";
+		var projectEndDate = "${projectList.projectEndDate }";
+		console.log(projectEndDate);
+		console.log(projectStartDate);
+		/* 프로젝트 삭제 버튼 클릭시 */
+		$("#removeProject").click(function(){
+			   if(confirm("정말 삭제하시겠습니까 ?") == true){
+/* 				   document.getElementById("projectStartDateEdit").value;
+				   var projectEndDate = document.getElementById("projectEndDateEdit").value.defaultValue = "2999-12-31";
+ */				  
+ 
+ 					
+ 				   var projectName = document.getElementById("projectName").value;
+				   var projectColor = document.getElementById("projectColor").value;
+			   
+			var pjtNo = ${ requestScope.pjtNo };
+					$.ajax({
+						url:"${pageContext.servletContext.contextPath}/board/backlogRemove",
+						type:"post",
+						data:{
+							pjtNo :pjtNo,
+							projectName : projectName,
+							projectStartDate : projectStartDate,
+							projectEndDate : projectEndDate,
+							projectColor : projectColor
+						},
+						success:function(data){
+						     alert("프로젝트가 삭제되었습니다");
+						}, error:function(data){
+							
+						}
+					});
+					
+			   }
+			    else{
+			        return ;
+			    }
+					
+			});
 </script>
 </html>
