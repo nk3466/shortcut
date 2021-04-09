@@ -141,6 +141,7 @@
 		  JOIN BACKLOG D ON (C.PJT_NO = D.PJT_NO)
           JOIN SPRINT E ON (D.BLG_NO = E.BLG_NO)
 		 WHERE C.PJT_NO = #{pjtNo}
+		   AND E.SPR_END_DATE > SYSDATE
 	</select>
 
 	<select id="selectSprintCount" resultType="_int" parameterType="_int">
@@ -151,6 +152,7 @@
           JOIN PROJECT C ON(B.PJT_NO = C.PJT_NO)
           JOIN MEMBER D ON(C.MEM_NO = D.MEM_NO)
          WHERE C.PJT_NO = #{pjtNo}
+           AND A.SPR_END_DATE > SYSDATE
 	</select>
 	
 	<select id="selectBarInfo" resultMap="ctcmResultMap" parameterType="_int">
@@ -168,6 +170,7 @@
           JOIN SPRINT D ON(D.SPR_NO = C.SPR_NO)
           JOIN MEMBER E ON(E.MEM_NO = A.MEM_NO)
          WHERE D.SPR_NO = #{sprNo}
+           AND D.SPR_END_DATE > SYSDATE
 	</select>
 
 </mapper>

@@ -73,7 +73,7 @@
                   <div class="board_list">
 						<!-- <div class="board_text"  data-toggle="modal" data-target="#project_modify"> -->
 						
-							<a class="board_detail type" style="background-color: ${project.projectColor};" href="${pageContext.servletContext.contextPath }/board/backlog/ ">
+							<a class="board_detail type" style="background-color: ${project.projectColor};" href="${pageContext.servletContext.contextPath }/board/backlog/${ project.pjtNo }">
 								<img src="${ pageContext.servletContext.contextPath }/resources/img/board_icon.png" style="height:70px; width:70px;">
 							</a>
 							<div style="display: none;">

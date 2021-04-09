@@ -34,6 +34,7 @@
 
  		<typeAlias alias="PmDTO" type="com.greedy.shortcut.messenger.model.dto.PmDTO"/>
 
+ 		<typeAlias alias="BacklogDTO" type="com.greedy.shortcut.board.model.dto.BacklogDTO"/>
  		
  	</typeAliases>
  	

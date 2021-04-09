@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.greedy.shortcut.board.model.dao.BacklogMapper">
+
+	<resultMap type="BacklogDTO" id="backlogResultMap">
+		<id property="blgNo" column="BLG_NO"/>
+		<result property="blgName" column="BLG_NAME"/>
+		<result property="blgPri" column="BLG_PRI"/>
+		<result property="blgEnrollDate" column="BLG_ENROLL_DATE"/>
+		<result property="sprEndDate" column="SPR_END_DATE"/>
+		<result property="pjtNo" column="PJT_NO"/>
+		<result property="blgDelYn" column="BLG_DEL_YN"/>
+		<result property="blgDemoMemo" column="BLG_DEMO_MEMO"/>
+		<result property="blgRefMemo" column="BLG_REF_MEMO"/>
+	</resultMap>
+
+	<select id="selectFinishSprint" resultMap="backlogResultMap" parameterType="_int">
+		SELECT
+               A.BLG_NO
+             , A.BLG_NAME
+             , A.BLG_PRI
+             , A.BLG_ENROLL_DATE
+             , B.SPR_END_DATE
+             , A.PJT_NO
+             , A.BLG_DEL_YN
+             , A.BLG_DEMO_MEMO
+             , A.BLG_REF_MEMO
+          FROM BACKLOG A
+          JOIN SPRINT B ON(A.BLG_NO = B.BLG_NO)
+         WHERE A.PJT_NO = #{pjtNo}
+           AND B.SPR_END_DATE &lt; SYSDATE
+	</select>
+
+</mapper>

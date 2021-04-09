@@ -43,11 +43,13 @@
 .backlog_create_area .backlog_table_area .table_area .table_item{text-align: center;}
 .backlog_create_area .backlog_table_area .table_area .table_item .row{margin: 0; margin-bottom: 5px; border: 1px solid lightgray;}
 .backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail{}
+/* .backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail .btn_detail_retro{background-color: white;} */
 .backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail.type1{width: 10%}
 .backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail.type2{width: 5%}
-.backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail.type3{width: 45%}
+.backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail.type3{width: 35%}
 .backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail.type4{width: 25%}
 
+.btn_detail_retro{background-color: white;}
 
 
 
