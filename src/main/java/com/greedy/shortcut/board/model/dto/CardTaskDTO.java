@@ -2,12 +2,16 @@ package com.greedy.shortcut.board.model.dto;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class CardTaskDTO {
 
 	private int progress;                  //업무진척도
 	private int crdNo;                     //카드번호
-	private int memNo;                     //담당자
+	private int memNo;					   //담당자
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd HH:mm:ss SSS", timezone = "Asia/Seoul")
 	private java.sql.Date startDate;       //업무시작일
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd HH:mm:ss SSS", timezone = "Asia/Seoul")
 	private java.sql.Date endDate;         //업무종료일
 	
 	public CardTaskDTO() {}
