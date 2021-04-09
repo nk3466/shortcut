@@ -138,6 +138,7 @@ public class MyworkController {
 	public String requestPaging(Principal principal, Model model,  @RequestParam Map<String, String> parameters) throws JsonProcessingException {
 		String currentPage = parameters.get("currentPage");
 		int memNo = Integer.parseInt(parameters.get("memNo"));
+		int type = Integer.parseInt(parameters.get("type"));
 		int pageNo = 1;
 		int limit = 3;
 		int buttonAmount = 5;
@@ -153,7 +154,7 @@ public class MyworkController {
 		System.out.println("memNo:" + memNo);
 		
 		/* 진행중 카드 갯수 조회 */
-		int totalCount = myworkService.selectTaskTypeCount(memNo, 2);
+		int totalCount = myworkService.selectTaskTypeCount(memNo, type);
 		
 		/* 페이지 정보 생성*/
 		PageInfoDTO pageInfo = Pagenation.getPageInfo(pageNo, totalCount, limit, buttonAmount);
@@ -162,15 +163,17 @@ public class MyworkController {
 		System.out.println("pageInfo : " + pageInfo);
 		
 		/* 진행중 카드 리스트 조회 */
-		List<MyworkResponseCardAndTaskDTO> cardProgress2List = myworkService.selectTaskTypeList(memNo, 2, pageInfo);
+		List<MyworkResponseCardAndTaskDTO> cardProgress2List = myworkService.selectTaskTypeList(memNo, type, pageInfo);
+		
+		for(int i = 0 ; i < cardProgress2List.size(); i++ ) {
+			cardProgress2List.get(i).setStartPage(pageInfo.getStartPage());
+			cardProgress2List.get(i).setEndPage(pageInfo.getEndPage());
+			cardProgress2List.get(i).setMaxPage(pageInfo.getMaxPage());
+		}
 		
 		System.out.println("cardProgress2List : " +cardProgress2List);
-		
-		List<Object> repList = new ArrayList<Object>();
-		repList.add(pageInfo);
-		repList.add(cardProgress2List);
-		
-		return new ObjectMapper().writeValueAsString(repList);
+
+		return new ObjectMapper().writeValueAsString(cardProgress2List);
 		
 		
 	}
