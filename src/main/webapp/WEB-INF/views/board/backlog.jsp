@@ -138,37 +138,31 @@
 								</tr>
 							</thead>
 							<tbody>
-							<c:forEach var="finishSprint" items="${ requestScope.finishSprintList }">
-								<tr>
-									<td class="">${ finishSprint.blgNo }</td>
-									<td class="">${ finishSprint.blgName }</td>
-									<td class="">${ finishSprint.blgPri }</td>
-									<td class="">${ finishSprint.sprEndDate }</td>
-									<td class="">${ finishSprint.blgDemoMemo }</td>
-									<td class="">${ finishSprint.blgRefMemo }</td>
-									<td><button class="btn_detail_retro" onclick="retrospect();">리뷰 작성</button></td>
-									<td><button class="btn_detail_retro">기록</button></td>
-								</tr>
-							</c:forEach>
+								<c:choose>
+									<c:when test="${fn:length(requestScope.finishSprintList) > 0 }">
+										<c:forEach var="finishSprint" items="${ requestScope.finishSprintList }">
+											<tr>
+												<td class="">${ finishSprint.blgNo }</td>
+												<td class="">${ finishSprint.blgName }</td>
+												<td class="">${ finishSprint.blgPri }</td>
+												<td class="">${ finishSprint.sprEndDate }</td>
+												<td class="">${ finishSprint.blgDemoMemo }</td>
+												<td class="">${ finishSprint.blgRefMemo }</td>
+												<td><button class="btn_detail_retro" onclick="retrospect();">리뷰 작성</button></td>
+												<td><button class="btn_detail_retro">기록</button></td>
+											</tr>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<tr>
+											<td colspan="8">조회된 결과가 없습니다.</td>
+										</tr>
+									</c:otherwise>
+								</c:choose>
 							</tbody>
 						</table>
 					</div>
-					
-				
-<%-- 					<c:forEach var="finishSprint" items="${ requestScope.finishSprintList }">
-						<div class="row">							
-							<div class="table_detail type1">${ finishSprint.blgNo }</div>
-							<div class="table_detail type1">${ finishSprint.blgName }</div>
-							<div class="table_detail type2">${ finishSprint.blgPri }</div>
-							<div class="table_detail type2">${ finishSprint.sprEndDate }</div>
-							<div class="table_detail type3">${ finishSprint.blgDemoMemo }</div>
-							<div class="table_detail type4">${ finishSprint.blgRefMemo }</div>	
-						</div>
-						<div style="border: 1px solid black;">
-							<button class="retrospectBtn" onclick="retrospect();">리뷰 작성</button>			
-							<button class="retrospectBtn">기록</button>			
-						</div>						
-					</c:forEach> --%>
+
 					<script>
 						function retrospect() {
 							location.href = "${ pageContext.servletContext.contextPath }/board/backlog/retrospect";
