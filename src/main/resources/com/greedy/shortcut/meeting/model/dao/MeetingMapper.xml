@@ -29,6 +29,11 @@
 		<result column="MEM_NO" property="memberNo"/>	
 	</resultMap> 
 	
+	<resultMap type="AttendListDTO" id="AttendListResultSet">
+		<id column="MEET_NO" property="meetingNo"/>
+		<result column="MEM_NO" property="memberNo"/>
+	</resultMap>
+	
 	<insert id="insertMeeting" parameterType="MeetingDTO">
 		INSERT
 		  INTO MEETING A
@@ -46,10 +51,34 @@
 	<select id="selectProjectMember" resultMap="MemberResultSet" parameterType="MemberDTO">
 		SELECT
 		       A.MEM_NAME
+		     , A.MEM_NO 
 		  FROM MEMBER A 
 		  JOIN PJT_AUTHORITY B ON (B.MEM_NO = A.MEM_NO)
 		 WHERE B.PJT_NO = 4
 	</select>
+	
+	<insert id="insertProjectMember" parameterType="AttendListDTO">
+		<selectKey keyProperty="meetingNo" order="BEFORE" resultType="_int">
+	         SELECT
+	                SEQ_MEET_NO.CURRVAL
+	           FROM DUAL
+	     </selectKey>
+	     
+	     INSERT
+		        INTO MEETING_ATTEND_LIST A
+		        (
+		          A.MEET_NO, A.MEM_NO
+		        )
+		        VALUES
+		        (
+		         #{meetingNo}, #{memberNo}
+		        )
+	   
+		      
+	        
+	</insert>
+	
+	
 	
 	
 </mapper>

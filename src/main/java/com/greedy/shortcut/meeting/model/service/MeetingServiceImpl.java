@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.greedy.shortcut.board.model.dto.ProjectAndAuthorityDTO;
 import com.greedy.shortcut.meeting.model.dao.MeetingMapper;
+import com.greedy.shortcut.meeting.model.dto.AttendListDTO;
 import com.greedy.shortcut.meeting.model.dto.MeetingDTO;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
@@ -30,6 +31,12 @@ public class MeetingServiceImpl implements MeetingService{
 	public List<MemberDTO> selectProjectMember(MemberDTO member) {
 
 		return mapper.selectProjectMember(member);
+	}
+
+	@Override
+	public boolean insertProjectMember(int memberNo) {
+		System.out.println("뇨내");
+		return mapper.insertProjectMember(memberNo) > 0? true:false;
 	}
 
 
