@@ -6,7 +6,7 @@ import java.util.List;
 public class CardDTO {
 
 	private int no;
-	private String name;
+	private String title;
 	private java.sql.Date EnrollDate;
 	private String delNo;
 	private int brdNo;
@@ -20,11 +20,11 @@ public class CardDTO {
 	
 	public CardDTO() {}
 
-	public CardDTO(int no, String name, Date enrollDate, String delNo, int brdNo, int order, int type, int memNo,
+	public CardDTO(int no, String title, Date enrollDate, String delNo, int brdNo, int order, int type, int memNo,
 			String txt, List<CardScheduleDTO> cardScheduleDTO, List<CardTaskDTO> cardTaskDTO) {
 		super();
 		this.no = no;
-		this.name = name;
+		this.title = title;
 		EnrollDate = enrollDate;
 		this.delNo = delNo;
 		this.brdNo = brdNo;
@@ -40,8 +40,8 @@ public class CardDTO {
 		return no;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
 	public java.sql.Date getEnrollDate() {
@@ -84,8 +84,8 @@ public class CardDTO {
 		this.no = no;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public void setEnrollDate(java.sql.Date enrollDate) {
@@ -126,8 +126,11 @@ public class CardDTO {
 
 	@Override
 	public String toString() {
-		return "CardDTO [no=" + no + ", name=" + name + ", EnrollDate=" + EnrollDate + ", delNo=" + delNo + ", brdNo="
+		return "CardDTO [no=" + no + ", title=" + title + ", EnrollDate=" + EnrollDate + ", delNo=" + delNo + ", brdNo="
 				+ brdNo + ", order=" + order + ", type=" + type + ", memNo=" + memNo + ", txt=" + txt
 				+ ", cardScheduleDTO=" + cardScheduleDTO + ", cardTaskDTO=" + cardTaskDTO + "]";
 	}
+	
+	
+
 }
