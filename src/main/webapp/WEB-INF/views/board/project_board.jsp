@@ -152,7 +152,7 @@
 					</tr>
 					</thead>
 					<tbody  id="dynamicTbody">
-					</tbody>
+						</tbody>
 				</table>
          </div>
             
@@ -327,7 +327,7 @@ if(document.getElementById("pjSelectOne")) {
 			
 			   success : function(data, textStatus, xhr) {
 				   alert("프로젝트 생성이 완료되었습니다.");
-					location.href = "${pageContext.servletContext.contextPath}/board/backlog";
+					location.href = "${pageContext.servletContext.contextPath}/board/project_board/" + memberNo;
 			   },
 				error : function(xhr, status, error) {
 					console.log(error);

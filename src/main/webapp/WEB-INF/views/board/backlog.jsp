@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -292,30 +293,50 @@
 			</div>
 		</div>
 	</div>
-	
+	<!-- 프로젝트 수정 모달 -->
 <div class="modal fade" id="project_produce_Detail">
    <div class="modal-dialog">
       <div class="modal-content">
 
          <!-- Modal Header -->
-         <div class="modal-header">
-            <input class="input_detail" type="text" id="projectName" placeholder="Add Project Title">            
+         <div class="row detailpage">
+         	<div class="left_area">
+         		<div class="modal-header">
+					<div class="item_detail">기존 프로젝트 이름</div>
+					<input class="input_detail nk type" type="text" id="projectName" placeholder="${projectList.projectName }" readonly>            
+				</div>
+		         <div class="modal-header">
+		         	<div class="item_detail">기존 시작 날짜 </div>
+		         	<input class="input_detail nk type" type="text" placeholder="${projectList.projectStartDate } " readonly style="border : 0;"/>
+		         </div>
+         		<div class="modal-header">
+		         	<div class="item_detail">기존 종료 날짜</div>
+		         	<input class="input_detail nk type" type="text" placeholder="${projectList.projectEndDate } " readonly style="border : 0;"/>
+		         </div>
+		         <div class="modal-header">
+		            <div class="item_detail">프로젝트 색상</div>
+		        	<input class="input_detail nk type" style="background-color: ${projectList.projectColor};" id="projectColor" readonly style="border : 0;">  
+		         </div> 
+         	</div>
+         	<div class="right_area">
+				<div class="modal-header">
+					<div class="item_detail">프로젝트 이름</div>
+					<input class="input_detail nk type" type="text" id="projectName" placeholder="수정할 프로젝트 이름">            
+				</div>
+				<div class="modal-header">
+					<div class="item_detail">수정 시작 날짜</div>
+		            <input class="input_detail nk type" type="date" id="projectStartDate"  placeholder="${projectList.projectStartDate }">         
+		         </div>
+		         <div class="modal-header">
+		            <div class="item_detail">수정 종료 날짜</div>
+		         	<input class="input_detail nk type" type="date" id="projectEndDate">  
+		         </div>
+		         <div class="modal-header">
+		            <div class="item_detail">수정할 프로젝트 색상</div>
+		        	<input class="input_detail nk type" type="color" id="projectColor">  
+		         </div> 
+         	</div>
          </div>
-         
-		<div class="modal-header">
-			<div>시작 날짜</div>
-            <input class="input_detail nk" type="date" id="projectStartDate">         
-         </div>
-         
-         <div class="modal-header">
-            <p>종료 날짜</p>
-         <input class="input_detail  nk" type="date" id="projectEndDate">  
-         </div>
-         
-         <div class="modal-header">
-            <p>프로젝트 색상</p>
-         <input class="input_detail  nk1" type="color" id="projectColor">  
-         </div> 
          
                 
          <!-- Modal body -->
@@ -349,6 +370,23 @@
 					</tr>
 					</thead>
 					<tbody  id="dynamicTbody">
+					<c:if test="${ !empty requestScope.memberList }">
+					  <c:forEach items="${memberList}" var="member" >
+					  <tr>
+						<th>1</th>
+						<th class="Email">${member.memberId}</th>
+						<th class="roll">
+						<c:choose>
+							<c:when test="${ member.projectRole == 1}">Admin</c:when>
+							<c:when test="${ member.projectRole == 2}">Member</c:when>
+							<c:when test="${ member.projectRole == 3}">Client</c:when>
+						</c:choose>
+						
+						</th>
+						<th class="memberNo" style="display:none">${member.memberNo}</th>
+						<tr>
+						</c:forEach>
+					</c:if> 
 					</tbody>
 				</table>
          </div>
@@ -361,8 +399,10 @@
       </div>
    </div>
 </div>
-
-	
-
 </body>
+<script>
+		$("#removepersonButton").click(function(){
+			$("#projectMember tr:last").remove();
+		});
+</script>
 </html>
