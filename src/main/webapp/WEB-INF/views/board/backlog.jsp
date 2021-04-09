@@ -159,7 +159,7 @@
 
 				<!-- Modal body -->
 				<div class="modal-body">
-					<div class="row">
+					<div class="row nk3">
 						<div class="backlog_info">
 							<div class="info_item">
 								<div class="info_detail">ID</div>
@@ -355,7 +355,8 @@
             
          
          <div class="modal_btn_area">
-            <button class="btn_detail" id="createProject">Create Project</button>
+            <button class="btn_detail" id="editProject">Edit Project</button>
+            <button class="btn_detail" id="removeProject">Remove Project</button>
          </div>            
       </div>
    </div>

@@ -65,15 +65,15 @@
                   </a> --%>
                   <div id="pjSelectOne">
                   <!-- 프로젝트 수정을 하기 위함 -->
-                  <div class="board_text"  data-toggle="modal" data-target="#project_modify">
+                  <!-- <div class="board_text"  data-toggle="modal" data-target="#project_modify">
                      The joeun   
-                  </div> 
+                  </div> --> 
                   </div>
                   <c:forEach var="project" items="${ requestScope.projectList }">
                   <div class="board_list">
 						<!-- <div class="board_text"  data-toggle="modal" data-target="#project_modify"> -->
 						
-							<a class="board_detail type" style="background-color: ${project.projectColor};" href="${pageContext.servletContext.contextPath }/board/backlog/ ">
+							<a class="board_detail type" style="background-color: ${project.projectColor};" href="${pageContext.servletContext.contextPath }/board/backlog/${ project.pjtNo }">
 								<img src="${ pageContext.servletContext.contextPath }/resources/img/board_icon.png" style="height:70px; width:70px;">
 							</a>
 							<div style="display: none;">
@@ -190,8 +190,15 @@ if(document.getElementById("pjSelectOne")) {
 		    xhr.setRequestHeader(header, token);
 		});
 		
-		var memberNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
-		   console.log(memberNo);
+		 const $pjSelectOne = document.getElementById("pjSelectOne");
+	  	 
+		/*  $pjSelectOne.onclick = function(){
+			 const  no = 32;
+			 $.ajax({
+				 url : 
+			 })
+			
+		 } */
 		
 		/* 멤버 수 count */
 		var idcount = 1;

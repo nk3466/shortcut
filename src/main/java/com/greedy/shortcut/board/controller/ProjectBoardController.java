@@ -46,9 +46,12 @@ public class ProjectBoardController {
 	@GetMapping("project_board/{no}")
 	public String project(Model model, HttpServletRequest request, @PathVariable("no") int no) {
 		
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UserDetails userDetails = (UserDetails) principal;
-		String email = userDetails.getUsername();
+		/*
+		 * Object principal =
+		 * SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		 * UserDetails userDetails = (UserDetails) principal; String email =
+		 * userDetails.getUsername();
+		 */
 		
 		System.out.println("no :" + no);
 		
