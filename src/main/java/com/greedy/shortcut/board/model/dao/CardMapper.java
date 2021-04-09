@@ -7,6 +7,6 @@ import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 public interface CardMapper {
 
-	List<ProjectAuthorityDTO> selectMember(int memberNo);
+	List<ProjectAuthorityDTO> selectMember(int pjtNo);
 
 }

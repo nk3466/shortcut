@@ -19,12 +19,12 @@
 		<result column="MEM_NO" property="memberNo"/>	
 	</resultMap> 
 	
-	<select id="selectMember" resultMap="AuthorityResultSet" parameterType="ProjectAuthorityDTO">
+	<select id="selectMember" resultMap="memberResultSet" parameterType="_int">
 		SELECT
 		       A.MEM_NAME
 		  FROM MEMBER A
 		  JOIN PJT_AUTHORITY B ON (A.MEM_NO = B.MEM_NO)
-		 WHERE A.MEM_NO = 2
+		 WHERE B.PJT_NO = #{pjtNo}
 	</select>
 		
  </mapper>

@@ -20,8 +20,8 @@ public class CardServiceImpl implements CardService {
 	}
 
 	@Override
-	public List<ProjectAuthorityDTO> selectMember(int memberNo) {
-		return cardMapper.selectMember(memberNo);
+	public List<ProjectAuthorityDTO> selectMember(int pjtNo) {
+		return cardMapper.selectMember(pjtNo);
 	}
 
 

@@ -122,7 +122,7 @@
 								class="fas fa-user-circle">이남경</i>
 						</div>
 					</div>
-					<div class="insert_card" data-toggle="modal"
+					<div id="progressSet" class="insert_card" data-toggle="modal"
 						data-target="#myModal2">
 						<i class="fas fa-plus"></i> 카드 생성하기
 					</div>
@@ -244,7 +244,7 @@
 	</div>
 
 
-
+	<input type="text" value="${ requestScope.pjtNo }" name="" id="" style="display: none;">
 
 
 	<!-- The Modal -->
@@ -252,20 +252,19 @@
 	<div class="modal fade" id="myModal2">
 		<div class="modal-dialog">
 			<div class="modal-header type">Short Cut</div>
-			<div class="modal-content">
-				<div class="modal-body">
-					<div class="row">
-
-
-						<div class="modal_list">
-							<i class="fas fa-check"><button id="workBtn"
-									style="background: #00ff0000; border: 0;">업무</button></i>
+			<form name="projectMemberList">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="row">
+							<div class="modal_list">
+								<i class="fas fa-check"><button id="workBtn"
+								style="background: #00ff0000; border: 0;">업무</button></i>
+							</div>
+							<div class="modal_list">
+								<i class="fas fa-calendar-week"><button id="calendarBtn"
+								style="background: #00ff0000; border: 0;">일정</button></i>
+							</div>
 						</div>
-						<div class="modal_list">
-							<i class="fas fa-calendar-week"><button id="calendarBtn"
-									style="background: #00ff0000; border: 0;">일정</button></i>
-						</div>
-					</div>
 
 					<div class="item_area">
 						<i class="fas fa-user-circle"></i>
@@ -274,9 +273,8 @@
 							<div class="info_detail type"><%= sf.format(nowTime) %></div>
 						</div>
 					</div>
-
 					<div class="item_area">
-						<input class="input_detail" type="text" name="title"
+						<input class="input_detail" type="text" name="title" id="title"
 							placeholder="제목을 입력해주세요."
 							style="border: none; background: transparent;">
 					</div>
@@ -285,11 +283,10 @@
 					<div class="item_area work_btn on">
 						<i class="fas fa-spinner"></i>
 						<div class="btn-group">
-							<button class="button on" name="request">요청</button>
-							<button class="button on" name="progress">진행</button>
-							<button class="button" name="feedback">피드백</button>
-							<button class="button" name="completion">완료</button>
-							<button class="button" name="hold">보류</button>
+							<button class="button on" name="request" id="request" type="button">요청</button>
+							<button class="button on" name="progress" id="progress" type="button">진행</button>
+							<button class="button" name="completion" id="completion" type="button">완료</button>
+							<button class="button" name="hold" id="hold" type="button">보류</button>
 						</div>
 
 					</div>
@@ -299,37 +296,39 @@
 						<!-- <input class="input_detail type1" id="selectmember" type="text" name="addMember" placeholder="Add Member" 
 						value="">  -->
 						<div id="choisemember"></div>
-						<input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회">
+						<input class="input_detail type2" id="addMember" type="reset" name="addMember" value="멤버조회">
 						<div id="member"></div>
 						<p class="memberNo" style="display:none">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}</p>
 					</div>
 				<!-- </form> -->
 					<div class="item_area work_btn on">
 						<i class="far fa-calendar-plus"></i> <input
-							class="input_detail type4" type="date" name=""> &nbsp; -
+							class="input_detail type4" type="date" name="taskStartDate"> &nbsp; -
 						&nbsp; <i class="far fa-calendar-minus"></i> <input
-							class="input_detail type4" type="date" name="">
+							class="input_detail type4" type="date" name="taskEndDate">
 					</div>
 					<!-- 업무영역 끝 -->
 
 					<!-- 일정 -->
 					<div class="item_area calendar_btn on">
-						<i class="far fa-clock"></i> <input type='datetime-local'>~<input
-							type='datetime-local'>
+						<i class="far fa-clock"></i> 
+						<input type='datetime-local' name="scheduleStartDate" style="display:inline-block; font-size: 12px"> ~ 
+						<input type='datetime-local' name="scheduleEndDate" style="font-size: 12px">
 					</div>
-					<div class="item_area calendar_btn on">
+					<!-- <div class="item_area calendar_btn on">
 						<i class="fas fa-user-plus"></i> <input class="input_detail type1"
 							type="text" name="name" placeholder="Add Member"> <input
 							class="input_detail type2" type="button" name="name" value="Add">
-					</div>
+					</div> -->
 					<div class="item_area calendar_btn on">
-						<i class="fas fa-map-marker-alt"></i><input
-							class="input_detail type3" type="text" name="name" size="20px"
+						<i class="fas fa-map-marker-alt"></i>
+						<input class="input_detail type3" type="text" name="place" size="20px"
 							placeholder="장소를 입력하세요"
 							style="border: none; background: transparent;">
 					</div>
 					<div class="item_area calendar_btn on">
-						<i class="fas fa-bell"></i> <select class="select_detail">
+						<i class="fas fa-bell"></i> 
+						<select class="select_detail" name="alarm">
 							<option>30분 전 미리 알림</option>
 							<option>하루 전 미리 알림</option>
 							<option>알리지 않음</option>
@@ -353,10 +352,11 @@
 					</div>
 
 					<div class="btn_area">
-						<button type="button" class="upload_btn">올리기</button>
+						<button type="button" class="upload_btn" id="upload">올리기</button>
 					</div>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 
@@ -412,88 +412,110 @@
 /* 시큐리티 권한  */
 const token = $("meta[name='_csrf']").attr("content");
 const header = $("meta[name='_csrf_header']").attr("content");
-var memberNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
+var pjtNo = ${requestScope.pjtNo};
 
 $(document).ajaxSend(function(e, xhr, options) {
     xhr.setRequestHeader(header, token);
 });
 
-$("#addMember").one("click", function(){
+var count = 0;
+
+$("#addMember").on("click", function(){
     $.ajax({
         type:"POST",
         url:"${pageContext.servletContext.contextPath}/board/kanbanboard",
-        data: {memberNo: memberNo},
+        data: {pjtNo: pjtNo},
         success:function(data, status, xhr)
         {
-        	console.log(data);
-        	console.log(memberNo);
-            let memberList=data;
-            let res="";
-            	
-            var choisemember = document.getElementById("choisemember");
-        	var member = document.getElementById("member");
-            for(let i = 0; i < memberList.length; i++)
-            {
-            	const nike = document.createElement("button");
-            	
-            	member.style.fontSize = 12+"px";
-            	member.style.padding = 5+"px";
-            	nike.style.backgroundColor = "#fce4ec";
-            	nike.style.color = "black";
-            	nike.style.margin = 5+"px";
-            	nike.innerHTML = nike.value = memberList[i].memberNo;
-            	member.appendChild(nike);
-            	
-            }
-        
-        var $mem = document.getElementById("member");
-        var $mem1 = document.getElementById("choisemember");
-        const $mems = $mem.childNodes;
-        
-        for(let i = 0; i < memberList.length; i++) {
-        	$mems[i].onclick = function() {
-        		const nikes = document.createElement("button");
-        		
-        		nikes.style.fontSize = 10+"px";
-        		nikes.style.padding = 5+"px";
-        		nikes.style.backgroundColor = "#eeffff";
-        		nikes.style.color = "black";
-        		nikes.style.margin = 5+"px";
-        		nikes.innerHTML = nikes.value = memberList[i].name;
-        		$mem1.appendChild(nikes);
-        		
-        		$(document).on('click','#bc',function(e){
-        			e.preventDefault();
-        			
-                	var t = $(this);
-                	
-                	t.toggleClass();
-                	
-        			
-        		})
-        		
-        		
-          		if(nikes.style.backgroundColor = "#eeffff") {
-        			nikes.id = "bc";
-	        		var $bc = document.getElementById("bc");
-	        		$bc.onclick = this.remove();
-        		}
-        		
-        		nikes.id = "ac";
-        		
-        		if(nikes.id = "ac") {
-	        		var $ac = document.getElementById("ac");
-	        		$ac.onclick = this.remove();
-	        		nikes.id = "bc";
-        		} 
-        		
-        	}
         	
-        	
-        }
+        	console.log(data)
+			if(data !==0){
+				
+				let memberList = data; 
+				let list="";
+				
+				for(let i = 0; i < memberList.length; i++){
+					
+					var insertSpan="";
+					insertSpan += '<span class="item_text on">' + memberList[i].name + '<i id="delBtn" class="fas fa-times-circle"></i>' + '</span>';
+					count++;
+					$("#member").append(insertSpan);
+				}
+			} 
         
-    }
+    },
+        error:function(data){
+			console.log(error);
+		}
       });
 });
+
+var progress = "";
+$("#progressSet").click(function() {
+	
+	$("#request").click(function() {
+		progress = 1;
+	})
+	
+	$("#progress").click(function() {
+		progress = 2;
+	})
+	
+	$("#completion").click(function() {
+		progress = 3;
+	})
+	
+	$("#hold").click(function() {
+		progress = 4;
+	})
+})
+	
+$("#upload").click(function() {
+	
+	const projectMemberList = document.getElementById('myModal2').innerHTML;
+	
+	var cardMember = $('form[name=projectMemberList]').serializeArray();
+	
+	cardMember.push({name : "progress", value : progress});
+	
+	for(let i = 0; i < count; i++){
+	   memberAttend = $('#member').find(".item_text").eq(i).text();
+	   cardMember.push({name : "memberAttend", value : memberAttend});
+	   var index = i + 1;
+	   console.log(memberAttend);
+	}
+	
+	console.table(cardMember);
+	
+	$.ajax({
+		url: "/board/kanbanboard/${ requestScope.pjtNo }",
+		type: "POST",
+		data: {cardMember : cardMember},
+		success: function(data, status, xhr) {
+			console.log(data);
+		},
+		error(xhr, status, error) {
+			console.log(error);
+		}
+	});
+	
+});
+
+function emailNull(value){
+	if(value === null) return true;
+	if(typeof value === 'string' && value === '') return true;
+	if(typeof value === 'undefined') return true;
+	return false;
+}
+
+
+
+$(document).on('click','.item_text.on',function(){
+	
+	var $t = $(this);
+	
+	$t.remove();
+	count--;
+}) 
 </script>
 </html>

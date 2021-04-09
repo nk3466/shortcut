@@ -43,6 +43,8 @@ public class BacklogBoardController {
 		
 		model.addAttribute("projectList", project);
 		model.addAttribute("memberList", memberList);
+		model.addAttribute("pjtNo", pjtNo);
+		
 		return "board/backlog";
 	}
 }

@@ -50,7 +50,7 @@
 			<div class="table_area">
 				<div class="table_item">
 				
-					<a href="${pageContext.servletContext.contextPath }/board/kanbanboard">
+					<a href="${pageContext.servletContext.contextPath }/board/kanbanboard/${ requestScope.pjtNo }">
 						<div class="row">							
 							<div class="table_detail type1">ABC</div>
 							<div class="table_detail type1">입금</div>
