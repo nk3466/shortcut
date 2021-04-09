@@ -32,7 +32,7 @@ public class BacklogBoardController {
 
 	@GetMapping("backlog/{pjtNo}")
 	public String project(Model model, @PathVariable("pjtNo") int pjtNo) {
-		
+		System.out.println("pjtNo : " + pjtNo);
 		ProjectDTO project = backlogService.selectProjectList(pjtNo);
 		
 		System.out.println("project는 : " + project);
