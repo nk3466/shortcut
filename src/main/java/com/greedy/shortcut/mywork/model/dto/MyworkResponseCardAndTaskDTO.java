@@ -13,11 +13,12 @@ public class MyworkResponseCardAndTaskDTO {
 	private int crdType;
 	private int startPage; 
 	private int endPage;
+	private int maxPage;
 
 	public MyworkResponseCardAndTaskDTO() {}
 
 	public MyworkResponseCardAndTaskDTO(int tkProgress, int crdNo, int memNo, Date tkStartDate, Date tkEndDate,
-			String crdName, int crdType, int startPage, int endPage) {
+			String crdName, int crdType, int startPage, int endPage, int maxPage) {
 		super();
 		this.tkProgress = tkProgress;
 		this.crdNo = crdNo;
@@ -28,13 +29,14 @@ public class MyworkResponseCardAndTaskDTO {
 		this.crdType = crdType;
 		this.startPage = startPage;
 		this.endPage = endPage;
+		this.maxPage = maxPage;
 	}
 
 	@Override
 	public String toString() {
 		return "MyworkResponseCardAndTaskDTO [tkProgress=" + tkProgress + ", crdNo=" + crdNo + ", memNo=" + memNo
 				+ ", tkStartDate=" + tkStartDate + ", tkEndDate=" + tkEndDate + ", crdName=" + crdName + ", crdType="
-				+ crdType + ", startPage=" + startPage + ", endPage=" + endPage + "]";
+				+ crdType + ", startPage=" + startPage + ", endPage=" + endPage + ", maxPage=" + maxPage + "]";
 	}
 
 	public int getTkProgress() {
@@ -108,6 +110,16 @@ public class MyworkResponseCardAndTaskDTO {
 	public void setEndPage(int endPage) {
 		this.endPage = endPage;
 	}
+
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
+	}
+
+	
 
 	
 

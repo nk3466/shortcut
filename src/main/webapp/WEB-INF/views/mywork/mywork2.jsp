@@ -117,8 +117,8 @@
 				My work
 			</div>
 			<div class="schedule_line"></div>
-			<div class="schedule_item" id="mywork">
-				<div class="row" id="request">
+			<div class="schedule_item">
+				<div class="row">
 					<div class="item_title">
 						요청
 					</div>
@@ -145,10 +145,10 @@
 						<div class="item_content"></div>
 					</div>
 					<div class="item_type6">
-						<div class="item_pagenavi"></div>
+						<div class="item_content">1 2 3</div>
 					</div>
 				</div>
-				<div class="row" id="doing">
+				<div class="row doing">
 					<div class="item_title">
 						진행중
 					</div>
@@ -156,7 +156,7 @@
 						<div class="item_name">
 							기간
 						</div>
-						<div class="item_content">
+						<div id="doingstart" class="item_content">
 						<c:forEach var="req_cardList" items="${ requestScope.cardProgress2List }">
 							<span><c:out value="${ req_cardList.tkStartDate }"/></span> <br>
 						</c:forEach> 
@@ -184,15 +184,76 @@
 						</div>
 					</div>
 					<div class="item_type6">
-						<div class="item_pagenavi"></div>
+						<div class="item_pagenavi">
+						
+						
+						<c:choose>
+							<c:when test="${ empty requestScope.searchValue }">
+								<button id="startPage"><<</button>
+								<c:if test="${ requestScope.doingPageInfo.pageNo <= 1 }">
+									<button disabled><</button>
+								</c:if>
+								<c:if test="${ requestScope.doingPageInfo.pageNo > 1 }">
+									<button id="prevPage"><</button>
+								</c:if>
+								
+								<c:forEach var="p" begin="${ requestScope.doingPageInfo.startPage }" end="${ requestScope.doingPageInfo.endPage }" step="1">
+									<c:if test="${ requestScope.doingPageInfo.pageNo eq p }">
+										<button disabled><c:out value="${ p }"/></button>
+									</c:if>
+									<c:if test="${ requestScope.doingPageInfo.pageNo ne p }">
+											<button class="pnbutton" onclick="movePage(${ p },this)"><c:out value="${ p }"/></button>
+											
+									</c:if>
+								</c:forEach>
+								
+								<c:if test="${ requestScope.doingPageInfo.pageNo >= requestScope.doingPageInfo.maxPage }">
+									<button disabled>></button>
+								</c:if>
+								<c:if test="${ requestScope.doingPageInfo.pageNo < requestScope.doingPageInfo.maxPage }">
+									<button id="nextPage">></button>
+								</c:if>
+								
+								<button id="maxPage">>></button>
+								
+							</c:when>
+							<c:otherwise>
+								<button id="searchStartPage"><<</button>
+								<c:if test="${ requestScope.doingPageInfo.pageNo <= 1 }">
+									<button disabled><</button>
+								</c:if>
+								<c:if test="${ requestScope.doingPageInfo.pageNo > 1 }">
+									<button id="searchPrevPage"><</button>
+								</c:if>
+								
+								<c:forEach var="p" begin="${ requestScope.doingPageInfo.startPage }" end="${ requestScope.doingPageInfo.endPage }" step="1">
+									<c:if test="${ requestScope.doingPageInfo.pageNo eq p }">
+										<button disabled><c:out value="${ p }"/></button>
+									</c:if>
+									<c:if test="${ requestScope.doingPageInfo.pageNo ne p }">
+										<button class="pnbutton"><c:out value="${ p }"/></button>
+									</c:if>
+								</c:forEach>
+								
+								<c:if test="${ requestScope.doingPageInfo.pageNo >= requestScope.doingPageInfo.maxPage }">
+									<button disabled>></button>
+								</c:if>
+								<c:if test="${ requestScope.doingPageInfo.pageNo < requestScope.doingPageInfo.maxPage }">
+									<button id="searchNextPage">></button>
+								</c:if>
+								<button id="searchMaxPage">>></button>
+							</c:otherwise>
+						</c:choose>
+						
+						
+						</div>
 					</div>
 				</div>
 				
 				<script type="text/javascript">
 				
-				/* 회원 정보 찾기 */
 				const $memNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
-				/* sequrity값 찾기 */
+				
 				const token = $("meta[name='_csrf']").attr("content");
 				const header = $("meta[name='_csrf_header']").attr("content");
 				$(document).ajaxSend(function(e, xhr, options) {
@@ -200,24 +261,6 @@
 				});
 				
 				/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
-				
-				/* 페이지 접근 시 초기화  */
-				$('document').ready(function(){
-					
-					for( let i = 1; i < 5; i++){
-						var idvalue = reversetypestandard(i)
-						var allcan = $("div[id^='" + idvalue + "']").find("[class*='_content']");
-						//var allcan = $("div[class^='item_content']");
-						console.log(idvalue+ " : " +allcan)
-						var allvar = $("div[id^='" + idvalue + "']").find('.item_pagenavi');
-						console.log(allvar);
-						pagenation($memNo,allcan,1,allvar,i);
-						console.log("@@@@@@@@@@@@@@@" + idvalue)
-					}
-				});
-				
-				/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
-				/* 날짜 변경 함수 */
 				function gettoDate(data){
 					var tag = document
 					var date = new Date(data);
@@ -227,10 +270,11 @@
 					return year+ "-" + month + "-" + day;
 				}
 				/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
-				
-				/* 페이지 네비게이션 갱신 함수 */
-				function navi(firstPage, lastPage, maxPage,domain){					
+				function navi(firstPage, lastPage, maxPage,domain){
+					
 					domain.empty();
+				
+					
 					if ( firstPage <= 1){
 						domain.append('<button class="pnbutton" disabled><<</button>');
 						domain.append('<button class="pnbutton" disabled><</button>');						
@@ -250,144 +294,154 @@
 					}
 				}
 				/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
-				
-				/* 리스트 조회 함수  */
-				function pagenation($memNo,slect,page,aslt,type){
+				function pagenation($memNo,slect,page,aslt){
 					console.log("현재페이지는 : "+  page);
-					console.log("type : " + type);
 					slect.empty();
 					$.ajax({
 						url: "requestPaging",
 						method: "post",
 						data: {"currentPage": page,
-							   "memNo": $memNo,
-							   "type" : type
+							   "memNo": $memNo
 						      },
 						success: function(data, status, xhr) {
-							console.log("data : " +data);
-							if (0==data.length){
-								
-							} else {
-								var start = data[0].startPage
-								var end = data[0].endPage
-								var max = data[0].maxPage
-								console.log("start : " + start);
-								console.log("end : " + end);
-								console.log("max : " + max)
 							
-								 for(let i = 0; i < slect.length; i++){
-									 for(let j=0; j < slect.length; j++){
-										 
-										 if( i == 0){
-											$(slect[i]).append(gettoDate(data[j].tkStartDate)+'<br>');
-										 }
-										 if( i == 1){
-											 $(slect[i]).append(gettoDate(data[j].tkEndDate)+'<br>');
-										 }
-										 if( i == 2){
-											 $(slect[i]).append((data[j].crdName)+'<br>');
-											 console.log("data[j].crdName : " + data[j].crdName);
-										 }
-								 	}								
-								 }
-							navi(start,end, max, aslt);
-								 
-							}
-
+							var start = data[0].startPage
+							var end = data[0].endPage
+							var max = data[0].maxPage
+							console.log("asdf : " + start);
+							console.log("end : " + end);
+							console.log("max : " + max)
+						
+							 for(let i = 0; i < slect.length; i++){
+								 for(let j=0; j < slect.length; j++){
+									 
+									 if( i == 0){
+										$(slect[i]).append(gettoDate(data[j].tkStartDate)+'<br>');
+									 }
+									 if( i == 1){
+										 $(slect[i]).append(gettoDate(data[j].tkEndDate)+'<br>');
+									 }
+									 if( i == 2){
+										 $(slect[i]).append((data[j].crdName)+'<br>');
+										 console.log("data[j].crdName : " + data[j].crdName);
+									 }
+							 	}								
+							 }
+						navi(start,end, max, aslt);
+							 
 						},
 						error: function(xhr, status, data){
 							console.log(data);
 						}
 					})	
 				}
-			
-				/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 				
-				/* 타입 변경 함수  */
-				function typestandard(txt){
-					var num = 0;
-					if('request'=== txt) {
-						num = 1;
-					
-					} else if('doing'=== txt) {
-						num = 2;
-						
-					} else if('done'=== txt) {
-						num = 3;
-					} else if('wait'=== txt) {
-						num = 4;
-					}
-					
-					return num;
-				}
+				/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 				
-				function reversetypestandard(num){
-					var txt = '';
-					if(1 === num) {
-						txt = 'request';
+				
+				if(document.getElementById("startPage")) {
 					
-					} else if(2=== num) {
-						txt = 'doing';
-						
-					} else if(3=== num) {
-						txt = 'done';
-					} else if(4=== num) {
-						txt = 'wait';
-					}
+					const $startPage = document.getElementById("startPage");
 					
-					return txt;
+					$startPage.addEventListener('click', function(){
+						var page = 1;
+						var slect = $(this).closest('.row').find("[class*='_content']");
+						console.log("slect"+ slect);
+						pagenation($memNo,slect,page)
+					});
 				}
 				
 				/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
-	
-				/* 버튼 함수  */
+				if(document.getElementById("prevPage")) {
+					const $prevPage = document.getElementById("prevPage");
+					$prevPage.onclick = function() {
+						//location.href = link + "?currentPage=${ requestScope.pageInfo.pageNo - 1}";
+					}
+				}
+				
+				if(document.getElementById("nextPage")) {
+					const $nextPage = document.getElementById("nextPage");
+					
+					$nextPage.addEventListener('click', function(){
+						var firstPage = 6;
+						var lastPage = 7;
+						var aslt = $(this).closest('.item_pagenavi')
+						var pbuton= '<button class="pnbutton"><c:out value="${ p }"/></button>';
+						aslt.empty();
+						aslt.append('<button class="pnbutton"><<</button>');
+						aslt.append('<button class="pnbutton"><</button>');
+						for( let i = firstPage; i <=lastPage; i++ ){
+							aslt.append('<button class="pnbutton" onclick="movePage('+ i +',this)">'+i+'</button>');
+						}
+						aslt.append('<button class="pnbutton">></button>');
+						aslt.append('<button class="pnbutton">>></button>');
+						//location.href = link + "?currentPage=${ requestScope.pageInfo.pageNo + 1}";
+					})
+				}
+				
+				if(document.getElementById("maxPage")) {
+					const $maxPage = document.getElementById("maxPage");
+					
+					$maxPage.addEventListener('click', function(){
+						var slect = $(this).closest('.row').find("[class*='_content']");
+						var page = ${ requestScope.doingPageInfo.maxPage };
+						console.log("slect"+ slect);
+						new pagenation($memNo,slect,page)
+					});
+				}
+				
+				
+				 
+			/* 	function pnbutton(obj) {
+
+
+					$(obj).on('click', function(){
+					var slect = $(this).closest('.row').find("[class*='_content']");
+					var page = $(this)[0].val();
+					console.log("slect  : @@@@@ : " + slect);
+					console.log(page);
+					});
+				} */
+				 	
+					
 				function movePage(page,beta) {
 					var slect = $(beta).closest('.row').find("[class*='_content']");
 					var aslt = $(beta).closest('.item_pagenavi')
-					var pretype = $(beta).closest('.row').attr('id');
-					var type = typestandard(pretype);
-					new pagenation($memNo,slect,page,aslt,type);
+					new pagenation($memNo,slect,page,aslt)
 					
 				};
 				
 				function startPage(beta) {
 					var slect = $(beta).closest('.row').find("[class*='_content']");
 					var aslt = $(beta).closest('.item_pagenavi')
-					var pretype = $(beta).closest('.row').attr('id');
-					var type = typestandard(pretype);
-					new pagenation($memNo,slect,1,aslt,type);				
+					new pagenation($memNo,slect,1,aslt)				
 				};
 				
 				function nextPage(page, beta) {
 					var slect = $(beta).closest('.row').find("[class*='_content']");
 					var aslt = $(beta).closest('.item_pagenavi')
-					var pretype = $(beta).closest('.row').attr('id');
-					var type = typestandard(pretype);
-					new pagenation($memNo,slect,page+1,aslt,type);				
+					new pagenation($memNo,slect,page+1,aslt)				
 				};
 				
 				function prevPage(page, beta) {
 					var slect = $(beta).closest('.row').find("[class*='_content']");
 					var aslt = $(beta).closest('.item_pagenavi')
-					var pretype = $(beta).closest('.row').attr('id');
-					var type = typestandard(pretype);
-					new pagenation($memNo,slect,page-1,aslt,type);			
+					new pagenation($memNo,slect,page-1,aslt)				
 				};
 				
 				function rumPage(page, beta) {
 					var slect = $(beta).closest('.row').find("[class*='_content']");
 					var aslt = $(beta).closest('.item_pagenavi')
-					var pretype = $(beta).closest('.row').attr('id');
-					var type = typestandard(pretype);
-					new pagenation($memNo,slect,page,aslt,type);				
+					new pagenation($memNo,slect,page,aslt)				
 				};
-						
+				
+				
+				function searchPageButtonAction(text) {
+					//location.href = searchLink + "?currentPage=" + text + "&searchCondition=${ requestScope.searchCondition }&searchValue=${ requestScope.searchValue }";
+				}					
 				
 				</script>
-			<div class="row" id="done">
-			<div class="item_title">
-						완료
-					</div>
+				<div>
 				<div class="item_type3">
 						<div class="item_name">
 							기간
@@ -406,11 +460,8 @@
 						</div>
 						<div class="item_content"></div>
 					</div>
-					<div class="item_type6">
-						<div class="item_pagenavi"></div>
-					</div>
-			</div>
-				<div class="row" id="wait">
+				</div>
+				<div class="row">
 					<div class="item_title">
 						보류
 					</div>
@@ -431,9 +482,6 @@
 							제목
 						</div>
 						<div class="item_content"></div>
-					</div>
-					<div class="item_type6">
-						<div class="item_pagenavi"></div>
 					</div>
 				</div>
 			</div>
