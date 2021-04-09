@@ -123,8 +123,15 @@
 
 
 
+/* 모달 상세 페이지 */
 
+.modal.fade .modal-dialog .modal-content .row.detailpage{margin:0; justify-content: center;}
+.modal.fade .modal-dialog .modal-content .row.detailpage .left_area{width:50%;}
+.modal.fade .modal-dialog .modal-content .row.detailpage .left_area .modal-header{ line-height: 40px;}
+.modal.fade .modal-dialog .modal-content .row.detailpage .left_area .modal-header .item_detail{letter-spacing: -1px; width:45%;}
+.modal.fade .modal-dialog .modal-content .row.detailpage .left_area .modal-header .input_detail.nk.type{width:55%;}
 
-
-
-
+.modal.fade .modal-dialog .modal-content .row.detailpage .right_area{width:50%;}
+.modal.fade .modal-dialog .modal-content .row.detailpage .right_area .modal-header{ line-height: 40px;}
+.modal.fade .modal-dialog .modal-content .row.detailpage .right_area .modal-header .item_detail{letter-spacing: -1px; width:45%;}
+.modal.fade .modal-dialog .modal-content .row.detailpage .right_area .modal-header .input_detail.nk.type{width:55%;}

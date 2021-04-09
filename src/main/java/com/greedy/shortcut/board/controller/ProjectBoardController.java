@@ -91,9 +91,6 @@ public class ProjectBoardController {
 		 List<ProjectAuthorityDTO> projectMemberList = new ArrayList<>();
 		 
 		 for(int i = 0; i < (projectMake.size() - 4)/2; i++) {
-			 System.out.println("와?");
-			 
-			// project.setMemberNo(Integer.parseInt(((String[]) projectMake.get("nk1[" + i + "][value]"))[0]));
 			 ProjectAuthorityDTO projectAuthority = new ProjectAuthorityDTO();
 			  
 			 projectAuthority.setMemberNo(Integer.parseInt(((String[]) projectMake.get("nk1[" + i + "][value]"))[0]));
@@ -102,13 +99,9 @@ public class ProjectBoardController {
 			 
 			 projectMemberList.add(projectAuthority);
 		 }
-			/*
-			 * projectAuthority.setMemberId(httpsession.getId());
-			 * projectAuthority.setProjectRole(1); projectMemberList.add(projectAuthority);
-			 */
-		 System.out.println(projectMemberList);
-		 
-		 if(!projectBoardService.insertProject(project) || !projectBoardService.insertProjectMember(project, projectMemberList)) {
+			
+			if (!projectBoardService.insertProject(project) 
+					|| !projectBoardService.insertProjectMember(project, projectMemberList)	) {
 			 rttr.addFlashAttribute("message","프로젝트 생성이 취소되었습니다.");
 				return new ObjectMapper().writeValueAsString(project);
 		 }

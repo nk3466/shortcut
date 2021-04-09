@@ -38,7 +38,7 @@ public class BacklogBoardController {
 		List<ProjectAuthorityDTO> memberList = backlogService.selectMemberList(pjtNo);
 		
 		for(ProjectAuthorityDTO member : memberList) {
-			System.out.println("프로젝트 멤버 :" + memberList);
+			System.out.println("프로젝트 멤버 :" + member);
 		}
 		
 		model.addAttribute("projectList", project);

@@ -20,6 +20,7 @@ public class ProjectBoardServiceImpl implements ProjectBoardService{
 		this.mapper = mapper;
 	}
 	
+	/* 아이디 유무 체크 */
 	@Override
 	public int idprojectcheck(MemberDTO member) {
 
@@ -33,48 +34,63 @@ public class ProjectBoardServiceImpl implements ProjectBoardService{
 		}
 		
 	}
-
+	
+	/* 프로젝트 생성 */
 	@Override
 	public boolean insertProject(ProjectDTO project) {
-
-		return mapper.insertPoject(project) > 0? true : false;
+		/*
+		 * mapper.insertPoject(project); mapper.insertProjectHistory(project);
+		 */
+		return mapper.insertPoject(project) + mapper.insertProjectHistory(project) > 0? true : false;
 	}
 
-	
+	/* 프로젝트 회원 등록 */
 	@Override
 	public boolean insertProjectMember(ProjectDTO project, List<ProjectAuthorityDTO> projectMemberList) {
 		
-		ProjectDTO project1 =  mapper.selectProjectNum(project);
+		/*
+		 * ProjectDTO project1 = mapper.selectProjectNum(project);
+		 * 
+		 * System.out.println(project1); int projectNo = project1.getPjtNo();
+		 */
+		/*
+		 * for(int i = 0; i < projectMemberList.size();i++) {
+		 * projectMemberList.get(i).setProjectNo(projectNo); }
+		System.out.println("야호" + projectMemberList); */
 		
-		
-		System.out.println(project1);
-		int projectNo = project1.getPjtNo();
-		for(int i = 0; i < projectMemberList.size();i++) {
-			
-			projectMemberList.get(i).setProjectNo(projectNo);
-		}
-		
-		System.out.println("야호" + projectMemberList);
-		//projectMemberList.add(e)
-		  if(!Integer.toString(projectNo).isEmpty()) { 
+		int count = 0;
+		 /* if(!Integer.toString(projectNo).isEmpty()) { */
 			  for(int i = 0; i < projectMemberList.size(); i++) {
 				  mapper.insertProjectMember(projectMemberList.get(i));
+				  mapper.insertProjectMemberHistory(projectMemberList.get(i));
+				  count++;
 			  }
-			  //return  mapper.insertProjectMember(projectMemberList) > 0? true : false;
-		 
-		  }else {
+			  return  count >= projectMemberList.size()? true : false;
 		  
-		  }
-		 
-		return false;
-	
 	}
-
+	
+	/* 프로젝트 생성 이력 insert */
+	/*
+	 * @Override public boolean insertProjectHistory(ProjectDTO project) {
+	 * 
+	 * return mapper.insertProjectHistory(project) > 0? true : false; }
+	 */
+	/* 프로젝트 회원 이력 insert */
+	/*
+	 * @Override public boolean insertProjectMemberHistory(ProjectDTO project,
+	 * List<ProjectAuthorityDTO> projectMemberList) {
+	 * 
+	 * return mapper.insertProjectMemberHistory; }
+	 * 
+	 */
+	
 	/* 프로젝트 조회 */
 	@Override
 	public List<ProjectDTO> selectProjectList(int no) {
 		return mapper.selectProjectList(no);
 	}
+
+	
 
 
 }
