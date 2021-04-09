@@ -11,11 +11,13 @@ public class MyworkResponseCardAndTaskDTO {
 	private java.sql.Date tkEndDate;
 	private String crdName;
 	private int crdType;
+	private int startPage; 
+	private int endPage;
 
 	public MyworkResponseCardAndTaskDTO() {}
 
 	public MyworkResponseCardAndTaskDTO(int tkProgress, int crdNo, int memNo, Date tkStartDate, Date tkEndDate,
-			String crdName, int crdType) {
+			String crdName, int crdType, int startPage, int endPage) {
 		super();
 		this.tkProgress = tkProgress;
 		this.crdNo = crdNo;
@@ -24,13 +26,15 @@ public class MyworkResponseCardAndTaskDTO {
 		this.tkEndDate = tkEndDate;
 		this.crdName = crdName;
 		this.crdType = crdType;
+		this.startPage = startPage;
+		this.endPage = endPage;
 	}
 
 	@Override
 	public String toString() {
 		return "MyworkResponseCardAndTaskDTO [tkProgress=" + tkProgress + ", crdNo=" + crdNo + ", memNo=" + memNo
 				+ ", tkStartDate=" + tkStartDate + ", tkEndDate=" + tkEndDate + ", crdName=" + crdName + ", crdType="
-				+ crdType + "]";
+				+ crdType + ", startPage=" + startPage + ", endPage=" + endPage + "]";
 	}
 
 	public int getTkProgress() {
@@ -88,6 +92,24 @@ public class MyworkResponseCardAndTaskDTO {
 	public void setCrdType(int crdType) {
 		this.crdType = crdType;
 	}
+
+	public int getStartPage() {
+		return startPage;
+	}
+
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
+	}
+
+	public int getEndPage() {
+		return endPage;
+	}
+
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
+
+	
 
 	
 	

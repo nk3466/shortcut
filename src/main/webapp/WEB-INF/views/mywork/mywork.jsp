@@ -190,26 +190,26 @@
 						<c:choose>
 							<c:when test="${ empty requestScope.searchValue }">
 								<button id="startPage"><<</button>
-								<c:if test="${ requestScope.pageInfo.pageNo <= 1 }">
+								<c:if test="${ requestScope.doingPageInfo.pageNo <= 1 }">
 									<button disabled><</button>
 								</c:if>
-								<c:if test="${ requestScope.pageInfo.pageNo > 1 }">
+								<c:if test="${ requestScope.doingPageInfo.pageNo > 1 }">
 									<button id="prevPage"><</button>
 								</c:if>
 								
-								<c:forEach var="p" begin="${ requestScope.pageInfo.startPage }" end="${ requestScope.pageInfo.endPage }" step="1">
-									<c:if test="${ requestScope.pageInfo.pageNo eq p }">
+								<c:forEach var="p" begin="${ requestScope.doingPageInfo.startPage }" end="${ requestScope.doingPageInfo.endPage }" step="1">
+									<c:if test="${ requestScope.doingPageInfo.pageNo eq p }">
 										<button disabled><c:out value="${ p }"/></button>
 									</c:if>
-									<c:if test="${ requestScope.pageInfo.pageNo ne p }">
-										<button onclick="pageButtonAction(this.innerText);"><c:out value="${ p }"/></button>
+									<c:if test="${ requestScope.doingPageInfo.pageNo ne p }">
+											<button class="pnbutton"><c:out value="${ p }"/></button>
 									</c:if>
 								</c:forEach>
 								
-								<c:if test="${ requestScope.pageInfo.pageNo >= requestScope.pageInfo.maxPage }">
+								<c:if test="${ requestScope.doingPageInfo.pageNo >= requestScope.doingPageInfo.maxPage }">
 									<button disabled>></button>
 								</c:if>
-								<c:if test="${ requestScope.pageInfo.pageNo < requestScope.pageInfo.maxPage }">
+								<c:if test="${ requestScope.doingPageInfo.pageNo < requestScope.doingPageInfo.maxPage }">
 									<button id="nextPage">></button>
 								</c:if>
 								
@@ -218,26 +218,26 @@
 							</c:when>
 							<c:otherwise>
 								<button id="searchStartPage"><<</button>
-								<c:if test="${ requestScope.pageInfo.pageNo <= 1 }">
+								<c:if test="${ requestScope.doingPageInfo.pageNo <= 1 }">
 									<button disabled><</button>
 								</c:if>
-								<c:if test="${ requestScope.pageInfo.pageNo > 1 }">
+								<c:if test="${ requestScope.doingPageInfo.pageNo > 1 }">
 									<button id="searchPrevPage"><</button>
 								</c:if>
 								
-								<c:forEach var="p" begin="${ requestScope.pageInfo.startPage }" end="${ requestScope.pageInfo.endPage }" step="1">
-									<c:if test="${ requestScope.pageInfo.pageNo eq p }">
+								<c:forEach var="p" begin="${ requestScope.doingPageInfo.startPage }" end="${ requestScope.doingPageInfo.endPage }" step="1">
+									<c:if test="${ requestScope.doingPageInfo.pageNo eq p }">
 										<button disabled><c:out value="${ p }"/></button>
 									</c:if>
-									<c:if test="${ requestScope.pageInfo.pageNo ne p }">
-										<button onclick="searchPageButtonAction(this.innerText);"><c:out value="${ p }"/></button>
+									<c:if test="${ requestScope.doingPageInfo.pageNo ne p }">
+										<button class="pnbutton"><c:out value="${ p }"/></button>
 									</c:if>
 								</c:forEach>
 								
-								<c:if test="${ requestScope.pageInfo.pageNo >= requestScope.pageInfo.maxPage }">
+								<c:if test="${ requestScope.doingPageInfo.pageNo >= requestScope.doingPageInfo.maxPage }">
 									<button disabled>></button>
 								</c:if>
-								<c:if test="${ requestScope.pageInfo.pageNo < requestScope.pageInfo.maxPage }">
+								<c:if test="${ requestScope.doingPageInfo.pageNo < requestScope.doingPageInfo.maxPage }">
 									<button id="searchNextPage">></button>
 								</c:if>
 								<button id="searchMaxPage">>></button>
@@ -250,8 +250,8 @@
 				</div>
 				
 				<script type="text/javascript">
-				//const link = "${ pageContext.servletContext.contextPath }/board/list";
-				//const searchLink = "${ pageContext.servletContext.contextPath}/board/search";
+				
+				const $memNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
 				const token = $("meta[name='_csrf']").attr("content");
 				const header = $("meta[name='_csrf_header']").attr("content");
 				$(document).ajaxSend(function(e, xhr, options) {
@@ -266,14 +266,11 @@
 					var year = date.getFullYear();
 					var month = ("0" + (1+ date.getMonth())).slice(-2);
 					var day = ("0" + date.getDate()).slice(-2);
-					console.log("asdfasdfasdf")
 					return year+ "-" + month + "-" + day;
 				}
 				/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 				function pagenation($memNo,slect,page){
-					
-					
-					console.log("test");
+					console.log("현재페이지는 : "+  page);
 					slect.empty();
 					$.ajax({
 						url: "requestPaging",
@@ -282,9 +279,12 @@
 							   "memNo": $memNo
 						      },
 						success: function(data, status, xhr) {
+							
+							console.table(data[0].cardProgress2List);
 						
-							 for(var i = 0; i < slect.length; i++){
-								 for( var j=0; j < slect.length; j++){
+							 for(let i = 0; i < slect.length; i++){
+								 for(let j=0; j < slect.length; j++){
+									 
 									 if( i == 0){
 										$(slect[i]).append(gettoDate(data[j].tkStartDate)+'<br>');
 									 }
@@ -293,9 +293,11 @@
 									 }
 									 if( i == 2){
 										 $(slect[i]).append((data[j].crdName)+'<br>');
+										 console.log("data[j].crdName : " + data[j].crdName);
 									 }
 							 	}								
 							 }
+							 console.log("done")
 							 
 						},
 						error: function(xhr, status, data){
@@ -304,17 +306,17 @@
 					})	
 				}
 				
-				
 				/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 				if(document.getElementById("startPage")) {
 					
 					const $startPage = document.getElementById("startPage");
-					const $memNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
-					var slect = $(this).closest('.row').find("[class*='_content']");
-					var page = 1;
-					console.log("testtest");
-					$startPage.onclick= pagenation;
-					console.log("testtesttest")
+					
+					$startPage.addEventListener('click', function(){
+						var page = 1;
+						var slect = $(this).closest('.row').find("[class*='_content']");
+						console.log("slect"+ slect);
+						pagenation($memNo,slect,page)
+					});
 				}
 				
 				/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
@@ -334,14 +336,36 @@
 				
 				if(document.getElementById("maxPage")) {
 					const $maxPage = document.getElementById("maxPage");
-					$maxPage.onclick = function() {
-						//location.href = link + "?currentPage=${ requestScope.pageInfo.maxPage }";
-					}
+					
+					$maxPage.addEventListener('click', function(){
+						var slect = $(this).closest('.row').find("[class*='_content']");
+						var page = ${ requestScope.doingPageInfo.maxPage };
+						console.log("slect"+ slect);
+						new pagenation($memNo,slect,page)
+					});
 				}
 				
-				function pageButtonAction(text) {
-					//location.href = link + "?currentPage=" + text;
-				}
+				
+				 
+			/* 	function pnbutton(obj) {
+
+
+					$(obj).on('click', function(){
+					var slect = $(this).closest('.row').find("[class*='_content']");
+					var page = $(this)[0].val();
+					console.log("slect  : @@@@@ : " + slect);
+					console.log(page);
+					});
+				} */
+				 	$('.pnbutton').click(function(){
+						var page = $(this).text();
+						var slect = $(this).closest('.row').find("[class*='_content']");
+						console.log("page  : @@@@" + page);
+						console.log("slect :  @@@@"+ slect);
+						new pagenation($memNo,slect,page)
+					}); 
+					
+				
 				
 				function searchPageButtonAction(text) {
 					//location.href = searchLink + "?currentPage=" + text + "&searchCondition=${ requestScope.searchCondition }&searchValue=${ requestScope.searchValue }";

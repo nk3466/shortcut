@@ -92,7 +92,6 @@ public class MyworkController {
 		System.out.println("cardProgress3List : " + cardProgress3List);
 		System.out.println("cardProgress4List : " + cardProgress4List);
 		
-		PageInfoDTO pageInfo = Pagenation.getPageInfo(1, doingCardCount, 3, 5);
 //		//List<ClientCardDTO> cardList = new ArrayList<>();
 //		//cardList = myworkService.selectCardList(member.getNo()); 
 //		List<MyworkResponseCardAndTaskDTO> cardList = new ArrayList<>();
@@ -114,7 +113,11 @@ public class MyworkController {
 //			}
 //		}
 //		
-		model.addAttribute("pageInfo", pageInfo);
+	
+		model.addAttribute("reqPageInfo", reqPageInfo);
+		model.addAttribute("doingPageInfo", doingPageInfo);
+		model.addAttribute("donePageInfo", donePageInfo);
+		model.addAttribute("waitPageInfo", waitPageInfo);
 		model.addAttribute("allCardCount", allCardCount);
 		model.addAttribute("reqCardCount", reqCardCount);
 		model.addAttribute("doingCardCount", doingCardCount);
@@ -156,12 +159,18 @@ public class MyworkController {
 		PageInfoDTO pageInfo = Pagenation.getPageInfo(pageNo, totalCount, limit, buttonAmount);
 		
 		
+		System.out.println("pageInfo : " + pageInfo);
 		
 		/* 진행중 카드 리스트 조회 */
 		List<MyworkResponseCardAndTaskDTO> cardProgress2List = myworkService.selectTaskTypeList(memNo, 2, pageInfo);
 		
 		System.out.println("cardProgress2List : " +cardProgress2List);
-		return new ObjectMapper().writeValueAsString(cardProgress2List);
+		
+		List<Object> repList = new ArrayList<Object>();
+		repList.add(pageInfo);
+		repList.add(cardProgress2List);
+		
+		return new ObjectMapper().writeValueAsString(repList);
 		
 		
 	}
