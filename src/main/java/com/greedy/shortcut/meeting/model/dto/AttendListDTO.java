@@ -33,6 +33,8 @@ public class AttendListDTO {
 	public String toString() {
 		return "AttendListDTO [meetingNo=" + meetingNo + ", memberNo=" + memberNo + "]";
 	}
+
+	
 	
 	
 }

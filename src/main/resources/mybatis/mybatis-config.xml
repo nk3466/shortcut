@@ -33,6 +33,8 @@
  		<typeAlias alias="MessengerDTO" type="com.greedy.shortcut.messenger.model.dto.MessengerDTO"/>
 
  		<typeAlias alias="PmDTO" type="com.greedy.shortcut.messenger.model.dto.PmDTO"/>
+ 		
+ 		<typeAlias alias="AttendListDTO" type="com.greedy.shortcut.meeting.model.dto.AttendListDTO"/>
 
  		
  	</typeAliases>

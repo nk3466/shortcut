@@ -165,6 +165,8 @@
 		</div>
 
 	</div>
+	
+	
 </body>
 
 <script type="text/javascript">
@@ -187,7 +189,7 @@
 	
 	
 		
-		var count = 1;
+		var count = 0;
 		
 		$(".conference_update").click(function(){
 			$.ajax({
@@ -203,10 +205,11 @@
 						for(let i = 0; i < memberList.length; i++){
 							
 							var insertSpan="";
-							insertSpan += '<span class="item_text on">' + memberList[i].name + '<i id="delBtn" class="fas fa-times-circle"></i>' + '</span>';
-							
+							insertSpan += '<span class="item_text on">' + memberList[i].name + '<i id="delBtn" class="fas fa-times-circle"></i>' + '<input class="item_num" name="memberno' + [i] + '" type="hidden" value="' + memberList[i].no + '">' + '</span>';
+							count++
 							$("#meetingMember").append(insertSpan);
 						}
+						console.log(count);
 					} 
 				},
 				error:function(data){
@@ -218,25 +221,17 @@
 			
 		});
 		
-		
-		function emailNull(value){
-			if(value === null) return true;
-			if(typeof value === 'string' && value === '') return true;
-			if(typeof value === 'undefined') return true;
-			return false;
-		}
-		
-		
-
+	
 		$(document).on('click','.item_text.on',function(){
 			
 			var $t = $(this);
 			
 			$t.remove();
+			count--;
+			console.log(count);
 		}) 
 		
 	$("#upload").click(function(){
-		
 		
 
 		var enrollDate = $("#meetingDate").val();						// input date 값
@@ -260,20 +255,31 @@
 		
 		var meetingName = $("#titleName").val();
 		var meetingText = $("#meetingContent").val();
-		/* var chamga[] = $("#memberEmail").val(); */
 		
-	
+		const projectMemberList = document.getElementById('meetingMember').innerHTML;
 		
 		
+		var meetingMember = $('form[name=projectMemberList]').serializeArray();
+		for(let i = 0; i < count; i++){
+			memberAttend = $('#meetingMember').find(".item_num").eq(i).val();
+			meetingMember.push({name : "memberAttend", value : memberAttend});
+			var index = i + 1;
+			console.log(memberAttend);
+		}
+		
+		
+		console.log(meetingMember);
 		
 		$.ajax({
 			url : "${pageContext.servletContext.contextPath}/meeting/meetinglog",
 			type : "POST",	
 			dataType : "json",
 			data : {
+				    meetingMember : meetingMember,
 					enrollDate : enrollDate,
 					meetingName : meetingName,
-					meetingText : meetingText
+					meetingText : meetingText,
+					index : index
 					},
 			success : function(data, status, xhr){
 				console.log(enrollDate6 === enrollDate7);
