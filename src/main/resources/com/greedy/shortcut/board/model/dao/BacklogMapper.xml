@@ -123,4 +123,109 @@
 		 WHERE A.PJT_NO = #{pjtNo}
 	</select> 
 
+	<select id="selectMemberDupCheck" resultMap="memberResultSet" parameterType="MemberDTO">
+	 SELECT 
+            A.MEM_NO
+       FROM MEMBER A 
+      WHERE A.MEM_ID = #{email} 
+	</select>
+	
+		<!-- 프로젝트 수정-->
+	 <insert id="insertEditProject" parameterType="ProjectDTO">
+	INSERT
+	  INTO PROJECT A
+	  (
+	     A.PJT_NO, A.PJT_NAME, A.PJT_START_DATE, MEM_NO,
+	     A.PJT_DEL_YN, A.PJT_END_DATE, A.PJT_COLOR
+	    )
+	  VALUES
+	  (
+	    SEQ_PJT_NO.NEXTVAL, #{projectName}, #{projectStartDate}, #{memberNo},
+	    'N', #{projectEndDate}, #{projectColor}
+	  )
+	</insert>
+	
+	<!-- 프로젝트 수정 이력 등록 -->
+	<insert id="insertEditProjectHistory" parameterType="ProjectDTO">
+	<selectKey keyProperty="pjtNo" order="BEFORE" resultType="_int">
+		 SELECT 
+	            SEQ_PJT_NO.CURRVAL
+	       FROM DUAL
+    </selectKey>
+	    INSERT
+	      INTO PROJECT_HISTORY A
+	      (
+	        A.PJT_NO, A.PJT_NAME, A.PJT_START_DATE, A.PJT_END_DATE
+	      , A.UPDATE_DATE, A.PJT_DEL_YN, A.PJT_HIS_NO, A.PJT_COLOR
+	      )
+	      VALUES
+	      (
+	      #{pjtNo}, #{projectName}, #{projectStartDate},#{projectEndDate}
+	      , SYSDATE, 'N', SEQ_PJT_HIS_NO.NEXTVAL, #{projectColor}
+	      )
+	</insert>
+	
+	
+	<!-- 프로젝트 넘버 조회 -->
+	 <select id="selectProjectNum" resultMap="ProjectResultSet" parameterType="ProjectDTO">
+	 SELECT 
+            SEQ_PJT_NO.CURRVAL
+       FROM DUAL
+	</select> 
+	<!-- 프로젝트 멤버 수정 -->
+	<insert id="insertEditProjectMember" parameterType="ProjectAuthorityDTO">
+	<selectKey keyProperty="pjtNo" order="BEFORE" resultType="_int">
+		 SELECT 
+	            SEQ_PJT_NO.CURRVAL
+	       FROM DUAL	
+    </selectKey>
+		INSERT
+		   INTO PJT_AUTHORITY
+		   (
+		   PA_ROLE, PJT_NO, MEM_NO, PA_NO
+		   )
+		   VALUES
+		   (
+		    #{projectRole}, #{pjtNo}, #{memberNo}, SEQ_PA_NO.NEXTVAL
+		    )
+	</insert>
+	
+	<!-- 프로젝트 수정 회원 이력 등록 -->
+	<insert id="insertEditProjectMemberHistory" parameterType="ProjectAuthorityDTO">
+	<selectKey keyProperty="memberNo" order="BEFORE" resultType="_int">
+		 SELECT 
+	            SEQ_PA_NO.CURRVAL
+	       FROM DUAL
+    </selectKey>
+		INSERT
+	      INTO TM_HISTORY
+			 (
+			   PA_ROLE, UPDATE_DATE, PA_NO
+			 )
+	    VALUES
+			 (
+			   #{projectRole}, SYSDATE, #{memberNo}
+			  )
+	</insert>
+	
+	<!-- 프로젝트 삭제 -->
+	<update id="removeProject"  parameterType="ProjectDTO">
+	    UPDATE PROJECT A
+           SET A.PJT_DEL_YN = 'Y'
+         WHERE A.PJT_NO = #{pjtNo}
+	</update>
+	
+	<insert id="insertRemoveProjectHistory"  parameterType="ProjectDTO">
+		 INSERT
+	      INTO PROJECT_HISTORY A
+	      (
+	        A.PJT_NO, A.PJT_NAME, A.PJT_START_DATE, A.PJT_END_DATE
+	      , A.UPDATE_DATE, A.PJT_DEL_YN, A.PJT_HIS_NO, A.PJT_COLOR
+	      )
+	      VALUES
+	      (
+	      #{pjtNo}, #{projectName}, #{projectStartDate}, #{projectEndDate}
+	      , SYSDATE, 'Y', SEQ_PJT_HIS_NO.NEXTVAL, #{projectColor}
+	      )
+	</insert>
 </mapper>

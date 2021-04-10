@@ -25,6 +25,7 @@ public interface ProjectMapper {
 	/* 프로젝트 멤버 조회 */
 	List<ProjectDTO> selectProjectList(int no);
 
+	/* 프로젝트 멤버 이력 등록 (프로젝트 생성시)  */
 	int insertProjectMemberHistory(ProjectAuthorityDTO projectAuthorityDTO);
 
 }
