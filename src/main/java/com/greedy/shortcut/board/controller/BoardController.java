@@ -57,13 +57,13 @@ public class BoardController {
 	@ResponseBody
 	public String insertCard(@ModelAttribute CardDTO card, HttpServletRequest request, RedirectAttributes rttr,
 			@RequestParam(value = "cardMember[]") List<String> cardMember)  {
-		
-		for(int i = 0; i < cardMember.size(); i++) {
-//			cardService.insertCard(cardMember.get(i));
-				
 			
-			}
 		System.out.println(cardMember);
+		for(int i = 0; i < cardMember.size(); i++) { 
+		  cardService.insertCard(cardMember.get(i));
+		 
+		 }
+		 		System.out.println(cardMember);
 		rttr.addFlashAttribute("message", "카드 생성에 성공했습니다.");
 		
 		return "/board/kanbanboard";
