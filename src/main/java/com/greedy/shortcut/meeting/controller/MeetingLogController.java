@@ -92,13 +92,19 @@ public class MeetingLogController {
 		}
 		
 		
-		
+		/* 미팅 인서트 */
 		if(!meetingService.insertMeeting(meeting)) {}
+		
+		/* 미팅번호 */
+		Object meetingNo = meetingService.selectMeeting();
+		System.out.println("이거 뜨냐 ? " + meetingNo);
+		int mNo = Integer.parseInt(meetingNo.toString());
+		
 		
 		for(int i = 0; i < projectMemberList.size(); i++ ) {
 			int memberNo = projectMemberList.get(i).getMemberNo();
-			if(meetingService.insertProjectMember(memberNo)) {
-				System.out.println("입력완료!!");
+			if(meetingService.insertProjectMember(memberNo, mNo)) {
+				System.out.println("입력완료!!" + memberNo) ;
 			}
 		}
 		//if(!meetingService.insertProjectMember(projectMemberList)) {}

@@ -1,5 +1,8 @@
 package com.greedy.shortcut.board.model.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +41,16 @@ public class ProjectBoardServiceImpl implements ProjectBoardService{
 	/* 프로젝트 생성 */
 	@Override
 	public boolean insertProject(ProjectDTO project) {
+		
+		/* 목표시간 미입력시 */
 		/*
-		 * mapper.insertPoject(project); mapper.insertProjectHistory(project);
+		 * SimpleDateFormat dfm = new SimpleDateFormat("yyyy-MM-dd"); Date day = null;
+		 * try { day = dfm.parse("2999-12-31"); // jsp 에서 설정한 디폴트값 } catch
+		 * (ParseException e) { e.printStackTrace(); }
+		 * if(project.getProjectEndDate().equals(day)) {
+		 * project.setProjectEndDate(null); }
 		 */
+		System.out.println("이거 좀 뽑아봐" + project);
 		return mapper.insertPoject(project) + mapper.insertProjectHistory(project) > 0? true : false;
 	}
 
@@ -48,41 +58,15 @@ public class ProjectBoardServiceImpl implements ProjectBoardService{
 	@Override
 	public boolean insertProjectMember(ProjectDTO project, List<ProjectAuthorityDTO> projectMemberList) {
 		
-		/*
-		 * ProjectDTO project1 = mapper.selectProjectNum(project);
-		 * 
-		 * System.out.println(project1); int projectNo = project1.getPjtNo();
-		 */
-		/*
-		 * for(int i = 0; i < projectMemberList.size();i++) {
-		 * projectMemberList.get(i).setProjectNo(projectNo); }
-		System.out.println("야호" + projectMemberList); */
-		
 		int count = 0;
-		 /* if(!Integer.toString(projectNo).isEmpty()) { */
 			  for(int i = 0; i < projectMemberList.size(); i++) {
 				  mapper.insertProjectMember(projectMemberList.get(i));
 				  mapper.insertProjectMemberHistory(projectMemberList.get(i));
 				  count++;
 			  }
-			  return  count >= projectMemberList.size()? true : false;
-		  
+		return  count >= projectMemberList.size()? true : false;
 	}
 	
-	/* 프로젝트 생성 이력 insert */
-	/*
-	 * @Override public boolean insertProjectHistory(ProjectDTO project) {
-	 * 
-	 * return mapper.insertProjectHistory(project) > 0? true : false; }
-	 */
-	/* 프로젝트 회원 이력 insert */
-	/*
-	 * @Override public boolean insertProjectMemberHistory(ProjectDTO project,
-	 * List<ProjectAuthorityDTO> projectMemberList) {
-	 * 
-	 * return mapper.insertProjectMemberHistory; }
-	 * 
-	 */
 	
 	/* 프로젝트 조회 */
 	@Override

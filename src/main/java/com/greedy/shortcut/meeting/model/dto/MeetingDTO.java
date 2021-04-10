@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class MeetingDTO {
 
-	private int meetingNO;
+	private Integer meetingNo;
 	private String meetingName;
 	private String meetingText;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd HH:mm:ss SSS", timezone = "Asia/Seoul")
@@ -17,10 +17,10 @@ public class MeetingDTO {
 	
 	public MeetingDTO() {}
 
-	public MeetingDTO(int meetingNO, String meetingName, String meetingText, Date enrollDate, String status,
+	public MeetingDTO(Integer meetingNo, String meetingName, String meetingText, Date enrollDate, String status,
 			int sprintNo) {
 		super();
-		this.meetingNO = meetingNO;
+		this.meetingNo = meetingNo;
 		this.meetingName = meetingName;
 		this.meetingText = meetingText;
 		this.enrollDate = enrollDate;
@@ -28,12 +28,12 @@ public class MeetingDTO {
 		this.sprintNo = sprintNo;
 	}
 
-	public int getMeetingNO() {
-		return meetingNO;
+	public Integer getMeetingNo() {
+		return meetingNo;
 	}
 
-	public void setMeetingNO(int meetingNO) {
-		this.meetingNO = meetingNO;
+	public void setMeetingNo(Integer meetingNo) {
+		this.meetingNo = meetingNo;
 	}
 
 	public String getMeetingName() {
@@ -78,11 +78,10 @@ public class MeetingDTO {
 
 	@Override
 	public String toString() {
-		return "MeetingDTO [meetingNO=" + meetingNO + ", meetingName=" + meetingName + ", meetingText=" + meetingText
+		return "MeetingDTO [meetingNo=" + meetingNo + ", meetingName=" + meetingName + ", meetingText=" + meetingText
 				+ ", enrollDate=" + enrollDate + ", status=" + status + ", sprintNo=" + sprintNo + "]";
 	}
 
-	
 	
 	
 }

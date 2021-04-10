@@ -34,14 +34,7 @@
             </div>
             <div class="project_line"></div>
             <div class="project_text2">
-               Wankku is a front-end, Minsero is a back-end... Yakgan e run neukkim jeok in neukkim  Right?? Understand?  You know what I’m saying???  I want to sensitive mood desing for our homepage, so we need  to help us by ourselves.
-               <br>
-               Conclusively, I hope our prototype will be completed tomorrow.
-               <br>
-               See you later~   
-               <br>
-               <br>
-               mr.choo!~~ ipsul wi e choo
+               Wankku 
             </div>               
          </div>   
          <div class="project_board_area">
@@ -72,10 +65,12 @@
                   <c:forEach var="project" items="${ requestScope.projectList }">
                   <div class="board_list">
 						<!-- <div class="board_text"  data-toggle="modal" data-target="#project_modify"> -->
-						
-							<a class="board_detail type" style="background-color: ${project.projectColor};" href="${pageContext.servletContext.contextPath }/board/backlog/${ project.pjtNo }">
+						<form action="${ pageContext.servletContext.contextPath }/board/backlog" method="get">
+							<input type="text" value="${project.pjtNo }" id="pjtNo" name="pjtNo" style="display: none;">
+							<button class="board_detail type" style="background-color: ${project.projectColor};" id="moveProject" type="submit">
 								<img src="${ pageContext.servletContext.contextPath }/resources/img/board_icon.png" style="height:70px; width:70px;">
-							</a>
+							</button>
+						</form>
 							<div style="display: none;">
 								<c:out value="${ project.pjtNo }"/>
 							</div>
@@ -83,7 +78,7 @@
 								<c:out value="${ project.projectName }"/>	
 							</div>	
 						</div>
-							</c:forEach>				
+					</c:forEach>				
 						
 					<!-- </div> -->
 					          
@@ -192,21 +187,11 @@ if(document.getElementById("pjSelectOne")) {
 		
 		 const $pjSelectOne = document.getElementById("pjSelectOne");
 	  	 
-		/*  $pjSelectOne.onclick = function(){
-			 const  no = 32;
-			 $.ajax({
-				 url : 
-			 })
-			
-		 } */
-		
+				
 		/* 멤버 수 count */
 		var idcount = 1;
-		/* console.log("엇??" +  ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}); */
 		$("#addpersonButton").click(function(){
-			
 		var email = $("#email").val();			//입력한 이메일
-		
 			if(!vali($("#email").val())){
 				/* 아이디 중복 체크 */
 				$.ajax({
@@ -233,14 +218,14 @@ if(document.getElementById("pjSelectOne")) {
 						}
 						
 					}, error:function(data){
+						
 					}
 				});
-				
 		}else{
 			alert("이메일을 입력해주세요");
 		}
 			});
-			
+		/* 프로젝트 멤버 삭제 버튼 클릭 시 */	
 		$("#removepersonButton").click(function(){
 			$("#projectMember tr:last").remove();
 			idcount--;
@@ -254,7 +239,7 @@ if(document.getElementById("pjSelectOne")) {
 		    return false;
 		}
 		
-		/* 프로젝트 생성 버튼 클릭 */
+		/* 프로젝트 생성 버튼 클릭 시*/
 		$("#createProject").click(function(){ 
 			function makeTag(name, value){
 				var hiddenTag = document.createElement('input');
@@ -265,25 +250,20 @@ if(document.getElementById("pjSelectOne")) {
 				return hiddenTag
 			}
 			
-		   var memberNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
-		   console.log(memberNo);
+		   /* var memberNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
+		   console.log(memberNo); */
 		   
+		   /* 프로젝트 정보 */
 			const projectMemberList = document.getElementById('dynamicTbody').innerHTML;
-			var $form = $('<form></form>');
 		   var projectName = document.getElementById("projectName").value;
 		   var projectStartDate = document.getElementById("projectStartDate").value;
-		   var projectEndDate = document.getElementById("projectEndDate").value;
+		   var projectEndDate = document.getElementById("projectEndDate").value.defaultValue = "2999-12-31";
 		   var projectColor = document.getElementById("projectColor").value;
 		   console.log("projectName : " + projectName);
 		   console.log("projectStartDate : " + projectStartDate);
 		   console.log("projectEndDate : " + projectEndDate);
 		   console.log("projectColor : " + projectColor);
-		   
-		  /*  nk.push({name : "projectName", value : projectName},
-				   {name : "projectStartDate", value : projectStartDate},
-				   {name : "projectEndDate", value : projectEndDate},
-				   {name : "projectColor", value : projectColor} 
-		   );*/
+		 
 		   	
 		   var nk1 = $('form[name=projectMemberList]').serializeArray();
 		   var projectMaker = $("#projectMember").find(".memberNo").eq(0).text();
@@ -305,14 +285,9 @@ if(document.getElementById("pjSelectOne")) {
 						{ name : "projectRole",value : projectRole}
 						);
 				
-			   $form.append(makeTag(memberId, memberId));
-			   $form.append(makeTag(projectRole, projectRole));
 		   } 
 		   
-		   
-		   console.table("얍 " + nk1);
-		   
-		   
+		   /* 프로젝트 멤버, 정보 전송 */
 		   $.ajax({
 			   url :"${pageContext.servletContext.contextPath}/board/project_regist",
 			   type : "post",
@@ -338,75 +313,5 @@ if(document.getElementById("pjSelectOne")) {
 		})
 </script>
 
-
-<div class="modal fade" id="project_modify">
-   <div class="modal-dialog">
-      <div class="modal-content">
-
-         <!-- Modal Header -->
-         <div class="modal-header">
-            <input class="input_detail" type="text" id="projectName" placeholder="Add Project Title">            
-         </div>
-         
-		<div class="modal-header">
-			<div>시작 날짜</div>
-            <input class="input_detail nk" type="date" id="projectStartDate">         
-         </div>
-         
-         <div class="modal-header">
-            <p>종료 날짜</p>
-         <input class="input_detail  nk" type="date" id="projectEndDate">  
-         </div>
-         
-         <div class="modal-header">
-            <p>프로젝트 색상</p>
-         <input class="input_detail  nk1" type="color" id="projectColor">  
-         </div> 
-         
-                
-         <!-- Modal body -->
-         
-         <div class="modal-body">
-            <div class="row">
-               <i class="fas fa-search"></i>
-               <input class="input_detail1" type="text" id="email" placeholder="Add Member">
-               <select class="select_detail nk" id="selectroll">
-                  <option>Admin</option>
-                  <option>Member</option>
-                  <option>Client</option>
-               </select>
-               <input class="input_detail2 nk" type="button" id="addpersonButton" value="+">      
-               <input class="input_detail2 nk" type="button" id="removepersonButton" value="-">      
-            </div>
-
-				<table class="select_member" id="projectMember" border="1" style="width:100%; height:30px; text-align: center">
-					<thead>
-					<tr>
-						<th style="width:60px; align-content: center;" >인원 수</th>
-						<th>이메일</th>
-						<th style="width:100px;">권한</th>
-						<th style="width:100px; display:none">회원번호</th>
-					</tr>
-					<tr>
-						<th>1</th>
-						<th  class="Email">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}</th>
-						<th class="roll">Admin</th>
-						<th class="memberNo" style="display:none">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}</th>
-					</tr>
-					</thead>
-					<tbody  id="dynamicTbody">
-					</tbody>
-				</table>
-         </div>
-            
-         
-         
-         <div class="modal_btn_area">
-            <button class="btn_detail type">Revise Project</button>
-            <button class="btn_detail type">Delete Project</button>
-         </div>            
-      </div>
-   </div>
-</div>
 </body>
 </html>

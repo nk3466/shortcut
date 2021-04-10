@@ -84,20 +84,10 @@
 		    #{projectRole}, #{pjtNo}, #{memberNo}, SEQ_PA_NO.NEXTVAL
 		    )
 	</insert>
-	<!--  <insert id="insertProjectMember" parameterType="ProjectAuthorityDTO">
-	 INSERT
-	   INTO PJT_AUTHORITY
-	   (PA_ROLE, PJT_NO, MEM_NO, PA_NO)
-	   VALUES
-	   (
-	   <foreach collection="list" item="item" separator=",">
-	   #{item.projectRole}, #{item.projectNo}, #{item.memberNo}, SEQ_PA_NO.NEXTVAL
-	   </foreach>
-	   )
-	</insert>  -->
+
 	<!-- 프로젝트 리스트 조회 -->
 	<select id="selectProjectList" resultMap="ProjectResultSet" parameterType="MemberDTO">
-		SELECT
+	SELECT
 		       DISTINCT A.PJT_NO
 		     , A.PJT_NAME
 		     , A.PJT_START_DATE
@@ -107,10 +97,11 @@
 		     , A.PJT_COLOR
 		  FROM PROJECT A
 		 JOIN PJT_AUTHORITY C ON(A.PJT_NO = C.PJT_NO)
-		 WHERE C.MEM_NO = #{no}
-		   AND C.PA_ROLE = 1 OR C.PA_ROLE = 2
+		 WHERE A.PJT_DEL_YN = 'N'
+           AND C.MEM_NO = #{no}
 	</select> 
 	
+	<!-- 프로젝트 생성 이력 등록 -->
 	<insert id="insertProjectHistory" parameterType="ProjectDTO">
 	<selectKey keyProperty="pjtNo" order="BEFORE" resultType="_int">
 		 SELECT 

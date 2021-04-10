@@ -38,6 +38,8 @@
 
  		<typeAlias alias="BacklogDTO" type="com.greedy.shortcut.board.model.dto.BacklogDTO"/>
  		
+ 		<typeAlias alias="CardDTO" type="com.greedy.shortcut.board.model.dto.CardDTO"/>
+ 		
  	</typeAliases>
  	
  </configuration>
