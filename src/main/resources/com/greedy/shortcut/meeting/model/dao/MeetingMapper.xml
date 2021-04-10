@@ -5,7 +5,7 @@
 <mapper namespace="com.greedy.shortcut.meeting.model.dao.MeetingMapper">
 	
 	<resultMap type="MeetingDTO" id="MeetingResultSet">
-		<id column="MEET_NO" property="meetingNO"/>
+		<id column="MEET_NO" property="meetingNo"/>
 		<result column="MEET_NAME" property="meetingName"/>
 		<result column="MEET_TXT" property="meetingText"/>
 		<result column="MEET_ENROLL_DATE" property="enrollDate"/>
@@ -57,13 +57,23 @@
 		 WHERE B.PJT_NO = 4
 	</select>
 	
+	
+	
+	<select id="selectMeeting" parameterType="MeetingDTO" resultMap="MeetingResultSet">
+		SELECT
+                A.RNUM
+              , A.MEET_NO                
+           FROM (SELECT ROWNUM RNUM
+                      , B.MEET_NO                          
+                   FROM (SELECT C.MEET_NO                              
+                           FROM MEETING C                       
+                          ORDER BY C.MEET_NO DESC
+                        ) B
+                 ) A
+             WHERE A.RNUM BETWEEN 1 AND 1
+	</select>
+	
 	<insert id="insertProjectMember" parameterType="AttendListDTO">
-		<selectKey keyProperty="meetingNo" order="BEFORE" resultType="_int">
-	         SELECT
-	                SEQ_MEET_NO.CURRVAL
-	           FROM DUAL
-	     </selectKey>
-	     
 	     INSERT
 		        INTO MEETING_ATTEND_LIST A
 		        (
@@ -73,12 +83,6 @@
 		        (
 		         #{meetingNo}, #{memberNo}
 		        )
-	   
-		      
-	        
 	</insert>
-	
-	
-	
 	
 </mapper>

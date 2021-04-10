@@ -33,10 +33,22 @@ public class MeetingServiceImpl implements MeetingService{
 		return mapper.selectProjectMember(member);
 	}
 
+	/*
+	 * @Override public boolean insertProjectMember(int memberNo) {
+	 * System.out.println("뇨내"); return mapper.insertProjectMember(memberNo) > 0?
+	 * true:false; }
+	 */
+
 	@Override
-	public boolean insertProjectMember(int memberNo) {
-		System.out.println("뇨내");
-		return mapper.insertProjectMember(memberNo) > 0? true:false;
+	public Object selectMeeting() {
+
+		return mapper.selectMeeting();
+	}
+
+	@Override
+	public boolean insertProjectMember(int memberNo, int mNo) {
+		// TODO Auto-generated method stub
+		return mapper.insertProjectMember(memberNo, mNo) > 0? true:false;
 	}
 
 
