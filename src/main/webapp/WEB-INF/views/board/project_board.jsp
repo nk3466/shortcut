@@ -34,14 +34,7 @@
             </div>
             <div class="project_line"></div>
             <div class="project_text2">
-               Wankku is a front-end, Minsero is a back-end... Yakgan e run neukkim jeok in neukkim  Right?? Understand?  You know what I’m saying???  I want to sensitive mood desing for our homepage, so we need  to help us by ourselves.
-               <br>
-               Conclusively, I hope our prototype will be completed tomorrow.
-               <br>
-               See you later~   
-               <br>
-               <br>
-               mr.choo!~~ ipsul wi e choo
+               Wankku 
             </div>               
          </div>   
          <div class="project_board_area">
@@ -72,10 +65,12 @@
                   <c:forEach var="project" items="${ requestScope.projectList }">
                   <div class="board_list">
 						<!-- <div class="board_text"  data-toggle="modal" data-target="#project_modify"> -->
-						
-							<a class="board_detail type" style="background-color: ${project.projectColor};" href="${pageContext.servletContext.contextPath }/board/backlog/${ project.pjtNo }">
+						<form action="${ pageContext.servletContext.contextPath }/board/backlog" method="get">
+							<input type="text" value="${project.pjtNo }" id="pjtNo" name="pjtNo" style="display: none;">
+							<button class="board_detail type" style="background-color: ${project.projectColor};" id="moveProject" type="submit">
 								<img src="${ pageContext.servletContext.contextPath }/resources/img/board_icon.png" style="height:70px; width:70px;">
-							</a>
+							</button>
+						</form>
 							<div style="display: none;">
 								<c:out value="${ project.pjtNo }"/>
 							</div>
@@ -83,7 +78,7 @@
 								<c:out value="${ project.projectName }"/>	
 							</div>	
 						</div>
-							</c:forEach>				
+					</c:forEach>				
 						
 					<!-- </div> -->
 					          
