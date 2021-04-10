@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,8 +51,8 @@ public class BacklogBoardController {
 	}
 
 
-	@GetMapping("backlog/{pjtNo}")
-	public String project(Model model, @PathVariable("pjtNo") int pjtNo) {
+	@GetMapping("backlog")
+	public String project(Model model, @RequestParam(name="pjtNo") int pjtNo) {
 
 		ProjectDTO project = backlogService.selectProjectList(pjtNo);
 
@@ -78,6 +80,7 @@ public class BacklogBoardController {
 		int buttonAmount = 3;
 		
 		PageInfoDTO pageInfo = Pagenation.getPageInfo(pageNo, totalCount, limit, buttonAmount);
+		System.out.println(pageInfo);
 		//		logger.debug("finishSpringList :::::::::::::::::::: " + finishSprintList);
 		List<BacklogDTO> finishSprintList = backlogService.selectPagingFinishSprint(pjtNo, pageInfo);
 		System.out.println();
@@ -85,6 +88,7 @@ public class BacklogBoardController {
 			System.out.println(pagingBacklog);
 		}
 		
+		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("finishSprintList", finishSprintList);
 		/* =================== 종료된 백로그(스프린트) =================== */
 

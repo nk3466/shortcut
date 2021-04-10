@@ -15,7 +15,6 @@
 	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
 	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/backlog.css">
 	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/modal.css">
-
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -166,12 +165,231 @@
 							</tbody>
 						</table>
 					</div>
-
+					<div class="pagingArea" align="center">
+						<%-- <c:when test="${ empty requestScope.searchValue }"> --%>
+							<button id="startPage"><<</button>
+							<c:if test="${ requestScope.pageInfo.pageNo <= 1 }">
+								<button disabled><</button>
+							</c:if>
+							<c:if test="${ requestScope.pageInfo.pageNo > 1 }">
+								<button id="prevPage"><</button>
+							</c:if>
+							
+							<c:forEach var="p" begin="${ requestScope.pageInfo.startPage }" end="${ requestScope.pageInfo.endPage }" step="1">
+								<c:if test="${ requestScope.pageInfo.pageNo eq p }">
+									<button class="admBtn" disabled><c:out value="${ p }"/></button>
+								</c:if>
+								<c:if test="${ requestScope.pageInfo.pageNo ne p }">
+									<button class="admBtn" onclick="pageButtonAction(this.innerText);"><c:out value="${ p }"/></button>
+								</c:if>
+							</c:forEach>
+										
+							<c:if test="${ requestScope.pageInfo.pageNo >= requestScope.pageInfo.maxPage }">
+								<button class="admBtn" disabled>></button>
+							</c:if>
+							<c:if test="${ requestScope.pageInfo.pageNo < requestScope.pageInfo.maxPage }">
+								<button class="admBtn" id="nextPage">></button>
+							</c:if>
+							<button type="button" class="admBtn" id="maxPage">>></button>
+						<%-- </c:when> --%>
+					</div>
+					
+<button type="button" id="please">please</button>
+	<script>
+	const token = $("meta[name='_csrf']").attr("content");
+	const header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options) {
+	    xhr.setRequestHeader(header, token);
+	});
+		var one = 1;
+		var two = "two";
+		var pjtNo = ${requestScope.pjtNo};
+	
+		$("#please").click(function() {
+			console.log("a")
+			$.ajax({
+				url: "${pageContext.servletContext.contextPath}/board/backlog/please",
+				method: "GET",
+				data: {
+					one: one,
+					two: two,
+					pjtNo: pjtNo
+				},
+				success: function(data, status, xhr) {
+					console.log(data);
+				},
+				error: function(xhr, status, error) {
+					console.log(error);
+				}
+			});
+		});
+	</script>
+					
 					<script>
+						const link = "${ pageContext.servletContext.contextPath }/board/backlog";
+					
+						if(document.getElementById("startPage")) {
+							const $startPage = document.getElementById("startPage");
+							$startPage.onclick = function() {
+								location.href = link + "?currentPage=1";
+							}
+						}
+						
+						if(document.getElementById("prevPage")) {
+						    const $prevPage = document.getElementById("prevPage");
+						    $prevPage.onclick = function() {
+						        location.href = link + "?currentPage=${ requestScope.pageInfo.pageNo - 1}";
+						    }
+					    }
+						    
+					    if(document.getElementById("nextPage")) {
+						    const $nextPage = document.getElementById("nextPage");
+					        $nextPage.onclick = function() {
+					            location.href = link + "?currentPage=${ requestScope.pageInfo.pageNo + 1}";
+					        }
+					    }
+						    
+					    if(document.getElementById("maxPage")) {
+						    const $maxPage = document.getElementById("maxPage");
+						    $maxPage.onclick = function() {
+						        location.href = link + "?currentPage=${ requestScope.pageInfo.maxPage }";
+						    }
+					    }
+						    
+						function pageButtonAction(text) {
+							console.log("success");
+							console.log(typeof text);
+							pagingAjax();
+							 /*  location.href = link + "?currentPage=" + text; */
+				        }
+					</script>
+					<script>
+					
+						function pagingAjax() {
+							
+							var abc = "1";
+							
+							$.ajax({
+								url : "${pageContext.servletContext.contextPath}/board/backlog/reviewPaging",
+								method : "POST",
+								success : function(data, status, xhr) {
+									console.log(data);
+									console.log(status);
+									console.log(xhr);
+								},
+								error : function(xhr, status, error) {
+									console.log(xhr);
+									console.log(status);
+									console.log(error);
+								}
+							});
+						}
+					
 						function retrospect() {
 							location.href = "${ pageContext.servletContext.contextPath }/board/backlog/retrospect";
 						}
 					</script>
+<!-- 					<script type="text/javascript">
+						$(document).ready(function() {
+							boardMain.init();
+						});
+						
+						var boardMain = {
+								init : function() {
+									var _this = this;
+									_this.getBoardList();
+								}
+								,getBoardList : function(no) {
+									
+									var pageNo = (no || 1);
+									
+									$.ajax({
+										url : "board/backlog",
+										type : "GET",
+										data : "countPerPage=" + 5 + "&pageNo=" + pageNo,
+										success : function(data, status, xhr) {
+											
+											var item = data.finishSprintList;
+											var selectHtml = [];
+											var len = item.length;
+											
+											var page = data.pageInfo;
+											var page_boardList = Paging(page.totalCount, page.limit, page.buttonAmount, pageNo, "boardList");
+											
+											if(len > 0) {
+												$(item).each(function(i, item) {
+													selectHtml.push('<tr>');
+													selectHtml.push('<td><a href="#">' + item.DOCNUM + '</a></th>');
+													selectHtml.push('<th class="boardTitle" id="' + item.DOCNUM + '"><a href="#">' + (item.TITLE || "제목없음"))+'</a></th>');
+													selectHtml.push('<td>' + item.ADD_USR_NM + '</td>');
+													selectHtml.push('<td>' + item.VIEWCONUT + '</td>');
+													selectHtml.push('</tr>');
+												});
+											} else {
+												selectHtml.push('<tr>');
+												selectHtml.push('<td colspan="3">조회된 결과가 없습니다.</td>');
+												selectHtml.push('</tr>');
+											}
+											
+											$("#boardList").empty().html(selectHtml.join(''));
+											
+											$("#paging").empty().html(page_boardList);
+										},
+										error : function(xhr, status, error) {
+											console.log(xhr);
+											console.log(status);
+											console.log(error);
+										}
+									});
+									
+								}	
+						}
+						
+						var goPaging_boardList = function(cPage) {
+							boardMain.getBoardList(cPage);
+						}
+						
+						Paging = function(totalCount, limit, buttonAmount, pageNo, token) {
+							totalCount = parseInt(totalCount);
+							limit = parseInt(limit);
+							buttonAmount = parseInt(buttonAmount);
+							pageNo = parseInt(pageNo);
+							
+							var html = new Array();
+							if(totalCount == 0) {
+								return "";
+							}
+							
+							var pageCnt = totalCount % limit;
+							if(pageCnt == 0) {
+								pageCnt = parseInt(totalCnt / limit);
+							} else {
+								pageCnt = parseInt(totalCnt / limit) + 1;
+							}
+							
+							var pRCnt = parseInt(pageNo / buttonAmount);
+							if(pageNo % buttonAmount == 0) {
+								pRCnt = parseInt(pageNo / buttonAmount) - 1;
+							}
+							
+							if(pageNo > buttonAmount) {
+								var s2;
+								if(pageNo % pageSize == 0) {
+									s2 = pageNo - pageSize;
+								} else {
+									s2 = pageNo - pageNo % pageSize;
+								}
+								html.push('<a href=javascript:goPaging_' + token + '("');
+								html.push(s2);
+								html.push('");>"');
+								html.push('< ')
+								html.push('</a>');
+							} else {
+								html.push('<a href="#">\n'); html.push('◀ '); html.push('</a>'); } //paging Bar for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){ if(index == pageNo){ html.push('<strong>'); html.push(index); html.push('</strong>'); }else{ html.push('<a href=javascript:goPaging_' + token + '("'); html.push(index); html.push('");>'); html.push(index); html.push('</a>'); } if(index == pageCnt){ break; }else html.push(' | '); } //다음 화살표 if(pageCnt > (pRCnt + 1) * pageSize){ html.push('<a href=javascript:goPaging_' + token + '("'); html.push((pRCnt + 1)*pageSize+1); html.push('");>'); html.push(' ▶'); html.push('</a>'); }else{ html.push('<a href="#">'); html.push(' ▶'); html.push('</a>'); } return html.join("");
+
+							}
+						}
+					</script> -->					
 				</div>
 			</div>
 							

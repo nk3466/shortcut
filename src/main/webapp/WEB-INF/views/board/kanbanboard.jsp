@@ -21,7 +21,7 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
+<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
@@ -227,7 +227,9 @@
 	<div class="modal fade" id="myModal2">
 		<div class="modal-dialog">
 			<div class="modal-header type">Short Cut</div>
-			<form name="projectMemberList">
+			<!-- name="projectMemberList" -->
+			<form action="${pageContext.servletContext.contextPath}/card/regist" method="post">
+			<input type="text" value="${ requestScope.pjtNo }" name="memNo" id="" style="display: none;">
 				<div class="modal-content">
 					<div class="modal-body">
 						<div class="row">
@@ -271,7 +273,7 @@
 						<!-- <input class="input_detail type1" id="selectmember" type="text" name="addMember" placeholder="Add Member" 
 						value="">  -->
 						<div id="choisemember"></div>
-						<input class="input_detail type2" id="addMember" type="reset" name="addMember" value="멤버조회">
+						<input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회">
 						<div id="member"></div>
 						<p class="memberNo" style="display:none">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}</p>
 					</div>
@@ -313,7 +315,7 @@
 
 					<div class="item_area">
 						<i class="far fa-comment-alt"></i>
-						<textarea class="text_detail type"></textarea>
+						<textarea class="text_detail type" name="txt"></textarea>
 					</div>
 				</div>
 
@@ -327,7 +329,8 @@
 					</div>
 
 					<div class="btn_area">
-						<button type="button" class="upload_btn" id="upload">올리기</button>
+					<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+						<button type="submit" class="upload_btn" id="upload">올리기</button>
 					</div>
 				</div>
 			</div>
@@ -360,7 +363,7 @@
 		placeholder: "card-placeholder"
 	});
 	$(".insert_card").disableSelection();
-});o
+});
 
 	/* 일정, 업무 버튼 */
 	var count1 = 0;
@@ -468,17 +471,19 @@ $("#upload").click(function() {
 	
 	console.table(cardMember);
 	
-	$.ajax({
-		url: "/board/kanbanboard/${ requestScope.pjtNo }",
+	/* $.ajax({
+		url: "${pageContext.servletContext.contextPath}/card/regist",
 		type: "POST",
-		data: {cardMember : cardMember},
+		data: {
+			"cardMember" : cardMember,
+			"pjtNo" : pjtNo},
 		success: function(data, status, xhr) {
 			console.log(data);
-		},
-		error(xhr, status, error) {
+	},
+		error: function(xhr, status, error) {
 			console.log(error);
 		}
-	});
+	}); */
 	
 });
 
