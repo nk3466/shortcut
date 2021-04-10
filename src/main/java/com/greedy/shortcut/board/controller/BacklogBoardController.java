@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.greedy.shortcut.board.model.dto.BacklogDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
@@ -32,8 +32,8 @@ public class BacklogBoardController {
 	}
 
 
-	@GetMapping("backlog/{pjtNo}")
-	public String project(Model model, @PathVariable("pjtNo") int pjtNo) {
+	@GetMapping("backlog")
+	public String project(Model model, @RequestParam(name="pjtNo") int pjtNo) {
 
 		ProjectDTO project = backlogService.selectProjectList(pjtNo);
 
@@ -61,6 +61,7 @@ public class BacklogBoardController {
 		int buttonAmount = 3;
 		
 		PageInfoDTO pageInfo = Pagenation.getPageInfo(pageNo, totalCount, limit, buttonAmount);
+		System.out.println(pageInfo);
 		//		logger.debug("finishSpringList :::::::::::::::::::: " + finishSprintList);
 		List<BacklogDTO> finishSprintList = backlogService.selectPagingFinishSprint(pjtNo, pageInfo);
 		System.out.println();
@@ -68,6 +69,7 @@ public class BacklogBoardController {
 			System.out.println(pagingBacklog);
 		}
 		
+		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("finishSprintList", finishSprintList);
 		/* =================== 종료된 백로그(스프린트) =================== */
 
