@@ -13,11 +13,23 @@
 	</resultMap>
 	
 	<resultMap id="AuthorityResultSet" type="ProjectAuthorityDTO">
-		<id column="PA_NO" property="projectRoleNo"/>	<!-- 권한고유번호 -->
-		<result column="PA_ROLE" property="projectRole"/><!-- 	회원권한 -->
+		<id column="PA_NO" property="projectRoleNo"/>		<!-- 권한고유번호 -->
+		<result column="PA_ROLE" property="projectRole"/>	<!-- 	회원권한 -->
 		<result column="PJT_NO" property="projectNo"/>		<!-- 프로젝트번호  -->
 		<result column="MEM_NO" property="memberNo"/>	
 	</resultMap> 
+	
+	<resultMap id="CardResultSet" type="CardDTO">
+		<id column="CRD_NO" property="no" />
+		<result column="CRD_NAME" property="title" />
+		<result column="CRD_ENROLL_DATE" property="EnrollDate" />
+		<result column="CRD_DEL_YN" property="delNo" />
+		<result column="BRD_NO" property="brdNo" />
+		<result column="CRD_ORDER" property="order" />
+		<result column="CRD_TYPE" property="type" />
+		<result column="MEM_NO" property="memNo" />
+		<result column="CRD_TXT" property="txt" />
+	</resultMap>
 	
 	<select id="selectMember" resultMap="memberResultSet" parameterType="_int">
 		SELECT
@@ -26,5 +38,17 @@
 		  JOIN PJT_AUTHORITY B ON (A.MEM_NO = B.MEM_NO)
 		 WHERE B.PJT_NO = #{pjtNo}
 	</select>
-		
+	
+	<insert id="registCard" parameterType="CardDTO">
+        INSERT 
+          INTO CARD A
+        (
+          A.CRD_NO, A.CRD_NAME, A.MEM_NO, A.CRD_TXT
+        ) 
+		VALUES
+		(
+		  SEQ_MEM_NO.NEXTVAL, #{title}, #{memNo}, #{txt}
+		)
+	</insert>
+	
  </mapper>
