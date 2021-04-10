@@ -35,52 +35,6 @@
 <!-- Jquery UI -->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<style>
-.board-placeholder {
-	border: 1px dotted;
-	margin: 0 1em 1em 0;
-	height: 10px;
-	background-color:darkgray;
-	/* 노란색으로 표신되는 것이 주요 포인트 */
-	
-	pisition: absolute;
-}
-/* 마우스 포인터을 손가락으로 변경 */
-.card:not(.no-move) .board-header {
-	cursor: pointer;
-	justify-content: center;
-	cursor: move;
-}
-/* 일정, 업무 버튼 */
-.work_btn.on {
-	display: none;
-}
-.calendar_btn.on {
-	display: none;
-}
-/* 업무 진행도 버튼 */
-.btn-group .button {
-	background-color: #00ff0000;
-	border: 1px solid green;
-	color: black;
-	padding: 5px 12px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	cursor: pointer;
-	float: left;
-}
-
-.btn-group .button on {
-	background-color: #4CAF50;
-}
-
-.btn-group .button:not(:last-child) {
-	border-right: none;
-}
-</style>
-
 <title>Short Cut</title>
 </head>
 <body>
@@ -92,9 +46,8 @@
 			<div class="project_info_area">
 				<div class="project_info">
 					<div class="info_item">
-					
 						<div class="item_name">프로젝트명</div>
-						<div class="item_detail">Short Cut</div>
+						<div class="item_detail"><input type="text" id="projectName" placeholder="${projectList.projectName }" readonly></div>
 					</div>
 					<div class="info_item">
 						<div class="item_name">Backlog No</div>
@@ -108,6 +61,11 @@
 							<i class="fas fa-user-circle">한미화</i> <i
 								class="fas fa-user-circle">미스터추</i>
 						</div>
+					</div>
+					<div class="info_item">
+					<div id="newBoard" class="insert_card" data-toggle="modal"
+						data-target="#myModal3">
+						<i class="fas fa-plus"></i> 보드 생성하기</div>
 					</div>
 					
 				</div>
@@ -125,7 +83,7 @@
 
 				<!-- 카드1 -->
 			<div class="kanban_item boardcolumn">
-				<div class="kanbanboard type1">
+				<div class="kanbanboard type1" id="newBoard1">
 					<div class="kanbanboard_title board-header card no-move">요청</div>
 					<div class="board_item card">
 						<div class="item type1 card-header bg-white">SNS 로그인</div>
@@ -334,9 +292,34 @@
 			</form>
 		</div>
 	</div>
+	
+	<!-- Modal 보드 생성 (한미화) -->
+	<div class="modal fade" id="myModal3">
+		<div class="modal-dialog">
+			<div class="modal-header type">Short Cut</div>
+			<form name="projectMemberList">
+				<div class="modal-content">
+					<div class="modal-body">
+					
+						<input class="input_detail" type="text" name="title" id="title"
+							placeholder="제목을 입력해주세요." size="50"
+							style="border: none; background: transparent;">
+				</div>
+				<!-- Modal footer -->
+				<div class="modal_footer">
+					<div class="btn_area">
+						<button type="button" class="upload_btn" id="submit">올리기</button>
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+	
 
 </body>
 <script type="text/javascript">
+/* 보드 드래그앤 드롭(한미화) */
 	$(function() {
 		$(".boardcolumn").sortable({
 			// 드래그 앤 드롭 단위 css 선택자
@@ -351,7 +334,7 @@
 		$(".boardcolumn .card").disableSelection();
 	});
 
-	/* 한미화 */
+	/* 칸반보드 드래그앤드롭(한미화) */
 	$(function() {
 	$(".kanbanboard").sortable({
 		connectWith: ".kanbanboard",
@@ -359,8 +342,24 @@
 		cancle : ".no-move",
 		placeholder: "card-placeholder"
 	});
-	$(".insert_card").disableSelection();
+	$(".no-move").disableSelection();
 });
+	
+	/* 보드생성 */
+	$("#newBoard").click(fuction() {
+		$.ajax({
+			url : "newBoard";
+			success : function(data, status, xhr) {
+			console.log(data);
+			
+			const $div = $("#newBoard1");
+			$div.html("");
+			
+			
+		}
+			
+		});
+	});
 
 	/* 일정, 업무 버튼 */
 	var count1 = 0;
@@ -380,6 +379,7 @@
 		})
 	})
 	
+	/* 업무 진척도 버튼 색 바뀜 */
 	 $(function() {
           $('.button').click(function() {
               $('.button').removeAttr("style");
