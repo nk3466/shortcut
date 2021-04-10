@@ -227,7 +227,9 @@
 	<div class="modal fade" id="myModal2">
 		<div class="modal-dialog">
 			<div class="modal-header type">Short Cut</div>
-			<form name="projectMemberList">
+			<!-- name="projectMemberList" -->
+			<form action="${pageContext.servletContext.contextPath}/card/regist" method="post">
+			<input type="text" value="${ requestScope.pjtNo }" name="memNo" id="" style="display: none;">
 				<div class="modal-content">
 					<div class="modal-body">
 						<div class="row">
@@ -313,7 +315,7 @@
 
 					<div class="item_area">
 						<i class="far fa-comment-alt"></i>
-						<textarea class="text_detail type"></textarea>
+						<textarea class="text_detail type" name="txt"></textarea>
 					</div>
 				</div>
 
@@ -327,7 +329,8 @@
 					</div>
 
 					<div class="btn_area">
-						<button type="button" class="upload_btn" id="upload">올리기</button>
+					<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+						<button type="submit" class="upload_btn" id="upload">올리기</button>
 					</div>
 				</div>
 			</div>
@@ -468,17 +471,19 @@ $("#upload").click(function() {
 	
 	console.table(cardMember);
 	
-	$.ajax({
-		url: "/board/kanbanboard/${ requestScope.pjtNo }",
+	/* $.ajax({
+		url: "${pageContext.servletContext.contextPath}/card/regist",
 		type: "POST",
-		data: {"cardMember" : cardMember},
+		data: {
+			"cardMember" : cardMember,
+			"pjtNo" : pjtNo},
 		success: function(data, status, xhr) {
 			console.log(data);
 	},
 		error: function(xhr, status, error) {
 			console.log(error);
 		}
-	});
+	}); */
 	
 });
 
