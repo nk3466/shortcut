@@ -30,20 +30,20 @@
 	<title>Short Cut</title>
 
 	<script type="text/javascript">
-	var request = ${fn:length(requestScope.cardProgress1List) };
-	var doing = ${fn:length(requestScope.cardProgress2List) };
-	var done = ${fn:length(requestScope.cardProgress3List) };
-	var wait = ${fn:length(requestScope.cardProgress4List) };
-	console.log(request);
+
+	var requestCount = ${ requestScope.reqCardCount }
+	var doingCount = ${ requestScope.doingCardCount }
+	var doneCount = ${ requestScope.doneCardCount }
+	var waitCount = ${ requestScope.waitCardCount }
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Hours per Day'],
-          ['요청 중',     request],
-          ['진행 중',      doing],
-          ['완료',  done],
-          ['보류', wait]
+          ['요청 중',     requestCount],
+          ['진행 중',      doingCount],
+          ['완료',  doneCount],
+          ['보류', waitCount]
           
         ]);
 
@@ -85,32 +85,25 @@
 						<div class="item_name">
 							기간
 						</div>
-						<div class="item_content"></div>
+						
+						<div class="item_content">
+						<c:forEach var="meetingList" items="${ requestScope.meetingList }">
+							<span><c:out value="${ meetingList.schStartDate } ~ ${ meetingList.schEndDate }"/></span> <br>
+						</c:forEach> 
+						</div>
 					</div>
 					<div class="item_type2">
 						<div class="item_name">
 							제목
 						</div>
-						<div class="item_content"></div>
+						<div class="item_content">
+						<c:forEach var="meetingList" items="${ requestScope.meetingList }">
+							<span><c:out value="${ meetingList.crdName }"/></span> <br>
+						</c:forEach> 
+						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="item_title">
-						할일
-					</div>
-					<div class="item_type1">
-						<div class="item_name">
-							기간
-						</div>
-						<div class="item_content"></div>
-					</div>
-					<div class="item_type2">
-						<div class="item_name">
-							제목
-						</div>
-						<div class="item_content"></div>
-					</div>
-				</div>
+				
 			</div>
 
 			<div class="sch_title">
@@ -145,6 +138,12 @@
 						<div class="item_content"></div>
 					</div>
 					<div class="item_type6">
+						<div class="item_name">
+							비고
+						</div>
+						<div class="item_content"></div>
+					</div>
+					<div class="item_type7">
 						<div class="item_pagenavi"></div>
 					</div>
 				</div>
@@ -178,12 +177,15 @@
 							제목
 						</div>
 						<div class="item_content">
-						<c:forEach var="req_cardList" items="${ requestScope.cardProgress2List }">
-							<span><c:out value="${ req_cardList.crdName }"/></span> <br>
-						</c:forEach> 						
 						</div>
 					</div>
 					<div class="item_type6">
+						<div class="item_name">
+							비고
+						</div>
+						<div class="item_content"></div>
+					</div>
+					<div class="item_type7">
 						<div class="item_pagenavi"></div>
 					</div>
 				</div>
@@ -229,7 +231,7 @@
 				/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 				
 				/* 페이지 네비게이션 갱신 함수 */
-				function navi(firstPage, lastPage, maxPage,domain){					
+				function navi(firstPage, lastPage, maxPage,domain,page){					
 					domain.empty();
 					if ( firstPage <= 1){
 						domain.append('<button class="pnbutton" disabled><<</button>');
@@ -239,7 +241,11 @@
 						domain.append('<button class="pnbutton" onclick="prevPage('+ firstPage +',this)"><</button>');
 					}
 					for( let i = firstPage; i <= lastPage; i++ ){
+						if( i == page){
+						domain.append('<button class="pnbutton" disabled>'+i+'</button>');	
+						} else {
 						domain.append('<button class="pnbutton" onclick="movePage('+ i +',this)">'+i+'</button>');
+						}
 					}
 					if (lastPage == maxPage) {
 						domain.append('<button class="pnbutton" disabled>></button>');
@@ -264,33 +270,74 @@
 							   "type" : type
 						      },
 						success: function(data, status, xhr) {
-							console.log("data : " +data);
+							console.table(data);
 							if (0==data.length){
 								
 							} else {
 								var start = data[0].startPage
 								var end = data[0].endPage
 								var max = data[0].maxPage
+								var crdtype = data[0].tkProgress;
+								var startdate = data[0].tkStartDate;
+								var endate = data[0].tkEndDate; 
 								console.log("start : " + start);
 								console.log("end : " + end);
 								console.log("max : " + max)
+								console.log("crdtype: " + crdtype);
+								console.log("startdate : " + gettoDate(startdate));
+								console.log("endDate : " + gettoDate(endate));
+								console.log("length:" + slect.length);
 							
-								 for(let i = 0; i < slect.length; i++){
+								  for(let i = 0; i < slect.length; i++){
 									 for(let j=0; j < slect.length; j++){
+
+										 if(typeof(data[j]) == "undefined" || data[j] == "" || data[j] === null) {
+												 
+										 } else {
+											 
+											 /* 값 넣기 */
+											 if( i == 0){
+													$(slect[i]).append(gettoDate(data[j].tkStartDate)+'<br>');
+											 }
+											 if( i == 1){
+												$(slect[i]).append(gettoDate(data[j].tkEndDate)+'<br>');
+											 }
+											 if( i == 2){
+												 $(slect[i]).append((data[j].crdName)+'<br>');
+												 console.log("data[j].crdName : " + data[j].crdName);
+											 }
+											 /* 버튼 넣기 */
+											 if( i == 3){
+												 if(type == 1){
+												 var inputBtnHtml ='<input type="button" value="수락" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 2 +')" title="진행 중으로 카드를 옮깁니다."/> <input type="button" value="보류" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 4 +')" title="보류로 카드를 옮깁니다."/> <br>'
+												 
+													 $(slect[3]).append(inputBtnHtml);
+												 }
+												 if(type == 2){
+													 var inputBtnHtml ='<input type="button" value="완료" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 3 +')" title="완료로 카드를 옮깁니다."/><br>'
+														 $(slect[3]).append(inputBtnHtml);
+												 }
+												 if(type == 3){
+													 var inputBtnHtml ='<input type="button" value="진행" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 2 +')" title="진행 중으로 카드를 옮깁니다."/><br>'
+														 $(slect[3]).append(inputBtnHtml);
+												 }
+												 if(type == 4){
+													 var inputBtnHtml ='<input type="button" value="진행" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 2 +')" title="진행 중으로 카드를 옮깁니다."/><br>'
+														 $(slect[3]).append(inputBtnHtml);
+												 }
+												 
+											 }
+											 
+											 
+											 
+											
+											 
+										 }
 										 
-										 if( i == 0){
-											$(slect[i]).append(gettoDate(data[j].tkStartDate)+'<br>');
-										 }
-										 if( i == 1){
-											 $(slect[i]).append(gettoDate(data[j].tkEndDate)+'<br>');
-										 }
-										 if( i == 2){
-											 $(slect[i]).append((data[j].crdName)+'<br>');
-											 console.log("data[j].crdName : " + data[j].crdName);
-										 }
 								 	}								
-								 }
-							navi(start,end, max, aslt);
+								 } 
+								  
+							navi(start,end, max, aslt,page);
 								 
 							}
 
@@ -381,7 +428,29 @@
 					var type = typestandard(pretype);
 					new pagenation($memNo,slect,page,aslt,type);				
 				};
-						
+				
+				function updateProgress(crdNo, type, intenType){
+					console.log(crdNo);
+					console.log(type);
+					console.log(intenType);
+					 $.ajax({
+						url: "updateProgress",
+						method: "post",
+						data: {"crdNo": crdNo,
+							   "type" : type,
+							   "intenType" : intenType
+						      },
+						success: function(data, status, xhr) {
+							console.log(data);
+							location.href= "${ pageContext.servletContext.contextPath }/" + data;
+						},
+						error: function(xhr, status, error){
+							console.log(error)
+						}   
+					}); 
+				}
+				
+			
 				
 				</script>
 			<div class="row" id="done">
@@ -407,6 +476,12 @@
 						<div class="item_content"></div>
 					</div>
 					<div class="item_type6">
+						<div class="item_name">
+							비고
+						</div>
+						<div class="item_content"></div>
+					</div>
+					<div class="item_type7">
 						<div class="item_pagenavi"></div>
 					</div>
 			</div>
@@ -433,6 +508,12 @@
 						<div class="item_content"></div>
 					</div>
 					<div class="item_type6">
+						<div class="item_name">
+							비고
+						</div>
+						<div class="item_content"></div>
+					</div>
+					<div class="item_type7">
 						<div class="item_pagenavi"></div>
 					</div>
 				</div>

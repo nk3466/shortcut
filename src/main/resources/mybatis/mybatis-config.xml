@@ -40,6 +40,8 @@
  		
  		<typeAlias alias="CardDTO" type="com.greedy.shortcut.board.model.dto.CardDTO"/>
  		
+ 		<typeAlias alias="MyworkResponseCardAndScheduleDTO" type="com.greedy.shortcut.mywork.model.dto.MyworkResponseCardAndScheduleDTO"/>
+ 		
  	</typeAliases>
  	
  </configuration>
