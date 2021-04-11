@@ -52,13 +52,16 @@ public class BacklogBoardController {
 
 
 	@GetMapping("backlog")
-	public String project(Model model, @RequestParam(name="pjtNo") int pjtNo) {
+	public String project(Model model, @RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName) {
 
 		ProjectDTO project = backlogService.selectProjectList(pjtNo);
 
 		System.out.println("project는 : " + project);
 
 		List<ProjectAuthorityDTO> memberList = backlogService.selectMemberList(pjtNo);
+		
+		/* 프로젝트 이름 출력용 */
+		System.out.println("뽑아봐 : " + projectName);
 
 		for(ProjectAuthorityDTO member : memberList) {
 			System.out.println("프로젝트 멤버 :" + member);
@@ -90,6 +93,7 @@ public class BacklogBoardController {
 		
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("finishSprintList", finishSprintList);
+		model.addAttribute("projectName", projectName);
 		/* =================== 종료된 백로그(스프린트) =================== */
 
 		model.addAttribute("projectList", project);

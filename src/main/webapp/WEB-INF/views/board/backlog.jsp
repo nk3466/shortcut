@@ -34,9 +34,17 @@
 		<div class="backlog_header_area">
 			<span class="backlog_header">
 				Backlog	& Sprint		
-			</span>			
+			</span>
+			
+			<form action="${ pageContext.servletContext.contextPath }/meeting/meetinglog" method="get">
+							<input type="text" value="${project.pjtNo }" id="pjtNo" name="pjtNo" style="display: none;">
+							<input type="text" value="${project.projectName }" id="projectName" name="projectName" style="display: none;">
+							<button class="board_detail type" id="moveProject" type="submit">Meeting Log
+							</button>
+						</form>
+									
 		<div class="meeting_btn"  data-toggle="modal" data-target="#project_produce_Detail">Edit Project</div>
-			<a class="meeting_btn" href="${ pageContext.servletContext.contextPath }/meeting/meetinglog">Meeting Log</a>
+		<%-- 	<a class="meeting_btn" href="${ pageContext.servletContext.contextPath }/meeting/meetinglog">Meeting Log</a> --%>
 		</div>
 
 		<div class="sprint_box_area">			
@@ -656,6 +664,8 @@
 		});
 		var start = ${projectList.projectStartDate };
 		var End = ${projectList.projectEndDate };
+		var projectName = "${projectName}";
+		console.log(" projectName : " + projectName);
 		
 		//인원삭제 버튼 클릭
 		$("#removepersonButtonEdit").click(function(){
