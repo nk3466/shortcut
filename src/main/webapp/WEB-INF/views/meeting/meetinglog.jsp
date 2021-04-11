@@ -98,13 +98,13 @@
 										프로젝트
 									</div>							
 									<div class="item_text">
-										ShortCut 애자일 협업툴
+										<c:out value="${ project.pjtName }"/>	
 									</div>							
 									<div class="item_type type1">
 										스프린트
 									</div>							
 									<div class="item_text">
-										C1009-1
+										
 									</div>							
 								</div>
 								<div class="modal_line"></div>
@@ -160,7 +160,6 @@
 						</div>														
 					</div>
 				</form>
-
 			</div>
 		</div>
 

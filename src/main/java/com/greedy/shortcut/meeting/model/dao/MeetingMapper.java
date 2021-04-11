@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.greedy.shortcut.board.model.dto.ProjectAndAuthorityDTO;
+import com.greedy.shortcut.board.model.dto.ProjectDTO;
 import com.greedy.shortcut.meeting.model.dto.MeetingDTO;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
@@ -18,8 +19,10 @@ public interface MeetingMapper {
 
 	List<MemberDTO> selectProjectMember(MemberDTO member);
 
-	int insertProjectMember(int memberNo, @Param("meetingNo") int mNo);
+	int insertProjectMember(@Param("memberNo") int memberNo, @Param("meetingNo") int mNo);
 
-	Object selectMeeting();
+	MeetingDTO selectMeeting();
+
+	/* List<ProjectDTO> selectProjectList(); */
 
 }

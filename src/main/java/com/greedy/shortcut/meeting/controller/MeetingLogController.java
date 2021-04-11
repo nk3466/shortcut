@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
+import com.greedy.shortcut.board.model.dto.ProjectDTO;
 import com.greedy.shortcut.meeting.model.dto.AttendListDTO;
 import com.greedy.shortcut.meeting.model.dto.MeetingDTO;
 import com.greedy.shortcut.meeting.model.service.MeetingService;
@@ -39,9 +41,13 @@ public class MeetingLogController {
 		
 	}
 	
-	@GetMapping("/meetinglog")
+	@GetMapping("meetinglog")
 	public void meetinglog() {
 			
+		/*
+		 * List<ProjectDTO> projectList = meetingService.selectProjectList();
+		 * for(ProjectDTO project : projectList) { System.out.println(project); }
+		 */
 	}
 	
 	
@@ -57,7 +63,8 @@ public class MeetingLogController {
 				.synchronizedSortedMap(new TreeMap<String, String[]>(request.getParameterMap()));
 
 		synchronized (projectMake) {
-
+			
+			System.out.println("흐으으으으으음..." + projectMake.getClass().getName());
 			for (String key : projectMake.keySet()) {
 				String[] value = projectMake.get(key);
 
@@ -68,13 +75,13 @@ public class MeetingLogController {
 		}
 		int memberListsize = Integer.parseInt(((String[])projectMake.get("index"))[0]);
 		
+		
 		System.out.println("사이즈 : " + projectMake.size());
 		/*회원 정보 담기*/
 		 List<AttendListDTO> projectMemberList = new ArrayList<>();
 		
 		for(int i = 0; i < memberListsize; i++ ) {
 			
-			System.out.println("??");
 			AttendListDTO projectmember = new AttendListDTO();
 			
 			  projectmember.setMemberNo(Integer.parseInt((((String[]) projectMake.get("meetingMember[" + i
@@ -96,10 +103,19 @@ public class MeetingLogController {
 		if(!meetingService.insertMeeting(meeting)) {}
 		
 		/* 미팅번호 */
-		Object meetingNo = meetingService.selectMeeting();
-		System.out.println("이거 뜨냐 ? " + meetingNo);
-		int mNo = Integer.parseInt(meetingNo.toString());
+		MeetingDTO meetingNo = meetingService.selectMeeting();
 		
+		
+		int mNo = meetingNo.getMeetingNo();
+		
+		System.out.println("몬데이거 ;;" + mNo);
+		
+		
+		/*
+		 * int mNo = (int) meetingNo;
+		 * 
+		 * System.out.println("아 돌겠네 ;;" + mNo);
+		 */
 		
 		for(int i = 0; i < projectMemberList.size(); i++ ) {
 			int memberNo = projectMemberList.get(i).getMemberNo();

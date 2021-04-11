@@ -34,6 +34,16 @@
 		<result column="MEM_NO" property="memberNo"/>
 	</resultMap>
 	
+	<resultMap type="ProjectDTO" id="ProjectResultSet">
+		<id column="PJT_NO" property="pjtNo"/>
+		<result column="PJT_NAME" property="projectName"/>
+		<result column="PJT_START_DATE" property="projectStartDate"/>
+		<result column="PJT_DEL_YN" property="projectDelYN"/>
+		<result column="MEM_NO" property="memberNo"/>
+		<result column="PJT_END_DATE" property="projectEndDate"/>
+		<result column="PJT_COLOR" property="projectColor"/>
+	</resultMap>
+	
 	<insert id="insertMeeting" parameterType="MeetingDTO">
 		INSERT
 		  INTO MEETING A
@@ -84,5 +94,18 @@
 		         #{meetingNo}, #{memberNo}
 		        )
 	</insert>
+	<!-- 
+	<select id="selectProjectList" parameterType="ProjectDTO" resultMap="ProjectResultSet">
+		SELECT
+		       A.PJT_NO
+		     , A.PJT_NAME
+		     , A.PJT_START_DATE
+		     , A.PJT_DEL_YN
+		     , A.MEM_NO
+		     , A.PJT_END_DATE
+		     , A.PJT_COLOR
+		  FROM PROJECT A
+		 WHERE A.PJT_NO = #{pjtNo};  
+	</select> -->
 	
 </mapper>
