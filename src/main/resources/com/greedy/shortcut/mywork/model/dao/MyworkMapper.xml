@@ -40,6 +40,17 @@
 		
 	</resultMap>
 	
+	<resultMap id="cardAndScheduleResultSet" type="MyworkResponseCardAndScheduleDTO">
+		<id column="CRD_NO" property="crdNo" />
+		<result column="SCH_ALERT" property="schAlert" />
+		<result column="SCH_PLACE" property="schPlace" />
+		<result column="SCH_START_DATE" property="schStartDate" />
+		<result column="SCH_END_DATE" property="schEndDate" />
+		<result column="CRD_NAME" property="crdName"/>
+		<result column="CRD_TYPE" property="crdType"/>
+
+	</resultMap>
+	
 	
 	
 	<select id="selectTaskTypeCount" parameterType="hashmap" resultType="_int">
@@ -67,6 +78,44 @@
 	
 	
 	
+	
+	<select id="selectMeetingList" resultMap="cardAndScheduleResultSet" parameterType="hashmap">
+  SELECT 
+              D.SCH_ALERT
+            , D.SCH_PLACE
+            , D.CRD_NO
+            , D.MEM_NO
+            , D.SCH_START_DATE
+            , D.SCH_END_DATE
+            , D.CRD_NAME
+            , D.CRD_TYPE
+         FROM ( SELECT 
+                       ROWNUM AS RUM
+                     ,  F.SCH_ALERT
+                     , F.SCH_PLACE
+                     , F.CRD_NO 
+                     , F.MEM_NO
+                     , F.SCH_START_DATE
+                     , F.SCH_END_DATE
+                     , F.CRD_NAME
+                     , F.CRD_TYPE
+                  FROM ( SELECT /*+ index_ASC(A CRD_SCH_IDX01) */
+                                A.SCH_ALERT
+                              , A.SCH_PLACE
+                              , A.CRD_NO
+                              , B.MEM_NO
+                              , A.SCH_START_DATE
+                              , A.SCH_END_DATE
+                              , B.CRD_NAME
+                              , B.CRD_TYPE
+                           FROM CRD_SCHEDULE A
+                           JOIN CARD B ON (A.CRD_NO = B.CRD_NO )
+                          WHERE B.MEM_NO = #{memNo}
+                            AND B.CRD_TYPE = 3
+                        ) F
+              )D 
+              
+	</select>
 	
 	<select id="selectTaskTypeList" resultMap="cardAndTaskResultSet" parameterType="hashmap">
          SELECT 
@@ -119,4 +168,13 @@
          WHERE A.MEM_NO = #{memNo} 
            AND B.CRD_TYPE = 2
 	</select> -->
+	
+	<update id="updateProgress" parameterType="hashmap">
+		UPDATE CRD_TASK A 
+		   SET A.TK_PROGRESS = #{intenType}
+		 WHERE A.CRD_NO = #{crdNo}
+	</update>
+
+	
+	
 </mapper>

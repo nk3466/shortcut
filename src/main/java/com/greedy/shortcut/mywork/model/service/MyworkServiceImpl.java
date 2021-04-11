@@ -11,6 +11,7 @@ import com.greedy.shortcut.member.model.dto.MemberDTO;
 import com.greedy.shortcut.mywork.model.dao.MyworkMapper;
 import com.greedy.shortcut.mywork.model.dto.ClientCardDTO;
 import com.greedy.shortcut.mywork.model.dto.ClientTaskDTO;
+import com.greedy.shortcut.mywork.model.dto.MyworkResponseCardAndScheduleDTO;
 import com.greedy.shortcut.mywork.model.dto.MyworkResponseCardAndTaskDTO;
 
 @Service
@@ -65,6 +66,27 @@ public class MyworkServiceImpl implements MyworkService{
 
 		
 		return myworkMapper.selectTaskTypeList(map);
+	}
+
+	@Override
+	public boolean updateProgress(int crdNo, int type, int intenType) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("crdNo", crdNo);
+		map.put("type", type);
+		map.put("intenType",intenType);
+		
+		return myworkMapper.updateProgress(map);
+	}
+
+	@Override
+	public List<MyworkResponseCardAndScheduleDTO> selectMeetingList(Integer no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("memNo", no);
+
+
+		
+		return myworkMapper.selectMeetingList(map);
+	
 	}
 
 
