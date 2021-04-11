@@ -98,7 +98,7 @@
 
          <!-- Modal Header -->
          <div class="modal-header">
-            <input class="input_detail" type="text" id="projectName" placeholder="Add Project Title">            
+            <input class="input_detail" type="text" id="projectNameNK" placeholder="Add Project Title">            
          </div>
          
 		<div class="modal-header">
@@ -255,8 +255,8 @@ if(document.getElementById("pjSelectOne")) {
 		   console.log(memberNo); */
 		   
 		   /* 프로젝트 정보 */
-			const projectMemberList = document.getElementById('dynamicTbody').innerHTML;
-		   var projectName = document.getElementById("projectName").value;
+		   const projectMemberList = document.getElementById('dynamicTbody').innerHTML;
+		   var projectName = document.getElementById("projectNameNK").value;
 		   var projectStartDate = document.getElementById("projectStartDate").value;
 		   var projectEndDate = document.getElementById("projectEndDate").value.defaultValue = "2999-12-31";
 		   var projectColor = document.getElementById("projectColor").value;

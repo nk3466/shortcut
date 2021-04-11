@@ -66,7 +66,13 @@ public class BacklogBoardController {
 		for(ProjectAuthorityDTO member : memberList) {
 			System.out.println("프로젝트 멤버 :" + member);
 		}
-
+		/* 백로그 리스트 출력 */
+		List<BacklogDTO> backlogList = backlogService.selectBacklogList(pjtNo);
+		for(BacklogDTO backlog : backlogList) {
+			System.out.println(backlog);
+		}
+		
+		/* 스프린트 리스트 출력 */
 		/* =================== 종료된 백로그(스프린트) =================== */
 		int pageNo = 1;
 		int totalCount = 0;
@@ -99,6 +105,7 @@ public class BacklogBoardController {
 		model.addAttribute("projectList", project);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pjtNo", pjtNo);
+		model.addAttribute("backlogList", backlogList);
 
 		return "board/backlog";
 	}
@@ -178,6 +185,21 @@ public class BacklogBoardController {
 		}
 		
 		return new ObjectMapper().writeValueAsString(project);
+	}
+	
+	/* 백로그 생성 */
+	@PostMapping(value="/backlog/backlog_regist", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String registBacklog(@ModelAttribute BacklogDTO backlog, RedirectAttributes rttr ) throws JsonProcessingException {
+		
+		System.out.println(backlog);
+		
+		if(!backlogService.insertBacklog(backlog)) {
+			rttr.addFlashAttribute("message", "백로그 생성이 취소되었습니다.");
+			return "백로그 생성이 취소되었습니다.";
+		}
+		rttr.addFlashAttribute("message", "백로그가 생성되었습니다.");
+		return new ObjectMapper().writeValueAsString(backlog);
 	}
 	
 }
