@@ -47,8 +47,6 @@ public class MeetingLogController {
 			
 		
 		
-		 
-		
 		return "meeting/meetinglog";
 	}
 	

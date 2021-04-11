@@ -6,7 +6,7 @@
     height: 40px;  line-height: 40px;  text-align: center; margin-left: 15px; color: black;}
 
 
-.sprint_box_area{margin-bottom: 50px; height: 250px;}
+.sprint_box_area{margin-bottom: 50px; height: 250px; padding-top: 40px;}
 
 .sprint_box_area .sprint_text_btn{margin-bottom: 20px;}
 .sprint_box_area .sprint_text_btn .sprint_text{}
