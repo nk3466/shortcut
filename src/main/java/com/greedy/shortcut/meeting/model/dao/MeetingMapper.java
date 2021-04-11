@@ -23,6 +23,7 @@ public interface MeetingMapper {
 
 	MeetingDTO selectMeeting();
 
-	/* List<ProjectDTO> selectProjectList(); */
+	
+
 
 }

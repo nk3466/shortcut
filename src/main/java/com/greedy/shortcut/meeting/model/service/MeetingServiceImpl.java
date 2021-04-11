@@ -48,11 +48,10 @@ public class MeetingServiceImpl implements MeetingService{
 		return mapper.insertProjectMember(memberNo, mNo) > 0? true:false;
 	}
 
-	/*
-	 * @Override public List<ProjectDTO> selectProjectList() {
-	 * 
-	 * return mapper.selectProjectList(); }
-	 */
+	
+
+	
+	
 
 
 	

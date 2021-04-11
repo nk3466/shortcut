@@ -16,7 +16,7 @@ public interface MeetingService {
 
 	MeetingDTO selectMeeting();
 
-	/* List<ProjectDTO> selectProjectList(); */
+
 
 
 }

@@ -94,8 +94,8 @@
 		         #{meetingNo}, #{memberNo}
 		        )
 	</insert>
-	<!-- 
-	<select id="selectProjectList" parameterType="ProjectDTO" resultMap="ProjectResultSet">
+	
+<!-- 	<select id="selectProjectList" parameterType="ProjectDTO" resultMap="ProjectResultSet">
 		SELECT
 		       A.PJT_NO
 		     , A.PJT_NAME

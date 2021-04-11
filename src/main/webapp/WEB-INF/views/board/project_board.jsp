@@ -67,6 +67,7 @@
 						<!-- <div class="board_text"  data-toggle="modal" data-target="#project_modify"> -->
 						<form action="${ pageContext.servletContext.contextPath }/board/backlog" method="get">
 							<input type="text" value="${project.pjtNo }" id="pjtNo" name="pjtNo" style="display: none;">
+							<input type="text" value="${project.projectName }" id="projectName" name="projectName" style="display: none;">
 							<button class="board_detail type" style="background-color: ${project.projectColor};" id="moveProject" type="submit">
 								<img src="${ pageContext.servletContext.contextPath }/resources/img/board_icon.png" style="height:70px; width:70px;">
 							</button>
