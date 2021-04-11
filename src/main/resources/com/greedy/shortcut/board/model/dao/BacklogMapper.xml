@@ -228,4 +228,51 @@
 	      , SYSDATE, 'Y', SEQ_PJT_HIS_NO.NEXTVAL, #{projectColor}
 	      )
 	</insert>
+	<select id="selectBacklogList" resultMap="backlogResultMap" parameterType="BacklogDTO">
+		SELECT
+			   A.BLG_NO
+			 , A.BLG_NAME
+			 , A.BLG_PRI
+			 , A.BLG_ENROLL_DATE
+			 , A.PJT_NO
+			 , A.BLG_DEL_YN
+			 , A.BLG_DEMO_MEMO
+			 , A.BLG_REF_MEMO
+		  FROM BACKLOG A
+		 WHERE A.PJT_NO =  #{pjtNo}
+		 ORDER BY A.BLG_PRI ASC
+	</select>
+	
+	<insert  id="insertBacklog"  parameterType="BacklogDTO">
+	    INSERT
+	      INTO BACKLOG A
+	      (
+	        A.BLG_NO, A.BLG_NAME, A.BLG_PRI, A.BLG_ENROLL_DATE, A.PJT_NO
+	      , A.BLG_DEL_YN, A.BLG_DEMO_MEMO, A.BLG_REF_MEMO
+	      )
+	      VALUES
+	      (
+	        SEQ_BLG_NO.NEXTVAL, #{blgName}, #{blgPri}, SYSDATE, #{pjtNo}
+	      , 'N', #{blgDemoMemo}, #{blgRefMemo}
+	      )
+	</insert>
+	
+	<insert  id="insertBacklogHistory"  parameterType="BacklogDTO">
+		<selectKey keyProperty="blgNo" order="BEFORE" resultType="_int">
+			 SELECT 
+		           SEQ_BLG_NO.CURRVAL
+		       FROM DUAL
+	    </selectKey>
+	    INSERT
+	      INTO BACKLOG_HISTORY A
+	      (
+	        A.BLG_NO, A.BLG_NAME, A.BLG_PRI, A.UPDATE_DATE, A.BLG_DEL_YN, A.BLG_HIS_NO
+	      , A.BLG_ENROLL_DATE, A.BLG_DEMO_MEMO, A.BLG_REF_MEMO
+	      )
+	      VALUES
+	      (
+	        #{blgNo}, #{blgName}, #{blgPri}, SYSDATE, 'N', SEQ_BLG_HIS_NO.NEXTVAL 
+	      , SYSDATE, #{blgDemoMemo}, #{blgRefMemo}
+	      )
+	</insert>
 </mapper>

@@ -29,4 +29,9 @@ public interface BacklogService {
 
 	boolean removeProject(ProjectDTO project);
 
+	List<BacklogDTO> selectBacklogList(int pjtNo);
+	
+	/* 백로그 생성 */
+	boolean insertBacklog(BacklogDTO backlog);
+
 }

@@ -36,10 +36,21 @@ public interface BacklogMapper {
 
 	/* 프로젝트 회원 수정이력 등록*/
 	int insertEditProjectMemberHistory(ProjectAuthorityDTO projectAuthorityDTO);
-
+	
+	/* 프로젝트 삭제 */
 	boolean removeProject(int projectNo);
 
+	/* 프로젝트 삭제 이력 등록 */
 	int insertRemoveProjectHistory(ProjectDTO project);
+
+	/* 백로그 리스트 조회 */
+	List<BacklogDTO> selectBacklogList(int pjtNo);
+
+	/* 백로그 등록 */
+	int insertBacklog(BacklogDTO backlog);
+	
+	/* 백로그 히스토리 등록 */
+	int insertBacklogHistory(BacklogDTO backlog);
 
 
 }

@@ -52,9 +52,9 @@
 		<div class="sprint_box_area">			
 			<div class="sprint_text_btn">
 				<span class="sprint_text">Sprint 1</span>				
-				<button class="btn_detail on"  data-toggle="modal" data-target="#myModal3">Start Sprint</button>	
 				<button class="btn_detail ">Edit Sprint</button>			
 			</div>				
+				<button class="btn_detail on"  data-toggle="modal" data-target="#myModal3">Start Sprint</button>	
 			
 								
 			
@@ -88,30 +88,39 @@
 			<div class="backlog_table_area">				
 				<div class="table_area">
 					<div class="table_item">
-						<div class="row">
-							<div class="table_detail type1">ABC</div>
-							<div class="table_detail type1">입금</div>
-							<div class="table_detail type2">30</div>
-							<div class="table_detail type2">5</div>
-							<div class="table_detail type3">로그인, 입금 페이지 열기, 10달러 입금. 잔액 조회 페이지 이동. 잔액 확인</div>
-							<div class="table_detail type4">지금은 암호화를 고려하지 않아도 됨</div>
-						</div>
-						<div class="row">
-							<div class="table_detail type1">ABC</div>
-							<div class="table_detail type1">입금</div>
-							<div class="table_detail type2">30</div>
-							<div class="table_detail type2">5</div>
-							<div class="table_detail type3">로그인, 입금 페이지 열기, 10달러 입금. 잔액 조회 페이지 이동. 잔액 확인</div>
-							<div class="table_detail type4">지금은 암호화를 고려하지 않아도 됨</div>
-						</div>
-						<div class="row">
-							<div class="table_detail type1">ABC</div>
-							<div class="table_detail type1">입금</div>
-							<div class="table_detail type2">30</div>
-							<div class="table_detail type2">5</div>
-							<div class="table_detail type3">로그인, 입금 페이지 열기, 10달러 입금. 잔액 조회 페이지 이동. 잔액 확인</div>
-							<div class="table_detail type4">지금은 암호화를 고려하지 않아도 됨</div>
-						</div>
+					<table style="width: 100%;">
+							<thead>
+								<tr>
+									<th class="">No</th>
+									<th class="">백로그 이름</th>
+									<th class="">우선순위</th>
+									<th class="">데모방식</th>
+									<th class="">비고</th>
+									<th class="">스프린트 생성</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${fn:length(requestScope.backlogList) > 0 }">
+										<c:forEach var="backlog" items="${ requestScope.backlogList }" varStatus="st">
+											<tr>
+												<td class="table_detail type1">${st.count }</td>
+												<td class="table_detail type1">${ backlog.blgName }</td>
+												<td class="table_detail type1">${ backlog.blgPri }</td>
+												<td class="table_detail type1">${ backlog.blgDemoMemo }</td>
+												<td class="table_detail type1">${ backlog.blgRefMemo }</td>
+												<td class="table_detail type1"><button class="sprint_btn_detail"  data-toggle="modal" data-target="#myModal2">Create Sprint</button>	</td>
+											</tr>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<tr>
+											<td colspan="8">조회된 결과가 없습니다.</td>
+										</tr>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -153,7 +162,7 @@
 							<tbody>
 								<c:choose>
 									<c:when test="${fn:length(requestScope.finishSprintList) > 0 }">
-										<c:forEach var="finishSprint" items="${ requestScope.finishSprintList }">
+										<c:forEach var="finishSprint" items="${ requestScope.finishSprintList }" >
 											<tr>
 												<td class="">${ finishSprint.blgNo }</td>
 												<td class="">${ finishSprint.blgName }</td>
@@ -406,7 +415,7 @@
 
 	</div>
 	
-
+<!-- 백로그 생성 -->
   <!-- The Modal -->
 	<div class="modal fade" id="myModal">
 		<div class="modal-dialog">
@@ -424,25 +433,25 @@
 							
 							<div class="info_item">
 								<div class="info_detail">이름</div>
-								<input class="input_detail" type="text" name="">
+								<input class="input_detail" type="text" id="backlogName">
 							</div>
 							<div class="info_item">
 								<div class="info_detail">중요도</div>
-								<select>
-									<option>상</option>
-									<option>중</option>
-									<option>하</option>
+								<select id="importance">
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
 								</select>
 							</div>
 						</div>
 						<div class="backlog_textarea">
 							<div class="text_item">
 								<div class="text_detail">데모 방식</div>
-								<textarea class="textarea_detail"></textarea>
+								<textarea class="textarea_detail" id="DemoDetail"></textarea>
 							</div>
 							<div class="text_item">
 								<div class="text_detail">참고</div>
-								<textarea class="textarea_detail"></textarea>
+								<textarea class="textarea_detail" id="Reference"></textarea>
 							</div>
 						</div>
 					</div>
@@ -450,15 +459,43 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="btn_detail">생성</button>
+					<button type="button" class="btn_detail" id="createBacklog">생성</button>
 					<button type="button" class="btn_detail" data-dismiss="modal">취소</button>
 				</div>
 
 			</div>
 		</div>
 	</div>
-
-
+<!-- 백로그 생성 버튼 클릭시 -->
+		<script>
+			$("#createBacklog").click(function(){ 
+				var pjtNo = ${ requestScope.pjtNo };
+				 var blgName = document.getElementById("backlogName").value;
+				 var blgPri = document.getElementById("importance").value;
+				 var blgDemoMemo = document.getElementById("DemoDetail").value;
+				 var blgRefMemo = document.getElementById("Reference").value;
+				 
+				 $.ajax({
+					url : "${pageContext.servletContext.contextPath}/board/backlog/backlog_regist",
+					type : "post",
+					data : {
+						pjtNo : pjtNo,
+						blgName : blgName,
+						blgPri : blgPri,
+						blgDemoMemo : blgDemoMemo,
+						blgRefMemo : blgRefMemo
+					},
+					success : function(data, textStatus, xhr){
+						alert("백로그 생성이 완료되었습니다");
+						location.href="${pageContext.servletContext.contextPath}/board/backlog";
+					},
+					error : function(xhr, status, error){
+						console.log(error);
+						alert("백로그 생성이 취소되었습니다");
+					}
+				 })
+			})
+		</script>
 
 
 	<div class="modal fade" id="myModal2">

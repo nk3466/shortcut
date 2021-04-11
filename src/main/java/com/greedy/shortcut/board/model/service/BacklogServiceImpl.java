@@ -109,4 +109,16 @@ public class BacklogServiceImpl implements BacklogService {
 		return  backlogMapper.insertRemoveProjectHistory(project) > 0 ? true : false;
 	}
 	
+	/* 백로그 리스트 출력 */
+	@Override
+	public List<BacklogDTO> selectBacklogList(int pjtNo) {
+		return backlogMapper.selectBacklogList(pjtNo);
+	}
+	
+	/* 백로그 생성 */
+	@Override
+	public boolean insertBacklog(BacklogDTO backlog) {
+		return backlogMapper.insertBacklog(backlog) + backlogMapper.insertBacklogHistory(backlog)  > 1 ? true : false;
+	}
+	
 }
