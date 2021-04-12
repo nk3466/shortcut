@@ -188,10 +188,10 @@
 	
 	
 		
+		var pjtNo = ${pjtNo};
 		var count = 0;
 		
 		$(".conference_update").click(function(){
-			var pjtNo = ${pjtNo};
 			
 			console.log(pjtNo);
 			$.ajax({
@@ -279,6 +279,7 @@
 			type : "POST",	
 			dataType : "json",
 			data : {
+					pjtNo : pjtNo,
 				    meetingMember : meetingMember,
 					enrollDate : enrollDate,
 					meetingName : meetingName,

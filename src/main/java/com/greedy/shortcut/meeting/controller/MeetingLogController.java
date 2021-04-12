@@ -72,6 +72,7 @@ public class MeetingLogController {
 		System.out.println("meeting : " + meeting);
 		System.out.println("memberList : " + memberList);
 		
+		
 		SortedMap<String, String[]> projectMake = Collections
 				.synchronizedSortedMap(new TreeMap<String, String[]>(request.getParameterMap()));
 
