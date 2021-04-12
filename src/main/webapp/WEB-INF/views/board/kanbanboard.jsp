@@ -47,11 +47,11 @@
 				<div class="project_info">
 					<div class="info_item">
 						<div class="item_name">프로젝트명</div>
-						<div class="item_detail"><input type="text" id="projectName" placeholder="${projectList.projectName }" readonly></div>
+						<div class="item_detail"><input type="text" id="projectName" placeholder="${ requestScope.pjtNo }" readonly></div>
 					</div>
 					<div class="info_item">
-						<div class="item_name">Backlog No</div>
-						<div class="item_detail">C001-9</div>
+						<div class="item_name">SPRINT_NO</div>
+						<div class="item_detail"><input type="text" id="projectName" placeholder="${ requestScope.blgNo }" readonly></div>
 					</div>
 					<div class="info_item">
 						<div class="item_name">참여인원</div>
@@ -62,6 +62,7 @@
 								class="fas fa-user-circle">미스터추</i>
 						</div>
 					</div>
+					
 					<div class="info_item">
 					<div id="newBoard" class="insert_card" data-toggle="modal"
 						data-target="#myModal3">
@@ -70,7 +71,18 @@
 					
 				</div>
 			</div> <!-- 보드 정보 영역 끝 -->
-			
+			<!-- SELECT
+       A.PJT_NAME
+     , C.SPR_NO
+     , D.MEM_NAME
+     , E.MEM_NO
+  FROM PROJECT A 
+  JOIN BACKLOG B ON(A.PJT_NO = B.PJT_NO)
+  JOIN SPRINT C ON (C.BLG_NO = B.BLG_NO)
+  JOIN PJT_AUTHORITY E ON (A.PJT_NO = E.PJT_NO)
+  JOIN MEMBER D ON (D.MEM_NO = E.MEM_NO)
+  WHERE A.PJT_NO = 1
+    AND SPR_NO = 1; -->
 			
 			<!--<c:forEach var="msgList" items="${requestScope.msgList }">
 							<div class="recv_item"><c:out value="${ msgList.no }"/></div>
@@ -106,7 +118,7 @@
 				
 				<!-- 카드2 -->
 			<div class="kanban_item boardcolumn">
-				<div class="kanbanboard type2">
+				<div class="kanbanboard type2" id="newBoard2">
 					<div class="kanbanboard_title board-header card no-move">진행중</div>
 					<div class="board_item card">
 						<div class="item type1 card-header bg-white">SNS 로그인</div>
@@ -172,6 +184,7 @@
 					</div>
 				</div>
 			</div><!-- 카드4 끝-->
+			
 
 		</div>
 	</div>
@@ -300,8 +313,9 @@
 	<div class="modal fade" id="myModal3">
 		<div class="modal-dialog">
 			<div class="modal-header type">Short Cut</div>
-			<form name="projectMemberList">
 				<div class="modal-content">
+				<form action="${ pageContext.servletContext.contextPath }/board/kanbanboard"
+		method="post">
 					<div class="modal-body">
 					
 						<input class="input_detail" type="text" name="title" id="title"
@@ -311,11 +325,11 @@
 				<!-- Modal footer -->
 				<div class="modal_footer">
 					<div class="btn_area">
-						<button type="button" class="upload_btn" id="submit">올리기</button>
-					</div>
+					<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+						<input type="submit" class="upload_btn" id="newBoard" value="올리기">					</div>
 				</div>
-			</div>
 			</form>
+			</div>
 		</div>
 	</div>
 	
@@ -349,21 +363,21 @@
 });
 	
 	/* 보드생성 */
-	$("#newBoard").click(fuction() {
-		$.ajax({
-			url : "newBoard";
-			success : function(data, status, xhr) {
-			console.log(data);
+	$("#newBoard").click(function() {
+		function makeTag(name, value) {
+			var hiddenTag = document.createElement('input');
+			hiddenTag.setAttribute("type", "hidden")
+			hiddenTag.setAttribute("name", name)
+			hiddenTag.setAttribute("value", value)
 			
-			const $div = $("#newBoard1");
-			$div.html("");
-			
-			
+			return hiddenTag
 		}
-			
+		
+		const kanbanboardList = document.getElement({'newBoard1', 'newBoard2', 'newBoard3'}).innerHTML;
+		var brdName = document.getElementById("brdName").value;
+		console.log("brdName : " + brdName);
 		});
-	});
-
+	
 	/* 일정, 업무 버튼 */
 	var count1 = 0;
 	var count2 = 0;

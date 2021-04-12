@@ -1,10 +1,6 @@
 package com.greedy.shortcut.board.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,26 +12,27 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.greedy.shortcut.board.model.dto.BoardDTO;
 import com.greedy.shortcut.board.model.dto.CardDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
+import com.greedy.shortcut.board.model.service.BoardService;
 import com.greedy.shortcut.board.model.service.CardService;
-import com.greedy.shortcut.meeting.model.dto.AttendListDTO;
-import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/*")
 public class BoardController {
 
 	private final CardService cardService;
+	private final BoardService boardService;
 
 	@Autowired
-	public BoardController(CardService cardService) {
+	public BoardController(CardService cardService, BoardService boardService) {
 		this.cardService = cardService;
+		this.boardService = boardService;
 	}
 
 	@GetMapping("/board/kanbanboard/{pjtNo}")
@@ -69,8 +66,27 @@ public class BoardController {
 		rttr.addFlashAttribute("message", "카드 등록에 성공하셨습니다.");
 		
 		return "/board/kanbanboard";
-		
 	}
+	
+	
+	
+	@PostMapping("kanbanboard")
+	@ResponseBody
+	   public String newBoard(@ModelAttribute BoardDTO board, RedirectAttributes redirect, Model model) {
+
+	   
+	      if (!boardService.newBoard(board)) {
+	    	  System.out.println("왔다?!");
+	         redirect.addFlashAttribute("message", "게시글등록실패하였습니다");
+	      }
+
+	      redirect.addFlashAttribute("message", "게시글 등록성공");
+	      System.out.println("왓다");
+	      List<BoardDTO> boardList = boardService.selectBoard();
+
+	      model.addAttribute("boardList", boardList);
+	      return "board/kanbanboard";
+	   }
 	
 	
 }
