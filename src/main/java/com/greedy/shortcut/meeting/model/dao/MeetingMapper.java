@@ -25,6 +25,10 @@ public interface MeetingMapper {
 
 	List<MeetingDTO> selectMeetingList(int pjtNo);
 
+	MeetingDTO selectMeetingDetail(int meetingNo);
+
+	List<MemberDTO> selectMeetingDetailMember(int meetingNo);
+
 	
 
 

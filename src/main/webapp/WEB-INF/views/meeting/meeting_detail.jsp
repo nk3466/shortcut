@@ -71,7 +71,7 @@
 									<div class="item_type type">
 										참석자
 									</div>
-									<div class="item_type" id="meetingMember">
+									<div class="item_type" id="meetingMemberDetailList">
 										
 									</div>
 									

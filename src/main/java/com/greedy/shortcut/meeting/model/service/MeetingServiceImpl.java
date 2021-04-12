@@ -1,5 +1,6 @@
 package com.greedy.shortcut.meeting.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,22 @@ public class MeetingServiceImpl implements MeetingService{
 	public List<MeetingDTO> selectMeetingList(int pjtNo) {
 
 		return mapper.selectMeetingList(pjtNo);
+	}
+
+	@Override
+	public HashMap<String,Object> selectMeetingDetail(int meetingNo) {
+		MeetingDTO meeting = mapper.selectMeetingDetail(meetingNo);
+		
+		List<MemberDTO> memberList = mapper.selectMeetingDetailMember(meetingNo);
+		
+		HashMap<String,Object> MeetingDetail = new HashMap<String,Object>();
+		
+		MeetingDetail.put("meeting", meeting);
+		MeetingDetail.put("memberList", memberList);
+		
+		
+	
+		return MeetingDetail;
 	}
 
 	

@@ -1,5 +1,6 @@
 package com.greedy.shortcut.meeting.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.greedy.shortcut.board.model.dto.ProjectDTO;
@@ -17,6 +18,8 @@ public interface MeetingService {
 	MeetingDTO selectMeeting();
 
 	List<MeetingDTO> selectMeetingList(int pjtNo);
+
+	HashMap<String,Object> selectMeetingDetail(int meetingNo);
 
 
 

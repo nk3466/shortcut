@@ -2,8 +2,10 @@ package com.greedy.shortcut.meeting.model.dto;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 public class MeetingDTO {
 
@@ -15,11 +17,12 @@ public class MeetingDTO {
 	private String status;
 	private int sprintNo;
 	private int pjtNo;
+	private List<MemberDTO> memberList;
 	
 	public MeetingDTO() {}
 
 	public MeetingDTO(Integer meetingNo, String meetingName, String meetingText, Date enrollDate, String status,
-			int sprintNo, int pjtNo) {
+			int sprintNo, int pjtNo, List<MemberDTO> memberList) {
 		super();
 		this.meetingNo = meetingNo;
 		this.meetingName = meetingName;
@@ -28,6 +31,14 @@ public class MeetingDTO {
 		this.status = status;
 		this.sprintNo = sprintNo;
 		this.pjtNo = pjtNo;
+		this.memberList = memberList;
+	}
+
+	@Override
+	public String toString() {
+		return "MeetingDTO [meetingNo=" + meetingNo + ", meetingName=" + meetingName + ", meetingText=" + meetingText
+				+ ", enrollDate=" + enrollDate + ", status=" + status + ", sprintNo=" + sprintNo + ", pjtNo=" + pjtNo
+				+ ", memberList=" + memberList + "]";
 	}
 
 	public Integer getMeetingNo() {
@@ -86,11 +97,12 @@ public class MeetingDTO {
 		this.pjtNo = pjtNo;
 	}
 
-	@Override
-	public String toString() {
-		return "MeetingDTO [meetingNo=" + meetingNo + ", meetingName=" + meetingName + ", meetingText=" + meetingText
-				+ ", enrollDate=" + enrollDate + ", status=" + status + ", sprintNo=" + sprintNo + ", pjtNo=" + pjtNo
-				+ "]";
+	public List<MemberDTO> getMemberList() {
+		return memberList;
+	}
+
+	public void setMemberList(List<MemberDTO> memberList) {
+		this.memberList = memberList;
 	}
 
 	

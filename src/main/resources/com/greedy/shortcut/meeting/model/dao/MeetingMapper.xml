@@ -108,5 +108,30 @@
 		 WHERE A.SPR_NO = 1
 	</select>
 	
+	<select id="selectMeetingDetail" parameterType="MeetingDTO" resultMap="MeetingResultSet">
+
+		SELECT
+		       A.MEET_NO
+		     , A.MEET_NAME
+		     , A.MEET_TXT
+		     , A.MEET_ENROLL_DATE
+		     , A.MEET_DEL_YN
+		     , A.SPR_NO
+		     , A.PJT_NO     
+		  FROM MEETING A
+		 WHERE A.MEET_NO = #{meetingNo}
+	</select>
 	
+	<select id="selectMeetingDetailMember"  resultMap="MemberResultSet" parameterType="Hashmap">
+		 
+		SELECT
+			  B.MEM_NO
+			, B.MEM_NAME
+	    FROM MEETING_ATTEND_LIST A 
+	    JOIN MEMBER B ON (A.MEM_NO= B.MEM_NO)
+	   WHERE A.MEET_NO = #{meetingNo}
+
+	</select>
+	
+
 </mapper>

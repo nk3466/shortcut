@@ -183,10 +183,35 @@
       $(this).on("click",".mtinfo", function(){
     	  
 	      $("#conference_detail").modal();
+	      console.log('id : '+ $(this).attr('id'));
+	      selectMeetingDetail($(this).attr('id'));
+	      
+	      
     	  
       })
       
    })
+   function selectMeetingDetail(meetingNo){
+	   $.ajax({
+	        url:"selectMeetingDetail",
+	        type:"POST",
+	        data : {"meetingNo" : meetingNo},
+	   		success: function(data, status, xhr){
+	   			console.table(data) ;
+	   			console.table(data.memberList[0].name) ;
+	   			var memberListtt = data.memberList;
+	   			console.log("memberListtt :" + memberListtt[0]);
+	   			var appendPlace = 'meetingMemberDetailList';
+	   			
+	   			new insertPerson(memberListtt,appendPlace);
+	   		},
+	   		error: function(xhr, status, data){
+	   			console.log(data);
+	   		}
+	   })
+
+	   
+   }
 </script>
 <script type="text/javascript">
 
@@ -221,7 +246,7 @@
 	   			for(var i = 0 ; i < data.length; i++){
 	   				console.log( ""+ gettoDate(data[i].enrollDate));
 	   				var meetingInfoooo= calculateDate(data[i].enrollDate);
-	   				new drawMeeting(enrollDateInfo,data[i].meetingName ,meetingInfoooo);
+	   				new drawMeeting(enrollDateInfo,data[i].meetingName ,meetingInfoooo,data[i].meetingNo);
 	   			}
 	   		},
 	   		error: function(xhr, status, data){
@@ -249,14 +274,9 @@
                
                let memberList = data; 
                let list="";
+               let meetingMember = 'meetingMember';
+               new insertPerson(memberList,meetingMember);
                
-               for(let i = 0; i < memberList.length; i++){
-                  
-                  var insertSpan="";
-                  insertSpan += '<span class="item_text on">' + memberList[i].name + '<i id="delBtn" class="fas fa-times-circle"></i>' + '<input class="item_num" name="memberno' + [i] + '" type="hidden" value="' + memberList[i].no + '">' + '</span>';
-                  count++
-                  $("#meetingMember").append(insertSpan);
-               }
                console.log(count);
             }  
          },
@@ -270,6 +290,18 @@
    });
    
 
+   function insertPerson(memberList,appendPlace){
+	   console.log("insertPersonmemberList : " + memberList.length);
+	   for(let i = 0; i < memberList.length; i++){
+           console.log("memberList[i].name : " + memberList[i].name);
+           console.table( $("#"+appendPlace+"") );
+           var insertSpan="";
+           insertSpan = '<span class="item_text on">' + memberList[i].name + '<i id="delBtn" class="fas fa-times-circle"></i>' + '<input class="item_num" name="memberno' + [i] + '" type="hidden" value="' + memberList[i].no + '">' + '</span>';
+           count++
+           $("#"+appendPlace+"").append(insertSpan);
+        }
+   }
+   
    $(document).on('click','.item_text.on',function(){
       
       var $t = $(this);
@@ -364,7 +396,7 @@
 	                },
 	          success : function(data, status, xhr){
 	             console.log( enrollDateInfo.EnrollDate === enrollDateInfo.meetDate);
-	             drawMeeting(enrollDateInfo,meetingName,meetingInfo)
+	             drawMeeting(enrollDateInfo,meetingName,meetingInfo,meetingNo)
 	             $("#conference").modal("hide");
 	             
 	             
@@ -375,11 +407,11 @@
 	       })
    }
    
-   function drawMeeting(enrollDateInfo,meetingName,calenderPlace){
+   function drawMeeting(enrollDateInfo,meetingName,calenderPlace,meetingNo){
        
        if(enrollDateInfo.EnrollDate === enrollDateInfo.meetDate){
           var insertDiv="";
-          insertDiv +='<div class="mtinfo">' + meetingName + '</div>';
+          insertDiv +='<div class="mtinfo" id="'+ meetingNo +'">' + meetingName + '</div>';
           
           calenderPlace.append(insertDiv);
        }

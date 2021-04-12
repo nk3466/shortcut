@@ -3,6 +3,7 @@ package com.greedy.shortcut.meeting.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
@@ -176,4 +177,12 @@ public class MeetingLogController {
 		return new ObjectMapper().writeValueAsString(meetingList);
 	}
 	
+	@PostMapping(value="meetinglog/selectMeetingDetail", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String selectMeetingDetail(@RequestParam Map<String, String> parameters) throws JsonProcessingException {
+		int meetingNo = Integer.parseInt(parameters.get("meetingNo"));
+		HashMap<String,Object> meeting = meetingService.selectMeetingDetail(meetingNo);
+
+		return new ObjectMapper().writeValueAsString(meeting);
+	}
 }
