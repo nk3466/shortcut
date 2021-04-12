@@ -4,6 +4,7 @@ package com.greedy.shortcut.meeting.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -43,8 +44,20 @@ public class MeetingLogController {
 	}
 	
 	@GetMapping("meetinglog")
-	public String meetinglog(Model model) {
+	public String meetinglog(Model model, @RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName) {
 			
+		System.out.println("제발;;" + pjtNo);
+		System.out.println("제발;!!!;" + projectName);
+		
+		
+		/* 미팅조회 */
+		List<MeetingDTO> meetingList = meetingService.selectMeetingList(pjtNo);
+		
+		System.out.println("이거뜸??????????" + meetingList);
+		
+		model.addAttribute("pjtNo", pjtNo);
+		model.addAttribute("projectName", projectName);
+		model.addAttribute("meetingList", meetingList);
 		
 		
 		return "meeting/meetinglog";
@@ -64,7 +77,6 @@ public class MeetingLogController {
 
 		synchronized (projectMake) {
 			
-			System.out.println("흐으으으으으음..." + projectMake.getClass().getName());
 			for (String key : projectMake.keySet()) {
 				String[] value = projectMake.get(key);
 
@@ -130,13 +142,16 @@ public class MeetingLogController {
 		return new ObjectMapper().writeValueAsString(meeting);
 	}
 	
-	@PostMapping(value="selectProjectMember", produces="application/json; charset=UTF-8")
+	@PostMapping(value="meetinglog/selectProjectMember", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public List<MemberDTO> selectProjectMember(@ModelAttribute MemberDTO member) {
+	public List<MemberDTO> selectProjectMember(@ModelAttribute MemberDTO member,   @RequestParam Map<String, String> parameters) {
 		
-		List<MemberDTO> memberList = meetingService.selectProjectMember(member);
+		int pjtNo = Integer.parseInt(parameters.get("pjtNo"));
+		System.out.println("넘ㅁ버 " + pjtNo);
 		
+		List<MemberDTO> memberList = meetingService.selectProjectMember(member, pjtNo);
 		
+		System.out.println("넘버" + pjtNo);
 		System.out.println("프젝맴버" + memberList);
 		
 		return memberList;

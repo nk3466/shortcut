@@ -11,6 +11,7 @@
 		<result column="MEET_ENROLL_DATE" property="enrollDate"/>
 		<result column="MEET_DEL_YN" property="status"/>
 		<result column="SPR_NO" property="sprintNo"/>
+		<result column="PJT_NO" property="pjtNo"/>
 	</resultMap>
 	
 	<resultMap type="MemberDTO" id="MemberResultSet">
@@ -49,12 +50,12 @@
 		  INTO MEETING A
 		(
 		  A.MEET_NO, A.MEET_NAME, A.MEET_TXT
-		, A.MEET_ENROLL_DATE, SPR_NO
+		, A.MEET_ENROLL_DATE, SPR_NO ,PJT_NO
 		)  
 		VALUES
 		(
 		  SEQ_MEET_NO.NEXTVAL, #{meetingName}, #{meetingText}
-		, #{enrollDate}, 1
+		, #{enrollDate}, 1, #{pjtNo}
 		)
 	</insert>
 	
@@ -64,7 +65,7 @@
 		     , A.MEM_NO 
 		  FROM MEMBER A 
 		  JOIN PJT_AUTHORITY B ON (B.MEM_NO = A.MEM_NO)
-		 WHERE B.PJT_NO = 4
+		 WHERE B.PJT_NO = ${pjtNo}
 	</select>
 	
 	
@@ -95,17 +96,17 @@
 		        )
 	</insert>
 	
-<!-- 	<select id="selectProjectList" parameterType="ProjectDTO" resultMap="ProjectResultSet">
+	<select id="selectMeetingList" parameterType="MeetingDTO" resultMap="MeetingResultSet">
 		SELECT
-		       A.PJT_NO
-		     , A.PJT_NAME
-		     , A.PJT_START_DATE
-		     , A.PJT_DEL_YN
-		     , A.MEM_NO
-		     , A.PJT_END_DATE
-		     , A.PJT_COLOR
-		  FROM PROJECT A
-		 WHERE A.PJT_NO = #{pjtNo};  
-	</select> -->
+		       A.MEET_NO
+		     , A.MEET_NAME
+		     , A.MEET_TXT
+		     , A.MEET_ENROLL_DATE
+		     , A.MEET_DEL_YN
+		     , A.SPR_NO     
+		  FROM MEETING A
+		 WHERE A.SPR_NO = 1
+	</select>
+	
 	
 </mapper>

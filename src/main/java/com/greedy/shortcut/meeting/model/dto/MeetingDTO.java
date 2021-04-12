@@ -14,11 +14,12 @@ public class MeetingDTO {
 	private java.sql.Date enrollDate;
 	private String status;
 	private int sprintNo;
+	private int pjtNo;
 	
 	public MeetingDTO() {}
 
 	public MeetingDTO(Integer meetingNo, String meetingName, String meetingText, Date enrollDate, String status,
-			int sprintNo) {
+			int sprintNo, int pjtNo) {
 		super();
 		this.meetingNo = meetingNo;
 		this.meetingName = meetingName;
@@ -26,6 +27,7 @@ public class MeetingDTO {
 		this.enrollDate = enrollDate;
 		this.status = status;
 		this.sprintNo = sprintNo;
+		this.pjtNo = pjtNo;
 	}
 
 	public Integer getMeetingNo() {
@@ -76,12 +78,22 @@ public class MeetingDTO {
 		this.sprintNo = sprintNo;
 	}
 
+	public int getPjtNo() {
+		return pjtNo;
+	}
+
+	public void setPjtNo(int pjtNo) {
+		this.pjtNo = pjtNo;
+	}
+
 	@Override
 	public String toString() {
 		return "MeetingDTO [meetingNo=" + meetingNo + ", meetingName=" + meetingName + ", meetingText=" + meetingText
-				+ ", enrollDate=" + enrollDate + ", status=" + status + ", sprintNo=" + sprintNo + "]";
+				+ ", enrollDate=" + enrollDate + ", status=" + status + ", sprintNo=" + sprintNo + ", pjtNo=" + pjtNo
+				+ "]";
 	}
 
+	
 	
 	
 }

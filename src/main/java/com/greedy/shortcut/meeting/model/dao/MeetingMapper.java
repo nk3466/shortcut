@@ -17,11 +17,13 @@ public interface MeetingMapper {
 
 	ProjectAndAuthorityDTO projectMemberCheck(String name);
 
-	List<MemberDTO> selectProjectMember(MemberDTO member);
+	List<MemberDTO> selectProjectMember(@Param("member") MemberDTO member, @Param("pjtNo") int pjtNo);
 
 	int insertProjectMember(@Param("memberNo") int memberNo, @Param("meetingNo") int mNo);
 
 	MeetingDTO selectMeeting();
+
+	List<MeetingDTO> selectMeetingList(int pjtNo);
 
 	
 

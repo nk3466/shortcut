@@ -10,11 +10,13 @@ public interface MeetingService {
 
 	boolean insertMeeting(MeetingDTO meeting);
 
-	List<MemberDTO> selectProjectMember(MemberDTO member);
+	List<MemberDTO> selectProjectMember(MemberDTO member, int pjtNo);
 
 	boolean insertProjectMember(int memberNo, int mNo);
 
 	MeetingDTO selectMeeting();
+
+	List<MeetingDTO> selectMeetingList(int pjtNo);
 
 
 

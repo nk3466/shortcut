@@ -81,7 +81,7 @@
 			<div class="modal-content">
 				<form action="${pageContext.servletContext.contextPath}/meeting/meetinglog" method="post">
 					<div class="modal-body">
-						
+							<input type="text" value="${pjtNo}" id="pjtNo" name="pjtNo" style="display: none;">
 							<div class="conference_item">
 								<div class="row">
 									<div class="item_type type">
@@ -98,7 +98,7 @@
 										프로젝트
 									</div>							
 									<div class="item_text">
-										<c:out value="${ project.pjtName }"/>	
+										<c:out value="${requestScope.projectName}"/>	
 									</div>							
 									<div class="item_type type1">
 										스프린트
@@ -191,11 +191,16 @@
 		var count = 0;
 		
 		$(".conference_update").click(function(){
+			var pjtNo = ${pjtNo};
+			
+			console.log(pjtNo);
 			$.ajax({
 				url:"selectProjectMember",
-				type:"POST",					
+				type:"POST",
+				data : {"pjtNo" : pjtNo},
+				
 				success: function(data, status, xhr){
-					console.log(data)
+					console.table(data)
 					if(data !==0){
 						
 						let memberList = data; 
@@ -209,7 +214,7 @@
 							$("#meetingMember").append(insertSpan);
 						}
 						console.log(count);
-					} 
+					}  
 				},
 				error:function(data){
 					console.log(error);
