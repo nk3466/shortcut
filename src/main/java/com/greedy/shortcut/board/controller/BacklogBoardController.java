@@ -16,13 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,10 +28,8 @@ import com.greedy.shortcut.board.model.dto.BacklogDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.ProjectDTO;
 import com.greedy.shortcut.board.model.service.BacklogService;
-
 import com.greedy.shortcut.common.paging.PageInfoDTO;
 import com.greedy.shortcut.common.paging.Pagenation;
-
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 
@@ -50,15 +46,33 @@ public class BacklogBoardController {
 		this.backlogService = backlogService;
 	}
 
+	@PostMapping("backlog")
+	public String backlog(Model model, @RequestParam(name="blgNo") int blgNo,  @RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName) {
+		System.out.println("프로젝터 번호" + pjtNo);
+		System.out.println("백로그 번호 : " +blgNo );
+		System.out.println("프로젝트 이름  : " + projectName);
+		/* 백로그 수정용 조회 */
+		BacklogDTO backlog = backlogService.selectBacklogToEdit(blgNo, pjtNo);
+		
+		System.out.println(backlog);
+		model.addAttribute("backlog", backlog);
+		
+		return"야야";
+		//return "?pjtNo=" + pjtNo +"&projectName=" + projectName.replace(" ", "+");
+		}
 
 	@GetMapping("backlog")
-	public String project(Model model, @RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName) {
-
+	public String project(Model model, @RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName
+	/* , @RequestParam(name="blgNo1") int blgNo */
+			) {
+		/* 프로젝트 리스트 */
 		ProjectDTO project = backlogService.selectProjectList(pjtNo);
 
 		System.out.println("project는 : " + project);
-
+		
 		List<ProjectAuthorityDTO> memberList = backlogService.selectMemberList(pjtNo);
+		
+		
 		
 		/* 프로젝트 이름 출력용 */
 		System.out.println("뽑아봐 : " + projectName);
@@ -202,4 +216,19 @@ public class BacklogBoardController {
 		return new ObjectMapper().writeValueAsString(backlog);
 	}
 	
+
+//	/* 백로그 수정 */
+//	@PostMapping(value="backlog/SelectBacklog" , produces="application/json; charset=UTF-8")
+//	@ResponseBody
+//	public String SelectBacklog(HttpSession httpsession,		
+//			@ModelAttribute ProjectDTO project,
+//			HttpServletRequest request, RedirectAttributes rttr) throws JsonProcessingException {
+//		
+//		
+//		BacklogDTO backlog = backlogService.selectBacklogList(pjtNo);
+//		return "";
+//				
+//		
+//	}
+//	
 }

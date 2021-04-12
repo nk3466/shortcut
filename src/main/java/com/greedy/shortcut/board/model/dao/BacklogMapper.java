@@ -3,6 +3,8 @@ package com.greedy.shortcut.board.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.greedy.shortcut.board.model.dto.BacklogDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.ProjectDTO;
@@ -51,6 +53,8 @@ public interface BacklogMapper {
 	
 	/* 백로그 히스토리 등록 */
 	int insertBacklogHistory(BacklogDTO backlog);
+
+	BacklogDTO selectBacklogToEdit(@Param("blgNo")int blgNo,@Param("pjtNo") int pjtNo);
 
 
 }
