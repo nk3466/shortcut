@@ -120,9 +120,7 @@
 							기간
 						</div>
 						<div class="item_content">
-						<c:forEach var="req_cardList" items="${ requestScope.cardProgress1List }">
-							<c:out value="${ req_cardList.tkStartDate }"/> <br>
-						</c:forEach>
+						
 						</div>
 					</div>
 					<div class="item_type4">
@@ -209,7 +207,6 @@
 					for( let i = 1; i < 5; i++){
 						var idvalue = reversetypestandard(i)
 						var allcan = $("div[id^='" + idvalue + "']").find("[class*='_content']");
-						//var allcan = $("div[class^='item_content']");
 						console.log(idvalue+ " : " +allcan)
 						var allvar = $("div[id^='" + idvalue + "']").find('.item_pagenavi');
 						console.log(allvar);

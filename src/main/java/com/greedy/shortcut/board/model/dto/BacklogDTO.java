@@ -14,10 +14,14 @@ public class BacklogDTO implements java.io.Serializable {
 	private String blgDemoMemo;
 	private String blgRefMemo;
 	
+	private int startPage; 
+	private int endPage;
+	private int maxPage;
+	
 	public BacklogDTO() {}
 
 	public BacklogDTO(int blgNo, String blgName, int blgPri, Date blgEnrollDate, Date sprEndDate, int pjtNo,
-			String blgDelYn, String blgDemoMemo, String blgRefMemo) {
+			String blgDelYn, String blgDemoMemo, String blgRefMemo, int startPage, int endPage, int maxPage) {
 		super();
 		this.blgNo = blgNo;
 		this.blgName = blgName;
@@ -28,6 +32,9 @@ public class BacklogDTO implements java.io.Serializable {
 		this.blgDelYn = blgDelYn;
 		this.blgDemoMemo = blgDemoMemo;
 		this.blgRefMemo = blgRefMemo;
+		this.startPage = startPage;
+		this.endPage = endPage;
+		this.maxPage = maxPage;
 	}
 
 	public int getBlgNo() {
@@ -102,14 +109,39 @@ public class BacklogDTO implements java.io.Serializable {
 		this.blgRefMemo = blgRefMemo;
 	}
 
+	public int getStartPage() {
+		return startPage;
+	}
+
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
+	}
+
+	public int getEndPage() {
+		return endPage;
+	}
+
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
+
+	public int getMaxPage() {
+		return maxPage;
+	}
+
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
+	}
+
 	@Override
 	public String toString() {
 		return "BacklogDTO [blgNo=" + blgNo + ", blgName=" + blgName + ", blgPri=" + blgPri + ", blgEnrollDate="
 				+ blgEnrollDate + ", sprEndDate=" + sprEndDate + ", pjtNo=" + pjtNo + ", blgDelYn=" + blgDelYn
-				+ ", blgDemoMemo=" + blgDemoMemo + ", blgRefMemo=" + blgRefMemo + "]";
+				+ ", blgDemoMemo=" + blgDemoMemo + ", blgRefMemo=" + blgRefMemo + ", startPage=" + startPage
+				+ ", endPage=" + endPage + ", maxPage=" + maxPage + "]";
 	}
 
-
+	
 
 	
 	

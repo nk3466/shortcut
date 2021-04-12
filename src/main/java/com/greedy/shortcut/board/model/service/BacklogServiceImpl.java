@@ -34,11 +34,6 @@ public class BacklogServiceImpl implements BacklogService {
 	}
 
 	@Override
-	public List<BacklogDTO> selectFinishSprint(int pjtNo) {
-		return backlogMapper.selectFinishSprint(pjtNo);
-	}
-	
-	@Override
     public ProjectDTO selectProjectList(int pjtNo) {
 		return backlogMapper.selectProject(pjtNo);
 	}
@@ -46,17 +41,6 @@ public class BacklogServiceImpl implements BacklogService {
 	@Override
     public List<ProjectAuthorityDTO> selectMemberList(int pjtNo) {
 		return backlogMapper.selectMemberList(pjtNo);
-	}
-
-	@Override
-	public List<BacklogDTO> selectPagingFinishSprint(int pjtNo, PageInfoDTO pageInfo) {
-		
-		Map<String, Object> pagingMap = new HashMap<>();
-		pagingMap.put("pjtNo", pjtNo);
-		pagingMap.put("startRow", pageInfo.getStartRow());
-		pagingMap.put("endRow", pageInfo.getEndRow());
-		
-		return backlogMapper.selectPagingFinishSprint(pagingMap);
 	}
 
 		/* 아이디 유무 체크 */

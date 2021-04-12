@@ -14,14 +14,6 @@
 		<result property="blgRefMemo" column="BLG_REF_MEMO"/>
 	</resultMap>
 	
-	<resultMap id="memberResultSet" type="MemberDTO">
-		<id column="MEM_NO" property="no" />
-		<result column="MEM_NAME" property="name" />
-		<result column="MEM_ID" property="email" />
-		<result column="MEM_PWD" property="password" />
-		<result column="PHONE" property="phone" />
-	</resultMap>
-
 	<resultMap id="ProjectResultSet" type="ProjectDTO">
 		<id column="PJT_NO" property="pjtNo"/>
 		<result column="PJT_NAME" property="projectName"/>
@@ -32,71 +24,22 @@
 		<result column="PJT_COLOR" property="projectColor"/>
 	</resultMap>
 	
-	 <resultMap id="AuthorityResultSet" type="ProjectAuthorityDTO">
+	<resultMap id="memberResultSet" type="MemberDTO">
+		<id column="MEM_NO" property="no" />
+		<result column="MEM_NAME" property="name" />
+		<result column="MEM_ID" property="email" />
+		<result column="MEM_PWD" property="password" />
+		<result column="PHONE" property="phone" />
+	</resultMap>
+	
+	<resultMap id="AuthorityResultSet" type="ProjectAuthorityDTO">
 		<id column="PA_NO" property="projectRoleNo"/>	<!-- 권한고유번호 -->
 		<result column="PA_ROLE" property="projectRole"/><!-- 	회원권한 -->
 		<result column="PJT_NO" property="pjtNo"/>		<!-- 프로젝트번호  -->
 		<result column="MEM_NO" property="memberNo"/>	
 		<result column="MEM_ID" property="memberId"/>
 	</resultMap> 
-
-	<select id="selectFinishSprint" resultMap="backlogResultMap" parameterType="_int">
-		SELECT
-               A.BLG_NO
-             , A.BLG_NAME
-             , A.BLG_PRI
-             , A.BLG_ENROLL_DATE
-             , B.SPR_END_DATE
-             , A.PJT_NO
-             , A.BLG_DEL_YN
-             , A.BLG_DEMO_MEMO
-             , A.BLG_REF_MEMO
-          FROM BACKLOG A
-          JOIN SPRINT B ON(A.BLG_NO = B.BLG_NO)
-         WHERE A.PJT_NO = #{pjtNo}
-           AND B.SPR_END_DATE &lt; SYSDATE
-	</select>
 	
-	<select id="selectPagingFinishSprint" resultMap="backlogResultMap" parameterType="hashMap">
-		SELECT
-               D.RNUM
-             , D.BLG_NO
-             , D.BLG_NAME
-             , D.BLG_PRI
-             , D.BLG_ENROLL_DATE
-             , D.SPR_END_DATE
-             , D.PJT_NO
-             , D.BLG_DEL_YN
-             , D.BLG_DEMO_MEMO
-             , D.BLG_REF_MEMO
-         FROM (SELECT ROWNUM RNUM
-                    , C.BLG_NO
-                    , C.BLG_NAME
-                    , C.BLG_PRI
-                    , C.BLG_ENROLL_DATE
-                    , C.SPR_END_DATE
-                    , C.PJT_NO
-                    , C.BLG_DEL_YN
-                    , C.BLG_DEMO_MEMO
-                    , C.BLG_REF_MEMO
-                FROM (SELECT A.BLG_NO
-                           , A.BLG_NAME
-                           , A.BLG_PRI
-                           , A.BLG_ENROLL_DATE
-                           , B.SPR_END_DATE
-                           , A.PJT_NO
-                           , A.BLG_DEL_YN
-                           , A.BLG_DEMO_MEMO
-                           , A.BLG_REF_MEMO
-                        FROM BACKLOG A
-                        JOIN SPRINT B ON(A.BLG_NO = B.BLG_NO)
-                       WHERE A.PJT_NO = #{pjtNo}
-                         AND B.SPR_END_DATE &lt; SYSDATE
-                       ORDER BY B.SPR_END_DATE DESC
-                    ) C
-              ) D
-         WHERE D.RNUM BETWEEN #{startRow} AND #{endRow}
-	</select>
 
 	<select id="selectProject" resultMap="ProjectResultSet" parameterType="ProjectDTO">
 		SELECT

@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.greedy.shortcut.retrospect.model.dao.RetrospectMapper">
 
+	<resultMap type="BacklogDTO" id="backlogResultMap">
+		<id property="blgNo" column="BLG_NO"/>
+		<result property="blgName" column="BLG_NAME"/>
+		<result property="blgPri" column="BLG_PRI"/>
+		<result property="blgEnrollDate" column="BLG_ENROLL_DATE"/>
+		<result property="sprEndDate" column="SPR_END_DATE"/>
+		<result property="pjtNo" column="PJT_NO"/>
+		<result property="blgDelYn" column="BLG_DEL_YN"/>
+		<result property="blgDemoMemo" column="BLG_DEMO_MEMO"/>
+		<result property="blgRefMemo" column="BLG_REF_MEMO"/>
+	</resultMap>
+
 	<resultMap id="reviewResultMap" type="ReviewDTO">
 		<id property="reviewNo" column="REVIEW_NO"/>
 		<result property="reviewLikeTxt" column="REVIEW_LIKE_TXT"/>
@@ -10,6 +22,24 @@
 		<result property="sprNo" column="SPR_NO"/>
 		<result property="memNo" column="MEM_NO"/>
 	</resultMap>
+	
+	<resultMap id="ProjectResultSet" type="ProjectDTO">
+		<id column="PJT_NO" property="pjtNo"/>
+		<result column="PJT_NAME" property="projectName"/>
+		<result column="PJT_START_DATE" property="projectStartDate"/>
+		<result column="PJT_DEL_YN" property="projectDelYN"/>
+		<result column="MEM_NO" property="memberNo"/>
+		<result column="PJT_END_DATE" property="projectEndDate"/>
+		<result column="PJT_COLOR" property="projectColor"/>
+	</resultMap>
+	
+	 <resultMap id="AuthorityResultSet" type="ProjectAuthorityDTO">
+		<id column="PA_NO" property="projectRoleNo"/>	<!-- 권한고유번호 -->
+		<result column="PA_ROLE" property="projectRole"/><!-- 	회원권한 -->
+		<result column="PJT_NO" property="pjtNo"/>		<!-- 프로젝트번호  -->
+		<result column="MEM_NO" property="memberNo"/>	
+		<result column="MEM_ID" property="memberId"/>
+	</resultMap> 
 
 	<select id="selectReview" resultMap="reviewResultMap">
 		SELECT
@@ -21,6 +51,64 @@
 		    , A.MEM_NO
 		 FROM REVIEW A
 		WHERE A.SPR_NO = 1
+	</select>
+
+	<select id="selectFinishSprint" resultMap="backlogResultMap" parameterType="_int">
+		SELECT
+               A.BLG_NO
+             , A.BLG_NAME
+             , A.BLG_PRI
+             , A.BLG_ENROLL_DATE
+             , B.SPR_END_DATE
+             , A.PJT_NO
+             , A.BLG_DEL_YN
+             , A.BLG_DEMO_MEMO
+             , A.BLG_REF_MEMO
+          FROM BACKLOG A
+          JOIN SPRINT B ON(A.BLG_NO = B.BLG_NO)
+         WHERE A.PJT_NO = #{pjtNo}
+           AND B.SPR_END_DATE &lt; SYSDATE
+	</select>
+	
+	<select id="selectPagingFinishSprint" resultMap="backlogResultMap" parameterType="hashMap">
+		SELECT
+               D.RNUM
+             , D.BLG_NO
+             , D.BLG_NAME
+             , D.BLG_PRI
+             , D.BLG_ENROLL_DATE
+             , D.SPR_END_DATE
+             , D.PJT_NO
+             , D.BLG_DEL_YN
+             , D.BLG_DEMO_MEMO
+             , D.BLG_REF_MEMO
+         FROM (SELECT ROWNUM RNUM
+                    , C.BLG_NO
+                    , C.BLG_NAME
+                    , C.BLG_PRI
+                    , C.BLG_ENROLL_DATE
+                    , C.SPR_END_DATE
+                    , C.PJT_NO
+                    , C.BLG_DEL_YN
+                    , C.BLG_DEMO_MEMO
+                    , C.BLG_REF_MEMO
+                FROM (SELECT A.BLG_NO
+                           , A.BLG_NAME
+                           , A.BLG_PRI
+                           , A.BLG_ENROLL_DATE
+                           , B.SPR_END_DATE
+                           , A.PJT_NO
+                           , A.BLG_DEL_YN
+                           , A.BLG_DEMO_MEMO
+                           , A.BLG_REF_MEMO
+                        FROM BACKLOG A
+                        JOIN SPRINT B ON(A.BLG_NO = B.BLG_NO)
+                       WHERE A.PJT_NO = #{pjtNo}
+                         AND B.SPR_END_DATE &lt; SYSDATE
+                       ORDER BY B.SPR_END_DATE DESC
+                    ) C
+              ) D
+         WHERE D.RNUM BETWEEN #{startRow} AND #{endRow}
 	</select>
 
 </mapper>
