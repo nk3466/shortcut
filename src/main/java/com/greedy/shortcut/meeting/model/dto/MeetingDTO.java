@@ -10,7 +10,7 @@ public class MeetingDTO {
 	private Integer meetingNo;
 	private String meetingName;
 	private String meetingText;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd HH:mm:ss SSS", timezone = "Asia/Seoul")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private java.sql.Date enrollDate;
 	private String status;
 	private int sprintNo;

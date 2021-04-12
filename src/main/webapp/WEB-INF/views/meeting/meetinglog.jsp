@@ -86,7 +86,7 @@
                      <div class="conference_item">
                         <div class="row">
                            <div class="item_type type">
-                              회의날짜
+                      		        회의날짜
                            </div>
                            <div class="item_type">
                               <input class="input_detail" type="date" id="meetingDate" name="enrollDate">
@@ -96,13 +96,13 @@
                         <div class="modal_line"></div>
                         <div class="row">
                            <div class="item_type type">
-                              프로젝트
+                          	    프로젝트
                            </div>                     
                            <div class="item_text">
                               <c:out value="${requestScope.projectName}"/>   
                            </div>                     
                            <div class="item_type type1">
-                              스프린트
+                  		            스프린트
                            </div>                     
                            <div class="item_text">
                               
@@ -111,7 +111,7 @@
                         <div class="modal_line"></div>
                      <!--    <div class="row">
                            <div class="item_type type">
-                              팀원추가
+     			                         팀원추가
                            </div>
                            <div class="item_type">
                               <input class="input_detail" type="text" id="memberEmail" name="" placeholder="회의 참가자 추가" onclick="this.value=''">
@@ -166,6 +166,8 @@
 
    </div>
    
+   <jsp:include page="../meeting/meeting_detail.jsp"></jsp:include>
+   
    
 </body>
 
@@ -177,6 +179,13 @@
          $("#conference").modal();
          
       })
+      
+      $(this).on("click",".mtinfo", function(){
+    	  
+	      $("#conference_detail").modal();
+    	  
+      })
+      
    })
 </script>
 <script type="text/javascript">
@@ -185,6 +194,9 @@
 		    meetDate : "",
 		    EnrollDate : ""	   
 	   }
+	
+	console.log(enrollDateInfo);
+	
    const token = $("meta[name='_csrf']").attr("content");
    const header = $("meta[name='_csrf_header']").attr("content");
    
@@ -297,7 +309,8 @@
    
    
    function calculateDate(enrollDate){
-	              
+	      
+
 	   	  console.log("enrollDate" + enrollDate);
 	      var enrollDate1 = enrollDate.substring(0,5);               //date 값의 년도 
 	      var enrollDate2 = enrollDate.substring(5,8);               //date 값의 월
@@ -305,7 +318,12 @@
 	      var enrollDate4 = enrollDate2.replace(/(^0+)/, "");            //0제외
 	      var enrollDate5 = enrollDate3.replace(/(^0+)/, "");            //0제외
 	      var enrollDate6 = enrollDate1 + enrollDate4 + enrollDate5;      //더하기
-	       console.log("enrollDate6 : " + enrollDate6);
+	      console.log("enrollDate1 : " + enrollDate1);
+	      console.log("enrollDate2 : " + enrollDate2);
+	      console.log("enrollDate3 : " + enrollDate3);
+	      console.log("enrollDate4 : " + enrollDate4);
+	      console.log("enrollDate5 : " + enrollDate5);
+	      console.log("enrollDate6 : " + enrollDate6);
 	      enrollDateInfo.EnrollDate = enrollDate6;
 	      
 	      var indexnum = parseInt(enrollDate5) - 5;                  //달력 인덱스값(정수로 파싱)
@@ -366,6 +384,8 @@
           calenderPlace.append(insertDiv);
        }
    }
+   
+   
 </script>
 
 
