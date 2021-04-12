@@ -73,8 +73,7 @@
 							<div class="table_detail type2">5</div>
 							<div class="table_detail type3">로그인, 입금 페이지 열기, 10달러 입금. 잔액 조회 페이지 이동. 잔액 확인</div>
 							<div class="table_detail type4">지금은 암호화를 고려하지 않아도 됨</div>					
-						</div>		
-										
+						</div>
 					</a>
 				</div>
 			</div>				

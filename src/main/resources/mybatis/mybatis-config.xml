@@ -43,6 +43,9 @@
  		<typeAlias alias="MyworkResponseCardAndScheduleDTO" type="com.greedy.shortcut.mywork.model.dto.MyworkResponseCardAndScheduleDTO"/>
  		
  		<typeAlias alias="BoardDTO" type="com.greedy.shortcut.board.model.dto.BoardDTO"/>
+
+ 		<typeAlias alias="SprintDTO" type="com.greedy.shortcut.board.model.dto.SprintDTO"/>
+ 		
  	</typeAliases>
  	
  </configuration>
