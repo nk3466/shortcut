@@ -28,11 +28,11 @@ public class MeetingServiceImpl implements MeetingService{
 		return mapper.insertMeeting(meeting) > 0? true:false;
 	}
 
-	@Override
-	public List<MemberDTO> selectProjectMember(MemberDTO member) {
-
-		return mapper.selectProjectMember(member);
-	}
+	/*
+	 * @Override public List<MemberDTO> selectProjectMember(MemberDTO member) {
+	 * 
+	 * return mapper.selectProjectMember(member); }
+	 */
 
 
 	@Override
@@ -44,8 +44,20 @@ public class MeetingServiceImpl implements MeetingService{
 
 	@Override
 	public boolean insertProjectMember(int memberNo, int mNo) {
-		// TODO Auto-generated method stub
+
 		return mapper.insertProjectMember(memberNo, mNo) > 0? true:false;
+	}
+
+	@Override
+	public List<MemberDTO> selectProjectMember(MemberDTO member, int pjtNo) {
+
+		return mapper.selectProjectMember(member, pjtNo);
+	}
+
+	@Override
+	public List<MeetingDTO> selectMeetingList(int pjtNo) {
+
+		return mapper.selectMeetingList(pjtNo);
 	}
 
 	

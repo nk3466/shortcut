@@ -39,8 +39,8 @@
 			
 									
 			<form action="${ pageContext.servletContext.contextPath }/meeting/meetinglog/" method="get">
-				<input type="text" value="${requestScope.project.pjtNo }" id="pjtNo" name="pjtNo" style="display: none;">
-				<input type="text" value="${requestScope.project.projectName }" id="projectName" name="projectName" style="display: none;">
+				<input type="text" value="${pjtNo }" id="pjtNo" name="pjtNo" style="display: none;">
+				<input type="text" value="${projectName }" id="projectName" name="projectName" style="display: none;">
 				<button type="submit" class="meeting_btn">Meeting Log</button>
 			</form>
 			<div class="meeting_btn"  data-toggle="modal" data-target="#project_produce_Detail">Edit Project</div>
