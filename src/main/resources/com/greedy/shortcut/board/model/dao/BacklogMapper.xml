@@ -229,7 +229,7 @@
 	      )
 	</insert>
 	<select id="selectBacklogList" resultMap="backlogResultMap" parameterType="BacklogDTO">
-		SELECT
+	    SELECT
 			   A.BLG_NO
 			 , A.BLG_NAME
 			 , A.BLG_PRI
@@ -239,7 +239,10 @@
 			 , A.BLG_DEMO_MEMO
 			 , A.BLG_REF_MEMO
 		  FROM BACKLOG A
-		 WHERE A.PJT_NO =  #{pjtNo}
+    LEFT OUTER JOIN SPRINT B ON (A.BLG_NO = B.BLG_NO)
+		 WHERE A.PJT_NO = #{pjtNo}
+           AND B.SPR_NO IS NULL
+            OR B.SPR_DEL_YN = 'Y'
 		 ORDER BY A.BLG_PRI ASC
 	</select>
 	
@@ -275,4 +278,19 @@
 	      , SYSDATE, #{blgDemoMemo}, #{blgRefMemo}
 	      )
 	</insert>
+	
+	<select id="selectBacklogToEdit" resultMap="backlogResultMap" parameterType="BacklogDTO">
+	    SELECT
+	           A.BLG_NO
+	         , A.BLG_NAME
+	         , A.BLG_PRI
+	         , A.BLG_ENROLL_DATE
+	         , A.PJT_NO
+	         , A.BLG_DEL_YN
+	         , A.BLG_DEMO_MEMO
+	         , A.BLG_REF_MEMO
+	      FROM BACKLOG A
+	     WHERE A.BLG_NO = #{blgNo}
+	       AND A.PJT_NO = #{pjtNo}
+	</select>
 </mapper>
