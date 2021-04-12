@@ -159,21 +159,10 @@
 									<th>기록</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="reviewBody">
 								<c:choose>
 									<c:when test="${fn:length(requestScope.finishSprintList) > 0 }">
-										<c:forEach var="finishSprint" items="${ requestScope.finishSprintList }" >
-											<tr>
-												<td class="">${ finishSprint.blgNo }</td>
-												<td class="">${ finishSprint.blgName }</td>
-												<td class="">${ finishSprint.blgPri }</td>
-												<td class="">${ finishSprint.sprEndDate }</td>
-												<td class="">${ finishSprint.blgDemoMemo }</td>
-												<td class="">${ finishSprint.blgRefMemo }</td>
-												<td><button class="btn_detail_retro" onclick="retrospect();">리뷰 작성</button></td>
-												<td><button class="btn_detail_retro">기록</button></td>
-											</tr>
-										</c:forEach>
+										
 									</c:when>
 									<c:otherwise>
 										<tr>
@@ -184,113 +173,84 @@
 							</tbody>
 						</table>
 					</div>
-					<div class="pagingArea" align="center">
-						<%-- <c:when test="${ empty requestScope.searchValue }"> --%>
-							<button id="startPage"><<</button>
-							<c:if test="${ requestScope.pageInfo.pageNo <= 1 }">
-								<button disabled><</button>
-							</c:if>
-							<c:if test="${ requestScope.pageInfo.pageNo > 1 }">
-								<button id="prevPage"><</button>
-							</c:if>
-							
-							<c:forEach var="p" begin="${ requestScope.pageInfo.startPage }" end="${ requestScope.pageInfo.endPage }" step="1">
-								<c:if test="${ requestScope.pageInfo.pageNo eq p }">
-									<button class="admBtn" disabled><c:out value="${ p }"/></button>
-								</c:if>
-								<c:if test="${ requestScope.pageInfo.pageNo ne p }">
-									<button class="admBtn" onclick="pageButtonAction(this.innerText);"><c:out value="${ p }"/></button>
-								</c:if>
-							</c:forEach>
-										
-							<c:if test="${ requestScope.pageInfo.pageNo >= requestScope.pageInfo.maxPage }">
-								<button class="admBtn" disabled>></button>
-							</c:if>
-							<c:if test="${ requestScope.pageInfo.pageNo < requestScope.pageInfo.maxPage }">
-								<button class="admBtn" id="nextPage">></button>
-							</c:if>
-							<button type="button" class="admBtn" id="maxPage">>></button>
-						<%-- </c:when> --%>
+					<div id="pagingArea" align="center">
+					
 					</div>
-					
-<button type="button" id="please">please</button>
-	<script>
-	
-	$(document).ajaxSend(function(e, xhr, options) {
-	    xhr.setRequestHeader(header, token);
-	});
-		var one = 1;
-		var two = "two";
-		var pjtNo = ${requestScope.pjtNo};
-	
-		$("#please").click(function() {
-			console.log("a")
-			$.ajax({
-				url: "${pageContext.servletContext.contextPath}/board/backlog/please",
-				method: "GET",
-				data: {
-					one: one,
-					two: two,
-					pjtNo: pjtNo
-				},
-				success: function(data, status, xhr) {
-					console.log(data);
-				},
-				error: function(xhr, status, error) {
-					console.log(error);
-				}
-			});
-		});
-	</script>
-					
+					<!-- Ajax 스프린트 리뷰 게시판 페이징 시작 -->
 					<script>
-						const link = "${ pageContext.servletContext.contextPath }/board/backlog";
-					
-						if(document.getElementById("startPage")) {
-							const $startPage = document.getElementById("startPage");
-							$startPage.onclick = function() {
-								location.href = link + "?currentPage=1";
-							}
-						}
+						/* 페이지 로드 될 때 시작 */
+						$('document').ready(function() {
+							
+							/* 프로젝트 번호 */
+							var pjtNo = ${requestScope.pjtNo};
+							/* 게시판 Body */
+							var $reviewBody = $("#reviewBody");
+							/* 페이징 버튼 */
+							var $pagingArea = $("#pagingArea");
+							
+							/* 페이징 함수 호출 */
+							pagingAjax(pjtNo, 1, $reviewBody, $pagingArea);
+							
+						});
 						
-						if(document.getElementById("prevPage")) {
-						    const $prevPage = document.getElementById("prevPage");
-						    $prevPage.onclick = function() {
-						        location.href = link + "?currentPage=${ requestScope.pageInfo.pageNo - 1}";
-						    }
-					    }
-						    
-					    if(document.getElementById("nextPage")) {
-						    const $nextPage = document.getElementById("nextPage");
-					        $nextPage.onclick = function() {
-					            location.href = link + "?currentPage=${ requestScope.pageInfo.pageNo + 1}";
-					        }
-					    }
-						    
-					    if(document.getElementById("maxPage")) {
-						    const $maxPage = document.getElementById("maxPage");
-						    $maxPage.onclick = function() {
-						        location.href = link + "?currentPage=${ requestScope.pageInfo.maxPage }";
-						    }
-					    }
-						    
-						function pageButtonAction(text) {
-							console.log("success");
-							console.log(typeof text);
-							pagingAjax();
-							 /*  location.href = link + "?currentPage=" + text; */
-				        }
-					</script>
-					<script>
-					
-						function pagingAjax() {
+						/* 페이징 함수 */
+						function pagingAjax(pjtNo, currentPage, $reviewBody, $pagingArea) {
 							
-							var abc = "1";
+							/* Body 영역 지우기 */
+							$reviewBody.empty();
 							
+							/* ajax 호출 */
 							$.ajax({
 								url : "${pageContext.servletContext.contextPath}/board/backlog/reviewPaging",
-								method : "POST",
+								method : "GET",
+								data : {
+									pjtNo : pjtNo,
+									currentPage : currentPage
+								},
 								success : function(data, status, xhr) {
+									
+									if(0 == data.length) {
+
+									} else {
+										/* DTO에 담긴 시작페이지, 끝페이지, 마지막페이지 꺼내기 */
+										var startPage = data[0].startPage;
+										var endPage = data[0].endPage;
+										var maxPage = data[0].maxPage;
+										
+										for(let index in data) {
+											
+											/* 버튼 생성 */
+											var retrospectBtnHtml = '<input type="button" value="리뷰 작성/수정" onclick="retrospect();">';
+											var recordBtnHtml = '<input type="button" value="기록" onclick="retrospectRecord();">';
+											
+											/* tr태그에 만들어 값 담기 */
+											$tr = $("<tr>");
+											$noTd = $("<td>").text(data[index].blgNo);
+											$nameTd = $("<td>").text(data[index].blgName);
+											$priTd = $("<td>").text(data[index].blgPri);
+											$enrollDateTd = $("<td>").text(data[index].blgEnrollDate);
+											$demoMemoTd = $("<td>").text(data[index].blgDemoMemo);
+											$refMemoTd = $("<td>").text(data[index].blgRefMemo);
+											$retrospectBtnTd = $("<td>").html(retrospectBtnHtml);
+											$recordBtnTd = $("<td>").html(recordBtnHtml);
+											
+											$tr.append($noTd);
+											$tr.append($nameTd);
+											$tr.append($priTd);
+											$tr.append($enrollDateTd);
+											$tr.append($demoMemoTd);
+											$tr.append($refMemoTd);
+											$tr.append($retrospectBtnTd);
+											$tr.append($recordBtnTd);
+											
+											/* 테이블에 추가 */
+											$reviewBody.append($tr);
+										}
+										
+										/* 페이징 버튼 함수 호출 - 페이지 정보와 페이징영역 정보 인자로 전달 */
+										navi(startPage, endPage, maxPage, $pagingArea, currentPage);
+									}
+									
 									console.log(data);
 									console.log(status);
 									console.log(xhr);
@@ -302,117 +262,124 @@
 								}
 							});
 						}
-					
+						
+						/* 페이징 버튼 함수 */
+						function navi(startPage, endPage, maxPage, $pagingArea, currentPage) {
+							
+							/* 페이징영역 지우기 */
+							$pagingArea.empty();
+							
+							/* 시작페이지가 1페이지일 때 disabled된 <<, < 버튼 추가
+							      아니라면, 활성화된 버튼 추가하고 startPage(), prevPage 함추 호출
+							*/
+							if(startPage <= 1) {
+								$pagingArea.append('<button disabled><<</button>')
+								$pagingArea.append('<button disabled><</button>');
+							} else {
+								$pagingArea.append('<button onclick="startPage();"><<</button>');
+								$pagingArea.append('<button onclick="prevPage(' + startPage + ');"><</button>');
+							}
+							
+							/* 현재 페이지와 같지 않는 버튼은 movePage()함수 호출 가능 */
+							for(let i = startPage; i <= endPage; i++) {
+								if(i == currentPage) {
+									$pagingArea.append('<button disabled>' + i + '</button>');
+								} else {
+									$pagingArea.append('<button onclick="movePage(' + i + ')">' + i + '</button>');
+								}
+							}
+							
+							if(endPage == maxPage) {
+								$pagingArea.append('<button disabled>></button>');
+								$pagingArea.append('<button disabled>>></button>');
+							} else {
+								$pagingArea.append('<button onclick="nextPage(' + endPage + ')">></button>');
+								$pagingArea.append('<button onclick="maxPage(' + maxPage + ')">>></button>');
+							}
+						}
+						
+						/* 페이징 버튼 함수들 */
+						function startPage() {
+							
+							var pjtNo = ${requestScope.pjtNo};
+							var $reviewBody = $("#reviewBody");
+							var $pagingArea = $("#pagingArea");
+							
+							/* 다시 pagingAjax 함수 호출해서 정보 뿌려주기 */
+							new pagingAjax(pjtNo, 1, $reviewBody, $pagingArea);
+						}
+						
+						function prevPage(currentPage) {
+							
+							var pjtNo = ${requestScope.pjtNo};
+							var $reviewBody = $("#reviewBody");
+							var $pagingArea = $("#pagingArea");
+							
+							new pagingAjax(pjtNo, currentPage - 1, $reviewBody, $pagingArea);
+						}
+						
+						function nextPage(currentPage) {
+							
+							var pjtNo = ${requestScope.pjtNo};
+							var $reviewBody = $("#reviewBody");
+							var $pagingArea = $("#pagingArea");
+							
+							new pagingAjax(pjtNo, currentPage + 1, $reviewBody, $pagingArea);
+						}
+						
+						function maxPage(maxPage) {
+							
+							var pjtNo = ${requestScope.pjtNo};
+							var $reviewBody = $("#reviewBody");
+							var $pagingArea = $("#pagingArea");
+							
+							new pagingAjax(pjtNo, maxPage, $reviewBody, $pagingArea);
+						}
+						
+						function movePage(choosePage) {
+							
+							var pjtNo = ${requestScope.pjtNo};
+							var $reviewBody = $("#reviewBody");
+							var $pagingArea = $("#pagingArea");
+							
+							new pagingAjax(pjtNo, choosePage, $reviewBody, $pagingArea);
+						}
+						
+						/* 스프린트 리뷰 작성 버튼 */
 						function retrospect() {
-							location.href = "${ pageContext.servletContext.contextPath }/board/backlog/retrospect";
+							
+							if(document.getElementById("reviewBody")) {
+						    	const $reviewBody = document.getElementById("reviewBody");
+						    	const $tdds = $reviewBody.childNodes;
+						    	
+						    	for(let i = 0; i <$tdds.length; i++) {
+						    		
+						 				const no = this.children[0].innerText;
+						 				console.log(no);
+						 	    }  
+						    }
+						} 
+							
+							
+							/* const $tdds = $("#reviewBody").childNodes;
+							
+							for(let i = 0; i <$tdds.length; i++) {
+								const no = $tdds[i].childNodes[0].innerText;
+								console.log(no);
+							} */
+							
+							/* location.href = "${ pageContext.servletContext.contextPath }/board/backlog/retrospect"; */
+						
+						
+						/* 생성된 스프린트 리뷰  접속 */
+						function retrospectRecord() {
+							
 						}
 					</script>
-<!-- 					<script type="text/javascript">
-						$(document).ready(function() {
-							boardMain.init();
-						});
-						
-						var boardMain = {
-								init : function() {
-									var _this = this;
-									_this.getBoardList();
-								}
-								,getBoardList : function(no) {
-									
-									var pageNo = (no || 1);
-									
-									$.ajax({
-										url : "board/backlog",
-										type : "GET",
-										data : "countPerPage=" + 5 + "&pageNo=" + pageNo,
-										success : function(data, status, xhr) {
-											
-											var item = data.finishSprintList;
-											var selectHtml = [];
-											var len = item.length;
-											
-											var page = data.pageInfo;
-											var page_boardList = Paging(page.totalCount, page.limit, page.buttonAmount, pageNo, "boardList");
-											
-											if(len > 0) {
-												$(item).each(function(i, item) {
-													selectHtml.push('<tr>');
-													selectHtml.push('<td><a href="#">' + item.DOCNUM + '</a></th>');
-													selectHtml.push('<th class="boardTitle" id="' + item.DOCNUM + '"><a href="#">' + (item.TITLE || "제목없음"))+'</a></th>');
-													selectHtml.push('<td>' + item.ADD_USR_NM + '</td>');
-													selectHtml.push('<td>' + item.VIEWCONUT + '</td>');
-													selectHtml.push('</tr>');
-												});
-											} else {
-												selectHtml.push('<tr>');
-												selectHtml.push('<td colspan="3">조회된 결과가 없습니다.</td>');
-												selectHtml.push('</tr>');
-											}
-											
-											$("#boardList").empty().html(selectHtml.join(''));
-											
-											$("#paging").empty().html(page_boardList);
-										},
-										error : function(xhr, status, error) {
-											console.log(xhr);
-											console.log(status);
-											console.log(error);
-										}
-									});
-									
-								}	
-						}
-						
-						var goPaging_boardList = function(cPage) {
-							boardMain.getBoardList(cPage);
-						}
-						
-						Paging = function(totalCount, limit, buttonAmount, pageNo, token) {
-							totalCount = parseInt(totalCount);
-							limit = parseInt(limit);
-							buttonAmount = parseInt(buttonAmount);
-							pageNo = parseInt(pageNo);
-							
-							var html = new Array();
-							if(totalCount == 0) {
-								return "";
-							}
-							
-							var pageCnt = totalCount % limit;
-							if(pageCnt == 0) {
-								pageCnt = parseInt(totalCnt / limit);
-							} else {
-								pageCnt = parseInt(totalCnt / limit) + 1;
-							}
-							
-							var pRCnt = parseInt(pageNo / buttonAmount);
-							if(pageNo % buttonAmount == 0) {
-								pRCnt = parseInt(pageNo / buttonAmount) - 1;
-							}
-							
-							if(pageNo > buttonAmount) {
-								var s2;
-								if(pageNo % pageSize == 0) {
-									s2 = pageNo - pageSize;
-								} else {
-									s2 = pageNo - pageNo % pageSize;
-								}
-								html.push('<a href=javascript:goPaging_' + token + '("');
-								html.push(s2);
-								html.push('");>"');
-								html.push('< ')
-								html.push('</a>');
-							} else {
-								html.push('<a href="#">\n'); html.push('◀ '); html.push('</a>'); } //paging Bar for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){ if(index == pageNo){ html.push('<strong>'); html.push(index); html.push('</strong>'); }else{ html.push('<a href=javascript:goPaging_' + token + '("'); html.push(index); html.push('");>'); html.push(index); html.push('</a>'); } if(index == pageCnt){ break; }else html.push(' | '); } //다음 화살표 if(pageCnt > (pRCnt + 1) * pageSize){ html.push('<a href=javascript:goPaging_' + token + '("'); html.push((pRCnt + 1)*pageSize+1); html.push('");>'); html.push(' ▶'); html.push('</a>'); }else{ html.push('<a href="#">'); html.push(' ▶'); html.push('</a>'); } return html.join("");
-
-							}
-						}
-					</script> -->					
+					<!-- Ajax 스프린트 리뷰 게시판 페이징 끝-->
 				</div>
 			</div>
-							
 		</div>
-
 	</div>
 	
 <!-- 백로그 생성 -->

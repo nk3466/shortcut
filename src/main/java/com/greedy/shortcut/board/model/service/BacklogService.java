@@ -11,15 +11,9 @@ import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 public interface BacklogService {
 
-	List<BacklogDTO> selectFinishSprint(int pjtNo);
-	
 	ProjectDTO selectProjectList(int pjtNo);
 
 	List<ProjectAuthorityDTO> selectMemberList(int pjtNo);
-
-	
-	List<BacklogDTO> selectPagingFinishSprint(int pjtNo, PageInfoDTO pageInfo);
-
 
 	int idprojectcheck(MemberDTO member);
 
