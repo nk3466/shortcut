@@ -59,7 +59,7 @@
 		)
 	</insert>
 	
-	<select id="selectProjectMember" resultMap="MemberResultSet" parameterType="MemberDTO">
+	<select id="selectProjectMember" resultMap="MemberResultSet" parameterType="Hashmap">
 		SELECT
 		       A.MEM_NAME
 		     , A.MEM_NO 

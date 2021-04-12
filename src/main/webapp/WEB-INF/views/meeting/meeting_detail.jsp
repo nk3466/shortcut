@@ -36,7 +36,7 @@
 										회의날짜
 									</div>
 									<div class="item_type">
-										<input class="input_detail" type="date" id="meetingDate" name="enrollDate">
+										<input class="input_detail" type="date" id="meetingDate" name="enrollDate" readonly>
 									</div>
 									
 								</div>
@@ -82,7 +82,7 @@
 										회의제목
 									</div>
 									<div class="item_type">
-										<input class="input_detail" type="text" id="titleName" name="meetingName">
+										<input class="input_detail" type="text" id="titleName" name="meetingName" readonly>
 									</div>
 									
 								</div>
@@ -91,7 +91,7 @@
 										회의내용
 									</div>
 									<div class="item_type type3">
-										<textarea id="meetingContent" class="textarea_detail" name="meetingText"></textarea>
+										<textarea id="meetingContent" class="textarea_detail" name="meetingText" readonly></textarea>
 									</div>
 									
 								</div>
@@ -104,6 +104,8 @@
 					<div class="modal_footer">								
 						<div class="btn_area">
 							<input name="${_csrf.parameterName}" type="hidden"  value="${_csrf.token}">
+							<input type="button" id="upload" class="upload_btn" value="삭제">	
+							<input type="button" id="upload" class="upload_btn" value="수정">	
 							<input type="button" id="upload" class="upload_btn" value="완료">	
 						</div>														
 					</div>

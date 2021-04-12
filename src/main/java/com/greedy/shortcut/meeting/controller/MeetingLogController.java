@@ -148,7 +148,7 @@ public class MeetingLogController {
 	public List<MemberDTO> selectProjectMember(@ModelAttribute MemberDTO member,   @RequestParam Map<String, String> parameters) {
 		
 		int pjtNo = Integer.parseInt(parameters.get("pjtNo"));
-		System.out.println("넘ㅁ버 " + pjtNo);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@넘ㅁ버 " + pjtNo);
 		
 		List<MemberDTO> memberList = meetingService.selectProjectMember(member, pjtNo);
 		
@@ -159,4 +159,21 @@ public class MeetingLogController {
 		
 		
 	}
+	
+//	@RequestMapping(value="meetinglog/meeitinglog_detail", produces="application/json; charset=UTF-8")
+//	@ResponseBody
+//	public void meeting_detail() {}
+//	
+	@PostMapping(value="meetinglog/selectAllmeeting", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String meetingList( Model model, @RequestParam Map<String, String> parameters) throws JsonProcessingException {
+		int PjtNo = Integer.parseInt(parameters.get("pjtNo"));
+		System.out.println("PjtNo : " + PjtNo);
+		
+		List<MeetingDTO> meetingList = meetingService.selectMeetingList(PjtNo);
+		System.out.println(meetingList.get(0).getMeetingName());
+		
+		return new ObjectMapper().writeValueAsString(meetingList);
+	}
+	
 }
