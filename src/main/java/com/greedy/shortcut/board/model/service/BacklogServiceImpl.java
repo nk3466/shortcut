@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -119,6 +120,14 @@ public class BacklogServiceImpl implements BacklogService {
 	@Override
 	public boolean insertBacklog(BacklogDTO backlog) {
 		return backlogMapper.insertBacklog(backlog) + backlogMapper.insertBacklogHistory(backlog)  > 1 ? true : false;
+	}
+	
+	/* 백로그 수정하기 위한 조회 */
+	@Override
+	public BacklogDTO selectBacklogToEdit(int blgNo, int pjtNo) {
+		System.out.println("으악" + blgNo);
+		System.out.println("으악1" + pjtNo);
+		return backlogMapper.selectBacklogToEdit(blgNo, pjtNo);
 	}
 	
 }

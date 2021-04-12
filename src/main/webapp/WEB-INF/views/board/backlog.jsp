@@ -35,12 +35,13 @@
 			<span class="backlog_header">
 				Backlog	& Sprint		
 			</span>
-			
-			
-									
+			<!-- -----------------------미팅로그 이동, 프로젝트 수정 버튼-------------------------- -->
 			<form action="${ pageContext.servletContext.contextPath }/meeting/meetinglog/" method="get">
 				<input type="text" value="${pjtNo }" id="pjtNo" name="pjtNo" style="display: none;">
 				<input type="text" value="${projectName }" id="projectName" name="projectName" style="display: none;">
+				<input type="text" value="${requestScope.project.pjtNo }" id="pjtNo" name="pjtNo" style="display: none;">
+				<input type="text" value="${requestScope.project.projectName }" id="projectName" name="projectName" style="display: none;">
+				<input type="text" value="${backlog.blgNo }" id="blgNo1" name="blgNo1" style="display: none;">
 				<button type="submit" class="meeting_btn">Meeting Log</button>
 			</form>
 			<div class="meeting_btn"  data-toggle="modal" data-target="#project_produce_Detail">Edit Project</div>
@@ -54,7 +55,7 @@
 				<span class="sprint_text">Sprint 1</span>				
 				<button class="btn_detail ">Edit Sprint</button>			
 			</div>				
-				<button class="btn_detail on"  data-toggle="modal" data-target="#myModal3">Start Sprint</button>	
+				
 			
 								
 			
@@ -78,11 +79,9 @@
 				</div>
 			</div>				
 		</div>
-
+		<!-- -----------------------백로그 영역-------------------------- -->
 		<div class="backlog_create_area">
 			<div class="create_sprint_btn">
-				<button class="sprint_btn_detail"  data-toggle="modal" data-target="#myModal2">Create Sprint</button>	
-							
 			</div>
 			<div class="backlog_line"></div>
 			<div class="backlog_table_area">				
@@ -109,7 +108,17 @@
 												<td class="table_detail type1">${ backlog.blgPri }</td>
 												<td class="table_detail type1">${ backlog.blgDemoMemo }</td>
 												<td class="table_detail type1">${ backlog.blgRefMemo }</td>
-												<td class="table_detail type1"><button class="sprint_btn_detail"  data-toggle="modal" data-target="#myModal2">Create Sprint</button>	</td>
+												<td class="table_detail type1">
+				 <form action="${ pageContext.servletContext.contextPath }/board/backlog/" method="post"> 
+				<button class="btn_detail on"  data-toggle="modal" data-target="#myModalEdit" id="EditSprint">Edit Sprint</button>	
+				 <input type="text" value="${pjtNo }" id="pjtNo" name="pjtNo" style="display: none;">
+				<input type="text" value="${backlog.blgNo}" id="blgNo" name="blgNo" style="display: none;">
+				<input type="text" value="${projectName }" id="projectName" name="projectName" style="display: none;">
+				<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+				</form> 
+												
+												<button class="btn_detail on"  data-toggle="modal" data-target="#myModal3">Start Sprint</button>
+												</td>
 											</tr>
 										</c:forEach>
 									</c:when>
@@ -124,6 +133,36 @@
 					</div>
 				</div>
 			</div>
+	<!-- <script>
+	$("#EditSprint").click(function(){
+		
+		var email = $("#emailEdit").val();			//입력한 이메일
+		var backlogNo = "${backlog.blgNo }";
+		console.log("dkdkdk" + backlogNo);
+			if(!vali($("#emailEdit").val())){
+				/* 아이디 중복 체크 */
+				$.ajax({
+					url:"${pageContext.servletContext.contextPath}/board/projectidDupCheckEdit",
+					type:"post",
+					data:{email :email},
+					success:function(data){
+					
+						}else{
+							
+						}
+						
+					}, error:function(data){
+					}
+				});
+				
+		}else{
+			alert("이메일을 입력해주세요");
+		}
+			});
+	
+	</script>  -->
+
+
 
 			<div class="create_backlog_btn">
 				<label>
@@ -466,6 +505,59 @@
 			</div>
 		</div>
 	</div>
+	<!-- 백로그 수정 -->
+	<!-- The Modal -->
+	<div class="modal fade" id="myModalEdit">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<div class="header_detail">Edit Backlog</div>					
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="row nk3">
+						<div class="backlog_info">
+							
+							<div class="info_item">
+								<div class="info_detail">이름</div>
+								<input class="input_detail" type="text" id="backlogName" value="${backlogList[1].blgName }">
+							</div>
+							<div class="info_item">
+								<div class="info_detail">중요도</div>
+								<%-- <select id="importance">
+								<option value="" disabled selected hidden>${backlogList.blgPri }</option> 
+									<option>1</option>
+									<option>2</option>
+									<option>3</option>
+								</select> --%>
+							</div>
+						</div>
+						<div class="backlog_textarea">
+							<div class="text_item">
+								<div class="text_detail">데모 방식</div>
+								<textarea class="textarea_detail" id="DemoDetail"  placeholder="${backlog.blgDemoMemo }" ></textarea>
+							</div>
+							<div class="text_item">
+								<div class="text_detail">참고</div>
+								<textarea class="textarea_detail" id="Reference"  placeholder="${backlog.blgRefMemo }" ></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn_detail" id="EditBacklog">수정</button>
+					<button type="button" class="btn_detail" id="removeBacklog">삭제</button>
+					<button type="button" class="btn_detail" data-dismiss="modal">취소</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
 <!-- 백로그 생성 버튼 클릭시 -->
 		<script>
 			$("#createBacklog").click(function(){ 
@@ -496,7 +588,37 @@
 				 })
 			})
 		</script>
-
+		
+<!-- 백로그 수정 버튼 클릭시 -->
+		<script>
+			$("#Edit Sprint").click(function(){ 
+				var pjtNo = ${ requestScope.pjtNo };
+				 var blgName = document.getElementById("backlogName").value;
+				 var blgPri = document.getElementById("importance").value;
+				 var blgDemoMemo = document.getElementById("DemoDetail").value;
+				 var blgRefMemo = document.getElementById("Reference").value;
+				 
+				 $.ajax({
+					url : "${pageContext.servletContext.contextPath}/board/backlog/backlog_regist",
+					type : "post",
+					data : {
+						pjtNo : pjtNo,
+						blgName : blgName,
+						blgPri : blgPri,
+						blgDemoMemo : blgDemoMemo,
+						blgRefMemo : blgRefMemo
+					},
+					success : function(data, textStatus, xhr){
+						alert("백로그 생성이 완료되었습니다");
+						location.href="${pageContext.servletContext.contextPath}/board/backlog";
+					},
+					error : function(xhr, status, error){
+						console.log(error);
+						alert("백로그 생성이 취소되었습니다");
+					}
+				 })
+			})
+		</script>
 
 	<div class="modal fade" id="myModal2">
 		<div class="modal-dialog type1">
@@ -632,7 +754,7 @@
          
                 
          <!-- Modal body -->
-         
+         <!-- 프로젝트 수정 -->
          <div class="modal-body">
             <div class="row">
                <i class="fas fa-search"></i>

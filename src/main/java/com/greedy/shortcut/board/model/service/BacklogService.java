@@ -34,4 +34,7 @@ public interface BacklogService {
 	/* 백로그 생성 */
 	boolean insertBacklog(BacklogDTO backlog);
 
+	/* 백로그 조회 */
+	BacklogDTO selectBacklogToEdit(int blgNo, int pjtNo);
+
 }
