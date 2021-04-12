@@ -7,6 +7,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import com.greedy.shortcut.board.model.dto.CardDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.service.CardService;
 import com.greedy.shortcut.meeting.model.dto.AttendListDTO;
+import com.greedy.shortcut.meeting.model.dto.MeetingDTO;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 @Controller
@@ -55,24 +57,34 @@ public class BoardController {
 		System.out.println("pjtNo : " + pjtNo);
 
 		List<ProjectAuthorityDTO> memberList = cardService.selectMember(pjtNo);
+		System.out.println("memberList : " + memberList);
 
 		return memberList;
 	}
 	
-	@PostMapping("/card/regist")
-	public String registCard(@ModelAttribute CardDTO card, HttpServletRequest request, RedirectAttributes rttr)  {
+	@PostMapping("/card/create")
+	public String createCard(
+			/* @ModelAttribute CardDTO card, */HttpServletRequest request, RedirectAttributes rttr, HttpSession httpsession)  {
 		
-		if(!cardService.registCard(card)) {
-			System.out.println(card);
-		}
+		String pleaseType = request.getParameter("pleaseType");
+		System.out.println("pleaseType : " + pleaseType);
+		/*
+		 * System.out.println("card : " + card);
+		 * 
+		 * if(!cardService.createCard(card)) {
+		 * 
+		 * split("")
+		 * 
+		 * }
+		 */
 		
-		rttr.addFlashAttribute("message", "카드 등록에 성공하셨습니다.");
+		/* rttr.addFlashAttribute("message", "회원 가입에 성공하셨습니다."); */
 		
-		return "/board/kanbanboard";
+		return "board/kanbanboard";
 		
 	}
-	
-	
+
 }
+
 
 

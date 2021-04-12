@@ -85,6 +85,7 @@
 			<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type1" id="newBoard1">
 					<div class="kanbanboard_title board-header card no-move">요청</div>
+					<input type="text" value="1" id="boardNo1" name="brdNo" style="display: none;">
 					<div class="board_item card">
 						<div class="item type1 card-header bg-white">SNS 로그인</div>
 						<div class="item type2 card-body">
@@ -99,7 +100,7 @@
 					</div>
 					<div id="progressSet" class="insert_card" data-toggle="modal"
 						data-target="#myModal2">
-						<i class="fas fa-plus"></i> 카드 생성하기
+						<i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
 					</div>
 			</div>
 				</div><!-- 카드1 끝 -->
@@ -108,6 +109,7 @@
 			<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type2">
 					<div class="kanbanboard_title board-header card no-move">진행중</div>
+					<input type="text" value="2" id="boardNo2" name="brdNo" style="display: none;">
 					<div class="board_item card">
 						<div class="item type1 card-header bg-white">SNS 로그인</div>
 						<div class="item type2 card-body">
@@ -122,7 +124,7 @@
 					</div>
 					<div class="insert_card" data-toggle="modal"
 						data-target="#myModal2">
-						<i class="fas fa-plus"></i> 카드 생성하기
+						<i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
 					</div>
 				</div>
 			</div><!-- 카드2 -->
@@ -131,6 +133,7 @@
 			<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type3">
 					<div class="kanbanboard_title board-header card no-move">완료</div>
+					<input type="text" value="3" id="boardNo3" name="brdNo" style="display: none;">
 					<div class="board_item card">
 						<div class="item type1 card-header bg-white">SNS 로그인</div>
 						<div class="item type2 card-body">
@@ -145,7 +148,7 @@
 					</div>
 					<div class="insert_card" data-toggle="modal"
 						data-target="#myModal2">
-						<i class="fas fa-plus"></i> 카드 생성하기
+						<i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
 					</div>
 				</div>
 			</div><!-- 카드3 끝 -->
@@ -154,6 +157,7 @@
 			<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type4">
 					<div class="kanbanboard_title board-header card no-move">>완료</div>
+					<input type="text" value="4" id="boardNo4" name="brdNo" style="display: none;">
 					<div class="board_item card">
 						<div class="item type1 card-header bg-white">SNS 로그인</div>
 						<div class="item type2 card-body">
@@ -168,7 +172,7 @@
 					</div>
 					<div class="insert_card" data-toggle="modal"
 						data-target="#myModal2">
-						<i class="fas fa-plus"></i> 카드 생성하기
+						<i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
 					</div>
 				</div>
 			</div><!-- 카드4 끝-->
@@ -185,19 +189,21 @@
 	<div class="modal fade" id="myModal2">
 		<div class="modal-dialog">
 			<div class="modal-header type">Short Cut</div>
+			
 			<!-- name="projectMemberList" -->
-			<form action="${pageContext.servletContext.contextPath}/card/regist" method="post">
-			<input type="text" value="${ requestScope.pjtNo }" name="memNo" id="" style="display: none;">
+			<form action="${pageContext.servletContext.contextPath}/card/create" method="post">
+			<input type="text" value="${ requestScope.pjtNo }" name="pjtNo" id="" style="display: none;">
+			<input type="text" value="" name="pleaseType" style="display: none;" id="pleaseType">
 				<div class="modal-content">
 					<div class="modal-body">
 						<div class="row">
 							<div class="modal_list">
-								<i class="fas fa-check"><button id="workBtn"
-								style="background: #00ff0000; border: 0;">업무</button></i>
+								<i class="fas fa-check"><button id="workBtn" type="button"
+								style="background: #00ff0000; border: 0;" value="1">업무</button></i>
 							</div>
 							<div class="modal_list">
-								<i class="fas fa-calendar-week"><button id="calendarBtn"
-								style="background: #00ff0000; border: 0;">일정</button></i>
+								<i class="fas fa-calendar-week"><button id="calendarBtn" type="button"
+								style="background: #00ff0000; border: 0;" value="2">일정</button></i>
 							</div>
 						</div>
 
@@ -231,9 +237,10 @@
 						<!-- <input class="input_detail type1" id="selectmember" type="text" name="addMember" placeholder="Add Member" 
 						value="">  -->
 						<div id="choisemember"></div>
-						<input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회">
+						<!-- <input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회"> -->
 						<div id="member"></div>
 						<p class="memberNo" style="display:none">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}</p>
+						<input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
 					</div>
 				<!-- </form> -->
 					<div class="item_area work_btn on">
@@ -288,7 +295,7 @@
 
 					<div class="btn_area">
 					<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-						<button type="submit" class="upload_btn" id="upload">올리기</button>
+						<button class="upload_btn" id="upload" type="submit">올리기</button>
 					</div>
 				</div>
 			</div>
@@ -349,7 +356,7 @@
 });
 	
 	/* 보드생성 */
-	$("#newBoard").click(fuction() {
+	/* $("#newBoard").click(fuction() {
 		$.ajax({
 			url : "newBoard";
 			success : function(data, status, xhr) {
@@ -362,24 +369,79 @@
 		}
 			
 		});
-	});
+	}); */
 
 	/* 일정, 업무 버튼 */
 	var count1 = 0;
 	var count2 = 0;
 
 	$(function() {
-		$("#workBtn").click(function(e) {
-			e.preventDefault();
+		
+		var isTypeTwo = false;
+		var isTypeThree = false;
+		var isTypeFour = false;
+		
+		$("#workBtn").click(function(){
 
+			if(isTypeTwo) {
+				isTypeTwo = false;
+			} else if(!isTypeTwo) {
+				isTypeTwo = true;
+			}
+			
+			if(isTypeTwo && isTypeThree) {
+				isTypeFour = true;
+			} else {
+				isTypeFour = false;
+			}
+
+			resultToggle(isTypeTwo, isTypeThree, isTypeFour);
+			
 			$(".work_btn").toggleClass("on");
-		})
-
-		$("#calendarBtn").click(function(e) {
-			e.preventDefault();
-
+		});
+		
+		$("#calendarBtn").click(function(){
+			
+			if(isTypeThree) {
+				isTypeThree = false;
+			} else if(!isTypeThree) {
+				isTypeThree = true;
+			}
+			
+			if(isTypeTwo && isTypeThree) {
+				isTypeFour = true;
+			} else {
+				isTypeFour = false;
+			}
+			
+			resultToggle(isTypeTwo, isTypeThree, isTypeFour);
+			
 			$(".calendar_btn").toggleClass("on");
-		})
+		});
+		
+		function resultToggle(isTypeTwo, isTypeThree, isTypeFour) {
+			console.log("업무 : " + isTypeTwo);
+			console.log("일정 : " + isTypeThree);
+			console.log("업무&일정 : " + isTypeFour);
+			
+			let typeNumber = 1;
+			
+			if(isTypeTwo && !isTypeThree) {
+				console.log("업무 : 2");
+				typeNumber = 2;
+			} else if(!isTypeTwo && isTypeThree) {
+				console.log("일정 : 3");
+				typeNumber = 3;
+			} else if(isTypeTwo && isTypeThree && isTypeFour) {
+				console.log("업무&일정 : 4");
+				typeNumber = 4;
+			} 
+			
+			console.log(typeNumber);
+			var $pleaseType = document.getElementById("pleaseType");
+			$pleaseType.value = typeNumber;
+			
+		}
 	})
 	
 	/* 업무 진척도 버튼 색 바뀜 */
@@ -404,7 +466,7 @@ $(document).ajaxSend(function(e, xhr, options) {
 
 var count = 0;
 
-$("#addMember").on("click", function(){
+$("#workBtn").click(function(){
     $.ajax({
         type:"POST",
         url:"${pageContext.servletContext.contextPath}/board/kanbanboard",
@@ -421,11 +483,15 @@ $("#addMember").on("click", function(){
 				for(let i = 0; i < memberList.length; i++){
 					
 					var insertSpan="";
-					insertSpan += '<span class="item_text on">' + memberList[i].name + '<i id="delBtn" class="fas fa-times-circle"></i>' + '</span>';
+					insertSpan += '<span class="item_text on">' + memberList[i].name 
+					+ '<i id="delBtn" class="fas fa-times-circle"></i>' 
+		        	+ '<input class="item_num" name="memberNo' 
+		        	+ [i] + '" type="hidden" value="' + memberList[i].no + '">' + '</span>';
 					count++;
 					$("#member").append(insertSpan);
 				}
 			} 
+        	
         
     },
         error:function(data){
@@ -437,7 +503,7 @@ $("#addMember").on("click", function(){
 var progress = "";
 $("#progressSet").click(function() {
 	
-	$("#request").click(function() {
+	$("#workBtn").click(function() {
 		progress = 1;
 	})
 	
@@ -452,9 +518,21 @@ $("#progressSet").click(function() {
 	$("#hold").click(function() {
 		progress = 4;
 	})
-})
+});
+
+var type = "";
+$("#progressSet").click(function() {
 	
-$("#upload").click(function() {
+	$("#request").click(function() {
+		type = 1;
+	})
+	
+	$("#calendarBtn").click(function() {
+		type = 2;
+	})
+});
+	
+/* $("#upload").click(function() {
 	
 	const projectMemberList = document.getElementById('myModal2').innerHTML;
 	
@@ -471,8 +549,8 @@ $("#upload").click(function() {
 	
 	console.table(cardMember);
 	
-	/* $.ajax({
-		url: "${pageContext.servletContext.contextPath}/card/regist",
+	$.ajax({
+		url: "${pageContext.servletContext.contextPath}/card/create",
 		type: "POST",
 		data: {
 			"cardMember" : cardMember,
@@ -483,9 +561,9 @@ $("#upload").click(function() {
 		error: function(xhr, status, error) {
 			console.log(error);
 		}
-	}); */
+	});
 	
-});
+}); */
 
 function emailNull(value){
 	if(value === null) return true;
@@ -502,6 +580,6 @@ $(document).on('click','.item_text.on',function(){
 	
 	$t.remove();
 	count--;
-}) 
+});
 </script>
 </html>

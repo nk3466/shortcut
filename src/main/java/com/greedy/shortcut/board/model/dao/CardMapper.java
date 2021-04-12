@@ -10,7 +10,8 @@ public interface CardMapper {
 
 	List<ProjectAuthorityDTO> selectMember(int pjtNo);
 
-	int registCard(CardDTO card);
+	int createCard(CardDTO card);
+
 
 
 }

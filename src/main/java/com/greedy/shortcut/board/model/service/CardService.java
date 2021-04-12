@@ -10,7 +10,12 @@ public interface CardService {
 
 	List<ProjectAuthorityDTO> selectMember(int pjtNo);
 
-	boolean registCard(CardDTO card);
+	boolean createCard(CardDTO card);
+
+	CardDTO selectCard();
+
+	boolean cardMember(int memberNo, int cNo);
+
 
 
 }
