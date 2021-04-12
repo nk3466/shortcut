@@ -38,7 +38,7 @@
 		</div>
 		<div class="time_area">
 			<div class="row">
-				<div class="time_item">
+				<!-- <div class="time_item">
 					<div class="start_time">
 						시작 시간 
 						<input type="time" name="">
@@ -49,7 +49,7 @@
 						종료 시간 
 						<input type="time" name="">
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="retrospect_content">
@@ -93,6 +93,7 @@
 			</table>
 			<div class="save_btn">
 				<button class="btn_detail">저장</button>
+				<button class="btn_detail">수정</button>
 			</div>
 		</div>
 	</div>

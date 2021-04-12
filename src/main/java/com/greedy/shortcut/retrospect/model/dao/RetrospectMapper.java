@@ -13,5 +13,6 @@ public interface RetrospectMapper {
 	List<BacklogDTO> selectFinishSprint(int pjtNo);
 	
 	List<BacklogDTO> selectPagingFinishSprint(Map<String, Object> pagingMap);
-	
+
+	int selectReviewRegistYn(int blgNo); 
 }

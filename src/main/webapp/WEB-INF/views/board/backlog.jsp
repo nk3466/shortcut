@@ -257,9 +257,17 @@
 										
 										for(let index in data) {
 											
+											/* 0보다 크면 null이 아니기에 리뷰 수정 버튼 */
+											let retrospectButtonType = ""; 
+											if(data[index].reviewRegistYn > 0) {
+												retrospectButtonType = "리뷰 수정";
+											} else {
+												retrospectButtonType = "리뷰 작성";
+											}
+											
 											/* 버튼 생성 */
-											var retrospectBtnHtml = '<input type="button" value="리뷰 작성/수정" onclick="retrospect();">';
-											var recordBtnHtml = '<input type="button" value="기록" onclick="retrospectRecord();">';
+											var retrospectBtnHtml = '<input type="button" value="' + retrospectButtonType + '" onclick="retrospect(this);">';
+											var recordBtnHtml = '<input type="button" value="기록" onclick="retrospectRecord(this);">';
 											
 											/* tr태그에 만들어 값 담기 */
 											$tr = $("<tr>");
@@ -384,30 +392,14 @@
 						}
 						
 						/* 스프린트 리뷰 작성 버튼 */
-						function retrospect() {
+						function retrospect($retrospectTd) {
 							
-							if(document.getElementById("reviewBody")) {
-						    	const $reviewBody = document.getElementById("reviewBody");
-						    	const $tdds = $reviewBody.childNodes;
-						    	
-						    	for(let i = 0; i <$tdds.length; i++) {
-						    		
-						 				const no = this.children[0].innerText;
-						 				console.log(no);
-						 	    }  
-						    }
+							/* 백로그 번호 */
+					    	const blgNo = $retrospectTd.parentNode.parentNode.children[0].innerText;
+					    	console.log(blgNo);
+					    		
+					    	location.href = "${ pageContext.servletContext.contextPath }/board/backlog/retrospect/" + blgNo;
 						} 
-							
-							
-							/* const $tdds = $("#reviewBody").childNodes;
-							
-							for(let i = 0; i <$tdds.length; i++) {
-								const no = $tdds[i].childNodes[0].innerText;
-								console.log(no);
-							} */
-							
-							/* location.href = "${ pageContext.servletContext.contextPath }/board/backlog/retrospect"; */
-						
 						
 						/* 생성된 스프린트 리뷰  접속 */
 						function retrospectRecord() {

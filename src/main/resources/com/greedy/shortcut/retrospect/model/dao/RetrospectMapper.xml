@@ -110,5 +110,21 @@
               ) D
          WHERE D.RNUM BETWEEN #{startRow} AND #{endRow}
 	</select>
+	
+	<select id="selectReviewRegistYn" parameterType="_int" resultType="_int"> 
+		SELECT COUNT(*)
+          FROM (SELECT A.REVIEW_LIKE_TXT
+             , A.REVIEW_LEARN_TXT
+             , A.REVIEW_MISS_TXT
+             , A.REVIEW_NO
+             , A.SPR_NO
+             , A.MEM_NO
+          FROM REVIEW A
+         WHERE A.SPR_NO = (SELECT B.SPR_NO
+                             FROM SPRINT B 
+                            WHERE B.BLG_NO = #{blgNo}
+                          )
+        )
+	</select>
 
 </mapper>

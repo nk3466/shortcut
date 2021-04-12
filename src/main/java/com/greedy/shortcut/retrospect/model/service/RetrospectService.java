@@ -13,4 +13,6 @@ public interface RetrospectService {
 	List<BacklogDTO> selectFinishSprint(int pjtNo);
 	
 	List<BacklogDTO> selectPagingFinishSprint(int pjtNo, PageInfoDTO pageInfo);
+
+	int selectReviewRegistYn(int blgNo);
 }

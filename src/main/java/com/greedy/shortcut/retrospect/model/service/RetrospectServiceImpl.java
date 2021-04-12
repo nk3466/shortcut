@@ -43,4 +43,9 @@ public class RetrospectServiceImpl implements RetrospectService {
 		return retrospectMapper.selectPagingFinishSprint(pagingMap);
 	}
 
+	@Override
+	public int selectReviewRegistYn(int blgNo) {
+		return retrospectMapper.selectReviewRegistYn(blgNo);
+	}
+
 }

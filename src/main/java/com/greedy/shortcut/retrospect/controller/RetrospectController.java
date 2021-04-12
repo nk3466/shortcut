@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -63,6 +64,15 @@ public class RetrospectController {
 		
 		List<BacklogDTO> finishSprintList = retrospectService.selectPagingFinishSprint(pjtNo, pageInfo);
 		for(int i = 0; i < finishSprintList.size(); i++ ) {
+			/* 등록된 리뷰인지 수정해야할 리뷰인지 검색(버튼에 표기하기 위해) */
+			int reviewRegistYn = retrospectService.selectReviewRegistYn(finishSprintList.get(i).getBlgNo());
+			/* 0보다 크면 null이 아니기에 리뷰 수정 버튼  */
+			if(reviewRegistYn > 0) {
+				finishSprintList.get(i).setReviewRegistYn(reviewRegistYn);
+			} else {
+				finishSprintList.get(i).setReviewRegistYn(0);
+			}
+			
 			finishSprintList.get(i).setStartPage(pageInfo.getStartPage());
 			finishSprintList.get(i).setEndPage(pageInfo.getEndPage());
 			finishSprintList.get(i).setMaxPage(pageInfo.getMaxPage());
@@ -72,8 +82,10 @@ public class RetrospectController {
 		return new ObjectMapper().writeValueAsString(finishSprintList);
 	}
 	
-	@GetMapping("board/backlog/retrospect")
-	public String retrospect() {
+	@GetMapping("board/backlog/retrospect/{blgNo}")
+	public String retrospect(@PathVariable("blgNo") int blgNo) {
+		
+		System.out.println("blgNo : " + blgNo);
 		
 		List<ReviewDTO> review = retrospectService.selectReview();
 		
