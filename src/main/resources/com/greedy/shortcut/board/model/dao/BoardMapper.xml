@@ -76,16 +76,46 @@
      
  </select>
  
-<insert id="insertnewBoard" parameterType="BoardDTO">
-   INSERT
-     INTO BOARD A
-    (
-     A.BRD_NO, A.BRD_NAME, A.BRD_ENROLL_DATE, A.BRD_DEL_YN ,A.SPR_NO,A.BRD_ORDER
-    )
-    VALUES
-    (SEQ_BRD_NO.NEXTVAL, #{brdName}, SYSDATE, 'N',#{sprNo},#{brdOrder}
-    )
-</insert>
+ 	<update id="modifyBoardOrder" parameterType="hashmap">
+	 	<foreach collection="boardList" item="board" separator=";" open="DECLARE BEGIN" close="; END;">
+	 	     UPDATE BOARD A
+	            SET A.BRD_ORDER = (SELECT B.BRD_ORDER
+	                                 FROM BOARD B
+	                                WHERE B.BRD_NO = #{board.brdNo}
+	                              ) + 1
+	          WHERE A.BRD_NO = #{board.brdNo}
+	 	</foreach>
+ 	</update>
+ 
+	<insert id="insertnewBoard" parameterType="BoardDTO">
+	<selectKey keyProperty="tempOrder" order="BEFORE" resultType="_int">
+		SELECT MAX(BRD_ORDER)
+          FROM (SELECT B.BRD_ORDER
+             , B.SPR_NO
+          FROM BOARD B
+         ORDER BY BRD_NO DESC
+               ) C
+         WHERE C.SPR_NO = #{sprNo}
+	</selectKey>
+		INSERT
+	      INTO BOARD A
+	    (
+	      A.BRD_NO
+	    , A.BRD_NAME
+	    , A.BRD_ENROLL_DATE
+	    , A.BRD_DEL_YN 
+	    , A.SPR_NO,A.BRD_ORDER
+	    )
+	    VALUES
+	    (
+	      SEQ_BRD_NO.NEXTVAL
+	    , #{brdName}
+	    , SYSDATE
+	    , 'N' 
+	    , #{sprNo}
+	    , #{tempOrder}
+	    )
+	</insert>
 
 	
  </mapper>

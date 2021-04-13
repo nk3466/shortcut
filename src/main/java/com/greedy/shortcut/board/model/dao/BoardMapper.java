@@ -1,6 +1,7 @@
 package com.greedy.shortcut.board.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.greedy.shortcut.board.model.dto.BoardDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
@@ -17,4 +18,5 @@ public interface BoardMapper {
 
 	List<BoardDTO> selectboardList(int sprNo);
 
+	int modifyBoardOrder(Map<String, List<BoardDTO>> boardMap);
 }
