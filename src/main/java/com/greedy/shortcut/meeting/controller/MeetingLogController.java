@@ -188,4 +188,16 @@ public class MeetingLogController {
 		
 		return new ObjectMapper().writeValueAsString(meeting);
 	}
+	
+	@PostMapping(value="meetinglog/deletedMeeting", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String deletedMeeting(@RequestParam Map<String, String> parameters, Model model) throws JsonProcessingException {
+		int meetingNo = Integer.parseInt(parameters.get("meetingNo"));
+		HashMap<String,Object> meeting = meetingService.selectMeetingDetail(meetingNo);
+
+		model.addAttribute("meeting", meeting);
+		
+		
+		return new ObjectMapper().writeValueAsString(meeting);
+	}
 }

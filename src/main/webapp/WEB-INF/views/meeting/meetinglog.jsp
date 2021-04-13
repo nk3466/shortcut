@@ -172,6 +172,7 @@
 </body>
 
 <script type="text/javascript">
+
    $(function(){
       $(".conference_update").click(function(e){
          e.preventDefault();
@@ -179,18 +180,53 @@
          $("#conference").modal();
          
       })
+      var iddd = "";
       
-      $(this).on("click",".mtinfo", function(e){
+      $(this).on("click",".mtinfo", function(e){9
 		e.preventDefault(); 			   	  
 	      $("#conference_detail").modal();
+	      iddd = $(this).attr('id');
 	      console.log('id : '+ $(this).attr('id'));
 	      selectMeetingDetail($(this).attr('id'));
-	      
-	      
     	  
       })
       
+      // 삭제 
+      $(this).on("click","#deletedBtn", function(e){
+    	  new deleMeeting(iddd);
+      })
+      
+      
    })
+   /* 삭제 */
+   function deleMeeting(meetingNo){
+	   
+	   console.log("meetingNo : " + meetingNo);
+ 	   	$.ajax({
+  	   		url : "${pageContext.servletContext.contextPath}/meetinglog/deletedMeeting",
+  	   		type : "POST",
+	  	   	dataType : "json",
+	  	   	data : {meetingNo : meetingNo},
+	  	   	success : function(data, status, xhr){
+	  	   		console.log(data);
+	  	   	},
+	  	   	error : function(error){
+	  	   		console.log(error)
+	  	   			
+	  	   		
+	  	   	}
+  	   	})
+   }
+  /*   $("#deletedBtn").click(function(){
+	   
+	   var iddd= $(this).closest(".mtinfo").attr("id")
+	   
+	   alert(iddd);
+
+	   
+
+   }) */
+   
    function selectMeetingDetail(meetingNo){
 	   $.ajax({
 	        url:"selectMeetingDetail",
@@ -445,32 +481,35 @@
 	   
    
    function insertMeeting(pjtNo,meetingMember,enrollDate,meetingName,index,meetingText,meetingInfo){
-	      $.ajax({
-	          url : "${pageContext.servletContext.contextPath}/meeting/meetinglog",
-	          type : "POST",   
-	          dataType : "json",
-	          data : {
-	                "pjtNo" : pjtNo,
-	                "meetingMember" : meetingMember,
-	                "enrollDate" : enrollDate,
-	                "meetingName" : meetingName,
-	                "meetingText" : meetingText,
-	                "index" : index
-	                },
-	          success : function(data, status, xhr){
-	             /* console.log( enrollDateInfo.EnrollDate === enrollDateInfo.meetDate); */
-	             drawMeeting(enrollDateInfo,meetingName,meetingInfo,meetingNo)	//meetingNo 삭제 오류발생됨
-	             $("#conference").modal("hide");
-	             
-	             
-	          },
-	          error : function(xhr, status, error){
-	             console.log(error);
-	          }
-	       })
+      $.ajax({
+          url : "${pageContext.servletContext.contextPath}/meeting/meetinglog",
+          type : "POST",   
+          dataType : "json",
+          data : {
+                "pjtNo" : pjtNo,
+                "meetingMember" : meetingMember,
+                "enrollDate" : enrollDate,
+                "meetingName" : meetingName,
+                "meetingText" : meetingText,
+                "index" : index
+                },
+          success : function(data, status, xhr){
+             /* console.log( enrollDateInfo.EnrollDate === enrollDateInfo.meetDate); */
+             drawMeeting(enrollDateInfo,meetingName,meetingInfo,meetingNo)	
+             $("#conference").modal("hide");
+             
+             
+          },
+          error : function(xhr, status, error){
+             console.log(error);
+          }
+       })
    }
-   
+
+
   
+  
+   
    
    
 </script>
