@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.greedy.shortcut.board.model.dto.BacklogDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.ProjectDTO;
+import com.greedy.shortcut.board.model.dto.SprintDTO;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 public interface BacklogMapper {
@@ -22,11 +23,14 @@ public interface BacklogMapper {
 	MemberDTO selectMemberDupCheck(String email);
 
 	/* 프로젝트 수정   */
-	int insertEditProject(ProjectDTO project);
+	int updateProject(ProjectDTO project);
 
 	/* 프로젝트 수정 이력 등록  */
 	int insertEditProjectHistory(ProjectDTO project);
 
+	/* 기존 회원 삭제 */
+	int deleteProjectMember(ProjectDTO project);
+	
 	/* 프로젝트 회원 수정*/
 	int insertEditProjectMember(ProjectAuthorityDTO projectAuthorityDTO);
 
@@ -49,6 +53,22 @@ public interface BacklogMapper {
 	int insertBacklogHistory(BacklogDTO backlog);
 
 	BacklogDTO selectBacklogToEdit(@Param("blgNo")int blgNo,@Param("pjtNo") int pjtNo);
+
+	List<SprintDTO> selectSprintList(int pjtNo);
+
+	/* 백로그 수정 등록 */
+	int EditBacklog(BacklogDTO backlog);
+
+	/* 백로그 수정 히스토리  등록 */
+	int insertEditBacklogHistory(BacklogDTO backlog);
+
+	/* 백로그 삭제 */
+	int RemoveBacklog(BacklogDTO backlogRemove);
+	
+	/* 백로그 삭제 히스토리 등록 */
+	int insertRemoveBacklogHistory(BacklogDTO backlogRemove);
+	
+	
 
 
 }
