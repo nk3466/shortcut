@@ -12,11 +12,11 @@ public interface CardService {
 
 	boolean createCard(CardDTO card);
 
-	CardDTO selectCard();
-
 	boolean cardMember(int memberNo, int cNo);
 
 	boolean registCard(CardDTO card);
+
+	CardDTO currentCardNo();
 
 
 

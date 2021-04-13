@@ -25,13 +25,6 @@ public class CardServiceImpl implements CardService {
 		return cardMapper.selectMember(pjtNo);
 	}
 
-
-	@Override
-	public CardDTO selectCard() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public boolean cardMember(int memberNo, int cNo) {
 		// TODO Auto-generated method stub
@@ -50,6 +43,10 @@ public class CardServiceImpl implements CardService {
 		return false;
 	}
 
+	@Override
+	public CardDTO currentCardNo() {
+		return cardMapper.currentCardNo();
+	}
 
 
 }

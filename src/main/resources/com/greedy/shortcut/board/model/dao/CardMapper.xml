@@ -79,7 +79,6 @@
 	       FROM CARD
           WHERE BRD_NO = #{brdNo}
     </selectKey>
-	
 		INSERT
 	  INTO CARD A
 	  (
@@ -102,7 +101,15 @@
 	  , #{txt}
 	  
 	  )
-		
 	</insert>
-	
+	<select id="currentCardNo" resultMap="CardResultSet" parameterType="CardDTO">
+       SELECT 
+              CRD_NO
+         FROM (
+              SELECT 
+                     CRD_NO
+                FROM CARD
+               ORDER BY ROWNUM DESC)
+        WHERE ROWNUM = 1
+	</select>
  </mapper>
