@@ -98,10 +98,14 @@ public class BoardController {
 		List<BoardDTO> boardList = boardService.selectboardList(sprNo);
 		
 		/* 보드 순번 업데이트 */
-		int isSuccessUpdateAll = boardService.modifyBoardOrder(boardList);
-		System.out.println("isSuccessUpdateAll : " + isSuccessUpdateAll);
+		int successUpdateCount = 0;
+		for(int i = 0; i < boardList.size(); i++) {
+			
+			successUpdateCount += boardService.modifyBoardOrder(boardList.get(i).getBrdNo());
+		}
+		System.out.println("successUpdateCount : " + successUpdateCount);
 		/* 새로운 보드 인서트 */
-		if(isSuccessUpdateAll > 0) {
+		if(successUpdateCount == boardList.size()) {
 			boolean result = boardService.insertnewBoard(newboard);
 			System.out.println(result);
 		} 

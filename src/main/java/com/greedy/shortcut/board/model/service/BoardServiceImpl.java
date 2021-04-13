@@ -53,12 +53,9 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
-	public int modifyBoardOrder(List<BoardDTO> boardList) {
+	public int modifyBoardOrder(int brdNo) {
 		
-		Map<String, List<BoardDTO>> boardMap = new HashMap<>();
-		boardMap.put("boardList", boardList);
-		 
-		return boardMapper.modifyBoardOrder(boardMap);
+		return boardMapper.modifyBoardOrder(brdNo);
 	}
 
 }
