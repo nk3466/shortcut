@@ -77,7 +77,7 @@
 				<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type1" id="newBoard<c:out value="${boardList.brdOrder}"/>">
 					<div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/></div>
-					<input type="text" value="1" id="boardNo1" name="${boardList.brdNo}" style="display: none;">
+					<input type="text" value="${boardList.brdNo}" class="boardNo" name="" style="display: none;">
 					<div id="progressSet" class="insert_card" data-toggle="modal"
 						data-target="#myModal2">
 						<i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
@@ -104,11 +104,11 @@ console.log("boardList" +  "${requestScope.boardList}");
 	<div class="modal fade" id="myModal2">
 		<div class="modal-dialog">
 			<div class="modal-header type">Short Cut</div>
-			
+
 			<!-- name="projectMemberList" -->
-			<form action="${pageContext.servletContext.contextPath}/card/create" method="post">
-			<input type="text" value="${ requestScope.pjtNo }" name="pjtNo" id="" style="display: none;">
-			<input type="text" value="" name="pleaseType" style="display: none;" id="pleaseType">
+			<form id="card_insert" action="${pageContext.servletContext.contextPath}/card/create" method="post">
+			<input type="hidden" value="${ requestScope.pjtNo }" name="pjtNo">
+			<input type="text" value="" name="type" style="display: none;" id="pleaseType">
 				<div class="modal-content">
 					<div class="modal-body">
 						<div class="row">
@@ -129,6 +129,8 @@ console.log("boardList" +  "${requestScope.boardList}");
 							<div class="info_detail type"><%= sf.format(nowTime) %></div>
 						</div>
 					</div>
+							
+
 					<div class="item_area">
 						<input class="input_detail" type="text" name="title" id="title"
 							placeholder="제목을 입력해주세요."
@@ -140,9 +142,9 @@ console.log("boardList" +  "${requestScope.boardList}");
 						<i class="fas fa-spinner"></i>
 						<div class="btn-group">
 							<button class="button on" name="request" id="request" type="button">요청</button>
-							<button class="button on" name="progress" id="progress" type="button">진행</button>
-							<button class="button" name="completion" id="completion" type="button">완료</button>
-							<button class="button" name="hold" id="hold" type="button">보류</button>
+							<button class="button on" name="progress" id="progress" type="button" disabled>진행</button>
+							<button class="button" name="completion" id="completion" type="button" disabled>완료</button>
+							<button class="button" name="hold" id="hold" type="button" disabled>보류</button>
 						</div>
 
 					</div>
@@ -154,7 +156,7 @@ console.log("boardList" +  "${requestScope.boardList}");
 						<div id="choisemember"></div>
 						<!-- <input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회"> -->
 						<div id="member"></div>
-						<p class="memberNo" style="display:none">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}</p>
+						<input id="memberInput" type="hidden" value="">
 						<input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
 					</div>
 				<!-- </form> -->
@@ -401,6 +403,7 @@ $(document).ajaxSend(function(e, xhr, options) {
 var count = 0;
 
 $("#workBtn").click(function(){
+
     $.ajax({
         type:"POST",
         url:"${pageContext.servletContext.contextPath}/board/cardmember",
@@ -413,13 +416,13 @@ $("#workBtn").click(function(){
 				
 				let memberList = data; 
 				let list="";
-				
+				$("#member").empty();
 				for(let i = 0; i < memberList.length; i++){
 					
 					var insertSpan="";
 					insertSpan += '<span class="item_text on">' + memberList[i].name 
 					+ '<i id="delBtn" class="fas fa-times-circle"></i>' 
-		        	+ '<input class="item_num" name="memberNo' 
+		        	+ '<input class="item_num" name="memberList' 
 		        	+ [i] + '" type="hidden" value="' + memberList[i].no + '">' + '</span>';
 					count++;
 					$("#member").append(insertSpan);
@@ -435,7 +438,12 @@ $("#workBtn").click(function(){
 });
 
 var progress = "";
-$("#progressSet").click(function() {
+$(".insert_card").click(function() {
+	$("#brdremove").remove();
+	var btnplace = $(this).closest(".kanbanboard").find(".boardNo").val();
+	var form = $("#card_insert");
+	var html = '<input type="hidden" id="brdremove" name="brdNo" value="'+btnplace +'">'
+	form.append(html);
 	
 	$("#workBtn").click(function() {
 		progress = 1;
@@ -465,6 +473,7 @@ $("#progressSet").click(function() {
 		type = 2;
 	})
 });
+
 	
 /* $("#upload").click(function() {
 	
