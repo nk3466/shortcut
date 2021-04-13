@@ -303,6 +303,7 @@ if(document.getElementById("pjSelectOne")) {
 			
 			   success : function(data, textStatus, xhr) {
 				   alert("프로젝트 생성이 완료되었습니다.");
+				   document.location.reload();
 					location.href = "${pageContext.servletContext.contextPath}/board/project_board/" + memberNo;
 			   },
 				error : function(xhr, status, error) {

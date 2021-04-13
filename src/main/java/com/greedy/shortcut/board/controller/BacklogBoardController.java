@@ -3,6 +3,7 @@ package com.greedy.shortcut.board.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -27,9 +28,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.shortcut.board.model.dto.BacklogDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.ProjectDTO;
+import com.greedy.shortcut.board.model.dto.SprintDTO;
 import com.greedy.shortcut.board.model.service.BacklogService;
-import com.greedy.shortcut.common.paging.PageInfoDTO;
-import com.greedy.shortcut.common.paging.Pagenation;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 
@@ -46,18 +46,27 @@ public class BacklogBoardController {
 		this.backlogService = backlogService;
 	}
 
-	@PostMapping("backlog")
-	public String backlog(Model model, @RequestParam(name="blgNo") int blgNo,  @RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName) {
-		System.out.println("프로젝터 번호" + pjtNo);
-		System.out.println("백로그 번호 : " +blgNo );
-		System.out.println("프로젝트 이름  : " + projectName);
-		/* 백로그 수정용 조회 */
-		BacklogDTO backlog = backlogService.selectBacklogToEdit(blgNo, pjtNo);
+	@PostMapping(value="backlog12" , produces ="application/json; charset=UTF-8")
+	@ResponseBody
+	public String backlog(Model model,@RequestParam Map<String, String> parameters) throws JsonProcessingException {
+
 		
-		System.out.println(backlog);
-		model.addAttribute("backlog", backlog);
+		int blgNo = Integer.parseInt(parameters.get("blgNo"));
+		int pjtNo = Integer.parseInt(parameters.get("projectNo"));
+		System.out.println("blgNO : " +  blgNo);
+		System.out.println("projectNo : " +  pjtNo);
+		//System.out.println("프로젝터 번호" + pjtNo);
+//		System.out.println("백로그 번호 : " +blgNo );
+//		System.out.println("프로젝트 이름  : " + projectName);
+//		/* 백로그 수정용 조회 */
+		BacklogDTO backlogDetail = backlogService.selectBacklogToEdit(blgNo, pjtNo);
+		System.out.println("으악 : " + backlogDetail);
+//		System.out.println(backlog);
+//		model.addAttribute("backlog", backlog);
 		
-		return"야야";
+		//model.addAttribute("backlogDetail", backlogDetail);
+		 return new ObjectMapper().writeValueAsString(backlogDetail);
+		
 		//return "?pjtNo=" + pjtNo +"&projectName=" + projectName.replace(" ", "+");
 		}
 
@@ -73,7 +82,6 @@ public class BacklogBoardController {
 		List<ProjectAuthorityDTO> memberList = backlogService.selectMemberList(pjtNo);
 		
 		
-		
 		/* 프로젝트 이름 출력용 */
 		System.out.println("뽑아봐 : " + projectName);
 
@@ -83,16 +91,22 @@ public class BacklogBoardController {
 		/* 백로그 리스트 출력 */
 		List<BacklogDTO> backlogList = backlogService.selectBacklogList(pjtNo);
 		for(BacklogDTO backlog : backlogList) {
-			System.out.println(backlog);
+			System.out.println(backlog + "오잉");
 		}
-		
+		System.out.println("와??응??");
 		/* 스프린트 리스트 출력 */
-
+		List<SprintDTO> sprintList = backlogService.selectSprintList(pjtNo);
+		System.out.println("와??응??13131313131313");
+		
+		  for(SprintDTO sprint : sprintList) {
+			  System.out.println("스프린트 리스트 :" + sprint); 
+			  }
 		model.addAttribute("projectName", projectName);
 		model.addAttribute("projectList", project);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pjtNo", pjtNo);
 		model.addAttribute("backlogList", backlogList);
+		model.addAttribute("sprintList", sprintList);
 
 		return "board/backlog";
 	}
@@ -114,10 +128,8 @@ public class BacklogBoardController {
 	@PostMapping(value="backlog/project_edit" , produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public String EditProject(HttpSession httpsession,		
-			@ModelAttribute ProjectDTO project,
+			@RequestParam Map<String, String> parameters,
 			HttpServletRequest request, RedirectAttributes rttr) throws JsonProcessingException {
-		
-		System.out.println(project);
 		
 		/* model key value 값 출력 */
 		SortedMap<String, String[]> projectMake = Collections
@@ -133,21 +145,35 @@ public class BacklogBoardController {
 				}
 			}
 		}
+		
+		//SimpleDateFormat qwe = new SimpleDateFormat("yyyy-mm-dd");
+		
+		ProjectDTO project = new ProjectDTO();
+		int memberCount = Integer.parseInt(((String[]) projectMake.get("nk1[0][value]"))[0]); //회원수
+		
+		project.setPjtNo(Integer.parseInt(((String[]) projectMake.get("nk1[1][value]"))[0]));
+		project.setMemberNo(Integer.parseInt(((String[]) projectMake.get("nk1[2][value]"))[0]));
+		project.setProjectName(((String[]) projectMake.get("nk1[3][value]"))[0]);
+		project.setProjectStartDate(java.sql.Date.valueOf(((String[]) projectMake.get("nk1[4][value]"))[0]));
+		project.setProjectEndDate(java.sql.Date.valueOf(((String[]) projectMake.get("nk1[5][value]"))[0]));
+		project.setProjectColor(((String[]) projectMake.get("nk1[6][value]"))[0]);
+		
+		System.out.println("프로젝트 정보 촤르르르르 : " + project);
 		/*회원 정보 담기*/
 		 List<ProjectAuthorityDTO> projectMemberList = new ArrayList<>();
-		 
-		 for(int i = 0; i < (projectMake.size() - 4)/2; i++) {
+		 System.out.println("멤버 수는 : " + memberCount);
+		 for(int i = 7; i < 7 + memberCount * 2 ; i++) {
 			 ProjectAuthorityDTO projectAuthority = new ProjectAuthorityDTO();
 			  
 			 projectAuthority.setMemberNo(Integer.parseInt(((String[]) projectMake.get("nk1[" + i + "][value]"))[0]));
 			 i++;
 			 projectAuthority.setProjectRole(Integer.parseInt(((String[]) projectMake.get("nk1[" + i + "][value]"))[0]));
-			 
+			 projectAuthority.setpjtNo(Integer.parseInt(((String[]) projectMake.get("nk1[1][value]"))[0]));
 			 projectMemberList.add(projectAuthority);
 		 }
-			
+		 System.out.println("멤버릿트" + projectMemberList);
 			if (!backlogService.insertEditProject(project) 
-					|| !backlogService.insertEditProjectMember(project, projectMemberList)	) {
+			 || !backlogService.insertEditProjectMember(project, projectMemberList)	) {
 			 rttr.addFlashAttribute("message","프로젝트 수정이 취소되었습니다.");
 				return new ObjectMapper().writeValueAsString(project);
 		 }
@@ -190,18 +216,55 @@ public class BacklogBoardController {
 	}
 	
 
-//	/* 백로그 수정 */
-//	@PostMapping(value="backlog/SelectBacklog" , produces="application/json; charset=UTF-8")
-//	@ResponseBody
-//	public String SelectBacklog(HttpSession httpsession,		
-//			@ModelAttribute ProjectDTO project,
-//			HttpServletRequest request, RedirectAttributes rttr) throws JsonProcessingException {
-//		
-//		
-//		BacklogDTO backlog = backlogService.selectBacklogList(pjtNo);
-//		return "";
-//				
-//		
-//	}
-//	
+	/* 백로그 수정 */
+	@PostMapping(value="/backlog/backlog_Edit" , produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String EditBacklog(@RequestParam Map<String, String> parameters, RedirectAttributes rttr) throws JsonProcessingException {
+		
+		int pjtNo = Integer.parseInt(parameters.get("pjtNo"));
+		int blgNo = Integer.parseInt(parameters.get("blgNo"));		
+		String blgName = parameters.get("blgName");		
+		int blgPri = Integer.parseInt(parameters.get("blgPri"));		
+		String blgDemoMemo = parameters.get("blgDemoMemo");		
+		String blgRefMemo = parameters.get("blgRefMemo");		
+		
+		BacklogDTO backlog = new BacklogDTO();
+		backlog.setPjtNo(pjtNo);
+		backlog.setBlgNo(blgNo);
+		backlog.setBlgName(blgName);
+		backlog.setBlgPri(blgPri);
+		backlog.setBlgDemoMemo(blgDemoMemo);
+		backlog.setBlgRefMemo(blgRefMemo);
+		
+		System.out.println("제발 : " + backlog);
+		if(!backlogService.EditBacklog(backlog)) {
+			rttr.addFlashAttribute("message", "백로그 수정이 취소되었습니다.");
+			return "백로그 생성이 취소되었습니다.";
+		}
+		rttr.addFlashAttribute("message", "백로그가 수정되었습니다.");
+		return new ObjectMapper().writeValueAsString(backlog);
+	}
+	
+	
+	/* 백로그 삭제 */
+	@PostMapping(value="/backlog/backlog_Remove" , produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String RemoveBacklog(@RequestParam Map<String, String> parameters, RedirectAttributes rttr) throws JsonProcessingException {
+		
+		int pjtNo = Integer.parseInt(parameters.get("pjtNo"));
+		int blgNo = Integer.parseInt(parameters.get("blgNo"));		
+		
+		BacklogDTO backlogRemove = new BacklogDTO();
+		backlogRemove.setPjtNo(pjtNo);
+		backlogRemove.setBlgNo(blgNo);
+		
+		System.out.println("제발 : " + backlogRemove);
+		if(!backlogService.RemoveBacklog(backlogRemove)) {
+			rttr.addFlashAttribute("message", "백로그 삭제가 취소되었습니다.");
+			return "백로그 삭제가 취소되었습니다..";
+		}
+		rttr.addFlashAttribute("message", "백로그가 삭제되었습니다.");
+		return new ObjectMapper().writeValueAsString(backlogRemove);
+	}
+	
 }

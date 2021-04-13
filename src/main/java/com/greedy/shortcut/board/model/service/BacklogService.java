@@ -5,6 +5,7 @@ import java.util.List;
 import com.greedy.shortcut.board.model.dto.BacklogDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.ProjectDTO;
+import com.greedy.shortcut.board.model.dto.SprintDTO;
 import com.greedy.shortcut.common.paging.PageInfoDTO;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
@@ -30,5 +31,14 @@ public interface BacklogService {
 
 	/* 백로그 조회 */
 	BacklogDTO selectBacklogToEdit(int blgNo, int pjtNo);
+
+	/* 스프린트 리스트 조회 */
+	List<SprintDTO> selectSprintList(int pjtNo);
+	
+	/* 백로그 수정 */
+	boolean EditBacklog(BacklogDTO backlog);
+
+	/* 백로그 삭제 */
+	boolean RemoveBacklog(BacklogDTO backlogRemove);
 
 }

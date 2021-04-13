@@ -50,34 +50,32 @@
 			
 		</div>
 
-		<div class="sprint_box_area">			
-			<div class="sprint_text_btn">
-				<span class="sprint_text">Sprint 1</span>				
-				<button class="btn_detail ">Edit Sprint</button>			
-			</div>				
-				
-			
-								
-			
-			
-			<div class="sprint_box on"></div>
-							
-			<div class="table_area">
-				<div class="table_item">
-				
-					<a href="${pageContext.servletContext.contextPath }/board/kanbanboard/${ requestScope.pjtNo }">
-						<div class="row">							
-							<div class="table_detail type1">ABC</div>
-							<div class="table_detail type1">입금</div>
-							<div class="table_detail type2">30</div>
-							<div class="table_detail type2">5</div>
-							<div class="table_detail type3">로그인, 입금 페이지 열기, 10달러 입금. 잔액 조회 페이지 이동. 잔액 확인</div>
-							<div class="table_detail type4">지금은 암호화를 고려하지 않아도 됨</div>					
-						</div>
-					</a>
-				</div>
-			</div>				
-		</div>
+		      <div class="sprint_box_area">         
+         <div class="sprint_text_btn">
+            <span class="sprint_text">Sprint 1</span>            
+            <button class="btn_detail ">Edit Sprint</button>         
+         </div>            
+         sprintList
+         <div class="sprint_box on"></div>
+                     
+         <div class="table_area">
+            <div class="table_item">
+            
+               
+               <a href="${pageContext.servletContext.contextPath }/board/kanbanboard/?pjtNo=${ requestScope.pjtNo }&sprNo=1&projectName=${projectName}">
+                  <div class="row">                     
+                     <div class="table_detail type1">ABC</div>
+                     <div class="table_detail type1">입금</div>
+                     <div class="table_detail type2">30</div>
+                     <div class="table_detail type2">5</div>
+                     <div class="table_detail type3">로그인, 입금 페이지 열기, 10달러 입금. 잔액 조회 페이지 이동. 잔액 확인</div>
+                     <div class="table_detail type4">지금은 암호화를 고려하지 않아도 됨</div>               
+                  </div>
+               </a>
+            </div>
+         </div>            
+      </div>
+		
 		<!-- -----------------------백로그 영역-------------------------- -->
 		<div class="backlog_create_area">
 			<div class="create_sprint_btn">
@@ -86,7 +84,7 @@
 			<div class="backlog_table_area">				
 				<div class="table_area">
 					<div class="table_item">
-					<table style="width: 100%;">
+					<table style="width: 100%;"  id="backlogViewList">
 							<thead>
 								<tr>
 									<th class="">No</th>
@@ -95,28 +93,25 @@
 									<th class="">데모방식</th>
 									<th class="">비고</th>
 									<th class="">스프린트 생성</th>
+									<th class=""  style="display: none;">백로그 번호</th>
+									<!-- <th class="">스프린트 생성</th> -->
 								</tr>
 							</thead>
 							<tbody>
 								<c:choose>
 									<c:when test="${fn:length(requestScope.backlogList) > 0 }">
 										<c:forEach var="backlog" items="${ requestScope.backlogList }" varStatus="st">
-											<tr>
+											<tr class="trtr">
 												<td class="table_detail type1">${st.count }</td>
 												<td class="table_detail type1">${ backlog.blgName }</td>
 												<td class="table_detail type1">${ backlog.blgPri }</td>
 												<td class="table_detail type1">${ backlog.blgDemoMemo }</td>
 												<td class="table_detail type1">${ backlog.blgRefMemo }</td>
-												<td class="table_detail type1">
-				 <form action="${ pageContext.servletContext.contextPath }/board/backlog/" method="post"> 
-				<button class="btn_detail on"  data-toggle="modal" data-target="#myModalEdit" id="EditSprint">Edit Sprint</button>	
-				 <input type="text" value="${pjtNo }" id="pjtNo" name="pjtNo" style="display: none;">
-				<input type="text" value="${backlog.blgNo}" id="blgNo" name="blgNo" style="display: none;">
-				<input type="text" value="${projectName }" id="projectName" name="projectName" style="display: none;">
-				<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-				</form> 
+												<td class="table_detail type1" class="blgNo1" id="blgNo1" style="display: none;">${ backlog.blgNo }</td> 
 												
-												<button class="btn_detail on"  data-toggle="modal" data-target="#myModal3">Start Sprint</button>
+												<td class="table_detail type1">
+												<button class="btn_detail on"  data-toggle="modal" data-target="#myModalEdit" id="EditBackLog" onclick="btnDetail(this)" value=${ backlog.blgNo }>Edit Backlog</button>	
+												<button class="btn_detail on"  data-toggle="modal" data-target="#myModal3">Start Backlog</button>
 												</td>
 											</tr>
 										</c:forEach>
@@ -132,34 +127,57 @@
 					</div>
 				</div>
 			</div>
-	<!-- <script>
-	$("#EditSprint").click(function(){
-		
-		var email = $("#emailEdit").val();			//입력한 이메일
-		var backlogNo = "${backlog.blgNo }";
-		console.log("dkdkdk" + backlogNo);
-			if(!vali($("#emailEdit").val())){
-				/* 아이디 중복 체크 */
-				$.ajax({
-					url:"${pageContext.servletContext.contextPath}/board/projectidDupCheckEdit",
-					type:"post",
-					data:{email :email},
-					success:function(data){
+	<script>
+		function btnDetail(beta){
+			var blgNo = $(beta).val();
+			console.log(blgNo);
+			var projectNo = ${ requestScope.pjtNo };
+			console.log("백로그 번호 :"  + blgNo);
+			console.log("플젝" + projectNo);
+		 $.ajax({
 					
-						}else{
-							
-						}
-						
-					}, error:function(data){
-					}
-				});
+				url : "backlog12", 
+				type: "POST",
+				data: { "blgNo" : blgNo,
+					    "projectNo" : projectNo },
+				success : function (data,status,xhr){
+					console.log(data.blgName);
+					console.table(data);
+					console.log(data.blgNo);
+					$("#importance11").empty();
+					$("#backlogNo11").attr('placeholder',"");
+					$("#backlogName11").attr('placeholder',"");
+					$("#DemoDetail11").attr('placeholder',"");
+					$("#Reference11").attr('placeholder',"");
+					
+					$("#backlogNo11").attr('value',data.blgNo);
+					$("#backlogName11").attr('placeholder',data.blgName);
+					$("#DemoDetail11").attr('placeholder',data.blgDemoMemo);
+					$("#Reference11").attr('placeholder',data.blgRefMemo);
+					$("#importance11").append( Eggpri(data.blgPri));
+				},
+				error : function (xhr, status, data){
+					console.log(data);
+				}
+					
+				})
 				
-		}else{
-			alert("이메일을 입력해주세요");
+			} 
+		 	
+	function Eggpri(num){
+		if(num == 1){
+			var html = "<option selected > 1 </option>" + "<option > 2 </option>" + "<option > 3 </option>"  
+		} else if(num == 2){
+			var html = "<option > 1 </option>" + "<option selected> 2 </option>" + "<option > 3 </option>"
+		} else if(num == 3){
+			var html = "<option > 1 </option>" + "<option > 2 </option>" + "<option selected> 3 </option>"
+		} else {
+			 var html = '잘 모르겠습니다.'
 		}
-			});
+		return html;
+	}
 	
-	</script>  -->
+	</script>  
 
 
 
@@ -478,29 +496,34 @@
 				<div class="modal-body">
 					<div class="row nk3">
 						<div class="backlog_info">
-							
 							<div class="info_item">
 								<div class="info_detail">이름</div>
-								<input class="input_detail" type="text" id="backlogName" value="${backlogList[1].blgName }">
+								<input class="input_detail" type="text" id="backlogName11" placeholder="" >
 							</div>
+							
+							<div class="info_item">
+								<div class="info_detail"><!--  style="display: none;" -->>백로그 번호</div>
+								<input class="input_detail" type="text" id="backlogNo11" value=""> <!-- style="display: none;" -->>
+							</div>
+							
+							
 							<div class="info_item">
 								<div class="info_detail">중요도</div>
-								<%-- <select id="importance">
-								<option value="" disabled selected hidden>${backlogList.blgPri }</option> 
+								<select id="importance11">
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>
-								</select> --%>
+								</select>
 							</div>
 						</div>
 						<div class="backlog_textarea">
 							<div class="text_item">
 								<div class="text_detail">데모 방식</div>
-								<textarea class="textarea_detail" id="DemoDetail"  placeholder="${backlog.blgDemoMemo }" ></textarea>
+								<textarea class="textarea_detail" id="DemoDetail11"  placeholder="" ></textarea>
 							</div>
 							<div class="text_item">
 								<div class="text_detail">참고</div>
-								<textarea class="textarea_detail" id="Reference"  placeholder="${backlog.blgRefMemo }" ></textarea>
+								<textarea class="textarea_detail" id="Reference11"  placeholder="" ></textarea>
 							</div>
 						</div>
 					</div>
@@ -516,6 +539,13 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	
+	
+	
+	
+	
 <!-- 백로그 생성 버튼 클릭시 -->
 		<script>
 			$("#createBacklog").click(function(){ 
@@ -536,45 +566,85 @@
 						blgRefMemo : blgRefMemo
 					},
 					success : function(data, textStatus, xhr){
+						location.reload();//새로고침
 						alert("백로그 생성이 완료되었습니다");
-						location.href="${pageContext.servletContext.contextPath}/board/backlog";
 					},
 					error : function(xhr, status, error){
 						console.log(error);
 						alert("백로그 생성이 취소되었습니다");
 					}
 				 })
-			})
+			});
 		</script>
 		
 <!-- 백로그 수정 버튼 클릭시 -->
 		<script>
-			$("#Edit Sprint").click(function(){ 
+		/* function btnDetail(beta){
+			var blgNo = $(beta).val(); */
+			
+			$("#EditBacklog").click(function(){ 
 				var pjtNo = ${ requestScope.pjtNo };
-				 var blgName = document.getElementById("backlogName").value;
-				 var blgPri = document.getElementById("importance").value;
-				 var blgDemoMemo = document.getElementById("DemoDetail").value;
-				 var blgRefMemo = document.getElementById("Reference").value;
-				 
+				 var blgNo = document.getElementById("backlogNo11").value;
+				 var blgName = document.getElementById("backlogName11").value;
+				 var blgPri = document.getElementById("importance11").value;
+				 var blgDemoMemo = document.getElementById("DemoDetail11").value;
+				 var blgRefMemo = document.getElementById("Reference11").value;
+				 console.log("넘ㅂ : " + pjtNo);
+				 console.log("넘ㅂ : " + blgNo);
+				 console.log("넘ㅂ : " + blgName);
+				 console.log("넘ㅂ : " + blgPri);
+				 console.log("넘ㅂ : " + blgDemoMemo);
+				 console.log("넘ㅂ : " + blgPri);
 				 $.ajax({
-					url : "${pageContext.servletContext.contextPath}/board/backlog/backlog_regist",
+					url : "${pageContext.servletContext.contextPath}/board/backlog/backlog_Edit",
 					type : "post",
 					data : {
 						pjtNo : pjtNo,
+						blgNo : blgNo,
 						blgName : blgName,
 						blgPri : blgPri,
 						blgDemoMemo : blgDemoMemo,
 						blgRefMemo : blgRefMemo
 					},
 					success : function(data, textStatus, xhr){
-						alert("백로그 생성이 완료되었습니다");
-						location.href="${pageContext.servletContext.contextPath}/board/backlog";
+						alert("백로그 수정이 완료되었습니다.");
+						document.location.reload();
 					},
 					error : function(xhr, status, error){
 						console.log(error);
-						alert("백로그 생성이 취소되었습니다");
+						alert("백로그 수정이 취소되었습니다.");
 					}
 				 })
+			})
+		
+		</script>
+		
+<!-- 백로그 삭제 버튼 클릭시 -->
+		<script>
+			$("#removeBacklog").click(function(){ 
+				 if(confirm("정말 삭제하시겠습니까 ?") == true){
+				var pjtNo = ${ requestScope.pjtNo };
+				 var blgNo = document.getElementById("backlogNo11").value;
+				 
+				 $.ajax({
+					url : "${pageContext.servletContext.contextPath}/board/backlog/backlog_Remove",
+					type : "post",
+					data : {
+						pjtNo : pjtNo,
+						blgNo : blgNo,
+					},
+					success : function(data, textStatus, xhr){
+						alert("백로그 삭제가 완료되었습니다");
+						document.location.reload();
+					},
+					error : function(xhr, status, error){
+						console.log(error);
+						alert("백로그 삭제가 취소되었습니다");
+					}
+				 })
+			}else{
+				return;
+				}
 			})
 		</script>
 
@@ -743,10 +813,10 @@
 					</thead>
 					<tbody  id="dynamicTbody">
 					<c:if test="${ !empty requestScope.memberList }">
-					  <c:forEach items="${memberList}" var="member" varStatus="st">
+					  <c:forEach items="${memberList}" var="member" varStatus="st" >
 					  <tr>
 					  <c:set var="countMember" value="${ st.count +1}"  />	<!-- st가 1부터 시작하여 1을 더하여 출력 -->
-						<th>${countMember }</th>
+						<th  class="memberCount">${countMember }</th>
 						<th class="Email">${member.memberId}</th>
 						<th class="roll">
 						<c:choose>
@@ -798,7 +868,9 @@
 		    if (typeof value === 'undefined') return true;
 		    return false;
 		}
-		var idcount = 1;
+		/* var idcount = 1; */
+		var addMemberNo = $("#projectMember tr:last");
+		console.log("마지막 번호" + $("#projectMember #memberCount").val());
 		/* 인원추가 */
 		$("#addpersonButtonEdit").click(function(){
 			
@@ -887,12 +959,13 @@
 		   } 
 		   
 		   console.table("얍 " + nk1);
-		   
+		   var pjtNo = ${ requestScope.pjtNo };
 		   $.ajax({
 			   url :"${pageContext.servletContext.contextPath}/board/backlog/project_edit",
 			   type : "post",
 			   data :  {
 				   nk1 : nk1,
+				   pjtNo : pjtNo,
 				   memberNo : projectMaker,
 				   projectName : projectName,
 				   projectStartDate : projectStartDate,

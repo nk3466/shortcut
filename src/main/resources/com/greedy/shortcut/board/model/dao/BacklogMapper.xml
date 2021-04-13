@@ -40,7 +40,16 @@
 		<result column="MEM_ID" property="memberId"/>
 	</resultMap> 
 	
-
+	<resultMap type="SprintDTO" id="SprintResultMap">
+		<id property="sprNo" column="SPR_NO"/>
+		<result property="sprName" column="SPR_NAME"/>
+		<result property="sprStardDate" column="SPR_START_DATE"/>
+		<result property="sprEndDate" column="SPR_END_DATE"/>
+		<result property="sprGoal" column="SPR_GOAL"/>
+		<result property="sprDelYn" column="SPR_DEL_YN"/>
+		<result property="sprBlgNo" column="BLG_NO"/>
+	</resultMap>
+	
 	<select id="selectProject" resultMap="ProjectResultSet" parameterType="ProjectDTO">
 		SELECT
 		       A.PJT_NO
@@ -74,27 +83,17 @@
 	</select>
 	
 		<!-- 프로젝트 수정-->
-	 <insert id="insertEditProject" parameterType="ProjectDTO">
-	INSERT
-	  INTO PROJECT A
-	  (
-	     A.PJT_NO, A.PJT_NAME, A.PJT_START_DATE, MEM_NO,
-	     A.PJT_DEL_YN, A.PJT_END_DATE, A.PJT_COLOR
-	    )
-	  VALUES
-	  (
-	    SEQ_PJT_NO.NEXTVAL, #{projectName}, #{projectStartDate}, #{memberNo},
-	    'N', #{projectEndDate}, #{projectColor}
-	  )
-	</insert>
+	 <update id="updateProject" parameterType="ProjectDTO">
+	     UPDATE PROJECT 
+            SET PJT_NAME = #{projectName}
+              , PJT_START_DATE = #{projectStartDate}
+              , PJT_END_DATE = #{projectEndDate}
+              , PJT_COLOR = #{projectColor}
+         WHERE PJT_NO =  #{pjtNo}
+	</update>
 	
 	<!-- 프로젝트 수정 이력 등록 -->
 	<insert id="insertEditProjectHistory" parameterType="ProjectDTO">
-	<selectKey keyProperty="pjtNo" order="BEFORE" resultType="_int">
-		 SELECT 
-	            SEQ_PJT_NO.CURRVAL
-	       FROM DUAL
-    </selectKey>
 	    INSERT
 	      INTO PROJECT_HISTORY A
 	      (
@@ -111,17 +110,18 @@
 	
 	<!-- 프로젝트 넘버 조회 -->
 	 <select id="selectProjectNum" resultMap="ProjectResultSet" parameterType="ProjectDTO">
-	 SELECT 
-            SEQ_PJT_NO.CURRVAL
-       FROM DUAL
-	</select> 
-	<!-- 프로젝트 멤버 수정 -->
-	<insert id="insertEditProjectMember" parameterType="ProjectAuthorityDTO">
-	<selectKey keyProperty="pjtNo" order="BEFORE" resultType="_int">
 		 SELECT 
 	            SEQ_PJT_NO.CURRVAL
-	       FROM DUAL	
-    </selectKey>
+	       FROM DUAL
+	</select> 
+	
+	<delete id="deleteProjectMember" parameterType="ProjectDTO">
+		DELETE
+	      FROM PJT_AUTHORITY E
+	     WHERE E.PJT_NO = #{pjtNo}
+	</delete>
+	<!-- 프로젝트 멤버 수정 -->
+	<insert id="insertEditProjectMember" parameterType="ProjectAuthorityDTO">
 		INSERT
 		   INTO PJT_AUTHORITY
 		   (
@@ -185,6 +185,7 @@
     LEFT OUTER JOIN SPRINT B ON (A.BLG_NO = B.BLG_NO)
 		 WHERE A.PJT_NO = #{pjtNo}
            AND B.SPR_NO IS NULL
+           AND A.BLG_DEL_YN = 'N'
             OR B.SPR_DEL_YN = 'Y'
 		 ORDER BY A.BLG_PRI ASC
 	</select>
@@ -213,12 +214,12 @@
 	      INTO BACKLOG_HISTORY A
 	      (
 	        A.BLG_NO, A.BLG_NAME, A.BLG_PRI, A.UPDATE_DATE, A.BLG_DEL_YN, A.BLG_HIS_NO
-	      , A.BLG_ENROLL_DATE, A.BLG_DEMO_MEMO, A.BLG_REF_MEMO
+	      , A.BLG_DEMO_MEMO, A.BLG_REF_MEMO
 	      )
 	      VALUES
 	      (
 	        #{blgNo}, #{blgName}, #{blgPri}, SYSDATE, 'N', SEQ_BLG_HIS_NO.NEXTVAL 
-	      , SYSDATE, #{blgDemoMemo}, #{blgRefMemo}
+	      , #{blgDemoMemo}, #{blgRefMemo}
 	      )
 	</insert>
 	
@@ -235,5 +236,68 @@
 	      FROM BACKLOG A
 	     WHERE A.BLG_NO = #{blgNo}
 	       AND A.PJT_NO = #{pjtNo}
+	       AND A.BLG_DEL_YN = 'N'
 	</select>
+	
+	<select id="selectSprintList" resultMap="SprintResultMap" parameterType="SprintDTO">
+	              SELECT
+			     A.SPR_NO
+               , A.SPR_NAME
+               , A.SPR_START_DATE
+               , A.SPR_END_DATE
+               , A.SPR_GOAL
+               , A.SPR_DEL_YN
+               , A.BLG_NO
+               , B.PJT_NO
+		  FROM SPRINT A
+    LEFT OUTER JOIN BACKLOG B ON (A.BLG_NO = B.BLG_NO)
+		 WHERE B.PJT_NO = 1
+          AND A.SPR_END_DATE &gt; SYSDATE
+          AND A.SPR_DEL_YN = 'N'
+		 ORDER BY B.BLG_PRI ASC
+	</select>
+	
+	<update id="EditBacklog" parameterType="BacklogDTO">
+	     UPDATE BACKLOG A
+            SET A.BLG_NAME = #{blgName}
+              , A.BLG_PRI = #{blgPri}
+              , A.BLG_DEMO_MEMO = #{blgDemoMemo}
+              , A.BLG_REF_MEMO = #{blgRefMemo}
+         WHERE A.BLG_NO =  #{blgNo}
+    	   AND A.PJT_NO = #{pjtNo}     
+    </update>
+    
+    <insert  id="insertEditBacklogHistory"  parameterType="BacklogDTO">
+	    INSERT
+	      INTO BACKLOG_HISTORY A
+	      (
+	        A.BLG_NO, A.BLG_NAME, A.BLG_PRI, A.UPDATE_DATE, A.BLG_DEL_YN, A.BLG_HIS_NO
+	      , A.BLG_DEMO_MEMO, A.BLG_REF_MEMO
+	      )
+	      VALUES
+	      (
+	        #{blgNo}, #{blgName}, #{blgPri}, SYSDATE, 'N', SEQ_BLG_HIS_NO.NEXTVAL 
+	      , #{blgDemoMemo}, #{blgRefMemo}
+	      )
+	</insert>
+	<update id="RemoveBacklog" parameterType="BacklogDTO">
+	     UPDATE BACKLOG A
+            SET A.BLG_DEL_YN = 'Y'
+          WHERE A.BLG_NO =  #{blgNo}
+    	    AND A.PJT_NO = #{pjtNo}     
+    </update>
+    
+     <insert  id="insertRemoveBacklogHistory"  parameterType="BacklogDTO">
+	    INSERT
+	      INTO BACKLOG_HISTORY A
+	      (
+	        A.BLG_NO, A.BLG_NAME, A.BLG_PRI, A.UPDATE_DATE, A.BLG_DEL_YN, A.BLG_HIS_NO
+	      , A.BLG_DEMO_MEMO, A.BLG_REF_MEMO
+	      )
+	      VALUES
+	      (
+	        #{blgNo}, #{blgName}, #{blgPri}, SYSDATE, 'N', SEQ_BLG_HIS_NO.NEXTVAL 
+	      , #{blgDemoMemo}, #{blgRefMemo}
+	      )
+	</insert>
 </mapper>

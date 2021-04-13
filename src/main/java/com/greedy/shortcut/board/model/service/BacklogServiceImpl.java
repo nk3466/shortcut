@@ -18,7 +18,7 @@ import com.greedy.shortcut.board.model.dao.BacklogMapper;
 import com.greedy.shortcut.board.model.dto.BacklogDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.ProjectDTO;
-
+import com.greedy.shortcut.board.model.dto.SprintDTO;
 import com.greedy.shortcut.common.paging.PageInfoDTO;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
@@ -60,7 +60,11 @@ public class BacklogServiceImpl implements BacklogService {
 	/* 프로젝트 수정  */
 	@Override
 	public boolean insertEditProject(ProjectDTO project) {
-
+		
+		System.out.println("프로젝트 수정213213621" + project);
+		int a = backlogMapper.updateProject(project);
+		System.out.println("와???");
+		int b = backlogMapper.insertEditProjectHistory(project);
 		/* 목표시간 미입력시 */
 		/*
 		 * SimpleDateFormat dfm = new SimpleDateFormat("yyyy-MM-dd"); Date day = null;
@@ -69,17 +73,20 @@ public class BacklogServiceImpl implements BacklogService {
 		 * if(project.getProjectEndDate().equals(day)) {
 		 * project.setProjectEndDate(null); }
 		 */
-		return backlogMapper.insertEditProject(project) + backlogMapper.insertEditProjectHistory(project) > 0? true : false;
+		return a + b> 1? true : false;
 	}
 
 	/* 프로젝트회원 수정  */
 	@Override
 	public boolean insertEditProjectMember(ProjectDTO project, List<ProjectAuthorityDTO> projectMemberList) {
 		
+		System.out.println("프로젝트 수정" + project);
 		int count = 0;
+		int a = backlogMapper.deleteProjectMember(project);
+		System.out.println("프로젝트 사이즈 : " +  projectMemberList.size());
 		for(int i = 0; i < projectMemberList.size(); i++) {
-			backlogMapper.insertEditProjectMember(projectMemberList.get(i));
-			backlogMapper.insertEditProjectMemberHistory(projectMemberList.get(i));
+			int b = backlogMapper.insertEditProjectMember(projectMemberList.get(i));
+			int c = backlogMapper.insertEditProjectMemberHistory(projectMemberList.get(i));
 			  count++;
 		  }
 		
@@ -112,6 +119,33 @@ public class BacklogServiceImpl implements BacklogService {
 		System.out.println("으악" + blgNo);
 		System.out.println("으악1" + pjtNo);
 		return backlogMapper.selectBacklogToEdit(blgNo, pjtNo);
+	}
+
+	/* 스프린트 리스트 조회 */
+	@Override
+	public List<SprintDTO> selectSprintList(int pjtNo) {
+
+		return backlogMapper.selectSprintList(pjtNo);
+	}
+	
+	/* 백로그 수정 */
+	@Override
+	public boolean EditBacklog(BacklogDTO backlog) {
+
+			int a = backlogMapper.EditBacklog(backlog);
+			int b = backlogMapper.insertEditBacklogHistory(backlog);
+		
+		return a + b > 1? true : false;
+	}
+
+	/* 백로그 삭제 */
+	@Override
+	public boolean RemoveBacklog(BacklogDTO backlogRemove) {
+		
+		int a = backlogMapper.RemoveBacklog(backlogRemove);
+		//int b = backlogMapper.insertRemoveBacklogHistory(backlogRemove);
+		
+		return a > 0? true : false;
 	}
 	
 }
