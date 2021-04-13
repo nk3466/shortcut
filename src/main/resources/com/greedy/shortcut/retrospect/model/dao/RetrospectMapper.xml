@@ -21,6 +21,7 @@
 		<result property="reviewMissTxt" column="REVIEW_MISS_TXT"/>
 		<result property="sprNo" column="SPR_NO"/>
 		<result property="memNo" column="MEM_NO"/>
+		<result property="memName" column="MEM_NAME"/>
 	</resultMap>
 	
 	<resultMap id="ProjectResultSet" type="ProjectDTO">
@@ -40,18 +41,30 @@
 		<result column="MEM_NO" property="memberNo"/>	
 		<result column="MEM_ID" property="memberId"/>
 	</resultMap> 
-
-	<select id="selectReview" resultMap="reviewResultMap">
-		SELECT
-		      A.REVIEW_NO
-		    , A.REVIEW_LIKE_TXT
-		    , A.REVIEW_LEARN_TXT
-		    , A.REVIEW_MISS_TXT
-		    , A.SPR_NO
-		    , A.MEM_NO
-		 FROM REVIEW A
-		WHERE A.SPR_NO = 1
-	</select>
+	
+	<resultMap id="sprintResultMap" type="ClientSprintDTO">
+		<id property="sprNo" column="SPR_NO"/>
+		<result property="sprName" column="SPR_NAME"/>
+		<result property="sprStartDate" column="SPR_START_DATE"/>
+		<result property="sprEndDate" column="SPR_END_DATE"/>
+		<result property="sprGoal" column="SPR_GOAL"/>
+		<result property="sprDelYn" column="SPR_DEL_YN"/>
+		<result property="blgNo" column="BLG_NO"/>
+	</resultMap>
+	
+	<resultMap id="selectPtjAndSprNameResultMapt" type="ProjectAndSprintDTO">
+		<association property="projectDTO" resultMap="ProjectResultSet"/>
+		<association property="sprintDTO" resultMap="sprintResultMap"/>
+	</resultMap>
+	
+	<sql id="reviewSql">
+		       REVIEW_NO
+		     , REVIEW_LIKE_TXT
+		     , REVIEW_LEARN_TXT
+		     , REVIEW_MISS_TXT
+		     , SPR_NO
+		     , MEM_NO
+	</sql>
 
 	<select id="selectFinishSprint" resultMap="backlogResultMap" parameterType="_int">
 		SELECT
@@ -125,6 +138,62 @@
                             WHERE B.BLG_NO = #{blgNo}
                           )
         )
+	</select>
+	
+	<select id="selectPtjAndSprName" resultMap="selectPtjAndSprNameResultMapt" parameterType="_int">
+		SELECT
+               A.PJT_NAME
+             , A.PJT_NO
+             , C.SPR_NAME
+          FROM PROJECT A
+          JOIN BACKLOG B ON(A.PJT_NO = B.PJT_NO)
+          JOIN SPRINT C ON(B.BLG_NO = C.BLG_NO)
+         WHERE B.BLG_NO = #{blgNo}
+	</select>
+	
+	<select id="selectReview" resultMap="reviewResultMap" parameterType="_int">
+		SELECT
+               A.REVIEW_NO
+	         , A.REVIEW_LIKE_TXT
+             , A.REVIEW_LEARN_TXT
+             , A.REVIEW_MISS_TXT
+             , A.SPR_NO
+             , A.MEM_NO
+             , B.MEM_NAME
+          FROM REVIEW A
+          JOIN MEMBER B ON(A.MEM_NO = B.MEM_NO)
+         WHERE A.SPR_NO = #{blgNo}
+	</select>
+
+	<resultMap id="selectReviewAndProjectMemberResultMap" type="ReviewAndProjectMemberDTO">
+		<association property="projectAuthorityDTO" resultMap="AuthorityResultSet"/>
+		<association property="projectDTO" resultMap="ProjectResultSet"/>
+		<association property="memberDTO" javaType="MemberDTO">
+			<id property="no" column="MEM_NO"/>
+			<result property="email" column="MEM_ID"/>
+			<result property="name" column="MEM_NAME"/>
+			<result property="phone" column="PHONE"/>
+		</association>
+	</resultMap>
+	
+	<select id="selectReviewAndProjectMember" resultMap="selectReviewAndProjectMemberResultMap" parameterType="_int">
+		SELECT
+               A.PA_ROLE
+             , A.PJT_NO
+             , A.MEM_NO
+             , A.PA_NO
+             , B.PJT_NO
+             , B.PJT_NAME
+             , B.PJT_START_DATE
+             , B.PJT_DEL_YN
+             , B.MEM_NO
+             , B.PJT_END_DATE
+             , B.PJT_COLOR
+             , C.MEM_NAME
+          FROM PJT_AUTHORITY A
+          JOIN PROJECT B ON(A.PJT_NO = B.PJT_NO)
+          JOIN MEMBER C ON(A.MEM_NO = C.MEM_NO)
+         WHERE A.PJT_NO = #{pjtNo}
 	</select>
 
 </mapper>

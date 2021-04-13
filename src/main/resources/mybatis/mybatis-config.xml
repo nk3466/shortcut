@@ -45,6 +45,10 @@
  		<typeAlias alias="BoardDTO" type="com.greedy.shortcut.board.model.dto.BoardDTO"/>
 
  		<typeAlias alias="SprintDTO" type="com.greedy.shortcut.board.model.dto.SprintDTO"/>
+
+ 		<typeAlias alias="ProjectAndSprintDTO" type="com.greedy.shortcut.retrospect.model.dto.ProjectAndSprintDTO"/>
+
+ 		<typeAlias alias="ReviewAndProjectMemberDTO" type="com.greedy.shortcut.retrospect.model.dto.ReviewAndProjectMemberDTO"/>
  		
  	</typeAliases>
  	

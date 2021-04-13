@@ -1,5 +1,6 @@
 package com.greedy.shortcut.retrospect.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -7,16 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.shortcut.board.model.dto.BacklogDTO;
 import com.greedy.shortcut.common.paging.PageInfoDTO;
 import com.greedy.shortcut.common.paging.Pagenation;
+import com.greedy.shortcut.retrospect.model.dto.ProjectAndSprintDTO;
+import com.greedy.shortcut.retrospect.model.dto.ReviewAndProjectMemberDTO;
 import com.greedy.shortcut.retrospect.model.dto.ReviewDTO;
 import com.greedy.shortcut.retrospect.model.service.RetrospectService;
 
@@ -83,23 +89,82 @@ public class RetrospectController {
 	}
 	
 	@GetMapping("board/backlog/retrospect/{blgNo}")
-	public String retrospect(@PathVariable("blgNo") int blgNo) {
+	public ModelAndView retrospect(@PathVariable("blgNo") int blgNo, ModelAndView mv) {
 		
 		System.out.println("blgNo : " + blgNo);
-		
-		List<ReviewDTO> review = retrospectService.selectReview();
-		
+		/* 리뷰 리스트 */
+		List<ReviewDTO> review = retrospectService.selectReview(blgNo);
 		for(ReviewDTO rv : review) {
 			System.out.println(rv);
 		}
+		/* 프로젝트 이름과, 각 스프린트 이름 조회 */
+		ProjectAndSprintDTO projectAndSprintName = retrospectService.selectPtjAndSprName(blgNo);
+		String pjtName = projectAndSprintName.getProjectDTO().getProjectName();
+		String sprName = projectAndSprintName.getSprintDTO().getSprName();
+		int pjtNo = projectAndSprintName.getProjectDTO().getPjtNo();
+		
+		/* 프로젝트 전체 참여 인원 조회 */
+		List<ReviewAndProjectMemberDTO> reviewAndProjectMemberList = retrospectService.selectReviewAndProjectMember(pjtNo);
+		for(ReviewAndProjectMemberDTO rpm : reviewAndProjectMemberList) {
+			System.out.println(rpm);
+		}
+		
+		mv.addObject("blgNo", blgNo);
+		mv.addObject("review", review);
+		mv.addObject("pjtName", pjtName);
+		mv.addObject("sprName", sprName);
+		mv.addObject("reviewAndProjectMemberList", reviewAndProjectMemberList);
+		mv.setViewName("retrospect/retrospect");
+		
+		return mv;
+	}
+	
+	@PostMapping("/board/backlog/retrospect/regist")
+	public ModelAndView modifyReview(ModelAndView mv, @ModelAttribute ReviewDTO review) {
+		
+		System.out.println(review);
+		
+		String[] reviewLikeTxt = review.getReviewLikeTxt().split(",");
+		String[] reviewLearnTxt = review.getReviewLearnTxt().split(",");
+		String[] reviewMissTxt = review.getReviewMissTxt().split(",");
+		String[] memName = review.getMemName().split(",");
+		
+		List<String> reviewLikeTxtList = new ArrayList<>(); 
+		List<String> reviewLearnTxtList = new ArrayList<>(); 
+		List<String> reviewMissTxtList = new ArrayList<>(); 
+		List<String> memNameList = new ArrayList<>(); 
+		
+		System.out.println("memName.length : " + memName.length);
+		
+		for(int i = 0; i < memName.length; i++) {
+			reviewLikeTxtList.add(reviewLikeTxt[i]);
+			reviewLearnTxtList.add(reviewLearnTxt[i]);
+			reviewMissTxtList.add(reviewMissTxt[i]);
+			memNameList.add(memName[i]);
+		}
+		
+		for(String like : reviewLikeTxtList) {
+			System.out.println(like);
+		}
+		System.out.println();
+		
+		for(String learn : reviewLearnTxtList) {
+			System.out.println(learn);
+		}
+		System.out.println();
+		
+		for(String miss : reviewMissTxtList) {
+			System.out.println(miss);
+		}
+		System.out.println();
+		
+		for(String name : memNameList) {
+			System.out.println(name);
+		}
+		System.out.println();
 		
 		
-		
-		
-		
-		
-		
-		return "retrospect/retrospect";
+		return mv;
 	}
 	
 }
