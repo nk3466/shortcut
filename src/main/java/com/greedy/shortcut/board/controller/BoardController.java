@@ -21,6 +21,7 @@ import com.greedy.shortcut.board.model.dto.CardDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.service.BoardService;
 import com.greedy.shortcut.board.model.service.CardService;
+import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/*")
@@ -35,16 +36,27 @@ public class BoardController {
 		this.boardService = boardService;
 	}
 
-	@GetMapping("/board/kanbanboard/{pjtNo}")
-	public String kanbanboard(@PathVariable("pjtNo") int pjtNo, Model model) {
-		System.out.println("{pjtNo} : " + pjtNo);
+	@GetMapping("/board/kanbanboard/")
+	public String kanbanboard(@RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName, @RequestParam(name="sprNo") int sprNo, Model model) {
+		System.out.println("pjtNo : " + pjtNo);
+		System.out.println("projectName : " + projectName);
+		System.out.println("sprNo : " + sprNo);
 
+		List<MemberDTO> memberList = boardService.selectMember(pjtNo);
+		List<BoardDTO> boardList = boardService.selectboardList(sprNo);
+		System.out.println("boardList :" + boardList);
+		System.out.println("memberList : " + memberList);
 		model.addAttribute("pjtNo", pjtNo);
+		model.addAttribute("projectName", projectName);
+		model.addAttribute("sprNo", sprNo);
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("boardList", boardList);
+		
 
 		return "/board/kanbanboard";
 	}
 
-	@RequestMapping(value = "/board/kanbanboard", produces = "application/json; charset=UTF-8")
+	@RequestMapping(value = "/board/cardmember", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public List<ProjectAuthorityDTO> selectMember(@ModelAttribute ProjectAuthorityDTO pAuth, HttpServletRequest request) {
 
@@ -59,9 +71,9 @@ public class BoardController {
 	@PostMapping("/card/regist")
 	public String registCard(@ModelAttribute CardDTO card, HttpServletRequest request, RedirectAttributes rttr)  {
 		
-		if(!cardService.registCard(card)) {
-			System.out.println(card);
-		}
+		/*
+		 * if(!cardService.registCard(card)) { System.out.println(card); }
+		 */
 		
 		rttr.addFlashAttribute("message", "카드 등록에 성공하셨습니다.");
 		
@@ -70,22 +82,22 @@ public class BoardController {
 	
 	
 	
-	@PostMapping("kanbanboard")
+	@PostMapping("/board/kanbanboard")
 	@ResponseBody
-	   public String newBoard(@ModelAttribute BoardDTO board, RedirectAttributes redirect, Model model) {
-
+	   public String newBoard(@RequestParam(name="title") String title,@RequestParam(name="sprNo") int sprNo ,RedirectAttributes redirect, Model model) {
+		
+		System.out.println("title:" +  title);
+		System.out.println("sprNo:" +  sprNo);
+		
+		BoardDTO newboard = new BoardDTO();
+		newboard.setBrdName(title);
+		newboard.setSprNo(sprNo);
+		newboard.setBrdOrder(1);
+		boolean result = boardService.insertnewBoard(newboard);
+		System.out.println( result);
 	   
-	      if (!boardService.newBoard(board)) {
-	    	  System.out.println("왔다?!");
-	         redirect.addFlashAttribute("message", "게시글등록실패하였습니다");
-	      }
-
-	      redirect.addFlashAttribute("message", "게시글 등록성공");
-	      System.out.println("왓다");
-	      List<BoardDTO> boardList = boardService.selectBoard();
-
-	      model.addAttribute("boardList", boardList);
-	      return "board/kanbanboard";
+//	 
+	      return "redirect:/board/kanbanboard";
 	   }
 	
 	

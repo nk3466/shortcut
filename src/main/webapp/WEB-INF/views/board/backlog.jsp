@@ -65,7 +65,8 @@
 			<div class="table_area">
 				<div class="table_item">
 				
-					<a href="${pageContext.servletContext.contextPath }/board/kanbanboard/${ requestScope.pjtNo }">
+					
+					<a href="${pageContext.servletContext.contextPath }/board/kanbanboard/?pjtNo=${ requestScope.pjtNo }&sprNo=1&projectName=${projectName}">
 						<div class="row">							
 							<div class="table_detail type1">ABC</div>
 							<div class="table_detail type1">입금</div>

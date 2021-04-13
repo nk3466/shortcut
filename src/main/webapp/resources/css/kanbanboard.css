@@ -4,7 +4,7 @@
 .kanbanboard_area .row{margin: 0; padding-top: 45px;}
 
 .kanbanboard_area .row .project_info_area{width: 20%; padding: 15px; }
-.kanbanboard_area .row .project_info_area .project_info{border: 1px solid black; border-radius: 15px; width: 100%; height: 300px; background-color: white; padding: 15px;}
+.kanbanboard_area .row .project_info_area .project_info{border: 1px solid black; border-radius: 15px; width: 100%; height: auto; background-color: white; padding: 15px;}
 
 .kanbanboard_area .row .project_info_area .project_info .info_item{margin-bottom: 10px;}
 .kanbanboard_area .row .project_info_area .project_info .info_item .item_name{font-size: 20px;  font-weight: bold;}

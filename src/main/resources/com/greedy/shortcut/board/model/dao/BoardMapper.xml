@@ -13,7 +13,7 @@
 	</resultMap>
 	
 	<resultMap id="boardResultSet" type="BoardDTO">
-		<id column="BRD_NO" property="boardNo"/>
+		<id column="BRD_NO" property="brdNo"/>
 		<result column="BRD_NAME" property="brdName"/>
 		<result column="BRD_ENROLL_DATE" property="date"/>
 		<result column="SPR_NO" property="sprNo"/>
@@ -60,7 +60,7 @@
 		)
 	</insert>
 	
-	 <select id="selectBoard" resultMap="boardResultSet" parameterType="BoardDTO">
+	 <select id="selectboardList" resultMap="boardResultSet" parameterType="_int">
  SELECT
         A.BRD_NO
       , A.BRD_NAME
@@ -70,21 +70,22 @@
       , A.BRD_ORDER
    FROM BOARD A
   WHERE A.BRD_DEL_YN = 'N'
+  	AND A.SPR_NO = #{sprNo}
    <!--  AND A.BRD_ENROLL_DATE &lt;= SYSDATE -->
-    ORDER BY A.BOARD_NO
+    ORDER BY A.BRD_ORDER
      
  </select>
-
-<insert id="newBoard" parameterType="BoardDTO">
+ 
+<insert id="insertnewBoard" parameterType="BoardDTO">
    INSERT
      INTO BOARD A
     (
-     A.BRD_NO, A.BRD_NAME, A.BRD_ENROLL_DATE, A.BRD_DEL_YN 
+     A.BRD_NO, A.BRD_NAME, A.BRD_ENROLL_DATE, A.BRD_DEL_YN ,A.SPR_NO,A.BRD_ORDER
     )
     VALUES
-    (SEQ_BRD_NO.NEXTVAL, #{brdName}, SYSDATE, 'N'
+    (SEQ_BRD_NO.NEXTVAL, #{brdName}, SYSDATE, 'N',#{sprNo},#{brdOrder}
     )
-    
-</insert> 
+</insert>
+
 	
  </mapper>

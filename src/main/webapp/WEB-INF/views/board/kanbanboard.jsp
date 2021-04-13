@@ -20,8 +20,8 @@
 	href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
@@ -47,24 +47,24 @@
 				<div class="project_info">
 					<div class="info_item">
 						<div class="item_name">프로젝트명</div>
-						<div class="item_detail"><input type="text" id="projectName" placeholder="${ requestScope.pjtNo }" readonly></div>
+						<div class="item_detail"><input type="text" id="projectName" placeholder="${ projectName }" readonly></div>
 					</div>
 					<div class="info_item">
 						<div class="item_name">SPRINT_NO</div>
-						<div class="item_detail"><input type="text" id="projectName" placeholder="${ requestScope.blgNo }" readonly></div>
+						<div class="item_detail"><input type="text" id="projectName" placeholder="${ requestScope.sprNo }" readonly></div>
 					</div>
 					<div class="info_item">
 						<div class="item_name">참여인원</div>
 						<div class="item_detail">
-							<i class="fas fa-user-circle">김민기</i> <i
-								class="fas fa-user-circle">이남경</i> <i class="fas fa-user-circle">정민서</i>
-							<i class="fas fa-user-circle">한미화</i> <i
-								class="fas fa-user-circle">미스터추</i>
+						<c:forEach var="memberList" items="${memberList}">
+							<i class="fas fa-user-circle"><c:out value="${ memberList.name }"/></i>				
+						</c:forEach>
+					
 						</div>
 					</div>
 					
 					<div class="info_item">
-					<div id="newBoard" class="insert_card" data-toggle="modal"
+					<div id="newBoard" class="insert_board" data-toggle="modal"
 						data-target="#myModal3">
 						<i class="fas fa-plus"></i> 보드 생성하기</div>
 					</div>
@@ -92,103 +92,25 @@
 							<div class="recv_item"><c:out value="${ msgList.memName }"/></div>
 							<div class="recv_item"><c:out value="${ msgList.date }"/></div>
                          </c:forEach> -->
-
-				<!-- 카드1 -->
-			<div class="kanban_item boardcolumn">
-				<div class="kanbanboard type1" id="newBoard1">
-					<div class="kanbanboard_title board-header card no-move">요청</div>
-					<input type="text" value="1" id="boardNo1" name="brdNo" style="display: none;">
-					<div class="board_item card">
-						<div class="item type1 card-header bg-white">SNS 로그인</div>
-						<div class="item type2 card-body">
-							<span class="item_detail type">네이버</span> <span
-								class="item_detail type">google</span> <span
-								class="item_detail type">카카오톡</span>
-						</div>
-						<div class="item type3">
-							<i class="fas fa-user-circle">김민기</i> <i
-								class="fas fa-user-circle">이남경</i>
-						</div>
-					</div>
+<!-- 내가 만든 보드  -->
+<c:forEach var="boardList" items="${boardList }">
+				<div class="kanban_item boardcolumn">
+				<div class="kanbanboard type1" id="newBoard<c:out value="${boardList.brdOrder}"/>">
+					<div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/></div>
+					<input type="text" value="1" id="boardNo1" name="${boardList.brdNo}" style="display: none;">
 					<div id="progressSet" class="insert_card" data-toggle="modal"
 						data-target="#myModal2">
 						<i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
 					</div>
 			</div>
-				</div><!-- 카드1 끝 -->
+				</div>		
+ </c:forEach>
+<script type="text/javascript">
+console.log("boardList" +  "${requestScope.boardList}");
+</script>
+
+<!-- /내가 만든 보드 -->
 				
-				<!-- 카드2 -->
-			<div class="kanban_item boardcolumn">
-				<div class="kanbanboard type2" id="newBoard2">
-					<div class="kanbanboard_title board-header card no-move">진행중</div>
-					<input type="text" value="2" id="boardNo2" name="brdNo" style="display: none;">
-					<div class="board_item card">
-						<div class="item type1 card-header bg-white">SNS 로그인</div>
-						<div class="item type2 card-body">
-							<span class="item_detail type">네이버</span> <span
-								class="item_detail type">google</span> <span
-								class="item_detail type">카카오톡</span>
-						</div>
-						<div class="item type3">
-							<i class="fas fa-user-circle">김민기</i> <i
-								class="fas fa-user-circle">이남경</i>
-						</div>
-					</div>
-					<div class="insert_card" data-toggle="modal"
-						data-target="#myModal2">
-						<i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
-					</div>
-				</div>
-			</div><!-- 카드2 -->
-			
-			<!-- 카드3 -->
-			<div class="kanban_item boardcolumn">
-				<div class="kanbanboard type3">
-					<div class="kanbanboard_title board-header card no-move">완료</div>
-					<input type="text" value="3" id="boardNo3" name="brdNo" style="display: none;">
-					<div class="board_item card">
-						<div class="item type1 card-header bg-white">SNS 로그인</div>
-						<div class="item type2 card-body">
-							<span class="item_detail type">네이버</span> <span
-								class="item_detail type">google</span> <span
-								class="item_detail type">카카오톡</span>
-						</div>
-						<div class="item type3">
-							<i class="fas fa-user-circle">김민기</i> <i
-								class="fas fa-user-circle">이남경</i>
-						</div>
-					</div>
-					<div class="insert_card" data-toggle="modal"
-						data-target="#myModal2">
-						<i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
-					</div>
-				</div>
-			</div><!-- 카드3 끝 -->
-			
-			<!-- 카드4 -->
-			<div class="kanban_item boardcolumn">
-				<div class="kanbanboard type4">
-					<div class="kanbanboard_title board-header card no-move">>완료</div>
-					<input type="text" value="4" id="boardNo4" name="brdNo" style="display: none;">
-					<div class="board_item card">
-						<div class="item type1 card-header bg-white">SNS 로그인</div>
-						<div class="item type2 card-body">
-							<span class="item_detail type">네이버</span> <span
-								class="item_detail type">google</span> <span
-								class="item_detail type">카카오톡</span>
-						</div>
-						<div class="item type3">
-							<i class="fas fa-user-circle">김민기</i> <i
-								class="fas fa-user-circle">이남경</i>
-						</div>
-					</div>
-					<div class="insert_card" data-toggle="modal"
-						data-target="#myModal2">
-						<i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
-					</div>
-				</div>
-			</div><!-- 카드4 끝-->
-			
 
 		</div>
 	</div>
@@ -328,6 +250,7 @@
 						<input class="input_detail" type="text" name="title" id="title"
 							placeholder="제목을 입력해주세요." size="50"
 							style="border: none; background: transparent;">
+						<input name="sprNo" type="hidden" value="${sprNo}">	
 				</div>
 				<!-- Modal footer -->
 				<div class="modal_footer">
@@ -360,24 +283,25 @@
 
 	/* 칸반보드 드래그앤드롭(한미화) */
 	$(function() {
-	$(".kanbanboard").sortable({
-		connectWith: ".kanbanboard",
-		handle: ".card-header",
-		cancle : ".no-move",
-		placeholder: "card-placeholder"
+		$(".kanbanboard").sortable({
+			connectWith: ".kanbanboard",
+			handle: ".card-header",
+			cancle : ".no-move",
+			placeholder: "card-placeholder"
+		});
+		$(".no-move").disableSelection();
 	});
-	$(".no-move").disableSelection();
-});
 	
 	/* 보드생성 */
-<<<<<<< HEAD
+
 	$("#newBoard").click(function() {
 		function makeTag(name, value) {
 			var hiddenTag = document.createElement('input');
 			hiddenTag.setAttribute("type", "hidden")
 			hiddenTag.setAttribute("name", name)
 			hiddenTag.setAttribute("value", value)
-=======
+		}
+	});
 	/* $("#newBoard").click(fuction() {
 		$.ajax({
 			url : "newBoard";
@@ -387,7 +311,7 @@
 			const $div = $("#newBoard1");
 			$div.html("");
 			
->>>>>>> feature/minseo-20210412-30
+
 			
 			return hiddenTag
 		}
@@ -396,12 +320,9 @@
 		var brdName = document.getElementById("brdName").value;
 		console.log("brdName : " + brdName);
 		});
-<<<<<<< HEAD
-	
-=======
-	}); */
+	*/
+	//}); 
 
->>>>>>> feature/minseo-20210412-30
 	/* 일정, 업무 버튼 */
 	var count1 = 0;
 	var count2 = 0;
@@ -500,7 +421,7 @@ var count = 0;
 $("#workBtn").click(function(){
     $.ajax({
         type:"POST",
-        url:"${pageContext.servletContext.contextPath}/board/kanbanboard",
+        url:"${pageContext.servletContext.contextPath}/board/cardmember",
         data: {pjtNo: pjtNo},
         success:function(data, status, xhr)
         {
