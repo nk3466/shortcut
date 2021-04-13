@@ -391,138 +391,102 @@ console.log("boardList" +  "${requestScope.boardList}");
 	
 </script>
 <script>
-/* 시큐리티 권한  */
-const token = $("meta[name='_csrf']").attr("content");
-const header = $("meta[name='_csrf_header']").attr("content");
-var pjtNo = ${requestScope.pjtNo};
-
-$(document).ajaxSend(function(e, xhr, options) {
-    xhr.setRequestHeader(header, token);
-});
-
-var count = 0;
-
-$("#workBtn").click(function(){
-
-    $.ajax({
-        type:"POST",
-        url:"${pageContext.servletContext.contextPath}/board/cardmember",
-        data: {pjtNo: pjtNo},
-        success:function(data, status, xhr)
-        {
-        	
-        	console.log(data)
-			if(data !==0){
-				
-				let memberList = data; 
-				let list="";
-				$("#member").empty();
-				for(let i = 0; i < memberList.length; i++){
-					
-					var insertSpan="";
-					insertSpan += '<span class="item_text on">' + memberList[i].name 
-					+ '<i id="delBtn" class="fas fa-times-circle"></i>' 
-		        	+ '<input class="item_num" name="memberList' 
-		        	+ [i] + '" type="hidden" value="' + memberList[i].no + '">' + '</span>';
-					count++;
-					$("#member").append(insertSpan);
-				}
-			} 
-        	
-        
-    },
-        error:function(data){
-			console.log(error);
-		}
-      });
-});
-
-var progress = "";
-$(".insert_card").click(function() {
-	$("#brdremove").remove();
-	var btnplace = $(this).closest(".kanbanboard").find(".boardNo").val();
-	var form = $("#card_insert");
-	var html = '<input type="hidden" id="brdremove" name="brdNo" value="'+btnplace +'">'
-	form.append(html);
+	/* 시큐리티 권한  */
+	const token = $("meta[name='_csrf']").attr("content");
+	const header = $("meta[name='_csrf_header']").attr("content");
+	var pjtNo = ${requestScope.pjtNo};
 	
-	$("#workBtn").click(function() {
-		progress = 1;
-	})
-	
-	$("#progress").click(function() {
-		progress = 2;
-	})
-	
-	$("#completion").click(function() {
-		progress = 3;
-	})
-	
-	$("#hold").click(function() {
-		progress = 4;
-	})
-});
-
-var type = "";
-$("#progressSet").click(function() {
-	
-	$("#request").click(function() {
-		type = 1;
-	})
-	
-	$("#calendarBtn").click(function() {
-		type = 2;
-	})
-});
-
-	
-/* $("#upload").click(function() {
-	
-	const projectMemberList = document.getElementById('myModal2').innerHTML;
-	
-	var cardMember = $('form[name=projectMemberList]').serializeArray();
-	
-	cardMember.push({name : "progress", value : progress});
-	
-	for(let i = 0; i < count; i++){
-	   memberAttend = $('#member').find(".item_text").eq(i).text();
-	   cardMember.push({name : "memberAttend", value : memberAttend});
-	   var index = i + 1;
-	   console.log(memberAttend);
-	}
-	
-	console.table(cardMember);
-	
-	$.ajax({
-		url: "${pageContext.servletContext.contextPath}/card/create",
-		type: "POST",
-		data: {
-			"cardMember" : cardMember,
-			"pjtNo" : pjtNo},
-		success: function(data, status, xhr) {
-			console.log(data);
-	},
-		error: function(xhr, status, error) {
-			console.log(error);
-		}
+	$(document).ajaxSend(function(e, xhr, options) {
+	    xhr.setRequestHeader(header, token);
 	});
 	
-}); */
-
-function emailNull(value){
-	if(value === null) return true;
-	if(typeof value === 'string' && value === '') return true;
-	if(typeof value === 'undefined') return true;
-	return false;
-}
-
-
-
-$(document).on('click','.item_text.on',function(){
+	var count = 0;
 	
-	var $t = $(this);
+	$("#workBtn").click(function(){
 	
-	$t.remove();
-	count--;
-});
+	    $.ajax({
+	        type:"POST",
+	        url:"${pageContext.servletContext.contextPath}/card/cardmember",
+	        data: {pjtNo: pjtNo},
+	        success:function(data, status, xhr)
+	        {
+	        	
+	        	console.log(data)
+				if(data !==0){
+					
+					let memberList = data; 
+					let list="";
+					$("#member").empty();
+					for(let i = 0; i < memberList.length; i++){
+						
+						var insertSpan="";
+						insertSpan += '<span class="item_text on">' + memberList[i].name 
+						+ '<i id="delBtn" class="fas fa-times-circle"></i>' 
+			        	+ '<input class="item_num" name="memberList' 
+			        	+ [i] + '" type="hidden" value="' + memberList[i].no + '">' + '</span>';
+						count++;
+						$("#member").append(insertSpan);
+					}
+				} 
+	        	
+	        
+	    },
+	        error:function(data){
+				console.log(error);
+			}
+	      });
+	});
+	
+	var progress = "";
+	$(".insert_card").click(function() {
+		$("#brdremove").remove();
+		var btnplace = $(this).closest(".kanbanboard").find(".boardNo").val();
+		var form = $("#card_insert");
+		var html = '<input type="hidden" id="brdremove" name="brdNo" value="'+btnplace +'">'
+		form.append(html);
+		
+		$("#workBtn").click(function() {
+			progress = 1;
+		})
+		
+		$("#progress").click(function() {
+			progress = 2;
+		})
+		
+		$("#completion").click(function() {
+			progress = 3;
+		})
+		
+		$("#hold").click(function() {
+			progress = 4;
+		})
+	});
+	
+	var type = "";
+	$("#progressSet").click(function() {
+		
+		$("#request").click(function() {
+			type = 1;
+		})
+		
+		$("#calendarBtn").click(function() {
+			type = 2;
+		})
+	});
+	
+	function emailNull(value){
+		if(value === null) return true;
+		if(typeof value === 'string' && value === '') return true;
+		if(typeof value === 'undefined') return true;
+		return false;
+	}
+	
+	$(document).on('click','.item_text.on',function(){
+		
+		var $t = $(this);
+		
+		$t.remove();
+		count--;
+	});
 </script>
 </html>
