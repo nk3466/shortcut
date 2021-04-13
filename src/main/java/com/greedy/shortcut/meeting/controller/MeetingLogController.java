@@ -179,10 +179,13 @@ public class MeetingLogController {
 	
 	@PostMapping(value="meetinglog/selectMeetingDetail", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public String selectMeetingDetail(@RequestParam Map<String, String> parameters) throws JsonProcessingException {
+	public String selectMeetingDetail(@RequestParam Map<String, String> parameters, Model model) throws JsonProcessingException {
 		int meetingNo = Integer.parseInt(parameters.get("meetingNo"));
 		HashMap<String,Object> meeting = meetingService.selectMeetingDetail(meetingNo);
 
+		model.addAttribute("meeting", meeting);
+		
+		
 		return new ObjectMapper().writeValueAsString(meeting);
 	}
 }
