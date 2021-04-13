@@ -40,7 +40,9 @@ public class BoardController {
 	}
 
 	@GetMapping("/board/kanbanboard/")
-	public String kanbanboard(@RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName, @RequestParam(name="sprNo") int sprNo, Model model) {
+	public String kanbanboard(@RequestParam(name = "pjtNo") int pjtNo,
+			@RequestParam(name = "projectName") String projectName, @RequestParam(name = "sprNo") int sprNo,
+			Model model) {
 		System.out.println("pjtNo : " + pjtNo);
 		System.out.println("projectName : " + projectName);
 		System.out.println("sprNo : " + sprNo);
@@ -54,68 +56,96 @@ public class BoardController {
 		model.addAttribute("sprNo", sprNo);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("boardList", boardList);
-		
 
 		return "/board/kanbanboard";
 	}
 
 	@RequestMapping(value = "/board/cardmember", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public List<ProjectAuthorityDTO> selectMember(@ModelAttribute ProjectAuthorityDTO pAuth, HttpServletRequest request) {
+	public List<ProjectAuthorityDTO> selectMember(@ModelAttribute ProjectAuthorityDTO pAuth,
+			HttpServletRequest request) {
 
 		int pjtNo = Integer.parseInt(request.getParameter("pjtNo"));
-		//int sprNo = Integer.parseInt(request.getParameter("sprNo"));
+		// int sprNo = Integer.parseInt(request.getParameter("sprNo"));
 		System.out.println("pjtNo : " + pjtNo);
 
 		List<ProjectAuthorityDTO> memberList = cardService.selectMember(pjtNo);
 
 		return memberList;
 	}
-	
+
 	@PostMapping("/card/create")
-	public String registCard( @ModelAttribute CardDTO card,HttpServletRequest request, RedirectAttributes rttr)  {
+	public String registCard(@ModelAttribute CardDTO card, HttpServletRequest request, RedirectAttributes rttr) {
 
 		System.out.println("card: " + card);
 		String memberList = request.getParameter("memberList0");
 		System.out.println("memberList: " + memberList);
-		
-		
-		 if(!cardService.registCard(card)) { System.out.println(card); }
-		 
-		
+
+		if (!cardService.registCard(card)) {
+			System.out.println(card);
+		}
+
+		/*
+		 * @PostMapping("/card/regist") public String registCard(@ModelAttribute CardDTO
+		 * card, HttpServletRequest request, RedirectAttributes rttr) {
+		 * 
+		 * 
+		 * if(!cardService.registCard(card)) { System.out.println(card); }
+		 */
+
 		rttr.addFlashAttribute("message", "카드 등록에 성공하셨습니다.");
-		
+
 		return "/board/kanbanboard";
 	}
-	
-	
-	
+
 	@PostMapping("/board/kanbanboard")
 
-	   public String newBoard(@RequestParam(name="title") String title,@RequestParam(name="sprNo") int sprNo ,RedirectAttributes rttr, Model model) {
+	public String newBoard(@RequestParam(name = "title") String title, @RequestParam(name = "sprNo") int sprNo,
+			RedirectAttributes rttr, Model model) {
 
-		
-		System.out.println("title:" +  title);
-		System.out.println("sprNo:" +  sprNo);
-		
+		/*
+		 * @ResponseBody public String newBoard(@RequestParam(name="title") String
+		 * title,@RequestParam(name="sprNo") int sprNo ,@RequestParam(name="pjtNo") int
+		 * pjtNo ,@RequestParam(name="projectName") String projectName
+		 * ,RedirectAttributes redirect, Model model) {
+		 */
+
+		System.out.println("title:" + title);
+		System.out.println("sprNo:" + sprNo);
+
 		BoardDTO newboard = new BoardDTO();
 		newboard.setBrdName(title);
 		newboard.setSprNo(sprNo);
 		newboard.setBrdOrder(1);
 		boolean result = boardService.insertnewBoard(newboard);
-		System.out.println( result);
+		System.out.println(result);
 
-	   	 
-	      return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+projectName;
+		/*
+		 * return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+
+		 * projectName;
+		 */
 
-	   
 		rttr.addFlashAttribute("message", "보드 등록에 성공하셨습니다.");
- 
-	      return "/board/kanbanboard";
 
-	   }
-	
-	
+		return "/board/kanbanboard";
+
+	}
+
+	/* 현재 스프린트의 보드리스트 구하기 */
+	/*
+	 * List<BoardDTO> boardList = boardService.selectboardList(sprNo);
+	 * 
+	 * 보드 순번 업데이트 int successUpdateCount = 0; for(int i = 0; i < boardList.size();
+	 * i++) {
+	 * 
+	 * successUpdateCount +=
+	 * boardService.modifyBoardOrder(boardList.get(i).getBrdNo()); }
+	 * System.out.println("successUpdateCount : " + successUpdateCount); 새로운 보드 인서트
+	 * if(successUpdateCount == boardList.size()) { boolean result =
+	 * boardService.insertnewBoard(newboard); System.out.println(result); }
+	 * 
+	 * return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+
+	 * projectName; }
+	 */
+
 }
-
-

@@ -17,5 +17,7 @@ public interface BoardService {
 
 	List<BoardDTO> selectboardList(int sprNo);
 
+	int modifyBoardOrder(int brdNo);
+
 
 }

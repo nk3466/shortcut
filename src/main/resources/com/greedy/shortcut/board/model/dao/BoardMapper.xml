@@ -76,16 +76,36 @@
      
  </select>
  
-<insert id="insertnewBoard" parameterType="BoardDTO">
-   INSERT
-     INTO BOARD A
-    (
-     A.BRD_NO, A.BRD_NAME, A.BRD_ENROLL_DATE, A.BRD_DEL_YN ,A.SPR_NO,A.BRD_ORDER
-    )
-    VALUES
-    (SEQ_BRD_NO.NEXTVAL, #{brdName}, SYSDATE, 'N',#{sprNo},#{brdOrder}
-    )
-</insert>
+ 	<update id="modifyBoardOrder" parameterType="_int">
+	 	UPDATE BOARD A
+	       SET A.BRD_ORDER = (SELECT B.BRD_ORDER
+	                            FROM BOARD B
+	                           WHERE B.BRD_NO = #{brdNo}
+	                          ) + 1
+	    WHERE A.BRD_NO = #{brdNo}
+ 	</update>
+ 
+	<insert id="insertnewBoard" parameterType="BoardDTO">
+		INSERT
+	      INTO BOARD A
+	    (
+	      A.BRD_NO
+	    , A.BRD_NAME
+	    , A.BRD_ENROLL_DATE
+	    , A.BRD_DEL_YN 
+	    , A.SPR_NO
+	    , A.BRD_ORDER
+	    )
+	    VALUES
+	    (
+	      SEQ_BRD_NO.NEXTVAL
+	    , #{brdName}
+	    , SYSDATE
+	    , 'N' 
+	    , #{sprNo}
+	    , #{brdOrder}
+	    )
+	</insert>
 
 	
  </mapper>
