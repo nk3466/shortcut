@@ -47,11 +47,11 @@
 				<div class="project_info">
 					<div class="info_item">
 						<div class="item_name">프로젝트명</div>
-						<div class="item_detail"><input type="text" id="projectName" placeholder="${ projectName }" readonly></div>
+						<div class="item_detail"><input type="text" id="projectName" placeholder="${ projectName }" readonly style="border: none; background: transparent;"></div>
 					</div>
 					<div class="info_item">
 						<div class="item_name">SPRINT_NO</div>
-						<div class="item_detail"><input type="text" id="projectName" placeholder="${ requestScope.sprNo }" readonly></div>
+						<div class="item_detail"><input type="text" id="projectName" placeholder="${ requestScope.sprNo }" readonly style="border: none; background: transparent;"></div>
 					</div>
 					<div class="info_item">
 						<div class="item_name">참여인원</div>
@@ -71,27 +71,7 @@
 					
 				</div>
 			</div> <!-- 보드 정보 영역 끝 -->
-			<!-- SELECT
-       A.PJT_NAME
-     , C.SPR_NO
-     , D.MEM_NAME
-     , E.MEM_NO
-  FROM PROJECT A 
-  JOIN BACKLOG B ON(A.PJT_NO = B.PJT_NO)
-  JOIN SPRINT C ON (C.BLG_NO = B.BLG_NO)
-  JOIN PJT_AUTHORITY E ON (A.PJT_NO = E.PJT_NO)
-  JOIN MEMBER D ON (D.MEM_NO = E.MEM_NO)
-  WHERE A.PJT_NO = 1
-    AND SPR_NO = 1; -->
 			
-			<!--<c:forEach var="msgList" items="${requestScope.msgList }">
-							<div class="recv_item"><c:out value="${ msgList.no }"/></div>
-							<div class="recv_item"><c:out value="${ msgList.pjtName }"/></div>
-							<div class="recv_item"><c:out value="${ msgList.type }"/></div>
-							<div class="recv_item"><c:out value="${ msgList.txt }"/></div>
-							<div class="recv_item"><c:out value="${ msgList.memName }"/></div>
-							<div class="recv_item"><c:out value="${ msgList.date }"/></div>
-                         </c:forEach> -->
 <!-- 내가 만든 보드  -->
 <c:forEach var="boardList" items="${boardList }">
 				<div class="kanban_item boardcolumn">
@@ -243,8 +223,10 @@ console.log("boardList" +  "${requestScope.boardList}");
 		<div class="modal-dialog">
 			<div class="modal-header type">Short Cut</div>
 				<div class="modal-content">
-				<form action="${ pageContext.servletContext.contextPath }/board/kanbanboard"
-		method="post">
+				<form action="${ pageContext.servletContext.contextPath }/board/kanbanboard" method="post">
+				<input type="hidden" name="pjtNo" value="${pjtNo}">
+				<input type="hidden" name="projectName" value="${projectName}">
+				
 					<div class="modal-body">
 					
 						<input class="input_detail" type="text" name="title" id="title"

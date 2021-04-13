@@ -83,8 +83,7 @@ public class BoardController {
 	
 	
 	@PostMapping("/board/kanbanboard")
-	@ResponseBody
-	   public String newBoard(@RequestParam(name="title") String title,@RequestParam(name="sprNo") int sprNo ,RedirectAttributes redirect, Model model) {
+	   public String newBoard(@RequestParam(name="title") String title,@RequestParam(name="sprNo") int sprNo ,@RequestParam(name="pjtNo") int pjtNo ,@RequestParam(name="projectName") String projectName ,RedirectAttributes redirect, Model model) {
 		
 		System.out.println("title:" +  title);
 		System.out.println("sprNo:" +  sprNo);
@@ -95,9 +94,8 @@ public class BoardController {
 		newboard.setBrdOrder(1);
 		boolean result = boardService.insertnewBoard(newboard);
 		System.out.println( result);
-	   
-//	 
-	      return "redirect:/board/kanbanboard";
+	   	 
+	      return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+projectName;
 	   }
 	
 	
