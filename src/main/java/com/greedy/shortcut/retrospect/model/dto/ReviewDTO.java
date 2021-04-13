@@ -8,11 +8,12 @@ public class ReviewDTO implements java.io.Serializable {
 	private int reviewNo;
 	private int sprNo;
 	private int memNo;
+	private String memName;
 	
 	public ReviewDTO() {}
 
 	public ReviewDTO(String reviewLikeTxt, String reviewLearnTxt, String reviewMissTxt, int reviewNo, int sprNo,
-			int memNo) {
+			int memNo, String memName) {
 		super();
 		this.reviewLikeTxt = reviewLikeTxt;
 		this.reviewLearnTxt = reviewLearnTxt;
@@ -20,6 +21,7 @@ public class ReviewDTO implements java.io.Serializable {
 		this.reviewNo = reviewNo;
 		this.sprNo = sprNo;
 		this.memNo = memNo;
+		this.memName = memName;
 	}
 
 	public String getReviewLikeTxt() {
@@ -70,10 +72,21 @@ public class ReviewDTO implements java.io.Serializable {
 		this.memNo = memNo;
 	}
 
+	public String getMemName() {
+		return memName;
+	}
+
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
+
 	@Override
 	public String toString() {
 		return "ReviewDTO [reviewLikeTxt=" + reviewLikeTxt + ", reviewLearnTxt=" + reviewLearnTxt + ", reviewMissTxt="
-				+ reviewMissTxt + ", reviewNo=" + reviewNo + ", sprNo=" + sprNo + ", memNo=" + memNo + "]";
+				+ reviewMissTxt + ", reviewNo=" + reviewNo + ", sprNo=" + sprNo + ", memNo=" + memNo + ", memName="
+				+ memName + "]";
 	}
+
+	
 	
 }

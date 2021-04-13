@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.greedy.shortcut.board.model.dto.BacklogDTO;
 import com.greedy.shortcut.common.paging.PageInfoDTO;
 import com.greedy.shortcut.retrospect.model.dao.RetrospectMapper;
+import com.greedy.shortcut.retrospect.model.dto.ProjectAndSprintDTO;
+import com.greedy.shortcut.retrospect.model.dto.ReviewAndProjectMemberDTO;
 import com.greedy.shortcut.retrospect.model.dto.ReviewDTO;
 
 @Service("retrospectService")
@@ -23,8 +25,8 @@ public class RetrospectServiceImpl implements RetrospectService {
 	}
 	
 	@Override
-	public List<ReviewDTO> selectReview() {
-		return retrospectMapper.selectReview();
+	public List<ReviewDTO> selectReview(int blgNo) {
+		return retrospectMapper.selectReview(blgNo);
 	}
 	
 	@Override
@@ -46,6 +48,16 @@ public class RetrospectServiceImpl implements RetrospectService {
 	@Override
 	public int selectReviewRegistYn(int blgNo) {
 		return retrospectMapper.selectReviewRegistYn(blgNo);
+	}
+
+	@Override
+	public ProjectAndSprintDTO selectPtjAndSprName(int blgNo) {
+		return retrospectMapper.selectPtjAndSprName(blgNo);
+	}
+
+	@Override
+	public List<ReviewAndProjectMemberDTO> selectReviewAndProjectMember(int pjtNo) {
+		return retrospectMapper.selectReviewAndProjectMember(pjtNo);
 	}
 
 }

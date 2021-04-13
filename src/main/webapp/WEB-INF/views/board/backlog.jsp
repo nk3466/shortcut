@@ -194,8 +194,7 @@
 									<th class="">종료날짜</th>
 									<th class="">데모방식</th>
 									<th class="">비고</th>
-									<th>리뷰 작성 / 수정</th>
-									<th>기록</th>
+									<th class="">리뷰 작성 / 수정</th>
 								</tr>
 							</thead>
 							<tbody id="reviewBody">
@@ -261,14 +260,13 @@
 											/* 0보다 크면 null이 아니기에 리뷰 수정 버튼 */
 											let retrospectButtonType = ""; 
 											if(data[index].reviewRegistYn > 0) {
-												retrospectButtonType = "리뷰 수정";
+												retrospectButtonType = "기록";
 											} else {
 												retrospectButtonType = "리뷰 작성";
 											}
 											
 											/* 버튼 생성 */
 											var retrospectBtnHtml = '<input type="button" value="' + retrospectButtonType + '" onclick="retrospect(this);">';
-											var recordBtnHtml = '<input type="button" value="기록" onclick="retrospectRecord(this);">';
 											
 											/* tr태그에 만들어 값 담기 */
 											$tr = $("<tr>");
@@ -279,7 +277,6 @@
 											$demoMemoTd = $("<td>").text(data[index].blgDemoMemo);
 											$refMemoTd = $("<td>").text(data[index].blgRefMemo);
 											$retrospectBtnTd = $("<td>").html(retrospectBtnHtml);
-											$recordBtnTd = $("<td>").html(recordBtnHtml);
 											
 											$tr.append($noTd);
 											$tr.append($nameTd);
@@ -288,7 +285,6 @@
 											$tr.append($demoMemoTd);
 											$tr.append($refMemoTd);
 											$tr.append($retrospectBtnTd);
-											$tr.append($recordBtnTd);
 											
 											/* 테이블에 추가 */
 											$reviewBody.append($tr);
@@ -401,11 +397,6 @@
 					    		
 					    	location.href = "${ pageContext.servletContext.contextPath }/board/backlog/retrospect/" + blgNo;
 						} 
-						
-						/* 생성된 스프린트 리뷰  접속 */
-						function retrospectRecord() {
-							
-						}
 					</script>
 					<!-- Ajax 스프린트 리뷰 게시판 페이징 끝-->
 				</div>
