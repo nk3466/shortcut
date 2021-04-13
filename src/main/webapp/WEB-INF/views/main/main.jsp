@@ -31,7 +31,7 @@
 				</div>
 				<div class="main_line"></div>
 				<div class="main_text2">
-					From the small stuff to the big picture, ShortCut organizes work so teams know what to do, why it matters, and how to get it done.
+					From the small stuff to the big picture, ShortCut organizes work so teams know what to do, why it matters, and how to get it done.
 				</div>
 			</div>
 			<div class="main_img_area">

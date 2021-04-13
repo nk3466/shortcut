@@ -60,4 +60,14 @@ public class RetrospectServiceImpl implements RetrospectService {
 		return retrospectMapper.selectReviewAndProjectMember(pjtNo);
 	}
 
+	@Override
+	public int selectPjtNo(Integer blgNo) {
+		return retrospectMapper.selectPjtNo(blgNo);
+	}
+
+	@Override
+	public int registReview(ReviewDTO reviewDTO) {
+		return retrospectMapper.registReview(reviewDTO);
+	}
+
 }

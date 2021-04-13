@@ -54,6 +54,9 @@
 		</div>
 		<div class="retrospect_content">
 		<form method="post" id="myForm">
+			<input type="text" name="blgNo" id="blgNo" value="${ requestScope.blgNo }" style="display: none;">
+			<input type="text" name="pjtNo" id="pjtNo" value="${ requestScope.pjtNo }" style="display: none;">
+			<input type="text" name="pjtName" id="pjtName" value="${ requestScope.pjtName }" style="display: none;">
 			<table>
 				<tr>
 					<th></th>

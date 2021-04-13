@@ -196,4 +196,31 @@
          WHERE A.PJT_NO = #{pjtNo}
 	</select>
 
+	<select id="selectPjtNo" resultMap="backlogResultMap" parameterType="_int">
+		SELECT PJT_NO
+          FROM BACKLOG
+         WHERE BLG_NO = #{blgNo}
+	</select>
+
+	<insert id="registReview" parameterType="ReviewDTO">
+		INSERT
+		  INTO REVIEW
+		( 
+		  REVIEW_NO
+		, REVIEW_LIKE_TXT
+		, REVIEW_LEARN_TXT
+		, REVIEW_MISS_TXT
+		, SPR_NO
+		, MEM_NO
+		)
+		VALUES
+		(
+		  SEQ_REVIEW_NO.NEXTVAL
+		, #{reviewLikeTxt}
+		, #{reviewLearnTxt}
+		, #{reviewMissTxt}
+		, #{sprNo}
+		, #{memNo}
+		)
+	</insert>
 </mapper>
