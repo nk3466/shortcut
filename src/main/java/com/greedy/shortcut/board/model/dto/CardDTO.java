@@ -14,6 +14,7 @@ public class CardDTO {
 	private int type;
 	private int memNo;
 	private String txt;
+	private List<Integer> memberList;
 
 	private List<CardScheduleDTO> cardScheduleDTO;
 	private List<CardTaskDTO> cardTaskDTO;
@@ -21,7 +22,8 @@ public class CardDTO {
 	public CardDTO() {}
 
 	public CardDTO(int no, String title, Date enrollDate, String delNo, int brdNo, int order, int type, int memNo,
-			String txt, List<CardScheduleDTO> cardScheduleDTO, List<CardTaskDTO> cardTaskDTO) {
+			String txt, List<Integer> memberList, List<CardScheduleDTO> cardScheduleDTO,
+			List<CardTaskDTO> cardTaskDTO) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -32,8 +34,16 @@ public class CardDTO {
 		this.type = type;
 		this.memNo = memNo;
 		this.txt = txt;
+		this.memberList = memberList;
 		this.cardScheduleDTO = cardScheduleDTO;
 		this.cardTaskDTO = cardTaskDTO;
+	}
+
+	@Override
+	public String toString() {
+		return "CardDTO [no=" + no + ", title=" + title + ", EnrollDate=" + EnrollDate + ", delNo=" + delNo + ", brdNo="
+				+ brdNo + ", order=" + order + ", type=" + type + ", memNo=" + memNo + ", txt=" + txt + ", memberList="
+				+ memberList + ", cardScheduleDTO=" + cardScheduleDTO + ", cardTaskDTO=" + cardTaskDTO + "]";
 	}
 
 	public int getNo() {
@@ -70,6 +80,10 @@ public class CardDTO {
 
 	public String getTxt() {
 		return txt;
+	}
+
+	public List<Integer> getMemberList() {
+		return memberList;
 	}
 
 	public List<CardScheduleDTO> getCardScheduleDTO() {
@@ -116,6 +130,10 @@ public class CardDTO {
 		this.txt = txt;
 	}
 
+	public void setMemberList(List<Integer> memberList) {
+		this.memberList = memberList;
+	}
+
 	public void setCardScheduleDTO(List<CardScheduleDTO> cardScheduleDTO) {
 		this.cardScheduleDTO = cardScheduleDTO;
 	}
@@ -124,12 +142,6 @@ public class CardDTO {
 		this.cardTaskDTO = cardTaskDTO;
 	}
 
-	@Override
-	public String toString() {
-		return "CardDTO [no=" + no + ", title=" + title + ", EnrollDate=" + EnrollDate + ", delNo=" + delNo + ", brdNo="
-				+ brdNo + ", order=" + order + ", type=" + type + ", memNo=" + memNo + ", txt=" + txt
-				+ ", cardScheduleDTO=" + cardScheduleDTO + ", cardTaskDTO=" + cardTaskDTO + "]";
-	}
 	
 	
 

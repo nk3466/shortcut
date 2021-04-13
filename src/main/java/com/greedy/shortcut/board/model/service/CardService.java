@@ -16,6 +16,8 @@ public interface CardService {
 
 	boolean cardMember(int memberNo, int cNo);
 
+	boolean registCard(CardDTO card);
+
 
 
 }

@@ -1,5 +1,8 @@
 package com.greedy.shortcut.board.controller;
 
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,6 +64,7 @@ public class BoardController {
 	public List<ProjectAuthorityDTO> selectMember(@ModelAttribute ProjectAuthorityDTO pAuth, HttpServletRequest request) {
 
 		int pjtNo = Integer.parseInt(request.getParameter("pjtNo"));
+		//int sprNo = Integer.parseInt(request.getParameter("sprNo"));
 		System.out.println("pjtNo : " + pjtNo);
 
 		List<ProjectAuthorityDTO> memberList = cardService.selectMember(pjtNo);
@@ -68,12 +72,16 @@ public class BoardController {
 		return memberList;
 	}
 	
-	@PostMapping("/card/regist")
-	public String registCard(@ModelAttribute CardDTO card, HttpServletRequest request, RedirectAttributes rttr)  {
+	@PostMapping("/card/create")
+	public String registCard( @ModelAttribute CardDTO card,HttpServletRequest request, RedirectAttributes rttr)  {
+
+		System.out.println("card: " + card);
+		String memberList = request.getParameter("memberList0");
+		System.out.println("memberList: " + memberList);
 		
-		/*
-		 * if(!cardService.registCard(card)) { System.out.println(card); }
-		 */
+		
+		 if(!cardService.registCard(card)) { System.out.println(card); }
+		 
 		
 		rttr.addFlashAttribute("message", "카드 등록에 성공하셨습니다.");
 		
@@ -83,8 +91,7 @@ public class BoardController {
 	
 	
 	@PostMapping("/board/kanbanboard")
-	@ResponseBody
-	   public String newBoard(@RequestParam(name="title") String title,@RequestParam(name="sprNo") int sprNo ,RedirectAttributes redirect, Model model) {
+	   public String newBoard(@RequestParam(name="title") String title,@RequestParam(name="sprNo") int sprNo ,RedirectAttributes rttr, Model model) {
 		
 		System.out.println("title:" +  title);
 		System.out.println("sprNo:" +  sprNo);
@@ -96,8 +103,9 @@ public class BoardController {
 		boolean result = boardService.insertnewBoard(newboard);
 		System.out.println( result);
 	   
-//	 
-	      return "redirect:/board/kanbanboard";
+		rttr.addFlashAttribute("message", "보드 등록에 성공하셨습니다.");
+ 
+	      return "/board/kanbanboard";
 	   }
 	
 	

@@ -25,10 +25,6 @@ public class CardServiceImpl implements CardService {
 		return cardMapper.selectMember(pjtNo);
 	}
 
-	@Override
-	public boolean createCard(CardDTO card) {
-		return cardMapper.createCard(card) > 0? true:false;
-	}
 
 	@Override
 	public CardDTO selectCard() {
@@ -38,6 +34,18 @@ public class CardServiceImpl implements CardService {
 
 	@Override
 	public boolean cardMember(int memberNo, int cNo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean registCard(CardDTO card) {
+		
+		return cardMapper.registCard(card);
+	}
+
+	@Override
+	public boolean createCard(CardDTO card) {
 		// TODO Auto-generated method stub
 		return false;
 	}
