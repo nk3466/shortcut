@@ -51,7 +51,7 @@ public class BoardController {
 		model.addAttribute("sprNo", sprNo);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("boardList", boardList);
-		
+
 
 		return "/board/kanbanboard";
 	}
@@ -67,38 +67,49 @@ public class BoardController {
 
 		return memberList;
 	}
-	
+
 	@PostMapping("/card/regist")
 	public String registCard(@ModelAttribute CardDTO card, HttpServletRequest request, RedirectAttributes rttr)  {
-		
+
 		/*
 		 * if(!cardService.registCard(card)) { System.out.println(card); }
 		 */
-		
+
 		rttr.addFlashAttribute("message", "카드 등록에 성공하셨습니다.");
-		
+
 		return "/board/kanbanboard";
 	}
-	
-	
-	
+
+
+
 	@PostMapping("/board/kanbanboard")
-	   public String newBoard(@RequestParam(name="title") String title,@RequestParam(name="sprNo") int sprNo ,@RequestParam(name="pjtNo") int pjtNo ,@RequestParam(name="projectName") String projectName ,RedirectAttributes redirect, Model model) {
-		
+	@ResponseBody
+	public String newBoard(@RequestParam(name="title") String title,@RequestParam(name="sprNo") int sprNo ,@RequestParam(name="pjtNo") int pjtNo ,@RequestParam(name="projectName") String projectName ,RedirectAttributes redirect, Model model) {
+	
 		System.out.println("title:" +  title);
 		System.out.println("sprNo:" +  sprNo);
-		
+
 		BoardDTO newboard = new BoardDTO();
 		newboard.setBrdName(title);
 		newboard.setSprNo(sprNo);
 		newboard.setBrdOrder(1);
-		boolean result = boardService.insertnewBoard(newboard);
-		System.out.println( result);
 	   	 
-	      return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+projectName;
-	   }
-	
-	
+		/* 현재 스프린트의 보드리스트 구하기 */
+		List<BoardDTO> boardList = boardService.selectboardList(sprNo);
+		
+		/* 보드 순번 업데이트 */
+		int isSuccessUpdateAll = boardService.modifyBoardOrder(boardList);
+		System.out.println("isSuccessUpdateAll : " + isSuccessUpdateAll);
+		/* 새로운 보드 인서트 */
+		if(isSuccessUpdateAll > 0) {
+			boolean result = boardService.insertnewBoard(newboard);
+			System.out.println(result);
+		} 
+
+		return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+projectName;
+	}
+
+
 }
 
 
