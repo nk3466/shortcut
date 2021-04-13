@@ -21,4 +21,8 @@ public interface RetrospectMapper {
 	ProjectAndSprintDTO selectPtjAndSprName(int blgNo);
 	
 	List<ReviewAndProjectMemberDTO> selectReviewAndProjectMember(int pjtNo);
+	
+	int selectPjtNo(Integer blgNo);
+	
+	int registReview(ReviewDTO reviewDTO);
 }

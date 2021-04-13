@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,45 +31,45 @@ import com.greedy.shortcut.retrospect.model.service.RetrospectService;
 @Controller
 @RequestMapping("/*")
 public class RetrospectController {
-	
+
 	private final RetrospectService retrospectService;
-	
+
 	@Autowired
 	public RetrospectController(RetrospectService retrospectService) {
 		this.retrospectService = retrospectService;
 	}
-	
+
 	@GetMapping(value="board/backlog/reviewPaging", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public String reviewPaging(Model model, @RequestParam Map<String, String> parameters) throws JsonProcessingException {
-		
+
 		int pjtNo = Integer.parseInt(parameters.get("pjtNo")); 
 		String currentPage = parameters.get("currentPage"); 
 		int limit = 5;
 		int buttonAmount = 3;
-		
+
 		int pageNo = 1;
 		int totalCount = 0;
-		
+
 		if(currentPage != null && !"".equals(currentPage)) {
 			pageNo = Integer.parseInt(currentPage);
 		}
-		
+
 		if(pageNo <= 0) {
 			pageNo = 1;
 		}
-	
+
 		List<BacklogDTO> allfinishSprintList = retrospectService.selectFinishSprint(pjtNo);
 		for(BacklogDTO backlog : allfinishSprintList) {
 			System.out.println(backlog);
 		}
-	
+
 		/* 총 개수 */
 		totalCount = allfinishSprintList.size();
-		
+
 		PageInfoDTO pageInfo = Pagenation.getPageInfo(pageNo, totalCount, limit, buttonAmount);
 		System.out.println(pageInfo);
-		
+
 		List<BacklogDTO> finishSprintList = retrospectService.selectPagingFinishSprint(pjtNo, pageInfo);
 		for(int i = 0; i < finishSprintList.size(); i++ ) {
 			/* 등록된 리뷰인지 수정해야할 리뷰인지 검색(버튼에 표기하기 위해) */
@@ -78,19 +80,19 @@ public class RetrospectController {
 			} else {
 				finishSprintList.get(i).setReviewRegistYn(0);
 			}
-			
+
 			finishSprintList.get(i).setStartPage(pageInfo.getStartPage());
 			finishSprintList.get(i).setEndPage(pageInfo.getEndPage());
 			finishSprintList.get(i).setMaxPage(pageInfo.getMaxPage());
 			System.out.println("finishSprintList " + i + " : " + finishSprintList.get(i));
 		}
-		
+
 		return new ObjectMapper().writeValueAsString(finishSprintList);
 	}
-	
+
 	@GetMapping("board/backlog/retrospect/{blgNo}")
 	public ModelAndView retrospect(@PathVariable("blgNo") int blgNo, ModelAndView mv) {
-		
+
 		System.out.println("blgNo : " + blgNo);
 		/* 리뷰 리스트 */
 		List<ReviewDTO> review = retrospectService.selectReview(blgNo);
@@ -102,69 +104,81 @@ public class RetrospectController {
 		String pjtName = projectAndSprintName.getProjectDTO().getProjectName();
 		String sprName = projectAndSprintName.getSprintDTO().getSprName();
 		int pjtNo = projectAndSprintName.getProjectDTO().getPjtNo();
-		
+
 		/* 프로젝트 전체 참여 인원 조회 */
 		List<ReviewAndProjectMemberDTO> reviewAndProjectMemberList = retrospectService.selectReviewAndProjectMember(pjtNo);
 		for(ReviewAndProjectMemberDTO rpm : reviewAndProjectMemberList) {
 			System.out.println(rpm);
 		}
-		
+
 		mv.addObject("blgNo", blgNo);
 		mv.addObject("review", review);
 		mv.addObject("pjtName", pjtName);
 		mv.addObject("sprName", sprName);
 		mv.addObject("reviewAndProjectMemberList", reviewAndProjectMemberList);
 		mv.setViewName("retrospect/retrospect");
-		
+
 		return mv;
 	}
-	
+
 	@PostMapping("/board/backlog/retrospect/regist")
-	public ModelAndView modifyReview(ModelAndView mv, @ModelAttribute ReviewDTO review) {
+	public ModelAndView modifyReview(ModelAndView mv, @ModelAttribute ReviewDTO review, HttpServletRequest request) {
+
+		System.out.println("아나");
 		
+		String blgNo = request.getParameter("blgNo");
+		int blgNo2 = Integer.parseInt(request.getParameter("blgNo"));
+		String pjtName = request.getParameter("pjtName");
+		
+		System.out.println(blgNo);
+		System.out.println(pjtName);
 		System.out.println(review);
 		
-		String[] reviewLikeTxt = review.getReviewLikeTxt().split(",");
-		String[] reviewLearnTxt = review.getReviewLearnTxt().split(",");
-		String[] reviewMissTxt = review.getReviewMissTxt().split(",");
-		String[] memName = review.getMemName().split(",");
-		
-		List<String> reviewLikeTxtList = new ArrayList<>(); 
-		List<String> reviewLearnTxtList = new ArrayList<>(); 
-		List<String> reviewMissTxtList = new ArrayList<>(); 
-		List<String> memNameList = new ArrayList<>(); 
-		
+		Integer pjtNo = retrospectService.selectPjtNo(blgNo2);
+		System.out.println(pjtNo);
+
+		String[] reviewLikeTxt = review.getReviewLikeTxt().split(",", -1);
+		String[] reviewLearnTxt = review.getReviewLearnTxt().split(",", -1);
+		String[] reviewMissTxt = review.getReviewMissTxt().split(",", -1);
+		String[] memName = review.getMemName().split(",", -1);
+
 		System.out.println("memName.length : " + memName.length);
-		
+
+		List<ReviewDTO> insertReviewList = new ArrayList<>();
+
 		for(int i = 0; i < memName.length; i++) {
-			reviewLikeTxtList.add(reviewLikeTxt[i]);
-			reviewLearnTxtList.add(reviewLearnTxt[i]);
-			reviewMissTxtList.add(reviewMissTxt[i]);
-			memNameList.add(memName[i]);
+			ReviewDTO rv = new ReviewDTO();
+			rv.setReviewLikeTxt(reviewLikeTxt[i]);
+			rv.setReviewLearnTxt(reviewLearnTxt[i]);
+			rv.setReviewMissTxt(reviewMissTxt[i]);
+			rv.setMemName(memName[i]);
+			rv.setSprNo(blgNo2);
+			
+			insertReviewList.add(rv);
+		}
+
+		for(ReviewDTO ird : insertReviewList) {
+			System.out.println(ird);
 		}
 		
-		for(String like : reviewLikeTxtList) {
-			System.out.println(like);
+		List<ReviewAndProjectMemberDTO> reviewAndProjectMemberList = retrospectService.selectReviewAndProjectMember(pjtNo);
+		for(int i = 0; i < reviewAndProjectMemberList.size(); i++) {
+			if(reviewAndProjectMemberList.get(i).getMemberDTO().getName().equals(insertReviewList.get(i).getMemName())) {
+				insertReviewList.get(i).setMemNo(reviewAndProjectMemberList.get(i).getMemberDTO().getNo());
+			}
 		}
-		System.out.println();
 		
-		for(String learn : reviewLearnTxtList) {
-			System.out.println(learn);
+		int success = 0;
+		for(int i = 0; i < insertReviewList.size(); i++) {
+			success += retrospectService.registReview(insertReviewList.get(i));
 		}
-		System.out.println();
 		
-		for(String miss : reviewMissTxtList) {
-			System.out.println(miss);
+		if(success > 0 && insertReviewList.size() == success) {
+			System.out.println("성공");
 		}
-		System.out.println();
 		
-		for(String name : memNameList) {
-			System.out.println(name);
-		}
-		System.out.println();
-		
-		
+		mv.setViewName("redirect:/board/backlog/?pjtNo=" + pjtNo +"&projectName=" + pjtName);
 		return mv;
 	}
-	
+
 }
