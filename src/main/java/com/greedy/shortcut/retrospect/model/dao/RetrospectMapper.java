@@ -22,7 +22,11 @@ public interface RetrospectMapper {
 	
 	List<ReviewAndProjectMemberDTO> selectReviewAndProjectMember(int pjtNo);
 	
-	int selectPjtNo(Integer blgNo);
+	int selectPjtNo(int blgNo);
 	
 	int registReview(ReviewDTO reviewDTO);
+
+	int updateReview(ReviewDTO reviewDTO);
+
+	int removeReview(ReviewDTO reviewDTO);
 }
