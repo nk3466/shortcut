@@ -251,8 +251,8 @@ if(document.getElementById("pjSelectOne")) {
 				return hiddenTag
 			}
 			
-		   /* var memberNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
-		   console.log(memberNo); */
+		   var loginNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
+		   console.log(loginNo);
 		   
 		   /* 프로젝트 정보 */
 		   const projectMemberList = document.getElementById('dynamicTbody').innerHTML;
@@ -304,7 +304,7 @@ if(document.getElementById("pjSelectOne")) {
 			   success : function(data, textStatus, xhr) {
 				   alert("프로젝트 생성이 완료되었습니다.");
 				   document.location.reload();
-					location.href = "${pageContext.servletContext.contextPath}/board/project_board/" + memberNo;
+					location.href = "${pageContext.servletContext.contextPath}/board/project_board/" + loginNo;
 			   },
 				error : function(xhr, status, error) {
 					console.log(error);
