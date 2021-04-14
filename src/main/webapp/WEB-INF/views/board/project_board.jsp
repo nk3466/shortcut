@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- 파비콘 -->
+<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
 <meta name="_csrf" content="${_csrf.token}">
 <meta name="_csrf_header" content="${_csrf.headerName}">
 

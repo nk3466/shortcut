@@ -18,7 +18,16 @@ public class UserDetailsVO implements UserDetails {
 	private String password;	// PW
 	private String name;
 	private int no;
+	private String gitUrl;
 	private List<GrantedAuthority> authorities;
+	
+	public String getGitUrl() {
+		return gitUrl;
+	}
+	
+	public void setGitUrl(String gitUrl) {
+		this.gitUrl = gitUrl;
+	}
 	
 	public int getNo() {
 		return this.no;

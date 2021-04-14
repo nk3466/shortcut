@@ -61,13 +61,23 @@ public class RetrospectServiceImpl implements RetrospectService {
 	}
 
 	@Override
-	public int selectPjtNo(Integer blgNo) {
+	public int selectPjtNo(int blgNo) {
 		return retrospectMapper.selectPjtNo(blgNo);
 	}
 
 	@Override
 	public int registReview(ReviewDTO reviewDTO) {
 		return retrospectMapper.registReview(reviewDTO);
+	}
+
+	@Override
+	public int updateReview(ReviewDTO reviewDTO) {
+		return retrospectMapper.updateReview(reviewDTO);
+	}
+
+	@Override
+	public int removeReview(ReviewDTO reviewDTO) {
+		return retrospectMapper.removeReview(reviewDTO);
 	}
 
 }
