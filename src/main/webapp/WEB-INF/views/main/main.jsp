@@ -115,16 +115,97 @@
 										var $githubArea = document.getElementById("githubArea");
 										let $githubUrlArea = document.getElementById("githubUrlArea");
 										
-										getIssues();
+										var gitInfo = "${ sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.gitUrl }";
+										var gitInfoArray = gitInfo.split("https://github.com/");
+										var gitDetailInfo = gitInfoArray[1].split("/");
+										console.table(gitInfoArray);
+										console.log(gitInfoArray[1]); 
+										console.table(gitDetailInfo);
+										console.log(gitDetailInfo[0]);
+										console.log(gitDetailInfo[1]);
+										var gitId = gitDetailInfo[0];
+										var gitIdProject = gitDetailInfo[1];
+										
+										let today = new Date();
+										
+										let year = today.getFullYear();
+										let month = "" + (today.getMonth() + 1);
+										let beforMonth = "" + (today.getMonth() + 1 - 3);
+										let date = "" + today.getDate();
+										let day = today.getDay();
+										
+										if(month.length == 1) {
+											month = "0" + month;
+										}
+										if(beforMonth.length == 1) {
+											beforMonth = "0" + beforMonth;
+										}
+										if(date.length == 1) {
+											date = "0" + date;
+										}
+										
+										//var url = "https://api.github.com/search/issues?q=author:" + gitId + " repo:" + gitId + "/" + gitIdProject;
+										var url = "https://api.github.com/search/commits?q=repo:" + gitId + "/" + gitIdProject + " author-date:" + year + "-" + beforMonth + "-" + date +
+												".." + year + "-" + month + "-" + date;
+										//var url = "https://api.github.com/search/commits?q=repo:" + "freecodecamp" + "/" + "freecodecamp" + " author-date:" + year + "-" + beforMonth + "-" + date +
+										//		".." + year + "-" + month + "-" + date;
+										//var url = "https://api.github.com/search/commits?q=repo:freecodecamp/freecodecamp author-date:2021-02-01..2021-03-31";
+										//var url="https://api.github.com/search/commits?q=repo:Gingmin/semi-project author-date:2021-02-01..2021-03-31";
+										console.log(url);
+										getCommits(url);
 									});
 									
-									async function getIssues() {
+									async function getCommits(url) {
+										clear();
+										const headers = {
+												"Accept": "application/vnd.github.cloak-preview"
+												
+										} 
+										const response = await fetch(url, {
+											"method" : "GET",
+											"headers" : headers
+										});
+										
+										const link = response.headers.get("link");
+										const links = link.split(",");
+										const urls = links.map(a=> {
+											return {
+												url: a.split(";")[0].replace(">", "").replace("<", ""),
+												title: a.split(";")[1]
+											}
+										});
+										const result = await response.json();
+										
+										result.items.forEach(i=>{
+											const img = document.createElement("img");
+											img.src = i.author.avatar_url;
+											img.style.width = "32px";
+											img.style.height = "32px";
+											const anchor = document.createElement("a");
+											anchor.href = i.html_url;
+											anchor.textContent = i.commit.message.substr(0, 120) + "...";
+											githubArea.appendChild(img); 
+											githubArea.appendChild(anchor);
+											githubArea.appendChild(document.createElement("br"));
+										});
+										
+										urls.forEach(u => {
+											
+											const btn = document.createElement("button");
+											btn.textContent = u.title;
+											btn.addEventListener("click", e=> getCommits(u.url));
+											githubArea.appendChild(btn);
+											
+										});
+									}
+									
+									/* async function getIssues() {
 										
 										var gitInfo = "${ sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.gitUrl }";
 										var gitInfoArray = gitInfo.split("https://github.com/");
 										var gitDetailInfo = gitInfoArray[1].split("/");
 										console.table(gitInfoArray);
-										console.log(gitInfoArray[1]);
+										console.log(gitInfoArray[1]); 
 										console.table(gitDetailInfo);
 										console.log(gitDetailInfo[0]);
 										console.log(gitDetailInfo[1]);
@@ -132,19 +213,45 @@
 										var gitIdProject = gitDetailInfo[1];
 										
 										clear();
+										const headers = {
+												"Accept": "application/vnd.github.cloak-preview"
+												
+										} 
 										const url = "https://api.github.com/search/issues?q=author:" + gitId + " repo:" + gitId + "/" + gitIdProject;
 										const response = await fetch(url);
+										
+										const link = response.headers.get("link");
+										const links = link.split(",");
+										const urls = links.map(a=> {
+											return {
+												url: a.split(";")[0].replace(">", "").replace("<", ""),
+												title: a.split(";")[1]
+											}
+										});
+										
 										const result = await response.json();
 										
 										result.items.forEach(i=>{
-											
+											const img = document.createElement("img");
+											img.src = i.author.avatar_url;
+											img.style.width = "32px";
+											img.style.height = "32px";
 											const anchor = document.createElement("a");
 											anchor.href = i.html_url;
-											anchor.textContent = i.title;
+											anchor.textContent = i.title.substr(0, 120) + "...";
 											githubArea.appendChild(anchor);
 											githubArea.appendChild(document.createElement("br"));
 										});
-									}
+										
+										urls.forEach(u => {
+											
+											const btn = document.createElement("button");
+											btn.textContent = u.title;
+											btn.addEventListener("click", e=> getIssues(u.url));
+											githubArea.appendChild(btn);
+											
+										});
+									} */
 									
 									function clear() {
 										while(githubArea.firstChild)

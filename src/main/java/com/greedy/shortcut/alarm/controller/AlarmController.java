@@ -1,17 +1,14 @@
 package com.greedy.shortcut.alarm.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.shortcut.alarm.model.service.AlarmService;
 
 @Controller
@@ -36,12 +33,15 @@ public class AlarmController {
 //	}
 	
 	@PostMapping("alarm/github/regist")
-	public ModelAndView registGitUrl(ModelAndView mv, @RequestParam(required=true) String githubInfo, @RequestParam int memNo) {
+	public ModelAndView registGitUrl(ModelAndView mv, @RequestParam(required=true) String githubInfo, @RequestParam int memNo,
+			HttpSession session) {
 		
 		int success = alarmService.registGitUrl(memNo, githubInfo);
 		System.out.println("success : " + success);
 		
 		String gitUrl = alarmService.selectGitUrl(memNo);
+		
+		session.invalidate();
 		
 		mv.addObject("gitUrl", gitUrl);
 		mv.setViewName("redirect:/");
