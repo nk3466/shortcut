@@ -22,10 +22,10 @@
 .sprint_box_area .table_area .table_item{text-align: center;}
 .sprint_box_area .table_area .table_item .row{margin: 0; margin-bottom: 5px; border: 1px solid lightgray;}
 .sprint_box_area .table_area .table_item .row .table_detail{}
-.sprint_box_area .table_area .table_item .row .table_detail.type1{width: 10%}
-.sprint_box_area .table_area .table_item .row .table_detail.type2{width: 5%}
-.sprint_box_area .table_area .table_item .row .table_detail.type3{width: 45%}
-.sprint_box_area .table_area .table_item .row .table_detail.type4{width: 25%}
+.sprint_box_area .table_area .table_item .row .table_detail.type1{width: 7%}
+.sprint_box_area .table_area .table_item .row .table_detail.type2{width: 13%}
+.sprint_box_area .table_area .table_item .row .table_detail.type3{width: 34%}
+.sprint_box_area .table_area .table_item .row .table_detail.type4{width: 19%}
 
 
 .sprint_box_area .table_area .table_item .btn_detail{background-color: white; float: right;}

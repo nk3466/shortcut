@@ -1,5 +1,6 @@
 package com.greedy.shortcut.board.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,9 +47,9 @@ public class BacklogBoardController {
 		this.backlogService = backlogService;
 	}
 
-	@PostMapping(value="backlog12" , produces ="application/json; charset=UTF-8")
+	@PostMapping(value="backlogDetail" , produces ="application/json; charset=UTF-8")
 	@ResponseBody
-	public String backlog(Model model,@RequestParam Map<String, String> parameters) throws JsonProcessingException {
+	public String backlogDetail(Model model,@RequestParam Map<String, String> parameters) throws JsonProcessingException {
 
 		
 		int blgNo = Integer.parseInt(parameters.get("blgNo"));
@@ -69,6 +70,23 @@ public class BacklogBoardController {
 		
 		//return "?pjtNo=" + pjtNo +"&projectName=" + projectName.replace(" ", "+");
 		}
+	
+	@PostMapping(value="sprintDetail" , produces ="application/json; charset=UTF-8")
+	@ResponseBody
+	public String sprintDetail(Model model,@RequestParam Map<String, String> parameters) throws JsonProcessingException {
+
+		
+		int sprNo = Integer.parseInt(parameters.get("sprNo"));
+		System.out.println("sprNo : " +  sprNo);
+		
+		SprintDTO sprintDetail = backlogService.selectsprintDetailToEdit(sprNo);
+		System.out.println("으악 : " + sprintDetail);
+		
+		 return new ObjectMapper().writeValueAsString(sprintDetail);
+		
+		}
+	
+	
 
 	@GetMapping("backlog")
 	public String project(Model model, @RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName
@@ -152,7 +170,7 @@ public class BacklogBoardController {
 		int memberCount = Integer.parseInt(((String[]) projectMake.get("nk1[0][value]"))[0]); //회원수
 		
 		project.setPjtNo(Integer.parseInt(((String[]) projectMake.get("nk1[1][value]"))[0]));
-		project.setMemberNo(Integer.parseInt(((String[]) projectMake.get("nk1[2][value]"))[0]));
+		project.setMemberNo(Integer.parseInt(((String[]) projectMake.get("nk1[1][value]"))[0]));
 		project.setProjectName(((String[]) projectMake.get("nk1[3][value]"))[0]);
 		project.setProjectStartDate(java.sql.Date.valueOf(((String[]) projectMake.get("nk1[4][value]"))[0]));
 		project.setProjectEndDate(java.sql.Date.valueOf(((String[]) projectMake.get("nk1[5][value]"))[0]));
@@ -266,5 +284,65 @@ public class BacklogBoardController {
 		rttr.addFlashAttribute("message", "백로그가 삭제되었습니다.");
 		return new ObjectMapper().writeValueAsString(backlogRemove);
 	}
+	
+	/* 백로그 생성 */
+	@PostMapping(value="/sprint/sprint_regist", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String registSprint(@ModelAttribute SprintDTO sprint, RedirectAttributes rttr ) throws JsonProcessingException {
+		
+		System.out.println("가져오니?" +  sprint);
+		
+		if(!backlogService.registSprint(sprint)) {
+			rttr.addFlashAttribute("message", "스프린트 생성이 취소되었습니다.");
+			return "백로그 생성이 취소되었습니다.";
+		}
+		rttr.addFlashAttribute("message", "스프린트가 생성되었습니다.");
+		return new ObjectMapper().writeValueAsString(sprint);
+	}
+	
+	/* 스프린트 삭제 */
+	@PostMapping(value="/sprint/sprint_remove" , produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String RemoveSprint(@RequestParam Map<String, String> parameters, RedirectAttributes rttr) throws JsonProcessingException {
+		
+		int sprNo = Integer.parseInt(parameters.get("sprNo"));
+		System.out.println("sprNo : " + sprNo);
+		
+		if(!backlogService.RemoveSprint(sprNo)) {
+			rttr.addFlashAttribute("message", "스프린트 삭제가 취소되었습니다.");
+			return "스프린트 삭제가 취소되었습니다..";
+		}
+		rttr.addFlashAttribute("message", "스프린트 삭제되었습니다.");
+		return new ObjectMapper().writeValueAsString(sprNo);
+	}
+	
+	/* 백로그 수정 */
+	@PostMapping(value="/sprint/sprint_Edit" , produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String EditSprint(@RequestParam Map<String, String> parameters, RedirectAttributes rttr) throws JsonProcessingException {
+		
+		int sprNo = Integer.parseInt(parameters.get("sprNo"));		
+		String sprName = parameters.get("sprName");		
+		Date sprStardDate = java.sql.Date.valueOf(parameters.get("sprStardDate"));		
+		Date sprEndDate = java.sql.Date.valueOf(parameters.get("sprEndDate"));	
+		String sprGoal = parameters.get("sprGoal");	
+		
+		SprintDTO sprint = new SprintDTO();
+		sprint.setSprNo(sprNo);
+		sprint.setSprName(sprName);
+		sprint.setSprStardDate(sprStardDate);
+		sprint.setSprEndDate(sprEndDate);
+		sprint.setSprGoal(sprGoal);
+		
+		
+		System.out.println("제발 : " + sprint);
+		if(!backlogService.EditSprint(sprint)) {
+			rttr.addFlashAttribute("message", "백로그 수정이 취소되었습니다.");
+			return "백로그 생성이 취소되었습니다.";
+		}
+		rttr.addFlashAttribute("message", "백로그가 수정되었습니다.");
+		return new ObjectMapper().writeValueAsString(sprint);
+	}
+	
 	
 }

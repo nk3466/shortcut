@@ -147,5 +147,35 @@ public class BacklogServiceImpl implements BacklogService {
 		
 		return a > 0? true : false;
 	}
+
+	/* 스프린트 생성 */
+	@Override
+	public boolean registSprint(SprintDTO sprint) {
+		// TODO Auto-generated method stub
+		return backlogMapper.registSprint(sprint) + backlogMapper.registSprintHistory(sprint)  > 1 ? true : false;
+	}
+
+	/* 스프린트 조회 */
+	@Override
+	public SprintDTO selectsprintDetailToEdit(int sprNo) {
+		return backlogMapper.selectsprintDetailToEdit(sprNo);
+	}
+
+	/* 스프린트 삭제 */
+	@Override
+	public boolean RemoveSprint(int sprNo) {
+
+		return backlogMapper.RemoveSprint(sprNo) + backlogMapper.RemoveUpdateHistorySprint(sprNo) > 0? true : false;
+	}
+
+	/* 스프린트 수정 */
+	@Override
+	public boolean EditSprint(SprintDTO sprint) {
+
+		int a = backlogMapper.EditSprint(sprint);
+		int b = backlogMapper.insertEditSprintHistory(sprint);
+		
+		return  a + b > 1? true : false;
+	}
 	
 }

@@ -49,7 +49,7 @@
 		<result property="sprDelYn" column="SPR_DEL_YN"/>
 		<result property="sprBlgNo" column="BLG_NO"/>
 	</resultMap>
-	
+
 	<select id="selectProject" resultMap="ProjectResultSet" parameterType="ProjectDTO">
 		SELECT
 		       A.PJT_NO
@@ -62,7 +62,7 @@
 		 WHERE A.PJT_NO = #{pjtNo}
 	</select> 
 	
-	
+	<!-- 멤버리스트 조회 -->
 	<select id="selectMemberList" resultMap="AuthorityResultSet" parameterType="ProjectAuthorityDTO">
 		SELECT
 		       A.PA_ROLE
@@ -75,6 +75,7 @@
 		 WHERE A.PJT_NO = #{pjtNo}
 	</select> 
 
+	<!-- 회원 수정용 멤버 중복 조회 -->
 	<select id="selectMemberDupCheck" resultMap="memberResultSet" parameterType="MemberDTO">
 	 SELECT 
             A.MEM_NO
@@ -122,15 +123,15 @@
 	</delete>
 	<!-- 프로젝트 멤버 수정 -->
 	<insert id="insertEditProjectMember" parameterType="ProjectAuthorityDTO">
-		INSERT
-		   INTO PJT_AUTHORITY
-		   (
-		   PA_ROLE, PJT_NO, MEM_NO, PA_NO
-		   )
-		   VALUES
-		   (
-		    #{projectRole}, #{pjtNo}, #{memberNo}, SEQ_PA_NO.NEXTVAL
-		    )
+	 INSERT
+	   INTO PJT_AUTHORITY A
+	   (
+	    PA_ROLE, PJT_NO, MEM_NO, PA_NO
+	   )
+	   VALUES
+	   (
+	    #{projectRole}, #{pjtNo}, #{memberNo}, SEQ_PA_NO.NEXTVAL
+	   )
 	</insert>
 	
 	<!-- 프로젝트 수정 회원 이력 등록 -->
@@ -173,7 +174,7 @@
 	</insert>
 	<select id="selectBacklogList" resultMap="backlogResultMap" parameterType="BacklogDTO">
 	    SELECT
-			   A.BLG_NO
+      DISTINCT  A.BLG_NO
 			 , A.BLG_NAME
 			 , A.BLG_PRI
 			 , A.BLG_ENROLL_DATE
@@ -240,7 +241,7 @@
 	</select>
 	
 	<select id="selectSprintList" resultMap="SprintResultMap" parameterType="SprintDTO">
-	              SELECT
+	      SELECT
 			     A.SPR_NO
                , A.SPR_NAME
                , A.SPR_START_DATE
@@ -251,7 +252,7 @@
                , B.PJT_NO
 		  FROM SPRINT A
     LEFT OUTER JOIN BACKLOG B ON (A.BLG_NO = B.BLG_NO)
-		 WHERE B.PJT_NO = 1
+		 WHERE B.PJT_NO = #{pjtNo} 
           AND A.SPR_END_DATE &gt; SYSDATE
           AND A.SPR_DEL_YN = 'N'
 		 ORDER BY B.BLG_PRI ASC
@@ -287,17 +288,83 @@
     	    AND A.PJT_NO = #{pjtNo}     
     </update>
     
-     <insert  id="insertRemoveBacklogHistory"  parameterType="BacklogDTO">
+     <insert  id="registSprint"  parameterType="SprintDTO">
 	    INSERT
-	      INTO BACKLOG_HISTORY A
+	      INTO SPRINT A
 	      (
-	        A.BLG_NO, A.BLG_NAME, A.BLG_PRI, A.UPDATE_DATE, A.BLG_DEL_YN, A.BLG_HIS_NO
-	      , A.BLG_DEMO_MEMO, A.BLG_REF_MEMO
+	        A.SPR_NO, A.SPR_NAME, A.SPR_START_DATE, A.SPR_END_DATE
+	      , A.SPR_GOAL, A.SPR_DEL_YN, A.BLG_NO
 	      )
 	      VALUES
 	      (
-	        #{blgNo}, #{blgName}, #{blgPri}, SYSDATE, 'N', SEQ_BLG_HIS_NO.NEXTVAL 
-	      , #{blgDemoMemo}, #{blgRefMemo}
+	        SEQ_SPR_NO.NEXTVAL, #{sprName}, #{sprStardDate}, #{sprEndDate}
+	      , #{sprGoal}, 'N', #{sprBlgNo}
+	      )
+	</insert>
+	
+	<insert  id="registSprintHistory"  parameterType="SprintDTO">
+		<selectKey keyProperty="sprNo" order="BEFORE" resultType="_int">
+			 SELECT 
+		           SEQ_SPR_NO.CURRVAL
+		       FROM DUAL
+	    </selectKey>
+	    INSERT
+	      INTO SPRINT_HISTORY A
+	      (
+	        A.SPR_NO, A.SPR_NAME, A.SPR_GOAL, A.UPDATE_DATE, A.SPR_DEL_YN
+	      , A.SPR_HIS_NO, A.SPR_START_DATE, A.SPR_END_DATE
+	      )
+	      VALUES
+	      (
+	        #{sprNo}, #{sprName}, #{sprGoal}, SYSDATE, 'N'
+	      , SEQ_SPR_HIS_NO.NEXTVAL, #{sprStardDate}, #{sprEndDate}
+	      )
+	</insert>
+	<select id="selectsprintDetailToEdit" resultMap="SprintResultMap" parameterType="SprintDTO">
+	      SELECT
+			     A.SPR_NO
+               , A.SPR_NAME
+               , A.SPR_START_DATE
+               , A.SPR_END_DATE
+               , A.SPR_GOAL
+               , A.BLG_NO
+		  FROM SPRINT A
+		 WHERE A.SPR_NO = #{sprNo}
+	</select>
+	
+	<delete id="RemoveSprint" parameterType="SprintDTO">
+		DELETE
+		  FROM SPRINT E
+		 WHERE E.SPR_NO = #{sprNo}
+    </delete>
+    
+    <update id="RemoveUpdateHistorySprint" parameterType="SprintDTO">
+		  UPDATE SPRINT A
+            SET A.SPR_DEL_YN = 'Y'
+          WHERE A.SPR_NO =  #{sprNo}
+    </update>
+    
+
+    <update id="EditSprint" parameterType="SprintDTO">
+	     UPDATE SPRINT A
+            SET A.SPR_NAME = #{sprName}
+              , A.SPR_START_DATE = #{sprStardDate}
+              , A.SPR_END_DATE = #{sprEndDate}
+              , A.SPR_GOAL = #{sprGoal}
+         WHERE A.SPR_NO =  #{sprNo}
+    </update>
+    
+    <insert  id="insertEditSprintHistory"  parameterType="SprintDTO">
+	    INSERT
+	      INTO SPRINT_HISTORY A
+	      (
+	        A.SPR_NO, A.SPR_NAME, A.SPR_GOAL, A.UPDATE_DATE, A.SPR_DEL_YN
+	      , A.SPR_HIS_NO, A.SPR_START_DATE, A.SPR_END_DATE
+	      )
+	      VALUES
+	      (
+	        #{sprNo}, #{sprName}, #{sprGoal}, SYSDATE, 'N'
+	      , SEQ_SPR_HIS_NO.NEXTVAL, #{sprStardDate}, #{sprEndDate}
 	      )
 	</insert>
 </mapper>

@@ -52,9 +52,8 @@ public interface BacklogMapper {
 	/* 백로그 히스토리 등록 */
 	int insertBacklogHistory(BacklogDTO backlog);
 
+	/* 백로그 수정을 위한 리스트 조회 */
 	BacklogDTO selectBacklogToEdit(@Param("blgNo")int blgNo,@Param("pjtNo") int pjtNo);
-
-	List<SprintDTO> selectSprintList(int pjtNo);
 
 	/* 백로그 수정 등록 */
 	int EditBacklog(BacklogDTO backlog);
@@ -67,6 +66,30 @@ public interface BacklogMapper {
 	
 	/* 백로그 삭제 히스토리 등록 */
 	int insertRemoveBacklogHistory(BacklogDTO backlogRemove);
+	
+	/* 스프린트 리스트 조회 */
+	List<SprintDTO> selectSprintList(int pjtNo);
+	
+	/* 스프린트 생성 */
+	int registSprint(SprintDTO sprint);
+
+	/* 스프린트 히스토리 수정 */
+	int registSprintHistory(SprintDTO sprint);
+
+	/* 스프린트 디테일 조회 */
+	SprintDTO selectsprintDetailToEdit(int sprNo);
+
+	/* 스프린트 삭제 */
+	int RemoveSprint(int sprNo);
+
+	/* 스프린트 수정 */
+	int EditSprint(SprintDTO sprint);
+
+	/* 스프린트 수정 이력 등록 */
+	int insertEditSprintHistory(SprintDTO sprint);
+
+	int RemoveUpdateHistorySprint(int sprNo);
+	
 	
 	
 

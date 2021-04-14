@@ -2,11 +2,15 @@ package com.greedy.shortcut.board.model.dto;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class SprintDTO {
 	
 	private int sprNo;
 	private String sprName;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date sprStardDate;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date sprEndDate;
 	private String sprGoal;
 	private String sprDelYn;

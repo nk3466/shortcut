@@ -10,11 +10,11 @@ public class ProjectDTO {
 
 	private int pjtNo;
 	private String projectName;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd HH:mm:ss SSS", timezone = "Asia/Seoul")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private java.sql.Date projectStartDate;
 	private String projectDelYN;
 	private int memberNo;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd HH:mm:ss SSS", timezone = "Asia/Seoul")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private java.sql.Date projectEndDate;
 	private String projectColor;
 	

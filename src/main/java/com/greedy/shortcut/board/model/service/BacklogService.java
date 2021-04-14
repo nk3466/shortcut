@@ -41,4 +41,16 @@ public interface BacklogService {
 	/* 백로그 삭제 */
 	boolean RemoveBacklog(BacklogDTO backlogRemove);
 
+	/* 스프린트 생성 */
+	boolean registSprint(SprintDTO sprint);
+	
+	/* 스프린트 조회 */
+	SprintDTO selectsprintDetailToEdit(int sprNo);
+
+	/* 스프린트 삭제 */
+	boolean RemoveSprint(int sprNo);
+
+	/* 스프린트 수정 */
+	boolean EditSprint(SprintDTO sprint);
+
 }
