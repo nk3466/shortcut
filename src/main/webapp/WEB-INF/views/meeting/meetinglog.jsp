@@ -167,9 +167,11 @@
    </div>
    
    <jsp:include page="../meeting/meeting_detail.jsp"></jsp:include>
+   <jsp:include page="../meeting/meeting_modify.jsp"></jsp:include>
    
    
 </body>
+
 
 <script type="text/javascript">
 
@@ -180,9 +182,12 @@
          $("#conference").modal();
          
       })
+      
+      
       var iddd = "";
       
-      $(this).on("click",".mtinfo", function(e){9
+      
+      $(this).on("click",".mtinfo", function(e){
 		e.preventDefault(); 			   	  
 	      $("#conference_detail").modal();
 	      iddd = $(this).attr('id');
@@ -197,6 +202,26 @@
       })
       
       
+      /* 모달 상세페이지 수정 버튼 클릭시  */
+      $("#updateBtn").click(function(e) {
+			e.preventDefault();
+			
+			$('#conference_detail').modal("hide");
+			$('#conference_modify').modal("toggle");
+			
+		    
+		    new modifyMeeting(iddd)
+		});
+      
+      /* 모달 수정 페이지 완료 버튼 클릭시  */
+      $("#completeBtn").click(function(e){
+    	  e.preventDefault();
+    	  
+    	  new modifyComplete(iddd)
+    	  
+      })
+      
+      
    })
    /* 삭제 */
    function deleMeeting(meetingNo){
@@ -208,6 +233,9 @@
 	  	   	data : {"meetingNo" : meetingNo},
 	  	   	success : function(data, status, xhr){
 	  	   		console.log(data);
+	  	   		
+	  	   	 $("#conference_modify").modal("hide");
+	  	   	 location.reload();
 	  	   	},
 	  	   	error : function(error){
 	  	   		console.log(error)
@@ -216,16 +244,79 @@
 	  	   	}
   	   	})
    }
-  /*   $("#deletedBtn").click(function(){
-	   
-	   var iddd= $(this).closest(".mtinfo").attr("id")
-	   
-	   alert(iddd);
-
-	   
-
-   }) */
    
+   /* 수정페이지 */
+   function modifyMeeting(meetingNo){
+	   console.log("meetingNo 수정 : " + meetingNo);
+	   
+	   $.ajax({
+		   url : "modifyMeeting",
+		   type : "POST",
+		   data : {"meetingNo" : meetingNo},
+		   success : function(data, status, xhr){
+			   console.table(data);
+			   
+			    var memberList2 = data.memberList;
+	   			var meetingName2 = data.meeting.meetingName;
+	   			var meetingText2= data.meeting.meetingText;
+	   			var enrollDate2 = data.meeting.enrollDate; 
+	   			console.log("meetingTexttt :"+ meetingText2);
+	   			console.log("meetingNameee :"+ meetingName2);
+	   			var appendPlace = 'meetingMemberDetailList1';
+	   			var appendPlace1 = 'meetingDateDetail1';	
+	   			var appendPlace2 = 'meetingTitleDetail1';
+	   			var appendPlace3 = 'meetingContentDetail1';
+	   		
+	   			
+	   			 new insertPerson(memberList2,appendPlace); 
+	   			 new insertDate(enrollDate2, appendPlace1);
+	   			//new insertSprintName();
+	   			new insertMeetingName1(meetingName2,appendPlace2);
+	   			new insertMeetingText1(meetingText2,appendPlace3);
+		   },
+		   error : function(error){
+			   console.log(error);
+		   }
+		   
+	   })
+	   
+   }
+   
+   /* 수정 완료 버튼 클릭시  */
+   function modifyComplete(meetingNo) {
+	   
+	   
+	   var modifyTitle = $("#modifyTitle").val();
+	   var modifyContent = $("#modifyContent").val();
+	   
+	   console.log("모디파이수정 : " + modifyTitle);
+	   console.log("모디파이수정 : " + modifyContent);
+	   
+	   $.ajax({
+		   url : "modifyComplete",
+		   type : "POST",
+		   data : {
+			   "meetingNo" : meetingNo,
+			   "modifyTitle" : modifyTitle,
+			   "modifyContent" : modifyContent			   
+		   		},
+		   success : function(data){
+			   console.log(data);
+			   
+			   $("#conference_detail").modal("hide");
+		  	   	 location.reload();
+			   
+			   
+		   },
+		   error : function(error){
+			   console.log(error);
+		   }
+	   })
+   }
+   
+   
+   
+   /* 상세페이지 */ 
    function selectMeetingDetail(meetingNo){
 	   $.ajax({
 	        url:"selectMeetingDetail",
@@ -233,7 +324,7 @@
 	        data : {"meetingNo" : meetingNo},
 	   		success: function(data, status, xhr){
 	   			console.table(data) ;
-	   			console.table(data.memberList[0].name) ;
+	   			/* console.table(data.memberList[0].name); */
 	   			var memberListtt = data.memberList;
 	   			var meetingNameee = data.meeting.meetingName;
 	   			var meetingTexttt= data.meeting.meetingText;
@@ -241,7 +332,7 @@
 	   			console.log("enrollDate :"+ enrollDate);
 	   			console.log("meetingTexttt :"+ meetingTexttt);
 	   			console.log("meetingNameee :"+ meetingNameee);
-	   			console.log("memberListtt :" + memberListtt[0]);
+	   			//console.log("memberListtt :" + memberListtt[0]);
 	   			var appendPlace = 'meetingMemberDetailList';
 	   			var appendPlace1 = 'meetingDateDetail';	
 	   			var appendPlace2 = 'meetingTitleDetail';
@@ -304,6 +395,7 @@
 	        type:"POST",
 	        data : {"pjtNo" : pjtNooo},
 	   		success: function(data, status, xhr){
+	   			
 	   			console.table(data) ;
 	   			console.log("data.length : " + data.length);
 	   			for(var i = 0 ; i < data.length; i++){
@@ -311,6 +403,7 @@
 	   				var meetingInfoooo= calculateDate(data[i].enrollDate);
 	   				new drawMeeting(enrollDateInfo,data[i].meetingName ,meetingInfoooo,data[i].meetingNo);
 	   			}
+	   			
 	   		},
 	   		error: function(xhr, status, data){
 	   			console.log(data);
@@ -395,6 +488,29 @@
 	   $("#"+appendPlace+"").append(insertContent); 
 	   console.log("이거내용이야" + meetingTexttt);
    }
+   
+   
+    
+   
+    /* 수정페이지 타이틀 넣어주기 */
+    function insertMeetingName1(meetingName2,appendPlace){
+ 	   $("#"+appendPlace+"").empty();
+ 	   
+ 	   var insertTitle="";
+ 	   insertTitle = '<input id="modifyTitle" class="input_detail" type="text" value="' +meetingName2+ '">' 
+ 	   
+ 	   $("#"+appendPlace+"").append(insertTitle);
+    }
+    
+    /* 수정페이지 내용 넣어주기 */
+     function insertMeetingText1(meetingText2,appendPlace){
+     	$("#"+appendPlace+"").empty();
+ 	   
+ 	   var insertContent="";
+ 	   insertContent = '<textarea id="modifyContent" class="textarea_detail">' + meetingText2 + '</textarea>'
+ 	   $("#"+appendPlace+"").append(insertContent); 
+    }
+   
    
    /* 참석자 클릭시 삭제  */
    $(document).on('click','.item_text.on',function(){
@@ -496,7 +612,7 @@
              /* console.log( enrollDateInfo.EnrollDate === enrollDateInfo.meetDate); */
              drawMeeting(enrollDateInfo,meetingName,meetingInfo,meetingNo)	
              $("#conference").modal("hide");
-             
+             location.reload();
              
           },
           error : function(xhr, status, error){

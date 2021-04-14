@@ -23,6 +23,10 @@ public interface MeetingService {
 
 	int deletedMeeting(int meetingNo);
 
+	int modifyComplete(int meetingNo, String modifyTitle, String modifyContent);
+
+
+
 
 
 

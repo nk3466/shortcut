@@ -24,7 +24,7 @@
 	<title>Short Cut</title>
 </head>
 <body>
-	<div class="modal fade" id="conference_detail">
+	<div class="modal fade" id="conference_modify">
 		<div class="modal-dialog">			
 			<div class="modal-content">
 				<%-- <form action="${pageContext.servletContext.contextPath}/meeting/meetinglog" method="post"> --%>
@@ -35,7 +35,7 @@
 									<div class="item_type type">
 										회의날짜
 									</div>
-									<div class="item_type"  id="meetingDateDetail">
+									<div class="item_type"  id="meetingDateDetail1">
 										<input class="input_detail tpye22" type="date" name="enrollDate" value="">
 									</div>
 									
@@ -56,22 +56,12 @@
 									</div>							
 								</div>
 								<div class="modal_line"></div>
-							<!-- 	<div class="row">
-									<div class="item_type type">
-										팀원추가
-									</div>
-									<div class="item_type">
-										<input class="input_detail" type="text" id="memberEmail" name="" placeholder="회의 참가자 추가" onclick="this.value=''">
-										<button type="button" id="memberAddBtn" class="btn_detail">Add</button>
-									</div>
-									
-								</div>
-								<div class="modal_line"></div> -->
+							
 								<div class="row">
 									<div class="item_type type">
 										참석자 
 									</div>
-									<div class="item_type" id="meetingMemberDetailList">
+									<div class="item_type" id="meetingMemberDetailList1">
 										
 									</div>
 									
@@ -81,7 +71,7 @@
 									<div class="item_type type">
 										회의제목 
 									</div>
-									<div class="item_type" id="meetingTitleDetail">
+									<div class="item_type" id="meetingTitleDetail1">
 										<input class="input_detail type23" type="text" id="titleName" name="meetingName1" readonly />
 									</div>
 									
@@ -90,7 +80,7 @@
 									<div class="item_type type">
 										회의내용 
 									</div>
-									<div class="item_type type3" id="meetingContentDetail">
+									<div class="item_type type3" id="meetingContentDetail1">
 										<textarea id="meetingContent" class="textarea_detail type2" name="meetingText" readonly></textarea>
 									</div>
 									
@@ -99,13 +89,13 @@
 							</div>
 						
 					</div>
-
+	
 					<!-- Modal footer -->
 					<div class="modal_footer">								
 						<div class="btn_area">
 							<input name="${_csrf.parameterName}" type="hidden"  value="${_csrf.token}">
 							<input type="button" id="deletedBtn" class="upload_btn" value="삭제">	
-							<input type="button" id="updateBtn" class="upload_btn" value="수정">	
+							<input type="button" id="completeBtn" class="upload_btn" value="완료">	
 						</div>														
 					</div>
 				<!-- </form> -->

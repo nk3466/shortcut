@@ -83,13 +83,21 @@ public class MeetingServiceImpl implements MeetingService{
 		return mapper.deletedMeeting(meetingNo);
 	}
 
+	@Override
+	public int modifyComplete(int meetingNo, String modifyTitle, String modifyContent) {
 
-	
-
-	
-	
+		return mapper.modifyComplete(meetingNo, modifyTitle, modifyContent);
+	}
 
 
-	
 	
 }
+
+
+
+	
+	
+
+
+	
+

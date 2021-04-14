@@ -32,6 +32,11 @@ public interface MeetingMapper {
 
 	int deletedMeeting(int meetingNo);
 
+	int modifyComplete(@Param("meetingNo") int meetingNo, @Param("modifyTitle") String modifyTitle, @Param("modifyContent") String modifyContent);
+
+	
+
+
 
 	
 
