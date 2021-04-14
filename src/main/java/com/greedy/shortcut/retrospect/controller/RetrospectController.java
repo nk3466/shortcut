@@ -122,10 +122,8 @@ public class RetrospectController {
 	}
 
 	@PostMapping("/board/backlog/retrospect/regist")
-	public ModelAndView modifyReview(ModelAndView mv, @ModelAttribute ReviewDTO review, HttpServletRequest request) {
+	public ModelAndView registReview(ModelAndView mv, @ModelAttribute ReviewDTO review, HttpServletRequest request) {
 
-		System.out.println("아나");
-		
 		String blgNo = request.getParameter("blgNo");
 		int blgNo2 = Integer.parseInt(request.getParameter("blgNo"));
 		String pjtName = request.getParameter("pjtName");
@@ -134,7 +132,7 @@ public class RetrospectController {
 		System.out.println(pjtName);
 		System.out.println(review);
 		
-		Integer pjtNo = retrospectService.selectPjtNo(blgNo2);
+		int pjtNo = retrospectService.selectPjtNo(blgNo2);
 		System.out.println(pjtNo);
 
 		String[] reviewLikeTxt = review.getReviewLikeTxt().split(",", -1);
@@ -180,5 +178,119 @@ public class RetrospectController {
 		mv.setViewName("redirect:/board/backlog/?pjtNo=" + pjtNo +"&projectName=" + pjtName);
 		return mv;
 	}
+	
+	@PostMapping("/board/backlog/retrospect/modify")
+	public ModelAndView modifyReview(ModelAndView mv, @ModelAttribute ReviewDTO review, HttpServletRequest request) {
+		
+		String blgNo = request.getParameter("blgNo");
+		int blgNo2 = Integer.parseInt(request.getParameter("blgNo"));
+		String pjtName = request.getParameter("pjtName");
+		
+		System.out.println(blgNo);
+		System.out.println(pjtName);
+		System.out.println(review);
+		
+		int pjtNo = retrospectService.selectPjtNo(blgNo2);
+		System.out.println(pjtNo);
 
+		String[] reviewLikeTxt = review.getReviewLikeTxt().split(",", -1);
+		String[] reviewLearnTxt = review.getReviewLearnTxt().split(",", -1);
+		String[] reviewMissTxt = review.getReviewMissTxt().split(",", -1);
+		String[] memName = review.getMemName().split(",", -1);
+
+		System.out.println("memName.length : " + memName.length);
+
+		List<ReviewDTO> updateReviewList = new ArrayList<>();
+
+		for(int i = 0; i < memName.length; i++) {
+			ReviewDTO rv = new ReviewDTO();
+			rv.setReviewLikeTxt(reviewLikeTxt[i]);
+			rv.setReviewLearnTxt(reviewLearnTxt[i]);
+			rv.setReviewMissTxt(reviewMissTxt[i]);
+			rv.setMemName(memName[i]);
+			rv.setSprNo(blgNo2);
+			
+			updateReviewList.add(rv);
+		}
+
+		for(ReviewDTO ird : updateReviewList) {
+			System.out.println(ird);
+		}
+		
+		List<ReviewAndProjectMemberDTO> reviewAndProjectMemberList = retrospectService.selectReviewAndProjectMember(pjtNo);
+		for(int i = 0; i < reviewAndProjectMemberList.size(); i++) {
+			if(reviewAndProjectMemberList.get(i).getMemberDTO().getName().equals(updateReviewList.get(i).getMemName())) {
+				updateReviewList.get(i).setMemNo(reviewAndProjectMemberList.get(i).getMemberDTO().getNo());
+			}
+		}
+		
+		int success = 0;
+		for(int i = 0; i < updateReviewList.size(); i++) {
+			success += retrospectService.updateReview(updateReviewList.get(i));
+		}
+		
+		if(success > 0 && updateReviewList.size() == success) {
+			System.out.println("성공");
+		}
+		
+		mv.setViewName("redirect:/board/backlog/?pjtNo=" + pjtNo +"&projectName=" + pjtName);
+		
+		return mv;
+	}
+
+	@PostMapping("/board/backlog/retrospect/remove")
+	public ModelAndView removeReview(ModelAndView mv, @ModelAttribute ReviewDTO review, HttpServletRequest request) {
+		
+		String blgNo = request.getParameter("blgNo");
+		int blgNo2 = Integer.parseInt(request.getParameter("blgNo"));
+		String pjtName = request.getParameter("pjtName");
+		
+		System.out.println(blgNo);
+		System.out.println(pjtName);
+		System.out.println(review);
+		
+		int pjtNo = retrospectService.selectPjtNo(blgNo2);
+		System.out.println(pjtNo);
+
+		String[] memName = review.getMemName().split(",", -1);
+
+		System.out.println("memName.length : " + memName.length);
+
+		List<ReviewDTO> removeReviewList = new ArrayList<>();
+
+		for(int i = 0; i < memName.length; i++) {
+			ReviewDTO rv = new ReviewDTO();
+			rv.setMemName(memName[i]);
+			rv.setSprNo(blgNo2);
+			
+			removeReviewList.add(rv);
+		}
+
+		for(ReviewDTO ird : removeReviewList) {
+			System.out.println(ird);
+		}
+		
+		List<ReviewAndProjectMemberDTO> reviewAndProjectMemberList = retrospectService.selectReviewAndProjectMember(pjtNo);
+		for(int i = 0; i < reviewAndProjectMemberList.size(); i++) {
+			if(reviewAndProjectMemberList.get(i).getMemberDTO().getName().equals(removeReviewList.get(i).getMemName())) {
+				removeReviewList.get(i).setMemNo(reviewAndProjectMemberList.get(i).getMemberDTO().getNo());
+			}
+		}
+		
+		int success = 0;
+		for(int i = 0; i < removeReviewList.size(); i++) {
+			success += retrospectService.removeReview(removeReviewList.get(i));
+		}
+		System.out.println("success : " + success);
+		
+		if(success > 0 && removeReviewList.size() == success) {
+			System.out.println("성공");
+		}
+		
+		mv.setViewName("redirect:/board/backlog/?pjtNo=" + pjtNo +"&projectName=" + pjtName);
+		
+		return mv;
+	}
+	
+		
 }

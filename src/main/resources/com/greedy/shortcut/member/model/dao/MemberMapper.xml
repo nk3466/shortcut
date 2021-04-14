@@ -10,6 +10,7 @@
 		<result column="MEM_ID" property="email" />
 		<result column="MEM_PWD" property="password" />
 		<result column="PHONE" property="phone" />
+		<result column="GIT_URL" property="gitUrl" />
 		
 	</resultMap>
 	
@@ -34,6 +35,7 @@
              , A.MEM_ID
              , A.MEM_PWD
              , A.PHONE
+             , A.GIT_URL
           FROM MEMBER A 
          WHERE A.MEM_ID = #{email} 
 	</select>

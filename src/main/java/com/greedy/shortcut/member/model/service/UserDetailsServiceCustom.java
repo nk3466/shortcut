@@ -43,10 +43,11 @@ public class UserDetailsServiceCustom implements UserDetailsService {
 			userDetails.setPassword(userInfo.getPassword());
 			userDetails.setName(userInfo.getName());
 			userDetails.setNo(userInfo.getNo());
+			userDetails.setGitUrl(userInfo.getGitUrl());
 			System.out.println("name : " + userInfo.getName());
 			System.out.println("email : " + userInfo.getEmail());
+			System.out.println("gitUrl : " + userInfo.getGitUrl());
 //			System.out.println("password : " + userInfo.getPassword());
-			
 			// 사용자 권한 select해서 받아온 List<String> 객체 주입
 //			userDetails.setAuthorities(mapper.selectUserAuthOne(inputUserId));
 		}
