@@ -10,6 +10,7 @@ public class MemberDTO {
 	private String password;
 	private String phone;
 	private String name;
+	private String gitUrl;
 	
 	private ProjectDTO projectDTO;
 	private int projectNo;
@@ -20,7 +21,7 @@ public class MemberDTO {
 
 
 	public MemberDTO(Integer no, String email, String password, String phone, String name, ProjectDTO projectDTO,
-			int projectNo, ProjectAuthorityDTO projectAuthorityDTO) {
+			int projectNo, ProjectAuthorityDTO projectAuthorityDTO, String gitUrl) {
 		super();
 		this.no = no;
 		this.email = email;
@@ -30,9 +31,17 @@ public class MemberDTO {
 		this.projectDTO = projectDTO;
 		this.projectNo = projectNo;
 		this.projectAuthorityDTO = projectAuthorityDTO;
+		this.gitUrl = gitUrl;
 	}
 
-
+	public String getGitUrl() {
+		return gitUrl;
+	}
+	
+	public void setGitUrl(String gitUrl) {
+		this.gitUrl = gitUrl;
+	}
+	
 	public Integer getNo() {
 		return no;
 	}

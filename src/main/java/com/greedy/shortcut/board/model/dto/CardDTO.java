@@ -3,10 +3,13 @@ package com.greedy.shortcut.board.model.dto;
 import java.sql.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class CardDTO {
 
 	private int no;
 	private String title;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd HH:mm:ss SSS", timezone = "Asia/Seoul")
 	private java.sql.Date EnrollDate;
 	private String delNo;
 	private int brdNo;
@@ -15,6 +18,7 @@ public class CardDTO {
 	private int memNo;
 	private String txt;
 	private List<Integer> memberList;
+	private int member; //담당자
 
 	private List<CardScheduleDTO> cardScheduleDTO;
 	private List<CardTaskDTO> cardTaskDTO;
@@ -22,7 +26,7 @@ public class CardDTO {
 	public CardDTO() {}
 
 	public CardDTO(int no, String title, Date enrollDate, String delNo, int brdNo, int order, int type, int memNo,
-			String txt, List<Integer> memberList, List<CardScheduleDTO> cardScheduleDTO,
+			String txt, List<Integer> memberList, int member, List<CardScheduleDTO> cardScheduleDTO,
 			List<CardTaskDTO> cardTaskDTO) {
 		super();
 		this.no = no;
@@ -35,6 +39,7 @@ public class CardDTO {
 		this.memNo = memNo;
 		this.txt = txt;
 		this.memberList = memberList;
+		this.member = member;
 		this.cardScheduleDTO = cardScheduleDTO;
 		this.cardTaskDTO = cardTaskDTO;
 	}
@@ -43,7 +48,8 @@ public class CardDTO {
 	public String toString() {
 		return "CardDTO [no=" + no + ", title=" + title + ", EnrollDate=" + EnrollDate + ", delNo=" + delNo + ", brdNo="
 				+ brdNo + ", order=" + order + ", type=" + type + ", memNo=" + memNo + ", txt=" + txt + ", memberList="
-				+ memberList + ", cardScheduleDTO=" + cardScheduleDTO + ", cardTaskDTO=" + cardTaskDTO + "]";
+				+ memberList + ", member=" + member + ", cardScheduleDTO=" + cardScheduleDTO + ", cardTaskDTO="
+				+ cardTaskDTO + "]";
 	}
 
 	public int getNo() {
@@ -84,6 +90,10 @@ public class CardDTO {
 
 	public List<Integer> getMemberList() {
 		return memberList;
+	}
+
+	public int getMember() {
+		return member;
 	}
 
 	public List<CardScheduleDTO> getCardScheduleDTO() {
@@ -132,6 +142,10 @@ public class CardDTO {
 
 	public void setMemberList(List<Integer> memberList) {
 		this.memberList = memberList;
+	}
+
+	public void setMember(int member) {
+		this.member = member;
 	}
 
 	public void setCardScheduleDTO(List<CardScheduleDTO> cardScheduleDTO) {

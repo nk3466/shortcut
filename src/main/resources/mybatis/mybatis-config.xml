@@ -51,6 +51,11 @@
  		<typeAlias alias="ReviewAndProjectMemberDTO" type="com.greedy.shortcut.retrospect.model.dto.ReviewAndProjectMemberDTO"/>
  		
  		<typeAlias alias="MeetingHistoryDTO" type="com.greedy.shortcut.meeting.model.dto.MeetingHistoryDTO"/>
+ 		
+ 		<typeAlias alias="RequestCardDTO" type="com.greedy.shortcut.board.model.dto.RequestCardDTO"/>
+ 		
+ 		<typeAlias alias="CardAttendListDTO" type="com.greedy.shortcut.board.model.dto.CardAttendListDTO"/>
+ 		
  	</typeAliases>
  	
  </configuration>

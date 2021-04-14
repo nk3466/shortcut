@@ -49,6 +49,7 @@ public class BoardController {
 
 		List<MemberDTO> memberList = boardService.selectMember(pjtNo);
 		List<BoardDTO> boardList = boardService.selectboardList(sprNo);
+		List<CardDTO> cardList = cardService.selectCardList(boardList);
 		System.out.println("boardList :" + boardList);
 		System.out.println("memberList : " + memberList);
 		model.addAttribute("pjtNo", pjtNo);
@@ -56,6 +57,7 @@ public class BoardController {
 		model.addAttribute("sprNo", sprNo);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("boardList", boardList);
+		model.addAttribute("cardList", cardList);
 
 		return "/board/kanbanboard";
 	}
@@ -87,8 +89,27 @@ public class BoardController {
 		newboard.setBrdName(title);
 		newboard.setSprNo(sprNo);
 		newboard.setBrdOrder(1);
-		boolean result = boardService.insertnewBoard(newboard);
-		System.out.println(result);
+		/* 현재 스프린트의 보드리스트 구하기 */
+		
+		 List<BoardDTO> boardList = boardService.selectboardList(sprNo);
+		 
+			/* 보드 순번 업데이트 */ 
+		 int successUpdateCount = 0; 
+		 for(int i = 0; i < boardList.size();i++) {
+		 
+		 successUpdateCount += boardService.modifyBoardOrder(boardList.get(i).getBrdNo()); }
+		 System.out.println("successUpdateCount : " + successUpdateCount); 
+		 
+			/* 새로운 보드 인서트 */
+		 if(successUpdateCount == boardList.size()) { 
+			 
+			 boolean result = boardService.insertnewBoard(newboard); System.out.println(result); 
+			 System.out.println(result);
+			 
+		 }
+		 
+		
+		//boolean result = boardService.insertnewBoard(newboard);
 
 		rttr.addFlashAttribute("message", "보드 등록에 성공하셨습니다.");
 		
@@ -98,23 +119,7 @@ public class BoardController {
 
 	}
 
-	/* 현재 스프린트의 보드리스트 구하기 */
 	
-	 //List<BoardDTO> boardList = boardService.selectboardList(sprNo);
-	 
-		/* 보드 순번 업데이트 */ 
-	 //int successUpdateCount = 0; 
-	 //for(int i = 0; i < boardList.size();i++) {
-	 
-	 //successUpdateCount += boardService.modifyBoardOrder(boardList.get(i).getBrdNo()); }
-	 //System.out.println("successUpdateCount : " + successUpdateCount); 
-	 
-		/* 새로운 보드 인서트 */
-	 //if(successUpdateCount == boardList.size()) { boolean result =
-	 //boardService.insertnewBoard(newboard); System.out.println(result); }
-	 
-	 //return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+
-	 //projectName; }
 	 
 
 }

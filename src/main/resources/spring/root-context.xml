@@ -53,7 +53,8 @@
 		              com.greedy.shortcut.mywork.model.dao,
 		              com.greedy.shortcut.meeting.model.dao,
 		              com.greedy.shortcut.retrospect.model.dao,
-		              com.greedy.shortcut.messenger.model.dao
+		              com.greedy.shortcut.messenger.model.dao,
+		              com.greedy.shortcut.alarm.model.dao
 		              "/>
 
 </beans>

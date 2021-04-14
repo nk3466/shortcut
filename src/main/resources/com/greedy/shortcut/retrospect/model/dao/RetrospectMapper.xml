@@ -196,7 +196,7 @@
          WHERE A.PJT_NO = #{pjtNo}
 	</select>
 
-	<select id="selectPjtNo" resultMap="backlogResultMap" parameterType="_int">
+	<select id="selectPjtNo" resultType="_int" parameterType="_int">
 		SELECT PJT_NO
           FROM BACKLOG
          WHERE BLG_NO = #{blgNo}
@@ -223,4 +223,22 @@
 		, #{memNo}
 		)
 	</insert>
+	
+	<update id="updateReview" parameterType="ReviewDTO">
+		UPDATE
+		       REVIEW
+		   SET REVIEW_LIKE_TXT = #{reviewLikeTxt}
+		     , REVIEW_LEARN_TXT = #{reviewLearnTxt}
+		     , REVIEW_MISS_TXT = #{reviewMissTxt}
+		 WHERE MEM_NO = #{memNo}
+	</update>
+	
+	<delete id="removeReview" parameterType="ReviewDTO">
+		DELETE
+		  FROM REVIEW
+		 WHERE MEM_NO = #{memNo}
+		   AND SPR_NO = #{sprNo}
+	</delete>
+	
+	
 </mapper>

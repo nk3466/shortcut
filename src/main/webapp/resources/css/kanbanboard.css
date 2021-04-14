@@ -12,20 +12,24 @@
 
 .kanbanboard_area .row .kanban_item{ width: 20%;  padding: 15px; float:left;}
 .kanbanboard_area .row .kanban_item .kanbanboard{width: 100%;  border: 1px solid lightgray; background-color: white; padding: 0 15px 20px;}
+<<<<<<< HEAD
 .kanbanboard_area .row .kanban_item .kanbanboard .kanbanboard_title{padding: 10px 0;  font-size: 20px;  font-weight: bold; border:0; text-align:center;     text-align: left;
     display: inherit;}
+=======
+.kanbanboard_area .row .kanban_item .kanbanboard .kanbanboard_title{padding: 10px 0;  font-size: 15px;  font-weight: bold; border:0; text-align:center;}
+>>>>>>> 42f0507f96521baf3d9871dd8f376ad22f8d60ed
 .kanbanboard_area .row .kanban_item .kanbanboard .insert_card{border: 1px solid lightgray;  padding: 10px;}
 .kanbanboard_area .row .kanban_item .kanbanboard .board_item{border: 1px solid lightgray;  margin-bottom: 20px; border-radius: 6px; padding: 5px;}
 .kanbanboard_area .row .kanban_item .kanbanboard .item.type1{font-size: 17px; }
 .kanbanboard_area .row .kanban_item .kanbanboard .item.type2{}
 .kanbanboard_area .row .kanban_item .kanbanboard .item.type2 .item_detail{border-radius: 9px; padding: 0 3px;}
-.kanbanboard_area .row .kanban_item .kanbanboard .item.type2 .item_detail.type{border: 1px solid #FBAAAA; background-color: #fbaaaa; padding: 3px; margin: 5px;}
+.kanbanboard_area .row .kanban_item .kanbanboard .item.type2 .item_detail.type{border: 1px solid #FBAAAA; background-color: #fbaaaa; padding: 3px; margin: 3px;}
 
 .kanbanboard_area .row .kanban_item .kanbanboard .item.type2 .item_detail.type1{border: 1px solid #B3D1EC; background-color: #B3D1EC;}
 .kanbanboard_area .row .kanban_item .kanbanboard .item.type2 .item_detail.type2{border: 1px solid #C1E1B2; background-color: #C1E1B2;}
 .kanbanboard_area .row .kanban_item .kanbanboard .item.type2 .item_detail.type3{border: 1px solid #E88D70; background-color: #E88D70;}
 
-.item.type3{font-size:20px; margin-left:20px;}
+.item.type3{font-size:15px; margin-left:20px;}
 
 .kanbanboard_area .row .kanban_item .kanbanboard.type1{border-top: 10px solid #E8BF70;}
 .kanbanboard_area .row .kanban_item .kanbanboard.type2{border-top: 10px solid #70E8D9;}

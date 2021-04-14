@@ -10,6 +10,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- 파비콘 -->
+<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
 <meta name="_csrf" content="${_csrf.token}">
 <meta name="_csrf_header" content="${_csrf.headerName}">
 <meta charset="UTF-8">
@@ -70,7 +72,10 @@
 					</div>
 					
 				</div>
-			</div> <!-- 보드 정보 영역 끝 -->
+			</div> 
+			<!-- 보드 정보 영역 끝 -->
+			
+			
 			
 <!-- 내가 만든 보드  -->
 <c:forEach var="boardList" items="${boardList }">
@@ -79,7 +84,40 @@
 					<div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/><i class="fas fa-ellipsis-v" id="modify"></i></div>
 					
 					
+					<div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/></div>
+					<!--  카드 영역  -->
+					<c:forEach var="cardList" items="${cardList }">
+					
+					<c:if test="${boardList.brdNo eq cardList.brdNo}">
+					    <div class="board_item card">
+                        <div class="item type1 card-header bg-white"><c:out value="${cardList.title}"/></div>
+                        <div class="item type2 card-body">
+                        <c:if test="${ 1 eq cardList.type}">
+                            <span class="item_detail type">일반</span> 
+                        </c:if>  
+                        <c:if test="${ 2 eq cardList.type}">
+                            <span class="item_detail type">업무</span> 
+                        </c:if>  
+                        <c:if test="${ 3 eq cardList.type}">
+                            <span class="item_detail type">일정</span> 
+                        </c:if>  
+                        <c:if test="${ 4 eq cardList.type}">
+                            <span class="item_detail type">업무</span> 
+                            <span class="item_detail type">일정</span> 
+                        </c:if>  
+                        </div>
+                        <div class="item type3">
+                            <i class="fas fa-user-circle">김민기</i> <i
+                                class="fas fa-user-circle">이남경</i>
+                        </div>
+                    </div>
+					</c:if>
+					 </c:forEach>
+					                                                   
+					<!-- /카드영역 -->
 					<input type="text" value="${boardList.brdNo}" class="boardNo" name="" style="display: none;">
+					
+					
 					<div id="progressSet" class="insert_card" data-toggle="modal"
 						data-target="#myModal2">
 						<i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
@@ -92,8 +130,21 @@ console.log("boardList" +  "${requestScope.boardList}");
 </script>
 
 <!-- /내가 만든 보드 -->
-				
+				<div class="kanban_item">
+            <div class="kanbanboard type1">
+               <div class="kanbanboard_title">
+                  요청
+               </div>
 
+               <div class="insert_card" data-toggle="modal" data-target="#myModal2">
+                  <i class="fas fa-plus"></i>
+                  카드 생성하기
+               </div>
+            </div>
+         </div>
+
+
+<!-- sdf -->
 		</div>
 	</div>
 
@@ -189,11 +240,21 @@ console.log("boardList" +  "${requestScope.boardList}");
 					</div>
 					<div class="item_area calendar_btn on">
 						<i class="fas fa-bell"></i> 
-						<select class="select_detail" name="alarm">
-							<option>30분 전 미리 알림</option>
-							<option>하루 전 미리 알림</option>
-							<option>알리지 않음</option>
+						<select class="select_detail" name="alert">
+							<option value="1">30분 전 미리 알림</option>
+							<option value="2">하루 전 미리 알림</option>
+							<option value="3">알리지 않음</option>
 						</select>
+					</div>
+					<div class="item_area calendar_btn on">
+						<i class="fas fa-user-plus"></i> 
+						<!-- <input class="input_detail type1" id="selectmember" type="text" name="addMember" placeholder="Add Member" 
+						value="">  -->
+						<div id="choisemember"></div>
+						<!-- <input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회"> -->
+						<div id="member2"></div>
+						<input id="memberInput" type="hidden" value="">
+						<input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
 					</div>
 					<!-- 일정 영역 끝 -->
 
@@ -422,12 +483,45 @@ console.log("boardList" +  "${requestScope.boardList}");
 					for(let i = 0; i < memberList.length; i++){
 						
 						var insertSpan="";
-						insertSpan += '<span class="item_text on">' + memberList[i].name 
+						insertSpan += '<span class="item_text onTask">' + memberList[i].name 
 						+ '<i id="delBtn" class="fas fa-times-circle"></i>' 
-			        	+ '<input class="item_num" name="memberList' 
-			        	+ [i] + '" type="hidden" value="' + memberList[i].no + '">' + '</span>';
+			        	+ '<input class="item_num" name="member" type="hidden" value="' + memberList[i].no + '">' + '</span>';
 						count++;
 						$("#member").append(insertSpan);
+					}
+				} 
+	        	
+	        
+	    },
+	        error:function(data){
+				console.log(error);
+			}
+	      });
+	});
+	
+	$("#calendarBtn").click(function(){
+		
+	    $.ajax({
+	        type:"POST",
+	        url:"${pageContext.servletContext.contextPath}/card/cardmember",
+	        data: {pjtNo: pjtNo},
+	        success:function(data, status, xhr)
+	        {
+	        	
+	        	console.log(data)
+				if(data !==0){
+					
+					let memberList = data; 
+					let list="";
+					$("#member2").empty();
+					for(let i = 0; i < memberList.length; i++){
+						
+						var insertSpan="";
+						insertSpan += '<span class="item_text on">' + memberList[i].name 
+						+ '<i id="delBtn" class="fas fa-times-circle"></i>' 
+			        	+ '<input class="item_num" name="memberList" type="hidden" value="' + memberList[i].no + '">' + '</span>';
+						count++;
+						$("#member2").append(insertSpan);
 					}
 				} 
 	        	
@@ -483,6 +577,13 @@ console.log("boardList" +  "${requestScope.boardList}");
 		return false;
 	}
 	
+	$(document).on('click','.item_text.onTask',function(){
+		
+		var $t = $(this).siblings();
+		
+		$t.remove();
+		count--;
+	});
 	$(document).on('click','.item_text.on',function(){
 		
 		var $t = $(this);
