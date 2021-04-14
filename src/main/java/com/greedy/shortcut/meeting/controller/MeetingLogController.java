@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.greedy.shortcut.board.model.dto.ProjectDTO;
 import com.greedy.shortcut.meeting.model.dto.AttendListDTO;
 import com.greedy.shortcut.meeting.model.dto.MeetingDTO;
 import com.greedy.shortcut.meeting.model.service.MeetingService;
@@ -200,4 +198,42 @@ public class MeetingLogController {
 		
 		return result;
 	}
+	
+	@PostMapping(value="meetinglog/modifyMeeting", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String modifyMeeting(@RequestParam Map<String, String> parameters, Model model) throws JsonProcessingException{
+		
+		int meetingNo = Integer.parseInt(parameters.get("meetingNo"));
+		System.out.println("모오냐아아아 " + meetingNo);
+		HashMap<String,Object> meeting = meetingService.selectMeetingDetail(meetingNo);
+
+		model.addAttribute("meeting", meeting);
+		
+		System.out.println("모오냐야" + meeting);
+		
+		System.out.println("이거 수정 미팅넘버" + meetingNo);
+		
+		
+		return new ObjectMapper().writeValueAsString(meeting);
+	}
+	
+	@PostMapping(value="meetinglog/modifyComplete", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public int modifyComplete(@RequestParam Map<String, String> parameters, Model model) {
+		
+		int meetingNo = Integer.parseInt(parameters.get("meetingNo"));
+		String modifyTitle = (parameters.get("modifyTitle"));
+		String modifyContent = (parameters.get("modifyContent"));
+		
+		System.out.println("수정 완료 : " + meetingNo);
+		System.out.println("수정 완료 : " + modifyTitle);
+		System.out.println("수정 완료 : " + modifyContent);
+		
+		int result = meetingService.modifyComplete(meetingNo, modifyTitle,modifyContent);
+		
+		return result;
+	}
+	
+	
+	
 }

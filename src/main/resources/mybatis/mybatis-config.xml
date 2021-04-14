@@ -50,6 +50,7 @@
 
  		<typeAlias alias="ReviewAndProjectMemberDTO" type="com.greedy.shortcut.retrospect.model.dto.ReviewAndProjectMemberDTO"/>
  		
+ 		<typeAlias alias="MeetingHistoryDTO" type="com.greedy.shortcut.meeting.model.dto.MeetingHistoryDTO"/>
  	</typeAliases>
  	
  </configuration>
