@@ -63,6 +63,31 @@
 		<result property="sprBlgNo" column="BLG_NO"/>
 	</resultMap>
 	
+	<resultMap id="RequestCardResultSet" type="RequestCardDTO">
+		<id column="CRD_NO" property="no" />
+		<result column="CRD_NAME" property="title" />
+		<result column="CRD_ENROLL_DATE" property="EnrollDate" />
+		<result column="CRD_DEL_YN" property="delNo" />
+		<result column="BRD_NO" property="brdNo" />
+		<result column="CRD_ORDER" property="order" />
+		<result column="CRD_TYPE" property="type" />
+		<result column="MEM_NO" property="memNo" />
+		<result column="CRD_TXT" property="txt" />
+		<result column="MEM_NO" property="member" />
+		<result column="SCH_PLACE" property="place" />
+		<result column="SCH_ALERT" property="alert" />
+		<result column="SCH_START_DATE" property="scheduleStartDate" />
+		<result column="SCH_END_DATE" property="scheduleEndDate" />
+		<result column="TK_START_DATE" property="taskStartDate" />
+		<result column="TK_END_DATE" property="taskEndDate" />
+	</resultMap>
+	
+	<resultMap type="CardAttendListDTO" id="CardAttendResultMap">
+		<id property="crdNo" column="CRD_NO"/>
+		<result property="sign" column="ATTEND_SIGN"/>
+		<result property="memNo" column="MEM_NO"/>
+	</resultMap>
+	
 	<select id="selectMember" resultMap="memberResultSet" parameterType="_int">
        SELECT
               A.MEM_NAME
@@ -112,4 +137,87 @@
                ORDER BY ROWNUM DESC)
         WHERE ROWNUM = 1
 	</select>
+	
+	<select id="selctCardList" resultMap="CardResultSet" parameterType="_int">
+	   SELECT 
+	         A.CRD_NO
+	       , A.CRD_NAME
+	       , A.CRD_ENROLL_DATE
+	       , A.CRD_DEL_YN
+	       , A.BRD_NO
+	       , A.CRD_ORDER
+	       , A.CRD_TYPE
+	       , A.MEM_NO
+	       , A.CRD_TXT
+	  FROM CARD A
+	  WHERE A.BRD_NO = #{brdNo}
+	</select>
+	<insert id="registCardTask" parameterType="RequestCardDTO">
+	<selectKey keyProperty="no" order="BEFORE" resultType="_int">
+		 SELECT
+		        NVL(TO_NUMBER(MAX(CRD_NO)),0)
+	       FROM CARD
+    </selectKey>
+	    INSERT
+	      INTO CRD_TASK A
+	    (
+	      A.TK_PROGRESS
+	    , A.CRD_NO
+	    , A.MEM_NO
+	    , A.TK_START_DATE
+	    , A.TK_END_DATE
+	    )
+	    VALUES
+	    (
+	      1
+	    , #{no}
+	    , #{member}
+	    , #{taskStartDate}
+	    , #{taskEndDate}
+	    )
+	</insert>
+	<insert id="registCardSchedule" parameterType="RequestCardDTO">
+	<selectKey keyProperty="no" order="BEFORE" resultType="_int">
+		 SELECT
+		        NVL(TO_NUMBER(MAX(CRD_NO)),0)
+	       FROM CARD
+    </selectKey>
+	    INSERT
+	      INTO CRD_SCHEDULE A
+	    (
+	      A.SCH_ALERT
+	    , A.SCH_PLACE
+	    , A.CRD_NO
+	    , A.SCH_START_DATE
+	    , A.SCH_END_DATE
+	    )
+	    VALUES
+	    (
+	      #{alert}
+	    , #{place}
+	    , #{no}
+	    , TO_DATE(#{scheduleStartDate}, 'YYYYMMDDHH24MISS')
+	    , TO_DATE(#{scheduleEndDate}, 'YYYYMMDDHH24MISS')
+	    )
+	</insert>
+	
+		<insert id="registSchAttendList" parameterType="CardAttendListDTO" >
+	<selectKey keyProperty="crdNo" order="BEFORE" resultType="_int">
+		 SELECT
+		        NVL(TO_NUMBER(MAX(CRD_NO)),0)
+	       FROM CARD
+    </selectKey>
+	    INSERT
+	      INTO CRD_SCH_ATTEND_LIST A
+	    (
+	      A.CRD_NO
+	    , A.MEM_NO
+	    )
+	    VALUES
+	    (
+	      #{crdNo}
+	    , #{memNo}
+	    )
+	</insert>
+	
  </mapper>
