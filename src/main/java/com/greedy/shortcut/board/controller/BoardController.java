@@ -73,30 +73,12 @@ public class BoardController {
 		return memberList;
 	}
 
-	//@PostMapping("/card/create")
-	//public String registCard(@ModelAttribute CardDTO card, HttpServletRequest request, RedirectAttributes rttr) {
-
-	//	System.out.println("card: " + card);
-	//	String memberList = request.getParameter("memberList0");
-	//	System.out.println("memberList: " + memberList);
-
-	//	if (!cardService.registCard(card)) {
-	//		System.out.println(card);
-	//	}
-
-	//	rttr.addFlashAttribute("message", "카드 등록에 성공하셨습니다.");
-
-	//	return "/board/kanbanboard";
-	//}
 
 	@PostMapping("/board/kanbanboard")
-	@ResponseBody public String newBoard(@RequestParam(name="title") String
+	public String newBoard(@RequestParam(name="title") String
 			title,@RequestParam(name="sprNo") int sprNo ,@RequestParam(name="pjtNo") int
 			pjtNo ,@RequestParam(name="projectName") String projectName
 			,RedirectAttributes redirect, Model model, RedirectAttributes rttr) {
-
-	//public String newBoard(@RequestParam(name = "title") String title, @RequestParam(name = "sprNo") int sprNo,
-			//RedirectAttributes rttr, Model model) {
 
 		System.out.println("title:" + title);
 		System.out.println("sprNo:" + sprNo);
@@ -113,7 +95,6 @@ public class BoardController {
 		 return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+
 		 projectName;
 
-//		return "/board/kanbanboard";
 
 	}
 
