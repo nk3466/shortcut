@@ -12,7 +12,8 @@
 
 .kanbanboard_area .row .kanban_item{ width: 20%;  padding: 15px; float:left;}
 .kanbanboard_area .row .kanban_item .kanbanboard{width: 100%;  border: 1px solid lightgray; background-color: white; padding: 0 15px 20px;}
-.kanbanboard_area .row .kanban_item .kanbanboard .kanbanboard_title{padding: 10px 0;  font-size: 20px;  font-weight: bold; border:0; text-align:center;}
+.kanbanboard_area .row .kanban_item .kanbanboard .kanbanboard_title{padding: 10px 0;  font-size: 20px;  font-weight: bold; border:0; text-align:center;     text-align: left;
+    display: inherit;}
 .kanbanboard_area .row .kanban_item .kanbanboard .insert_card{border: 1px solid lightgray;  padding: 10px;}
 .kanbanboard_area .row .kanban_item .kanbanboard .board_item{border: 1px solid lightgray;  margin-bottom: 20px; border-radius: 6px; padding: 5px;}
 .kanbanboard_area .row .kanban_item .kanbanboard .item.type1{font-size: 17px; }
@@ -103,7 +104,7 @@
 .btn-group .button{background-color: #00ff0000; border: 1px solid green; color: black; padding: 5px 12px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; cursor: pointer; float: left;}
 .btn-group .button on{background-color: #4CAF50;}
 .btn-group .button:not(:last-child){border-right: none;}
-
+.kanbanboard_area .row .kanban_item .kanbanboard .kanbanboard_title .fa-ellipsis-v{text-align: right; display: inline; padding-left: 60%;}
 
 
 

@@ -76,7 +76,9 @@
 <c:forEach var="boardList" items="${boardList }">
 				<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type1" id="newBoard<c:out value="${boardList.brdOrder}"/>">
-					<div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/></div>
+					<div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/><i class="fas fa-ellipsis-v" id="modify"></i></div>
+					
+					
 					<input type="text" value="${boardList.brdNo}" class="boardNo" name="" style="display: none;">
 					<div id="progressSet" class="insert_card" data-toggle="modal"
 						data-target="#myModal2">
