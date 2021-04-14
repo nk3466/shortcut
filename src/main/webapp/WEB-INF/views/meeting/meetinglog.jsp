@@ -203,10 +203,9 @@
 	   
 	   console.log("meetingNo : " + meetingNo);
  	   	$.ajax({
-  	   		url : "${pageContext.servletContext.contextPath}/meetinglog/deletedMeeting",
+  	   		url : "deletedMeeting",
   	   		type : "POST",
-	  	   	dataType : "json",
-	  	   	data : {meetingNo : meetingNo},
+	  	   	data : {"meetingNo" : meetingNo},
 	  	   	success : function(data, status, xhr){
 	  	   		console.log(data);
 	  	   	},

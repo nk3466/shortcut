@@ -106,6 +106,7 @@
 		     , A.SPR_NO     
 		  FROM MEETING A
 		 WHERE A.SPR_NO = 1
+		   AND A.MEET_DEL_YN = 'N'
 	</select>
 	
 	<select id="selectMeetingDetail" parameterType="MeetingDTO" resultMap="MeetingResultSet">
@@ -122,7 +123,7 @@
 		 WHERE A.MEET_NO = #{meetingNo}
 	</select>
 	
-	<select id="selectMeetingDetailMember"  resultMap="MemberResultSet" parameterType="Hashmap">
+	<select id="selectMeetingDetailMember"  resultMap="MemberResultSet">
 		 
 		SELECT
 			  B.MEM_NO
@@ -133,5 +134,10 @@
 
 	</select>
 	
+	<update id="deletedMeeting" parameterType="MeetingDTO">
+		UPDATE MEETING A
+		   SET A.MEET_DEL_YN = 'Y'
+		 WHERE A.MEET_NO = #{meetingNo}
+	</update>
 
 </mapper>

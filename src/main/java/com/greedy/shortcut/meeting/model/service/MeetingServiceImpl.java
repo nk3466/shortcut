@@ -77,6 +77,13 @@ public class MeetingServiceImpl implements MeetingService{
 		return MeetingDetail;
 	}
 
+	@Override
+	public int deletedMeeting(int meetingNo) {
+
+		return mapper.deletedMeeting(meetingNo);
+	}
+
+
 	
 
 	
