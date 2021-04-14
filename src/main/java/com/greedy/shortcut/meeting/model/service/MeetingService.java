@@ -21,6 +21,9 @@ public interface MeetingService {
 
 	HashMap<String,Object> selectMeetingDetail(int meetingNo);
 
+	int deletedMeeting(int meetingNo);
+
+
 
 
 

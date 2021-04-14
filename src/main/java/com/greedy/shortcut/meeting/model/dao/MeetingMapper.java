@@ -1,5 +1,6 @@
 package com.greedy.shortcut.meeting.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -28,6 +29,9 @@ public interface MeetingMapper {
 	MeetingDTO selectMeetingDetail(int meetingNo);
 
 	List<MemberDTO> selectMeetingDetailMember(int meetingNo);
+
+	int deletedMeeting(int meetingNo);
+
 
 	
 
