@@ -60,8 +60,10 @@ public class CardController {
 	}
 
 	@PostMapping("/card/create")
-	public String registCard(@ModelAttribute RequestCardDTO card, HttpServletRequest request, RedirectAttributes rttr
-							, Model model) {
+	public String registCard(@ModelAttribute RequestCardDTO card, HttpServletRequest request, 
+			@RequestParam(name="sprNo") int sprNo ,@RequestParam(name="pjtNo") int
+			pjtNo ,@RequestParam(name="projectName") String projectName
+			,RedirectAttributes redirect,RedirectAttributes rttr, Model model) {
 		CardScheduleDTO crd_sch = new CardScheduleDTO();
 		CardTaskDTO crd_task = new CardTaskDTO();
 		
@@ -91,12 +93,9 @@ public class CardController {
 		
 		rttr.addFlashAttribute("message", "카드 등록에 성공하셨습니다.");
 
-		return "/board/kanbanboard";
-		/* 
-		 * 
-		 
-		 * 
-		 *  */
+		return "redirect:/board/kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+
+		 projectName;
+		
 	}
 
 }
