@@ -35,15 +35,14 @@
 					<div class="login_btn_area">
 						<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
 						<button class="login_btn" type="submit">Login</button>
-						<!-- <a class="login_btn" href="http://kordzor.cafe24.com/final/project_board.html">Login</a> -->
 					</div>
 				</form>
 				<div class="modal_text_area">
 					<div class="modal_text">
-						<a class="modal_text_detail" href="#" data-toggle="modal" data-target="#password_find">비밀번호 찾기</a> 
+						<a class="modal_text_detail type1" href="#">비밀번호 찾기</a> 
 					</div>
 					<div class="modal_text">
-						<a class="modal_text_detail" href="#" data-toggle="modal" data-target="#member_regist">회원 가입 하기</a>
+						<a class="modal_text_detail type2" href="#">회원 가입 하기</a>
 					</div>
 				</div>				
 			</div>
@@ -53,14 +52,18 @@
 
 <script type="text/javascript">
 	$(function() {
-
-		
-		$(".modal_text_detail").click(function(e) {
+		$(".modal_text_detail.type1").click(function(e) {
 			e.preventDefault();
 
-			var $t = $(this);
-			
-			$('#member_login').modal("toggle");
+			$('#member_login').modal("hide");
+			$("#password_find").modal("toggle");
+		});
+		
+		$(".modal_text_detail.type2").click(function(e) {
+			e.preventDefault();
+
+			$('#member_login').modal("hide");
+			$("#member_regist").modal("toggle");
 		});
 		
 	})

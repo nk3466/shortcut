@@ -16,14 +16,9 @@
 <link rel="stylesheet" type="text/css"
 	href="${ pageContext.servletContext.contextPath }/resources/css/messenger.css">
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
 <!-- 폰트어썸 -->
@@ -81,7 +76,7 @@
 									${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}</div>
 							</div>
 
-							<div class="row" style="height: auto;">
+							<div class="row">
 								<div class="send_itme">프로젝트</div>
 								<div class="send_itme_detail">
 									<input class="input_detail type1" id="selectpjt" type="text"
@@ -92,7 +87,7 @@
 								<div id="project"></div>
 							</div>
 
-							<div class="row" style="height: auto;">
+							<div class="row" >
 								<div class="send_itme">받는 사람</div>
 								<div class="send_itme_detail">
 									<input class="input_detail type1" id="selectmember" type="text"
@@ -104,7 +99,7 @@
 								<div id="member"></div>
 							</div>
 
-							<div class="row" style="height: auto;">
+							<div class="row">
 								<div class="send_itme">구분</div>
 								<div class="send_itme_detail">
 									<input type="radio" name="messenger" id="work" value=1 style="width:20px; height:20px; border:1px;"><label for="work" id="label">업무</label>
@@ -117,10 +112,10 @@
 								<textarea class="textarea_detail"></textarea>
 							</div>
 							<div class="row">
-							<div class="btn_area">
-							<input name="${_csrf.parameterName}" type="hidden"  value="${_csrf.token}">
-						<button type="submit" class="upload_btn" id="btnSend">올리기</button>
-					</div>
+								<div class="btn_area">
+									<input name="${_csrf.parameterName}" type="hidden"  value="${_csrf.token}">
+									<button type="submit" class="upload_btn" id="btnSend">올리기</button>
+								</div>
 							</div>
 						</div>
 					</div>

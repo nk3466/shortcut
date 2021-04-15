@@ -17,10 +17,10 @@
 	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
 	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/backlog.css">
 	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/modal.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
 	<!-- 폰트어썸 -->
@@ -201,16 +201,16 @@
 			<div class="backlog_table_area">				
 				<div class="table_area">
 					<div class="table_item">
-					<table style="width: 100%;"  id="backlogViewList">
+						<table style="width: 100%;"  id="backlogViewList">
 							<thead>
 								<tr>
-									<th class="">No</th>
-									<th class="">백로그 이름</th>
-									<th class="">우선순위</th>
-									<th class="">데모방식</th>
-									<th class="">비고</th>
-									<th class="">스프린트 생성</th>
-									<th class=""  style="display: none;">백로그 번호</th>
+									<th class="th_detail type">No</th>
+									<th class="th_detail type">백로그 이름</th>
+									<th class="th_detail type">우선순위</th>
+									<th class="th_detail type">데모방식</th>
+									<th class="th_detail type">비고</th>
+									<th class="th_detail type">스프린트 생성</th>
+									<th class="th_detail type"  style="display: none;">백로그 번호</th>
 									<!-- <th class="">스프린트 생성</th> -->
 								</tr>
 							</thead>
@@ -322,13 +322,13 @@
 						<table style="width: 100%;">
 							<thead>
 								<tr>
-									<th class="">No</th>
-									<th class="">이름</th>
-									<th class="">우선순위</th>
-									<th class="">종료날짜</th>
-									<th class="">데모방식</th>
-									<th class="">비고</th>
-									<th class="">리뷰 작성 / 수정</th>
+									<th class="th_detail type">No</th>
+									<th class="th_detail type">이름</th>
+									<th class="th_detail type">우선순위</th>
+									<th class="th_detail type">종료날짜</th>
+									<th class="th_detail type">데모방식</th>
+									<th class="th_detail type">비고</th>
+									<th class="th_detail type">리뷰 작성 / 수정</th>
 								</tr>
 							</thead>
 							<tbody id="reviewBody">
@@ -866,7 +866,7 @@
 				
  		<div class="row detailpage">
          	<div class="left_area">
-         	<div class="modal-body">
+	         	<div class="modal-body">
 					<div class="sprint_item">
 									
 						<div class="item_name">
@@ -892,17 +892,19 @@
 						</div>
 						<textarea class="textarea_detail" id="sprintRegistGoalDetail" readonly></textarea>
 					</div>
-         	</div>
-         </div>
+	         	</div>
+       		</div>
          
          
 				<!-- Modal body -->
 				<div class="modal-body">
+				
 					<div class="sprint_item">
-					<div class="item_name">
+						<div class="item_name">
 							변경할 스프린트 이름
 						</div>
 						<input class="input_detail" type="text" id="sprintupdateNameDetail">
+					</div>	
 					<div class="sprint_item">
 						<div class="item_name">
 							변경 할 시작 날짜
@@ -922,13 +924,13 @@
 						<textarea class="textarea_detail" id="sprintupdateGoalDetail"></textarea>
 					</div>
 				</div>
-				</div>
 				<!-- Modal footer -->
-				<div class="modal-footer">
+				<div class="modal_btn_area">
 					<button type="button" class="btn_detail" id="EditSprint">수정</button>
 					<button type="button" class="btn_detail" id="RemoveSprint">삭제</button>
 					<button type="button" class="btn_detail" data-dismiss="modal">취소</button>
 				</div>
+				
 
 			</div>
 		</div>
@@ -1001,7 +1003,7 @@
 				<table class="select_member" id="projectMember" border="1" style="width:100%; height:30px; text-align: center">
 					<thead>
 					<tr>
-						<th style="width:60px; align-content: center;" >번호</th>
+						<th style="width:60px; ">번호</th>
 						<th>이메일</th>
 						<th style="width:100px;">권한</th>
 						<th style="width:100px; display:none">회원번호</th>

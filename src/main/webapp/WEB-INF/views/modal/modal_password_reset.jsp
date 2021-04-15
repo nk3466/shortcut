@@ -38,7 +38,7 @@
 						<a class="modal_text_detail type2" href="#" data-toggle="modal" data-target="#member_regist">회원가입</a> 
 					</div> -->
 					<div class="modal_text">
-						<a class="modal_text_detail type2" href="#" data-toggle="modal" data-target="#member_login">이미 계정이 있으면 로그인 해주세요 </a>
+						<a class="modal_text_detail type4" href="#">이미 계정이 있으면 로그인 해주세요 </a>
 					</div>
 				</div>				
 			</div>
@@ -48,13 +48,12 @@
 <script type="text/javascript">
 	$(function() {
 
-		
-		$(".modal_text_detail.type2").click(function(e) {
+		$(".modal_text_detail.type4").click(function(e) {
 			e.preventDefault();
 
-			var $t = $(this);
 			
-			$('#password_reset').modal("toggle");
+			$('#password_reset').modal("hide");
+			$('#member_login').modal("toggle");
 		});
 		
 	})

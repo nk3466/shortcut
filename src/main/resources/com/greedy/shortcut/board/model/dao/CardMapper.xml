@@ -97,7 +97,7 @@
         WHERE B.PJT_NO = #{pjtNo}
 	</select>
 	
-	<insert id="registCard" parameterType="CardDTO">
+	<insert id="registCard" parameterType="RequestCardDTO">
 	<selectKey keyProperty="order" order="BEFORE" resultType="_int">
 		 SELECT
 		        NVL(TO_NUMBER(MAX(CRD_ORDER)),0)+1

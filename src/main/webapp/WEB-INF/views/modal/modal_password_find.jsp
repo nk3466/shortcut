@@ -31,7 +31,7 @@
 	
 					
 					<div class="modal_btn_area">
-						<button type="button" class="modal_btn" data-toggle="modal" data-target="#password_reset">인증번호 전송</button>
+						<button type="button" class="modal_btn">인증번호 전송</button>
 					</div>
 				</form>	
 				<div class="modal_text_area">
@@ -39,7 +39,7 @@
 						<a class="modal_text_detail type11" href="#" data-toggle="modal" data-target="#member_regist">회원가입</a> 
 					</div> -->
 					<div class="modal_text">
-						<a class="modal_text_detail type1" href="#" data-toggle="modal" data-target="#member_login">이미 계정이 있으면 로그인 해주세요 </a>
+						<a class="modal_text_detail type3" href="#">이미 계정이 있으면 로그인 해주세요 </a>
 					</div>
 				</div>				
 			</div>
@@ -51,12 +51,11 @@
 	$(function() {
 
 		
-		$(".modal_text_detail.type1").click(function(e) {
+		$(".modal_text_detail.type3").click(function(e) {
 			e.preventDefault();
-
-			var $t = $(this);
 			
-			$('#password_find').modal("toggle");
+			$('#password_find').modal("hide");
+			$('#member_login').modal("toggle");
 		});
 		
 	
@@ -65,9 +64,8 @@
 		$(".modal_btn").click(function(e){
 			e.preventDefault();
 
-			var $t = $(this);
-
-			$('#password_find').modal("toggle");
+			$('#password_find').modal("hide");
+			$('##password_reset').modal("toggle");
 		})
 	})
 
