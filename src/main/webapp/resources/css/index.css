@@ -1,7 +1,8 @@
 @charset "UTF-8";
-.top_area{padding: 0 20px; line-height: 50px; border-bottom: 1px solid #ed1745;}
+.top_area{padding: 0 20px; line-height: 50px; border-bottom: 1px solid #ed1745; position: relative;}
 .top_area .row{margin: 0;}
 .top_area .row .top_logo_area{width: 20%; float: left;}
+.top_area .row .top_logo_area .top_logo_detail{text-decoration: none;}
 .top_area .row .top_logo_area .logo_detail{width: 30px; height: 30px;}
 .top_area .row .top_logo_area .logo_text{font-size: 18px; font-weight: bold; color: #ed1745;}
 .top_area .row .top_menu_area{width: 80%; float: right;}
@@ -20,8 +21,8 @@
 
 .main_content .row .main_img_area{float: left; width: 60%;}
 .main_content .row .main_img_area .carousel.slide{text-align: center;}
-.main_content .row .main_img_area .carousel.slide .carousel-item{ }
-.main_content .row .main_img_area .carousel.slide .carousel-item .img_detail{width: 850px;  height: 750px;}
+.main_content .row .main_img_area .carousel.slide .item{ }
+.main_content .row .main_img_area .carousel.slide .item .img_detail{width: 950px;  height: 750px; margin: 0 auto;}
 
 
 
@@ -32,7 +33,7 @@
 .modal.fade .modal-dialog .modal-content{padding: 15px;}
 .modal.fade .modal-dialog .modal-content.login.none{display: none;}
 .modal.fade .modal-dialog .modal-content .modal-header{border: 0;}
-.modal.fade .modal-dialog .modal-content .modal-header .modal-title{margin: 0 auto;  font-size: 25px;  font-weight: bold;}
+.modal.fade .modal-dialog .modal-content .modal-header .modal-title{text-align: center; font-size: 25px;  font-weight: bold;}
 
 .modal.fade .modal-dialog .modal-content .modal-body{}
 .modal.fade .modal-dialog .modal-content .modal-body .login_info{margin-bottom: 15px; text-align: center;}
@@ -59,7 +60,9 @@
 .modal.fade .modal-dialog .modal-content .modal_btn_area .modal_btn{width: 85%;  height: 50px;  background-color: #ffccd7;  border: 1px solid #ffccd7; border-radius: 20px; outline: none; color: white;}
 
 
-
+/* 알람 */
+.alarmArea{border:1px solid whitesmoke; width: 20%;  position: absolute; right: 0; z-index: 999; background-color: whitesmoke;   z-index: 999;   padding: 15px;}
+.alarmArea.on{display:none;}
 
 
 

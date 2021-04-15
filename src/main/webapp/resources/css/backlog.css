@@ -21,7 +21,8 @@
 .sprint_box_area .table_area{}
 .sprint_box_area .table_area .table_item{text-align: center;}
 .sprint_box_area .table_area .table_item .row{margin: 0; margin-bottom: 5px; border: 1px solid lightgray;}
-.sprint_box_area .table_area .table_item .row .table_detail{}
+.sprint_box_area .table_area .table_item .row .th_detail.type{text-align: center;}
+.sprint_box_area .table_area .table_item .row .table_detail{float:left;}
 .sprint_box_area .table_area .table_item .row .table_detail.type1{width: 7%}
 .sprint_box_area .table_area .table_item .row .table_detail.type2{width: 13%}
 .sprint_box_area .table_area .table_item .row .table_detail.type3{width: 34%}
@@ -32,7 +33,7 @@
 
 
 .backlog_create_area{height: 300px; }
-.backlog_create_area .create_sprint_btn{text-align: right;}
+.backlog_create_area .create_sprint_btn{text-align: left;}
 .backlog_create_area .create_sprint_btn .sprint_btn_detail{background-color: white;}
 .backlog_create_area .backlog_line{border: 1px solid lightgray; margin: 10px 0;}
 .backlog_create_area .create_backlog_btn{}
@@ -41,6 +42,7 @@
 .backlog_create_area .backlog_table_area{}
 .backlog_create_area .backlog_table_area .table_area{}
 .backlog_create_area .backlog_table_area .table_area .table_item{text-align: center;}
+.backlog_create_area .backlog_table_area .table_area .table_item .th_detail.type{text-align: center;}
 .backlog_create_area .backlog_table_area .table_area .table_item .row{margin: 0; margin-bottom: 5px; border: 1px solid lightgray;}
 .backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail{}
 /* .backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail .btn_detail_retro{background-color: white;} */
@@ -72,12 +74,12 @@
 
 .modal.fade .modal-dialog .modal-content .modal-body{}
 .modal.fade .modal-dialog .modal-content .modal-body .row{margin: 0;}
-.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info{width: 50%;}
+.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info{float:left; width: 50%;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item{margin-bottom: 75px;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item .info_detail{color: lightgray; margin-bottom: 7px;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item .input_detail{ width: 80%; }
 
-.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea{width: 50%;}
+.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea{float:left; width: 50%;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea .text_item{margin-bottom: 20px;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea .text_item .text_detail{color: lightgray; margin-bottom: 7px;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea .text_item .textarea_detail{width: 100%; height: 150px;}
@@ -109,31 +111,31 @@
 
 .modal.fade{}
 .modal.fade .modal-dialog.type2{max-width: 500px;}
-.modal.fade .modal-dialog .modal-content{}
-.modal.fade .modal-dialog .modal-content .modal-header{}
-.modal.fade .modal-dialog .modal-content .modal-header .header_detail.type1{font-weight: bold; font-size: 21px;}
-.modal.fade .modal-dialog .modal-content .m_text{padding: 0 15px;}
+.modal.fade .modal-dialog.type2 .modal-content{}
+.modal.fade .modal-dialog.type2 .modal-content .modal-header{}
+.modal.fade .modal-dialog.type2 .modal-content .modal-header .header_detail.type1{font-weight: bold; font-size: 21px;}
+.modal.fade .modal-dialog.type2 .modal-content .m_text{padding: 0 15px;}
 
-.modal.fade .modal-dialog .modal-content .modal-body{}
-.modal.fade .modal-dialog .modal-content .modal-body .sprint_item{ margin-bottom: 20px; }
-.modal.fade .modal-dialog .modal-content .modal-body .sprint_item .item_name{}
-.modal.fade .modal-dialog .modal-content .modal-body .sprint_item .input_detail{width: 100%; height: 35px;}
-.modal.fade .modal-dialog .modal-content .modal-body .sprint_item .textarea_detail{width: 100%; height: 150px;}
+.modal.fade .modal-dialog.type2 .modal-content .modal-body{float:left;}
+.modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item{ margin-bottom: 20px; }
+.modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item .item_name{}
+.modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item .input_detail{width: 100%; height: 35px;}
+.modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item .textarea_detail{width: 100%; height: 150px;}
 
-.modal.fade .modal-dialog .modal-content .modal-footer{}
-.modal.fade .modal-dialog .modal-content .modal-footer .btn_detail{background-color: white; border: 0;}
+.modal.fade .modal-dialog.type2 .modal-content .modal-footer{border:0;}
+.modal.fade .modal-dialog.type2 .modal-content .modal-footer .btn_detail{background-color: white; border: 0;}
 
 
 
 /* 모달 상세 페이지 */
 
-.modal.fade .modal-dialog .modal-content .row.detailpage{margin:0; justify-content: center;}
-.modal.fade .modal-dialog .modal-content .row.detailpage .left_area{width:50%;}
+.modal.fade .modal-dialog .modal-content .row.detailpage{margin:0;}
+.modal.fade .modal-dialog .modal-content .row.detailpage .left_area{float: left;width:50%;}
 .modal.fade .modal-dialog .modal-content .row.detailpage .left_area .modal-header{ line-height: 40px;}
-.modal.fade .modal-dialog .modal-content .row.detailpage .left_area .modal-header .item_detail{letter-spacing: -1px; width:45%;}
+.modal.fade .modal-dialog .modal-content .row.detailpage .left_area .modal-header .item_detail{letter-spacing: -2.5px; width:45%; float:left;}
 .modal.fade .modal-dialog .modal-content .row.detailpage .left_area .modal-header .input_detail.nk.type{width:55%;}
 
-.modal.fade .modal-dialog .modal-content .row.detailpage .right_area{width:50%;}
+.modal.fade .modal-dialog .modal-content .row.detailpage .right_area{float: left; width:50%;}
 .modal.fade .modal-dialog .modal-content .row.detailpage .right_area .modal-header{ line-height: 40px;}
-.modal.fade .modal-dialog .modal-content .row.detailpage .right_area .modal-header .item_detail{letter-spacing: -1px; width:45%;}
+.modal.fade .modal-dialog .modal-content .row.detailpage .right_area .modal-header .item_detail{letter-spacing: -2.5px; width:45%;float:left;}
 .modal.fade .modal-dialog .modal-content .row.detailpage .right_area .modal-header .input_detail.nk.type{width:55%;}

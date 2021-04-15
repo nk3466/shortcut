@@ -50,7 +50,7 @@
 				</form>	
 				<div class="modal_text_area">				
 					<div class="modal_text">
-						<a class="modal_text_detail type3" href="#" data-toggle="modal" data-target="#member_login">이미 계정이 있으면 로그인 해주세요 </a>
+						<a class="modal_text_detail type5" href="#" >이미 계정이 있으면 로그인 해주세요 </a>
 					</div>
 				</div>				
 			</div>
@@ -62,12 +62,12 @@
 	$(function() {
 
 		
-		$(".modal_text_detail.type3").click(function(e) {
+		$(".modal_text_detail.type5").click(function(e) {
 			e.preventDefault();
 
-			var $t = $(this);
 			
-			$('#member_regist').modal("toggle");
+			$('#member_regist').modal("hide");
+			$('#member_login').modal("toggle");
 		});
 		
 	})

@@ -37,15 +37,13 @@
 
 <script type="text/javascript">
 	$(function() {
-
-		
-		$(".modal_text_detail").click(function(e) {
+		/* $(".modal_text_detail").click(function(e) {
 			e.preventDefault();
 
 			var $t = $(this);
 			
 			$('#member_logout').modal("toggle");
-		});
+		}); */
 		
 	})
 
