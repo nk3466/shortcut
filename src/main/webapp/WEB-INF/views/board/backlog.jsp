@@ -55,7 +55,6 @@
 		<div class="sprint_box_area">			
 			<div class="sprint_text_btn">
 				<span class="sprint_text">Sprint</span>				
-				<button class="btn_detail ">Edit Sprint</button>			
 			</div>				
 			<div class="sprint_box on"></div>
 			<div class="table_area">
@@ -96,101 +95,92 @@
 				</div>
 			</div>				
 		</div>
-			<script>
-			
+	<script>
 	/* 스프린트 수정하기 위해 수정 버튼 누루면 조회된 결과 출력 */
-	
-	
 		function btnSprintDetail(beta){
 			var sprNo = $(beta).val();
 			console.log(sprNo);
 			console.log("스프린트 번호 :"  + sprNo);
-		 $.ajax({
-				url : "sprintDetail", 
-				type: "POST",
-				data: { "sprNo" : sprNo  },
-				success : function (data,status,xhr){
-					console.log(data.blgName);
-					console.table(data);
-					console.log(data.blgNo);
-					$("#sprintRegistNameDetail").attr('placeholder',"");
-					$("#sprintRegistStartDateDetail").attr('placeholder',"");
-					$("#sprintRegistEndDateDetail").attr('placeholder',"");
-					$("#sprintRegistGoalDetail").attr('placeholder',"");
-					
-					$("#backlogNo11").attr('value',data.blgNo);
-					$("#sprintRegistNoDetail").attr('placeholder',data.sprNo);
-					$("#sprintRegistNameDetail").attr('placeholder',data.sprName);
-					$("#sprintRegistStartDateDetail").attr('placeholder',data.sprStardDate);
-					$("#sprintRegistEndDateDetail").attr('placeholder',data.sprEndDate);
-					$("#sprintRegistGoalDetail").attr('placeholder',data.sprGoal);
-				},
-				error : function (xhr, status, data){
-					console.log(data);
-				}
-					
-				})
-				/*스프린트 삭제 */
+			/* 스프린트 조회  */
+					 $.ajax({
+							url : "sprintDetail", 
+							type: "POST",
+							data: { "sprNo" : sprNo  },
+							success : function (data,status,xhr){
+								console.log(data.blgName);
+								console.table(data);
+								console.log(data.blgNo);
+								$("#sprintRegistNameDetail").attr('placeholder',"");
+								$("#sprintRegistStartDateDetail").attr('placeholder',"");
+								$("#sprintRegistEndDateDetail").attr('placeholder',"");
+								$("#sprintRegistGoalDetail").attr('placeholder',"");
+								$("#BacklogNoDetail").attr('placeholder',"");
+								
+								$("#backlogNo11").attr('value',data.blgNo);
+								$("#sprintRegistNoDetail").attr('placeholder',data.sprNo);
+								$("#sprintRegistNameDetail").attr('placeholder',data.sprName);
+								$("#sprintRegistStartDateDetail").attr('placeholder',data.sprStardDate);
+								$("#sprintRegistEndDateDetail").attr('placeholder',data.sprEndDate);
+								$("#sprintRegistGoalDetail").attr('placeholder',data.sprGoal);
+								$("#BacklogNoDetail").attr('placeholder',data.sprBlgNo);
+							},
+							error : function (xhr, status, data){
+								console.log(data);
+							}
+								
+							})
+			/*스프린트 삭제 */
 				$("#RemoveSprint").click(function(){ 
 				 if(confirm("정말 삭제하시겠습니까 ?") == true){
-				/*  var sprNo = document.getElementById("sprintRegistNoDetail").value; */
-				 console.log("djdjdjdj  : " + sprNo);
-				 $.ajax({
-					url : "${pageContext.servletContext.contextPath}/board/sprint/sprint_remove",
-					type : "post",
-					data : {sprNo : sprNo},
-					success : function(data, textStatus, xhr){
-						alert("스프린트 삭제가 완료되었습니다");
-						document.location.reload();
-					},
-					error : function(xhr, status, error){
-						console.log(error);
-						alert("스프린트 삭제가 취소되었습니다");
-					}
-				 })
-			}else{
-				return;
-				}
+						var baglogNotosprintremove = document.getElementById("BacklogNoDetail").value;
+						console.log("백로그 번호 : " + baglogNotosprintremove);
+						 console.log("djdjdjdj  : " + sprNo);
+							 $.ajax({
+									url : "${pageContext.servletContext.contextPath}/board/sprint/sprint_remove",
+									type : "post",
+									data : {sprNo : sprNo},
+									success : function(data, textStatus, xhr){
+										alert("스프린트 삭제가 완료되었습니다");
+										document.location.reload();
+									},
+									error : function(xhr, status, error){
+										console.log(error);
+										alert("스프린트 삭제가 취소되었습니다");
+									}
+							 })
+					}else{
+						return;
+						}
 			})
-				
-			
 			
 			/* 스프린트 수정 */
-			
-			$("#EditSprint").click(function(){ 
-				 var sprName = document.getElementById("sprintupdateNameDetail").value;
-				 var sprStardDate = document.getElementById("sprintupdateStartDateDetail").value;
-				 var sprEndDate = document.getElementById("sprintupdateEndDateDetail").value;
-				 var sprGoal = document.getElementById("sprintupdateGoalDetail").value;
-				 console.log("넘ㅂ : " + sprName);
-				 console.log("넘ㅂ : " + sprStardDate);
-				 console.log("넘ㅂ : " + sprEndDate);
-				 console.log("넘ㅂ : " + sprGoal);
-				 $.ajax({
-					url : "${pageContext.servletContext.contextPath}/board/sprint/sprint_Edit",
-					type : "post",
-					data : {
-						sprNo : sprNo,
-						sprName : sprName,
-						sprStardDate : sprStardDate,
-						sprEndDate : sprEndDate,
-						sprGoal : sprGoal
-					},
-					success : function(data, textStatus, xhr){
-						alert("스프린트 수정이 완료되었습니다.");
-						document.location.reload();
-					},
-					error : function(xhr, status, error){
-						console.log(error);
-						alert("스프린트 수정이 취소되었습니다.");
-					}
-				 })
-			})
-		
-				
+				$("#EditSprint").click(function(){ 
+					 var sprName = document.getElementById("sprintupdateNameDetail").value;
+					 var sprStardDate = document.getElementById("sprintupdateStartDateDetail").value;
+					 var sprEndDate = document.getElementById("sprintupdateEndDateDetail").value;
+					 var sprGoal = document.getElementById("sprintupdateGoalDetail").value;
+
+					 	$.ajax({
+								url : "${pageContext.servletContext.contextPath}/board/sprint/sprint_Edit",
+								type : "post",
+								data : {
+									sprNo : sprNo,
+									sprName : sprName,
+									sprStardDate : sprStardDate,
+									sprEndDate : sprEndDate,
+									sprGoal : sprGoal
+								},
+								success : function(data, textStatus, xhr){
+									alert("스프린트 수정이 완료되었습니다.");
+									document.location.reload();
+								},
+								error : function(xhr, status, error){
+									console.log(error);
+									alert("스프린트 수정이 취소되었습니다.");
+								}
+					 })
+				})
 			} 
-		 	
-	
 	</script>        
 		
 		<!-- -----------------------백로그 영역-------------------------- -->
@@ -251,36 +241,34 @@
 			var projectNo = ${ requestScope.pjtNo };
 			console.log("백로그 번호 :"  + blgNo);
 			console.log("플젝" + projectNo);
-		 $.ajax({
-					
-				url : "backlogDetail", 
-				type: "POST",
-				data: { "blgNo" : blgNo,
-					    "projectNo" : projectNo },
-				success : function (data,status,xhr){
-					console.table(data);
-					console.log(data.blgNo);
-					$("#importance11").empty();
-					$("#backlogName11").attr('placeholder',"");
-					$("#DemoDetail11").attr('placeholder',"");
-					$("#Reference11").attr('placeholder',"");
-					
-					$("#backlogNo11").attr('value',data.blgNo);
-					//$("#BacklogNoTosprintRegist").attr('value',data.blgNo);				//스프린트 생성할 때 도 부여
-					//$("#BacklogNoTosprintRegist").attr('placeholder',data.blgNo);				//스프린트 생성할 때 도 부여
-					$("#backlogName11").attr('placeholder',data.blgName);
-					$("#DemoDetail11").attr('placeholder',data.blgDemoMemo);
-					$("#Reference11").attr('placeholder',data.blgRefMemo);
-					$("#importance11").append( Eggpri(data.blgPri));
-				},
-				error : function (xhr, status, data){
-					console.log(data);
-				}
-					
-				})
-				
-			} 
-		 	
+			
+					 $.ajax({
+							url : "backlogDetail", 
+							type: "POST",
+							data: { "blgNo" : blgNo,
+								    "projectNo" : projectNo },
+							success : function (data,status,xhr){
+								console.table(data);
+								console.log(data.blgNo);
+								$("#importance11").empty();
+								$("#backlogName11").attr('placeholder',"");
+								$("#DemoDetail11").attr('placeholder',"");
+								$("#Reference11").attr('placeholder',"");
+								
+								$("#backlogNo11").attr('value',data.blgNo);
+								//$("#BacklogNoTosprintRegist").attr('value',data.blgNo);				//스프린트 생성할 때 도 부여
+								//$("#BacklogNoTosprintRegist").attr('placeholder',data.blgNo);				//스프린트 생성할 때 도 부여
+								$("#backlogName11").attr('placeholder',data.blgName);
+								$("#DemoDetail11").attr('placeholder',data.blgDemoMemo);
+								$("#Reference11").attr('placeholder',data.blgRefMemo);
+								$("#importance11").append( Eggpri(data.blgPri));
+							},
+							error : function (xhr, status, data){
+								console.log(data);
+							}
+					})
+				} 
+					 	
 	function Eggpri(num){
 		if(num == 1){
 			var html = "<option selected > 1 </option>" + "<option > 2 </option>" + "<option > 3 </option>"  
@@ -293,19 +281,14 @@
 		}
 		return html;
 	}
-	
 	</script>  
-
-
-
 			<div class="create_backlog_btn">
 				<label>
 					<i class="fas fa-plus"></i>
 					<button class="backlog_btn_detail"  data-toggle="modal" data-target="#myModal">Create Backlog</button>	
 				</label>					
 			</div>
-			
-		</div>	
+	</div>	
 
 
 		<div class="sprint_box_area">			
@@ -359,7 +342,6 @@
 							var $reviewBody = $("#reviewBody");
 							/* 페이징 버튼 */
 							var $pagingArea = $("#pagingArea");
-							
 							/* 페이징 함수 호출 */
 							pagingAjax(pjtNo, 1, $reviewBody, $pagingArea);
 							
@@ -769,7 +751,7 @@
 				<p class="m_text"></p>
 
 				<!-- Modal body -->
-				<div class="modal-body">
+				<div class="modal-body type3">
 					<div class="sprint_item">
 						
 					
@@ -891,6 +873,12 @@
 							스프린트 목표
 						</div>
 						<textarea class="textarea_detail" id="sprintRegistGoalDetail" readonly></textarea>
+					</div>
+					<div class="sprint_item">
+						<div class="item_name" style="display: none">
+							스프린트의 백로그 번호
+						</div>
+						<textarea class="textarea_detail" id="BacklogNoDetail" style="display: none"></textarea>
 					</div>
 	         	</div>
        		</div>

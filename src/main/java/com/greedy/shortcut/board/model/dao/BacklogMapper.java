@@ -89,6 +89,12 @@ public interface BacklogMapper {
 	int insertEditSprintHistory(SprintDTO sprint);
 
 	int RemoveUpdateHistorySprint(int sprNo);
+
+	/* 스프린트 삭제후 백로그 삭제 */
+	int RemoveBacklogSprint(int sprNo);
+
+	/* 백로그 번호 조회 (스프린트 삭제를 위한) */
+	int selectBacklogNo(int sprNo);
 	
 	
 	

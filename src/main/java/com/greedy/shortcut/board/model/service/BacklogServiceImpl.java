@@ -165,7 +165,15 @@ public class BacklogServiceImpl implements BacklogService {
 	@Override
 	public boolean RemoveSprint(int sprNo) {
 
-		return backlogMapper.RemoveSprint(sprNo) + backlogMapper.RemoveUpdateHistorySprint(sprNo) > 0? true : false;
+		/* 스프린트 삭제 */
+		int a = backlogMapper.RemoveSprint(sprNo);
+		/* 백로그번호조회 */
+		int blgNo = backlogMapper.selectBacklogNo(sprNo);
+		/* 백로그 삭제 */
+		int c = backlogMapper.RemoveBacklogSprint(blgNo);
+		int d = backlogMapper.RemoveUpdateHistorySprint(sprNo);
+		
+		return a  + blgNo  + c + d > 2? true : false;
 	}
 
 	/* 스프린트 수정 */

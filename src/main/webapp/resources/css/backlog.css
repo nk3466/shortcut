@@ -26,7 +26,7 @@
 .sprint_box_area .table_area .table_item .row .table_detail.type1{width: 7%}
 .sprint_box_area .table_area .table_item .row .table_detail.type2{width: 13%}
 .sprint_box_area .table_area .table_item .row .table_detail.type3{width: 34%}
-.sprint_box_area .table_area .table_item .row .table_detail.type4{width: 19%}
+.sprint_box_area .table_area .table_item .row .table_detail.type4{width: 16%}
 
 
 .sprint_box_area .table_area .table_item .btn_detail{background-color: white; float: right;}
@@ -117,6 +117,7 @@
 .modal.fade .modal-dialog.type2 .modal-content .m_text{padding: 0 15px;}
 
 .modal.fade .modal-dialog.type2 .modal-content .modal-body{float:left;}
+.modal.fade .modal-dialog.type2 .modal-content .modal-body.type3{float:none;}
 .modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item{ margin-bottom: 20px; }
 .modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item .item_name{}
 .modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item .input_detail{width: 100%; height: 35px;}

@@ -175,19 +175,18 @@
 	<select id="selectBacklogList" resultMap="backlogResultMap" parameterType="BacklogDTO">
 	     SELECT
       DISTINCT  A.BLG_NO
-          , A.BLG_NAME
-          , A.BLG_PRI
-          , A.BLG_ENROLL_DATE
-          , A.PJT_NO
-          , A.BLG_DEL_YN
-          , A.BLG_DEMO_MEMO
-          , A.BLG_REF_MEMO
+	          , A.BLG_NAME
+	          , A.BLG_PRI
+	          , A.BLG_ENROLL_DATE
+	          , A.PJT_NO
+	          , A.BLG_DEL_YN
+	          , A.BLG_DEMO_MEMO
+	          , A.BLG_REF_MEMO
         FROM BACKLOG A
     LEFT OUTER JOIN SPRINT B ON (A.BLG_NO = B.BLG_NO)
        WHERE A.PJT_NO = #{pjtNo}
            AND B.SPR_NO IS NULL
            AND A.BLG_DEL_YN = 'N'
-            OR B.SPR_DEL_YN = 'Y'
        ORDER BY A.BLG_PRI ASC
 	</select>
 	
@@ -250,12 +249,12 @@
                , A.SPR_DEL_YN
                , A.BLG_NO
                , B.PJT_NO
-		  FROM SPRINT A
-    LEFT OUTER JOIN BACKLOG B ON (A.BLG_NO = B.BLG_NO)
-		 WHERE B.PJT_NO = #{pjtNo} 
-          AND A.SPR_END_DATE &gt; SYSDATE
-          AND A.SPR_DEL_YN = 'N'
-		 ORDER BY B.BLG_PRI ASC
+		    FROM SPRINT A
+      LEFT OUTER JOIN BACKLOG B ON (A.BLG_NO = B.BLG_NO)
+   		   WHERE B.PJT_NO = #{pjtNo} 
+             AND A.SPR_END_DATE &gt; SYSDATE
+             AND A.SPR_DEL_YN = 'N'
+		   ORDER BY B.BLG_PRI ASC
 	</select>
 	
 	<update id="EditBacklog" parameterType="BacklogDTO">
@@ -337,6 +336,20 @@
             SET A.SPR_DEL_YN = 'Y'
           WHERE A.SPR_NO =  #{sprNo}
     </delete>
+    
+    <select id="selectBacklogNo"  resultType="_int" parameterType="_int">
+  		 SELECT 
+	            BLG_NO
+	       FROM SPRINT
+	      WHERE SPR_NO = #{sprNo}
+    </select>
+    
+    <update id="RemoveBacklogSprint" parameterType="SprintDTO">
+		 UPDATE BACKLOG A
+            SET A.BLG_DEL_YN = 'Y'
+          WHERE A.BLG_NO =  #{blgNo}
+    </update>
+    
     
     <update id="RemoveUpdateHistorySprint" parameterType="SprintDTO">
 		  UPDATE SPRINT_HISTORY A
