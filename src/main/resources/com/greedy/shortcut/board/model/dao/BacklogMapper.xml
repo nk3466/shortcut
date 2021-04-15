@@ -173,22 +173,22 @@
 	      )
 	</insert>
 	<select id="selectBacklogList" resultMap="backlogResultMap" parameterType="BacklogDTO">
-	    SELECT
+	     SELECT
       DISTINCT  A.BLG_NO
-			 , A.BLG_NAME
-			 , A.BLG_PRI
-			 , A.BLG_ENROLL_DATE
-			 , A.PJT_NO
-			 , A.BLG_DEL_YN
-			 , A.BLG_DEMO_MEMO
-			 , A.BLG_REF_MEMO
-		  FROM BACKLOG A
+          , A.BLG_NAME
+          , A.BLG_PRI
+          , A.BLG_ENROLL_DATE
+          , A.PJT_NO
+          , A.BLG_DEL_YN
+          , A.BLG_DEMO_MEMO
+          , A.BLG_REF_MEMO
+        FROM BACKLOG A
     LEFT OUTER JOIN SPRINT B ON (A.BLG_NO = B.BLG_NO)
-		 WHERE A.PJT_NO = #{pjtNo}
+       WHERE A.PJT_NO = #{pjtNo}
            AND B.SPR_NO IS NULL
            AND A.BLG_DEL_YN = 'N'
             OR B.SPR_DEL_YN = 'Y'
-		 ORDER BY A.BLG_PRI ASC
+       ORDER BY A.BLG_PRI ASC
 	</select>
 	
 	<insert  id="insertBacklog"  parameterType="BacklogDTO">
