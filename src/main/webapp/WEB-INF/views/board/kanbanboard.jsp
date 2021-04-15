@@ -77,7 +77,7 @@
          
 <!-- 내가 만든 보드  -->
    <div class="asdfasdfasdf" style="width: 80%;  float: left;">
-<c:forEach var="boardList" items="${boardList }">
+<c:forEach var="boardList" items="${boardList}">
       <div class="kanban_item boardcolumn">
          <div class="kanbanboard type1" id="newBoard<c:out value="${boardList.brdOrder}"/>">
             <div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/><i class="fas fa-ellipsis-v" id="modify"></i></div>
@@ -85,7 +85,7 @@
             
             <div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/></div>
             <!--  카드 영역  -->
-            <c:forEach var="cardList" items="${cardList }">
+            <c:forEach var="cardList" items="${cardList}">
             
             <c:if test="${boardList.brdNo eq cardList.brdNo}">
                 <div class="board_item card">
@@ -109,6 +109,7 @@
                              <i class="fas fa-user-circle"><c:out value="${cardList.member}"/></i> <i
                                  class="fas fa-user-circle"><c:out value="${cardList.memberList}"/></i>
                          </div>
+                                 <input type="text" value="${cardList.no}" id="crdNo" name="" style="display: none;">
                      </div>
             </c:if>
              </c:forEach>
@@ -210,11 +211,6 @@ console.log("boardList" +  "${requestScope.boardList}");
                   <input type='datetime-local' name="scheduleStartDate" style="display:inline-block; font-size: 12px"> ~ 
                   <input type='datetime-local' name="scheduleEndDate" style="font-size: 12px">
                </div>
-               <!-- <div class="item_area calendar_btn on">
-                  <i class="fas fa-user-plus"></i> <input class="input_detail type1"
-                     type="text" name="name" placeholder="Add Member"> <input
-                     class="input_detail type2" type="button" name="name" value="Add">
-               </div> -->
                <div class="item_area calendar_btn on">
                   <i class="fas fa-map-marker-alt"></i>
                   <input class="input_detail type3" type="text" name="place" size="20px"
@@ -231,10 +227,7 @@ console.log("boardList" +  "${requestScope.boardList}");
                </div>
                <div class="item_area calendar_btn on">
                   <i class="fas fa-user-plus"></i> 
-                  <!-- <input class="input_detail type1" id="selectmember" type="text" name="addMember" placeholder="Add Member" 
-                  value="">  -->
                   <div id="choisemember"></div>
-                  <!-- <input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회"> -->
                   <div id="member2"></div>
                   <input id="memberInput" type="hidden" value="">
                   <input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
@@ -294,31 +287,52 @@ console.log("boardList" +  "${requestScope.boardList}");
          </div>
       </div>
    </div>
-   
-   <jsp:include page="../board/card_detail.jsp"/>
-
 </body>
+<script>
+   function selectCardInfo(crdNo) {
+
+      $.ajax({
+         url: "${pageContext.servletContext.contextPath}/select/cardInfo",
+         type: "get",
+         data: {crdNo: crdNo},
+         success: function(data, status, xhr) {
+            console.log(data);
+            
+         },
+         error: function(xhr, status, error) {
+            console.log(error);
+         }
+      });
+   }
+</script>
 <script type="text/javascript">
 
 $(function(){
       
       $(".board_item.card").click(function(){
           
-         $("#cardModalUpdate").modal();
+         $("#myModal2").modal();
           
       });
       
-   /*    var iddd = "";
-         
-         $(".board_item.card").click(function(e){
-         e.preventDefault();                  
-            $("#cardModalUpdate").modal();
-            iddd = $(this).attr('id');
-            console.log('id : '+ $(this).attr('id'));
-            selectCardDetail($(this).attr('id'));
+   })
+   $(function(){
+      
+      $(".board_item.card").click(function(){
+          
+         $("#myModal2").modal();
+          
+      });
+      
+        $(".board_item.card").click(function(e){
             
-         }); */
-         
+           	var crdNo = $(this).children("#crdNo").val();
+           	console.log(crdNo);
+         	e.preventDefault();                  
+         	$("#myModal2").modal();
+         	selectCardInfo(crdNo);
+            
+         });   
    })
 </script>
 
