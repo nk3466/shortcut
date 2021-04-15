@@ -1,14 +1,6 @@
 package com.greedy.shortcut.board.controller;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,22 +10,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.greedy.shortcut.board.model.dto.BoardDTO;
-import com.greedy.shortcut.board.model.dto.CardDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.shortcut.board.model.dto.CardScheduleDTO;
 import com.greedy.shortcut.board.model.dto.CardTaskDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.RequestCardDTO;
-import com.greedy.shortcut.board.model.service.BoardService;
 import com.greedy.shortcut.board.model.service.CardService;
-import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/*")
@@ -96,6 +85,22 @@ public class CardController {
 
 		return "redirect:/board/kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+
 		 projectName;
+		
+	}
+	
+	@GetMapping(value = "/select/cardInfo", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String selectCardInfo(HttpServletRequest request, Model model) throws JsonProcessingException {
+		
+		int cardNo = Integer.parseInt(request.getParameter("crdNo"));
+		System.out.println("cardNo 무야호: " + cardNo);
+		
+		List<RequestCardDTO> selectCardInfo = cardService.selectCardInfo(cardNo);
+		System.out.println("selectCardInfo무야호 : " + selectCardInfo);
+		
+		model.addAttribute("selectCardInfo", selectCardInfo);
+		
+		return new ObjectMapper().writeValueAsString(selectCardInfo);
 		
 	}
 

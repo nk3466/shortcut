@@ -50,6 +50,7 @@ public class BoardController {
 		List<MemberDTO> memberList = boardService.selectMember(pjtNo);
 		List<BoardDTO> boardList = boardService.selectboardList(sprNo);
 		List<CardDTO> cardList = cardService.selectCardList(boardList);
+		System.out.println("cardList다 들어있나? : " + cardList);
 		System.out.println("boardList :" + boardList);
 		System.out.println("memberList : " + memberList);
 		model.addAttribute("pjtNo", pjtNo);
