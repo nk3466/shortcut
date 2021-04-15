@@ -115,6 +115,7 @@
 		  FROM MEETING A
 		 WHERE A.SPR_NO = 1
 		   AND A.MEET_DEL_YN = 'N'
+		   AND A.PJT_NO = #{pjtNo}
 	</select>
 	
 	<select id="selectMeetingDetail" parameterType="MeetingDTO" resultMap="MeetingResultSet">

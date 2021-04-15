@@ -565,7 +565,7 @@
 	      var enrollDate4 = enrollDate2.replace(/(^0+)/, "");            //0제외
 	      var enrollDate5 = enrollDate3.replace(/(^0+)/, "");            //0제외
 	      var enrollDate6 = enrollDate1 + enrollDate4 + enrollDate5;      //더하기
-	      /* console.log("enrollDate1 : " + enrollDate1);
+	     /*  console.log("enrollDate1 : " + enrollDate1);
 	      console.log("enrollDate2 : " + enrollDate2);
 	      console.log("enrollDate3 : " + enrollDate3);
 	      console.log("enrollDate4 : " + enrollDate4);
