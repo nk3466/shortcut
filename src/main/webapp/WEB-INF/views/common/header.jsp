@@ -20,7 +20,7 @@
 			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/mypage/mypage">
 				<i class="fas fa-cog"></i>
 			</a>
-			<a class="menu_list" href="#">
+			<a class="menu_list">
 				<i class="far fa-bell" id="allAlarmBtn"></i>
 			</a>	
 			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/messenger/messenger">
@@ -53,10 +53,14 @@
 			
 			<!-- <button id="allAlarmBtn">AlARM</button> -->
 			<div class="alarmArea on">
-				<button id="generalAlarmBtn" type="button">알람</button>
-				<button id="githubAlarmBtn" type="button">깃허브</button>
+				<div class="btn-group btn-group-justified">
+					<span><button class="btn btn-default" id="generalAlarmBtn" type="button">Alarm</button></span>
+					<span><button class="btn btn-default" id="githubAlarmBtn" type="button">Github Commit</button></span>
+				</div>
+				<hr>
 				<div class="generalAlarmArea">
-					alarm
+					<br>
+					<h4>Alarm</h4>
 				</div>
 				<div class="githubAlarmArea">
 					<c:if test="${ empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.gitUrl }">
@@ -68,13 +72,17 @@
 					</form>
 					</c:if> 
 					<c:if test="${ !empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.gitUrl }">
-						<p id="githubUrlArea">"${ sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.gitUrl }"</p>
+						<h4 id="githubUrlArea" class="ghu1"></h4>
+						<h4 id="githubUrlArea" class="ghu2"></h4>
+						<button class="btn btn-default" type="button">수정</button>
 					</c:if>
+					<br>
 					<table>
 						<thead>
 							<tr>
-								<th>Github Issues</th>
+								<th><h4 align="center">Github Issues</h4></th>
 							</tr>
+							<tr style="height: 10px;"></tr>
 						</thead>
 						<tbody id=githubArea>
 							
@@ -116,6 +124,7 @@
 					$("#allAlarmBtn").click(function(){
 						
 						$(".alarmArea").toggleClass("on");
+						$(".githubAlarmArea").hide();
 					})
 					
 					$("#generalAlarmBtn").click(function() {
@@ -143,6 +152,13 @@
 						var gitId = gitDetailInfo[0];
 						var gitIdProject = gitDetailInfo[1];
 						
+						var ghu1 = $(".ghu1");
+						var ghu2 = $(".ghu2");
+						var ghuInfo1 = "Id : " + gitId;
+						var ghuInfo2 = "Project : " + gitIdProject;
+						ghu1.append(ghuInfo1);
+						ghu2.append(ghuInfo2);
+						
 						let today = new Date();
 						
 						let year = today.getFullYear();
@@ -162,11 +178,11 @@
 						}
 						
 						//var url = "https://api.github.com/search/issues?q=author:" + gitId + " repo:" + gitId + "/" + gitIdProject;
-						var url = "https://api.github.com/search/commits?q=repo:" + gitId + "/" + gitIdProject + " author-date:" + year + "-" + beforMonth + "-" + date +
-								".." + year + "-" + month + "-" + date;
+						//var url = "https://api.github.com/search/commits?q=repo:" + gitId + "/" + gitIdProject + " author-date:" + year + "-" + beforMonth + "-" + date +
+						//		".." + year + "-" + month + "-" + date;
 						//var url = "https://api.github.com/search/commits?q=repo:" + "freecodecamp" + "/" + "freecodecamp" + " author-date:" + year + "-" + beforMonth + "-" + date +
 						//		".." + year + "-" + month + "-" + date;
-						//var url = "https://api.github.com/search/commits?q=repo:freecodecamp/freecodecamp author-date:2021-02-01..2021-03-31";
+						var url = "https://api.github.com/search/commits?q=repo:freecodecamp/freecodecamp author-date:2021-02-01..2021-03-31";
 						//var url="https://api.github.com/search/commits?q=repo:Gingmin/semi-project author-date:2021-02-01..2021-03-31";
 						console.log(url);
 						getCommits(url);
@@ -200,23 +216,32 @@
 							img.style.height = "32px";
 							const anchor = document.createElement("a");
 							anchor.href = i.html_url;
-							anchor.textContent = i.commit.message.substr(0, 120) + "...";
+							anchor.textContent = i.commit.message.substr(0, 70) + "...";
 							githubArea.appendChild(img); 
 							githubArea.appendChild(anchor);
 							githubArea.appendChild(document.createElement("br"));
+							githubArea.appendChild(document.createElement("hr"));
 						});
 						
 						urls.forEach(u => {
 							
 							const btn = document.createElement("button");
-							btn.textContent = u.title;
+							btn.setAttribute('class', "gitPagingBtn");
+							let buttonStr = u.title.substring(6);
+							btn.textContent = buttonStr.substring(0, buttonStr.lastIndexOf("\""));
 							btn.addEventListener("click", e=> getCommits(u.url));
 							githubArea.appendChild(btn);
 							
 						});
 					}
 					
-					/* async function getIssues() {
+					function clear() {
+						while(githubArea.firstChild)
+							githubArea.removeChild(githubArea.firstChild);
+					}
+				});
+			</script>
+					   <%-- async function getIssues() {
 						
 						var gitInfo = "${ sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.gitUrl }";
 						var gitInfoArray = gitInfo.split("https://github.com/");
@@ -268,14 +293,8 @@
 							githubArea.appendChild(btn);
 							
 						});
-					} */
+					}  --%>
 					
-					function clear() {
-						while(githubArea.firstChild)
-							githubArea.removeChild(githubArea.firstChild);
-					}
-				});
-			</script>
 	</c:when>
 	
 </c:choose>
