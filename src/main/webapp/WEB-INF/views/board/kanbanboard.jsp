@@ -130,21 +130,6 @@ console.log("boardList" +  "${requestScope.boardList}");
 </script>
 
 <!-- /내가 만든 보드 -->
-				<div class="kanban_item">
-            <div class="kanbanboard type1">
-               <div class="kanbanboard_title">
-                  요청
-               </div>
-
-               <div class="insert_card" data-toggle="modal" data-target="#myModal2">
-                  <i class="fas fa-plus"></i>
-                  카드 생성하기
-               </div>
-            </div>
-         </div>
-
-
-<!-- sdf -->
 		</div>
 	</div>
 
