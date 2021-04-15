@@ -26,7 +26,6 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
    
-<!-- Jquery UI -->
      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -35,6 +34,7 @@
 <link
    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
    rel="stylesheet">
+<!-- Jquery UI -->
 <title>Short Cut</title>
 </head>
 <body>
@@ -68,21 +68,22 @@
                   data-target="#myModal3">
                   <i class="fas fa-plus"></i> 보드 생성하기</div>
                </div>
+               
             </div>
          </div> 
          <!-- 보드 정보 영역 끝 -->
          
-       
+         
          
 <!-- 내가 만든 보드  -->
    <div class="asdfasdfasdf" style="width: 80%;  float: left;">
-<%-- <c:forEach var="boardList" items="${boardList}">
+<c:forEach var="boardList" items="${boardList }">
       <div class="kanban_item boardcolumn">
          <div class="kanbanboard type1" id="newBoard<c:out value="${boardList.brdOrder}"/>">
-            <div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/>
-            <i class="fas fa-ellipsis-v" id="modify">
-            <button class="insert_board on"  data-toggle="modal" data-target="#myModal4" id="modify">수정</button></i></div>
+            <div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/><i class="fas fa-ellipsis-v" id="modify"></i></div>
             
+            
+            <div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/></div>
             <!--  카드 영역  -->
             <c:forEach var="cardList" items="${cardList }">
             
@@ -121,54 +122,8 @@
                <i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
             </div>
          </div>
-      </div>    --%>
+      </div>   
                
-<c:forEach var="boardList" items="${boardList}">
-				<div class="kanban_item boardcolumn">
-				<div class="kanbanboard type1" id="newBoard<c:out value="${boardList.brdOrder}"/>">
-					<div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/><i class="fas fa-ellipsis-v" id="modify"></i></div>
-					
-					
-					<div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/></div>
-					<!--  카드 영역  -->
-					<c:forEach var="cardList" items="${cardList}">
-					
-					<c:if test="${boardList.brdNo eq cardList.brdNo}">
-					    <div class="board_item card">
-                        <div class="item type1 card-header bg-white"><c:out value="${cardList.title}"/></div>
-                        <div class="item type2 card-body">
-                        <c:if test="${ 1 eq cardList.type}">
-                            <span class="item_detail type">일반</span> 
-                        </c:if>  
-                        <c:if test="${ 2 eq cardList.type}">
-                            <span class="item_detail type">업무</span> 
-                        </c:if>  
-                        <c:if test="${ 3 eq cardList.type}">
-                            <span class="item_detail type">일정</span> 
-                        </c:if>  
-                        <c:if test="${ 4 eq cardList.type}">
-                            <span class="item_detail type">업무</span> 
-                            <span class="item_detail type">일정</span> 
-                        </c:if>  
-                        </div>
-                        <div class="item type3">
-                            <i class="fas fa-user-circle"><c:out value="${cardList.member}"/></i> <i
-                                class="fas fa-user-circle"><c:out value="${cardList.memberList}"/></i>
-                        </div>
-						<input type="text" value="${cardList.no}" id="crdNo" name="" style="display: none;">
-                    </div>
-					</c:if>
-					 </c:forEach>
-					                                                   
-					<!-- /카드영역 -->
-					<input type="text" value="${boardList.brdNo}" class="boardNo" name="" style="display: none;">
-					
-					<div id="progressSet" class="insert_card" data-toggle="modal"
-						data-target="#myModal2">
-						<i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
-					</div>
-				</div>
-			</div>		
  </c:forEach>
    </div>   
 
@@ -229,33 +184,6 @@ console.log("boardList" +  "${requestScope.boardList}");
                      <button class="button" name="completion" id="completion" type="button" disabled>완료</button>
                      <button class="button" name="hold" id="hold" type="button" disabled>보류</button>
                   </div>
-					<div class="item_area">
-						<i class="fas fa-user-circle"></i>
-						<div class="login_info">
-							<div class="info_detail">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}</div>
-							<div class="info_detail type"><%= sf.format(nowTime) %></div>
-							<h1>asdasdsa</h1>
-							<c:out value="${selectCardInfo.RequestCardDTO.title}"></c:out>
-							<c:forEach var="selectCardInfo" items="${selectCardInfo}">
-							<h1>asdasdsa</h1>
-								<c:out value="${selectCardInfo.RequestCardDTO.title}"></c:out>
-							</c:forEach>
-						</div>
-					</div>
-					<div class="item_area">
-						<input class="input_detail" type="text" name="title" id="title" 
-							placeholder="제목을 입력해주세요." 
-							style="border: none; background: transparent;">
-					</div>
-					<!-- 업무 영역 -->
-					<div class="item_area work_btn on">
-						<i class="fas fa-spinner"></i>
-						<div class="btn-group">
-							<button class="button on" name="request" id="request" type="button">요청</button>
-							<button class="button on" name="progress" id="progress" type="button" disabled>진행</button>
-							<button class="button" name="completion" id="completion" type="button" disabled>완료</button>
-							<button class="button" name="hold" id="hold" type="button" disabled>보류</button>
-						</div>
 
                </div>
                <div class="item_area work_btn on">
@@ -360,80 +288,16 @@ console.log("boardList" +  "${requestScope.boardList}");
             <div class="modal_footer">
                <div class="btn_area">
                <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-                  <input type="submit" class="upload_btn" id="newBoard" value="올리기"></div>
+                  <input type="submit" class="upload_btn" id="newBoard" value="올리기">               </div>
             </div>
          </form>
          </div>
       </div>
    </div>
    
-   
-   
-   
-   
    <jsp:include page="../board/card_detail.jsp"/>
 
-					<div class="btn_area">
-					<input type="hidden" name="projectName" value="${projectName}">
-					<input name="sprNo" type="hidden" value="${sprNo}">	
-					<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-						<button class="upload_btn" id="upload" type="submit">올리기</button>
-					</div>
-				</div>
-			</div>
-			</form>
-		</div>
-	</div>
-	
-	<!-- Modal 보드 생성 (한미화) -->
-	<div class="modal fade" id="myModal3">
-		<div class="modal-dialog">
-			<div class="modal-header type">Short Cut</div>
-				<div class="modal-content">
-				<form action="${ pageContext.servletContext.contextPath }/board/kanbanboard" method="post">
-				<input type="hidden" name="pjtNo" value="${pjtNo}">
-				<input type="hidden" name="projectName" value="${projectName}">
-				
-					<div class="modal-body">
-					
-						<input class="input_detail" type="text" name="title" id="title"
-							placeholder="제목을 입력해주세요." size="50"
-							style="border: none; background: transparent;">
-						<input name="sprNo" type="hidden" value="${sprNo}">	
-				</div>
-				<!-- Modal footer -->
-				<div class="modal_footer">
-					<div class="btn_area">
-					<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-						<input type="submit" class="upload_btn" id="newBoard" value="올리기">					</div>
-				</div>
-			</form>
-			</div>
-		</div>
-	</div>
 </body>
-<script>
-	function selectCardInfo(crdNo) {
-
-		$.ajax({
-			url: "${pageContext.servletContext.contextPath}/select/cardInfo",
-			type: "get",
-			data: {crdNo: crdNo},
-			success: function(data, status, xhr) {
-				console.log(data);
-				
-				var array = "";
-				for(index in data) {
-					console.log(data.[index]);
-				}
-				
-			},
-			error: function(xhr, status, error) {
-				console.log(error);
-			}
-		});
-	}
-</script>
 <script type="text/javascript">
 
 $(function(){
@@ -456,24 +320,6 @@ $(function(){
          }); */
          
    })
-	$(function(){
-		
-		$(".board_item.card").click(function(){
-		    
-		   $("#myModal2").modal();
-		    
-		});
-		
-	     $(".board_item.card").click(function(e){
-	    	  
-	        var crdNo = $(this).children("#crdNo").val();
-	        console.log(crdNo);
-			e.preventDefault(); 			   	  
-			$("#myModal2").modal();
-			selectCardInfo(crdNo);
-	    	  
-	      });   
-	})
 </script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -519,8 +365,6 @@ $(function(){
          hiddenTag.setAttribute("value", value)
       }
    });
-   
-   
    /* $("#newBoard").click(fuction() {
       $.ajax({
          url : "newBoard";
