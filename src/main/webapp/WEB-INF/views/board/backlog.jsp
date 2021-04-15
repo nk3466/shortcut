@@ -81,7 +81,7 @@
 												<div class="table_detail type4">
 													<button class="btn_detail on"  data-toggle="modal" data-target="#myModalSprintEdit" id="EditBackLog" onclick="btnSprintDetail(this)" value=${ sprint.sprNo }>Edit Sprint</button>	
 													<a href="${pageContext.servletContext.contextPath }/board/kanbanboard/?pjtNo=${ requestScope.pjtNo }&sprNo=1&projectName=${projectName}">
-														<button class="btn_detail on">Start sprint </button>
+														<button class="btn_detail on" >Start sprint </button>
 													</a>
 												</div>					
 											</div>
@@ -99,6 +99,7 @@
 			<script>
 			
 	/* 스프린트 수정하기 위해 수정 버튼 누루면 조회된 결과 출력 */
+	
 	
 		function btnSprintDetail(beta){
 			var sprNo = $(beta).val();
@@ -224,10 +225,9 @@
 												<td class="table_detail type1">${ backlog.blgDemoMemo }</td>
 												<td class="table_detail type1">${ backlog.blgRefMemo }</td>
 												<td class="table_detail type1"  style="display: none;"><input type="text" class="blgNoTomakeSprint" id="blgNoTomakeSprint" value=${ backlog.blgNo } style="display: none;"></td> 
-												
 												<td class="table_detail type1">
-												<button class="btn_detail on"  data-toggle="modal" data-target="#myModalEdit" id="EditBackLog" onclick="btnDetail(this)" value=${ backlog.blgNo }>Edit Backlog</button>	
-												<button class="btn_detail on"  data-toggle="modal" data-target="#myModal3">Start Sprint</button>
+												<button class="btn_detail on"  data-toggle="modal" data-target="#myModalEdit"  id="EditBackLog" onclick="btnDetail(this)" value=${ backlog.blgNo }>Edit Backlog</button>	
+												<button class="btn_detail startSprint"  data-toggle="modal" data-target="#myModal3">Start Sprint</button>
 												</td>
 											</tr>
 										</c:forEach>
@@ -266,6 +266,8 @@
 					$("#Reference11").attr('placeholder',"");
 					
 					$("#backlogNo11").attr('value',data.blgNo);
+					//$("#BacklogNoTosprintRegist").attr('value',data.blgNo);				//스프린트 생성할 때 도 부여
+					//$("#BacklogNoTosprintRegist").attr('placeholder',data.blgNo);				//스프린트 생성할 때 도 부여
 					$("#backlogName11").attr('placeholder',data.blgName);
 					$("#DemoDetail11").attr('placeholder',data.blgDemoMemo);
 					$("#Reference11").attr('placeholder',data.blgRefMemo);
@@ -769,6 +771,8 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="sprint_item">
+						
+					
 						<div class="item_name">
 							Sprint name
 						</div>
@@ -807,12 +811,22 @@
 	<!-- 스프린트 생성 버튼 클릭시 -->
 		<script>
 		 		
+			var sprBlgNo = "";
+			$(".startSprint").click(function(){
+				sprBlgNo = $(this).closest(".trtr").find("#blgNoTomakeSprint").val();
+				console.log(sprBlgNo);
+			})
+			
+			
 			$("#MakeSprint").click(function(){ 
+				
+			
 				 var sprName = document.getElementById("sprintRegistName").value;
 				 var sprStardDate = document.getElementById("sprintRegistStartDate").value;
 				 var sprEndDate = document.getElementById("sprintRegistEndDate").value;
 				 var sprGoal = document.getElementById("sprintRegistGoal").value;
-				 var sprBlgNo = document.getElementById("blgNoTomakeSprint").value;
+				 //var sprBlgNo = document.getElementById("blgNoTomakeSprint").value;
+				 
 			console.log("호오?" + sprBlgNo);	
 				 
 				 $.ajax({
