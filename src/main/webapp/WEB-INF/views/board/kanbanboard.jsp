@@ -20,16 +20,17 @@
 	href="${ pageContext.servletContext.contextPath }/resources/css/kanbanboard.css">
 <link rel="stylesheet" type="text/css"
 	href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
-<script
+<!-- <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+	
 <!-- 폰트어썸 -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
@@ -37,6 +38,9 @@
 <!-- Jquery UI -->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <title>Short Cut</title>
 </head>
 <body>
@@ -107,8 +111,8 @@
                         </c:if>  
                         </div>
                         <div class="item type3">
-                            <i class="fas fa-user-circle">김민기</i> <i
-                                class="fas fa-user-circle">이남경</i>
+                            <i class="fas fa-user-circle"><c:out value="${cardList.member}"/></i> <i
+                                class="fas fa-user-circle"><c:out value="${cardList.memberList}"/></i>
                         </div>
                     </div>
 					</c:if>
@@ -122,17 +126,17 @@
 						data-target="#myModal2">
 						<i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
 					</div>
-			</div>
-				</div>		
+				</div>
+			</div>		
  </c:forEach>
-<script type="text/javascript">
-console.log("boardList" +  "${requestScope.boardList}");
-</script>
 
-<!-- /내가 만든 보드 -->
+
 		</div>
 	</div>
 
+<script type="text/javascript">
+console.log("boardList" +  "${requestScope.boardList}");
+</script>
 
 	<input type="text" value="${ requestScope.pjtNo }" name="" id="" style="display: none;">
 
@@ -171,8 +175,7 @@ console.log("boardList" +  "${requestScope.boardList}");
 
 					<div class="item_area">
 						<input class="input_detail" type="text" name="title" id="title"
-							placeholder="제목을 입력해주세요."
-							style="border: none; background: transparent;">
+							placeholder="제목을 입력해주세요." style="border: none; background: transparent;">
 					</div>
 
 					<!-- 업무 영역 -->
@@ -186,7 +189,6 @@ console.log("boardList" +  "${requestScope.boardList}");
 						</div>
 
 					</div>
-				<%-- <form action="${ pageContext.servletContext.contextPath }/board" method="get"> --%>
 					<div class="item_area work_btn on">
 						<i class="fas fa-user-plus"></i> 
 						<!-- <input class="input_detail type1" id="selectmember" type="text" name="addMember" placeholder="Add Member" 
@@ -197,7 +199,6 @@ console.log("boardList" +  "${requestScope.boardList}");
 						<input id="memberInput" type="hidden" value="">
 						<input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
 					</div>
-				<!-- </form> -->
 					<div class="item_area work_btn on">
 						<i class="far fa-calendar-plus"></i> <input
 							class="input_detail type4" type="date" name="taskStartDate"> &nbsp; -
@@ -259,6 +260,8 @@ console.log("boardList" +  "${requestScope.boardList}");
 					</div>
 
 					<div class="btn_area">
+					<input type="hidden" name="projectName" value="${projectName}">
+					<input name="sprNo" type="hidden" value="${sprNo}">	
 					<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
 						<button class="upload_btn" id="upload" type="submit">올리기</button>
 					</div>
@@ -295,8 +298,32 @@ console.log("boardList" +  "${requestScope.boardList}");
 		</div>
 	</div>
 	
+	<jsp:include page="../board/card_detail.jsp"/>
 
 </body>
+<script type="text/javascript">
+
+	$(function(){
+		
+		$(".board_item.card").click(function(){
+		    
+		   $("#cardModalUpdate").modal();
+		    
+		});
+		
+	/* 	var iddd = "";
+	      
+	      $(".board_item.card").click(function(e){
+			e.preventDefault(); 			   	  
+		      $("#cardModalUpdate").modal();
+		      iddd = $(this).attr('id');
+		      console.log('id : '+ $(this).attr('id'));
+		      selectCardDetail($(this).attr('id'));
+	    	  
+	      }); */
+	      
+	})
+</script>
 <script type="text/javascript">
 /* 보드 드래그앤 드롭(한미화) */
 	$(function() {

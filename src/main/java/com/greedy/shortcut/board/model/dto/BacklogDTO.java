@@ -19,12 +19,13 @@ public class BacklogDTO implements java.io.Serializable {
 	private int maxPage;
 	
 	private int reviewRegistYn;
+	private int sprNo;
 	
 	public BacklogDTO() {}
 
 	public BacklogDTO(int blgNo, String blgName, int blgPri, Date blgEnrollDate, Date sprEndDate, int pjtNo,
 			String blgDelYn, String blgDemoMemo, String blgRefMemo, int startPage, int endPage, int maxPage,
-			int reviewRegistYn) {
+			int reviewRegistYn, int sprNo) {
 		super();
 		this.blgNo = blgNo;
 		this.blgName = blgName;
@@ -39,6 +40,15 @@ public class BacklogDTO implements java.io.Serializable {
 		this.endPage = endPage;
 		this.maxPage = maxPage;
 		this.reviewRegistYn = reviewRegistYn;
+		this.sprNo = sprNo;
+	}
+	
+	public int getSprNo() {
+		return sprNo;
+	}
+	
+	public void setSprNo(int sprNo) {
+		this.sprNo = sprNo;
 	}
 
 	public int getBlgNo() {
