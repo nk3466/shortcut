@@ -19,4 +19,8 @@ public interface BoardMapper {
 	List<BoardDTO> selectboardList(int sprNo);
 
 	int modifyBoardOrder(int brdNo);
+
+	int modifyBoard(BoardDTO newboard);
+
+
 }

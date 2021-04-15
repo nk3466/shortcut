@@ -105,20 +105,39 @@ public class BoardController {
 			 
 			 boolean result = boardService.insertnewBoard(newboard); System.out.println(result); 
 			 System.out.println(result);
-			 
 		 }
-		 
 		
-		//boolean result = boardService.insertnewBoard(newboard);
-
 		rttr.addFlashAttribute("message", "보드 등록에 성공하셨습니다.");
 		
 		 return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+
 		 projectName;
-
-
 	}
+	
 
+	@PostMapping("/board/modify")
+	public String ModifyBoard(@RequestParam(name="title") String
+			title,@RequestParam(name="sprNo") int sprNo ,@RequestParam(name="pjtNo") int
+			pjtNo ,@RequestParam(name="projectName") String projectName
+			,RedirectAttributes redirect, Model model, RedirectAttributes rttr) {
+		
+		System.out.println("title:" + title);
+		System.out.println("sprNo:" + sprNo);
+
+		BoardDTO newboard = new BoardDTO();
+		newboard.setBrdName(title);
+		newboard.setSprNo(sprNo);
+
+		boolean result = boardService.modifyBoard(newboard); 
+		System.out.println(result); 
+		 System.out.println(result);
+	 
+	
+	rttr.addFlashAttribute("message", "보드 등록에 성공하셨습니다.");
+		
+		System.out.println("수정한다?");
+		return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+
+				 projectName;
+	}
 	
 	 
 
