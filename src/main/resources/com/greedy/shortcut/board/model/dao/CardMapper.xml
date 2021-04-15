@@ -66,7 +66,7 @@
 	<resultMap id="RequestCardResultSet" type="RequestCardDTO">
 		<id column="CRD_NO" property="no" />
 		<result column="CRD_NAME" property="title" />
-		<result column="CRD_ENROLL_DATE" property="EnrollDate" />
+		<result column="CRD_ENROLL_DATE" property="enrollDate" />
 		<result column="CRD_DEL_YN" property="delNo" />
 		<result column="BRD_NO" property="brdNo" />
 		<result column="CRD_ORDER" property="order" />
@@ -80,6 +80,7 @@
 		<result column="SCH_END_DATE" property="scheduleEndDate" />
 		<result column="TK_START_DATE" property="taskStartDate" />
 		<result column="TK_END_DATE" property="taskEndDate" />
+		<collection property="memberList" resultMap="CardAttendResultMap"/>
 	</resultMap>
 	
 	<resultMap type="CardAttendListDTO" id="CardAttendResultMap">
@@ -223,17 +224,25 @@
 	   SELECT 
 	         A.CRD_NO
 	       , A.CRD_NAME
+	       , A.CRD_ENROLL_DATE
+	       , A.CRD_DEL_YN
+	       , A.BRD_NO
 	       , A.CRD_ORDER
 	       , A.CRD_TYPE
 	       , A.MEM_NO
 	       , A.CRD_TXT
 	       , B.TK_PROGRESS
+	       , B.CRD_NO
+	       , B.MEM_NO
 	       , B.TK_START_DATE
 	       , B.TK_END_DATE
 	       , C.SCH_ALERT
 	       , C.SCH_PLACE
+	       , C.CRD_NO
 	       , C.SCH_START_DATE
 	       , C.SCH_END_DATE
+	       , D.ATTEND_SIGN
+	       , D.CRD_NO
 	       , D.MEM_NO
 	  FROM CARD A
 	  JOIN CRD_TASK B ON (A.CRD_NO = B.CRD_NO)
