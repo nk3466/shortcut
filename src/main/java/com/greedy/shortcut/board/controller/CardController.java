@@ -62,9 +62,11 @@ public class CardController {
 	@PostMapping("/card/create")
 	public String registCard(@ModelAttribute RequestCardDTO card, HttpServletRequest request, RedirectAttributes rttr
 							, Model model) {
+		System.out.println("dddddddddddddddddddddddddd");
 		CardScheduleDTO crd_sch = new CardScheduleDTO();
 		CardTaskDTO crd_task = new CardTaskDTO();
 		
+		System.out.println("card : " + card);
 		
 		Enumeration eParam = request.getParameterNames();
 		 

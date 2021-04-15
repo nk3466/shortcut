@@ -124,7 +124,6 @@
 	  , #{type}
 	  , #{memNo}
 	  , #{txt}
-	  
 	  )
 	</insert>
 	<select id="currentCardNo" resultMap="CardResultSet" parameterType="CardDTO">

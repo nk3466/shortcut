@@ -73,7 +73,7 @@ public class RetrospectController {
 		List<BacklogDTO> finishSprintList = retrospectService.selectPagingFinishSprint(pjtNo, pageInfo);
 		for(int i = 0; i < finishSprintList.size(); i++ ) {
 			/* 등록된 리뷰인지 수정해야할 리뷰인지 검색(버튼에 표기하기 위해) */
-			int reviewRegistYn = retrospectService.selectReviewRegistYn(finishSprintList.get(i).getBlgNo());
+			int reviewRegistYn = retrospectService.selectReviewRegistYn(finishSprintList.get(i).getSprNo());
 			/* 0보다 크면 null이 아니기에 리뷰 수정 버튼  */
 			if(reviewRegistYn > 0) {
 				finishSprintList.get(i).setReviewRegistYn(reviewRegistYn);
