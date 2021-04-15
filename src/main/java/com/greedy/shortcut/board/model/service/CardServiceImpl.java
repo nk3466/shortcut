@@ -92,5 +92,10 @@ public class CardServiceImpl implements CardService {
 		return cardList;
 	}
 
+	@Override
+	public List<RequestCardDTO> selectCardInfo(int cardNo) {
+		return cardMapper.selectCardInfo(cardNo);
+	}
+
 
 }

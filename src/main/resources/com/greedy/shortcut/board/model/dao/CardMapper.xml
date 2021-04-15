@@ -219,4 +219,27 @@
 	    )
 	</insert>
 	
+	<select id="selectCardInfo" resultMap="RequestCardResultSet" parameterType="_int">
+	   SELECT 
+	         A.CRD_NO
+	       , A.CRD_NAME
+	       , A.CRD_ORDER
+	       , A.CRD_TYPE
+	       , A.MEM_NO
+	       , A.CRD_TXT
+	       , B.TK_PROGRESS
+	       , B.TK_START_DATE
+	       , B.TK_END_DATE
+	       , C.SCH_ALERT
+	       , C.SCH_PLACE
+	       , C.SCH_START_DATE
+	       , C.SCH_END_DATE
+	       , D.MEM_NO
+	  FROM CARD A
+	  JOIN CRD_TASK B ON (A.CRD_NO = B.CRD_NO)
+	  JOIN CRD_SCHEDULE C ON (A.CRD_NO = C.CRD_NO)
+	  JOIN CRD_SCH_ATTEND_LIST D ON (A.CRD_NO = D.CRD_NO)
+	  WHERE A.CRD_NO = #{no}
+	</select>
+	
  </mapper>

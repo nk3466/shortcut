@@ -23,6 +23,8 @@ public interface CardMapper {
 
 	boolean registSchAttendList(CardAttendListDTO cal);
 
+	List<RequestCardDTO> selectCardInfo(int cardNo);
+
 
 
 

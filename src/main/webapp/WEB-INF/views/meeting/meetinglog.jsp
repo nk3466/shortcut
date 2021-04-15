@@ -192,7 +192,7 @@
       $(this).on("click",".mtinfo", function(e){
 		e.preventDefault(); 			   	  
 	      $("#conference_detail").modal();
-	      iddd = $(this).attr('id');
+	      var iddd = $(this).attr('id');
 	      console.log('id : '+ $(this).attr('id'));
 	      selectMeetingDetail($(this).attr('id'));
     	  

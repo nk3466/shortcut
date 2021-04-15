@@ -87,7 +87,7 @@
 			
 			
 <!-- 내가 만든 보드  -->
-<c:forEach var="boardList" items="${boardList }">
+<c:forEach var="boardList" items="${boardList}">
 				<div class="kanban_item boardcolumn">
 				<div class="kanbanboard type1" id="newBoard<c:out value="${boardList.brdOrder}"/>">
 					<div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/><i class="fas fa-ellipsis-v" id="modify"></i></div>
@@ -95,7 +95,7 @@
 					
 					<div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/></div>
 					<!--  카드 영역  -->
-					<c:forEach var="cardList" items="${cardList }">
+					<c:forEach var="cardList" items="${cardList}">
 					
 					<c:if test="${boardList.brdNo eq cardList.brdNo}">
 					    <div class="board_item card">
@@ -119,13 +119,13 @@
                             <i class="fas fa-user-circle"><c:out value="${cardList.member}"/></i> <i
                                 class="fas fa-user-circle"><c:out value="${cardList.memberList}"/></i>
                         </div>
+						<input type="text" value="${cardList.no}" id="crdNo" name="" style="display: none;">
                     </div>
 					</c:if>
 					 </c:forEach>
 					                                                   
 					<!-- /카드영역 -->
 					<input type="text" value="${boardList.brdNo}" class="boardNo" name="" style="display: none;">
-					
 					
 					<div id="progressSet" class="insert_card" data-toggle="modal"
 						data-target="#myModal2">
@@ -174,15 +174,19 @@ console.log("boardList" +  "${requestScope.boardList}");
 						<div class="login_info">
 							<div class="info_detail">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}</div>
 							<div class="info_detail type"><%= sf.format(nowTime) %></div>
+							<h1>asdasdsa</h1>
+							<c:out value="${selectCardInfo.RequestCardDTO.title}"></c:out>
+							<c:forEach var="selectCardInfo" items="${selectCardInfo}">
+							<h1>asdasdsa</h1>
+								<c:out value="${selectCardInfo.RequestCardDTO.title}"></c:out>
+							</c:forEach>
 						</div>
 					</div>
-							
-
 					<div class="item_area">
-						<input class="input_detail" type="text" name="title" id="title"
-							placeholder="제목을 입력해주세요." style="border: none; background: transparent;">
+						<input class="input_detail" type="text" name="title" id="title" 
+							placeholder="제목을 입력해주세요." 
+							style="border: none; background: transparent;">
 					</div>
-
 					<!-- 업무 영역 -->
 					<div class="item_area work_btn on">
 						<i class="fas fa-spinner"></i>
@@ -302,31 +306,48 @@ console.log("boardList" +  "${requestScope.boardList}");
 			</div>
 		</div>
 	</div>
-	
-	<jsp:include page="../board/card_detail.jsp"/>
-
 </body>
+<script>
+	function selectCardInfo(crdNo) {
+
+		$.ajax({
+			url: "${pageContext.servletContext.contextPath}/select/cardInfo",
+			type: "get",
+			data: {crdNo: crdNo},
+			success: function(data, status, xhr) {
+				console.log(data);
+				
+				var array = "";
+				for(index in data) {
+					console.log(data.[index]);
+				}
+				
+			},
+			error: function(xhr, status, error) {
+				console.log(error);
+			}
+		});
+	}
+</script>
 <script type="text/javascript">
 
 	$(function(){
 		
 		$(".board_item.card").click(function(){
 		    
-		   $("#cardModalUpdate").modal();
+		   $("#myModal2").modal();
 		    
 		});
 		
-	/* 	var iddd = "";
-	      
-	      $(".board_item.card").click(function(e){
-			e.preventDefault(); 			   	  
-		      $("#cardModalUpdate").modal();
-		      iddd = $(this).attr('id');
-		      console.log('id : '+ $(this).attr('id'));
-		      selectCardDetail($(this).attr('id'));
+	     $(".board_item.card").click(function(e){
 	    	  
-	      }); */
-	      
+	        var crdNo = $(this).children("#crdNo").val();
+	        console.log(crdNo);
+			e.preventDefault(); 			   	  
+			$("#myModal2").modal();
+			selectCardInfo(crdNo);
+	    	  
+	      });   
 	})
 </script>
 <script type="text/javascript">
