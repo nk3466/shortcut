@@ -95,9 +95,10 @@
 .card{folat:left;}
 
 /* 보드 드래그앤드롭 */
-.board-placeholder{border: 1px dotted; margin: 0 1em 1em 0; height: 10px; background-color:darkgray; pisition: absolute left:100px; folat:left; }
+.board-placeholder{border: 1px dotted; margin: 0 1em 1em 0; height: 10px; background-color:darkgray; pisition:absolute left:100px; folat:left;}
 /* 마우스 포인터을 손가락으로 변경 */
-.card:not(.no-move) .board-header{cursor: pointer; justify-content: center; cursor: move;}
+.board-header{cursor:pointer; justify-content:center;}
+.newInsert{cursor:pointer;}
 /* 일정, 업무 버튼 */
 .work_btn.on{display: none;}
 .calendar_btn.on {display: none;}

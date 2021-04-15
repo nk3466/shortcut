@@ -58,4 +58,13 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.modifyBoardOrder(brdNo);
 	}
 
+
+	@Override
+	public boolean modifyBoard(BoardDTO newboard) {
+		int result = boardMapper.modifyBoard(newboard);
+		
+	      return result >= 1 ? true : false;
+	   }
+
+
 }

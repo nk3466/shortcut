@@ -20,4 +20,7 @@ public interface BoardService {
 	int modifyBoardOrder(int brdNo);
 
 
+	boolean modifyBoard(BoardDTO newboard);
+
+
 }
