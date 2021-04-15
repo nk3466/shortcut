@@ -333,13 +333,13 @@
 	</select>
 	
 	<delete id="RemoveSprint" parameterType="SprintDTO">
-		DELETE
-		  FROM SPRINT E
-		 WHERE E.SPR_NO = #{sprNo}
+		 UPDATE SPRINT A
+            SET A.SPR_DEL_YN = 'Y'
+          WHERE A.SPR_NO =  #{sprNo}
     </delete>
     
     <update id="RemoveUpdateHistorySprint" parameterType="SprintDTO">
-		  UPDATE SPRINT A
+		  UPDATE SPRINT_HISTORY A
             SET A.SPR_DEL_YN = 'Y'
           WHERE A.SPR_NO =  #{sprNo}
     </update>
