@@ -382,7 +382,7 @@ public class BacklogBoardController {
 		return new ObjectMapper().writeValueAsString(sprNo);
 	}
 	
-	/* 백로그 수정 */
+	/* 스프린트 수정 */
 	@PostMapping(value="/sprint/sprint_Edit" , produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public String EditSprint(@RequestParam Map<String, String> parameters, RedirectAttributes rttr) throws JsonProcessingException {

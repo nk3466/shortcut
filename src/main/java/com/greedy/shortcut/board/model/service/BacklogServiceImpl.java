@@ -181,8 +181,9 @@ public class BacklogServiceImpl implements BacklogService {
 	public boolean EditSprint(SprintDTO sprint) {
 
 		int a = backlogMapper.EditSprint(sprint);
+		System.out.println("스프린트 수정" + a);
 		int b = backlogMapper.insertEditSprintHistory(sprint);
-		
+		System.out.println("스프린트 수정" + b);
 		return  a + b > 1? true : false;
 	}
 
