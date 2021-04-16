@@ -88,7 +88,6 @@
 							
 						</tbody>
 					</table>
-					<div id="pagingArea"></div>
 				</div>
 			</div>
 		</div>
@@ -154,6 +153,9 @@
 						
 						var ghu1 = $(".ghu1");
 						var ghu2 = $(".ghu2");
+						
+						ghu1.remove();
+						ghu2.remove();
 						var ghuInfo1 = "Id : " + gitId;
 						var ghuInfo2 = "Project : " + gitIdProject;
 						ghu1.append(ghuInfo1);
