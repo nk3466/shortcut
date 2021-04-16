@@ -106,12 +106,6 @@
 	    , #{brdOrder}
 	    )
 	</insert>
- 
-	<update id="modifyBoard" parameterType="BoardDTO">
-		UPDATE BOARD A
-		   SET A.BRD_NAME = #{brdName}
-		 WHERE A.BRD_ORDER = #{brdOrder}
-	</update>
 	
 	<update id="deleteBoard" parameterType="BoardDTO">
        UPDATE BOARD A
@@ -123,13 +117,29 @@
        INSERT
          INTO BOARD_HISTORY A
        (
-         A.BRD_NO, A.BRD_NAME, A.UPDATE_DATE A.BRD_HIS_NO
+         A.BRD_NO, A.BRD_NAME, A.UPDATE_DATE, A.BRD_HIS_NO
        )
        VALUES
        (
-         #{brdNo}, #{brdName}, SYSDATA, SEQ_BRD_HIS_NO.NEXTVAL
+         #{brdNo}, #{brdName}, SYSDATE, SEQ_BRD_HIS_NO.NEXTVAL
        )
 	</insert>
 	
+	<update id="modifyBoard" parameterType="BoardDTO">
+        UPDATE BOARD A
+           SET A.BRD_NAME = #{brdName}
+         WHERE A.BRD_NO = #{brdNo}
+	</update>
 	
+	<insert id="insertModifyBoardHistory" parameterType="BoardDTO">
+       INSERT
+         INTO BOARD_HISTORY A
+       (
+         A.BRD_NO, A.BRD_NAME, A.UPDATE_DATE, A.BRD_HIS_NO
+       )
+       VALUES
+       (
+         #{brdNo}, #{brdName}, SYSDATE, SEQ_BRD_HIS_NO.NEXTVAL
+       )
+	</insert>
  </mapper>

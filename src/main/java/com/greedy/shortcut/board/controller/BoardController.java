@@ -1,6 +1,8 @@
 package com.greedy.shortcut.board.controller;
 
+import java.lang.reflect.Parameter;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -96,7 +98,10 @@ public class BoardController {
 		 int successUpdateCount = 0; 
 		 for(int i = 0; i < boardList.size();i++) {
 		 
-		 successUpdateCount += boardService.modifyBoardOrder(boardList.get(i).getBrdNo()); }
+		 successUpdateCount += boardService.modifyBoardOrder(boardList.get(i).getBrdNo()); 
+		 
+		 }
+		 
 		 System.out.println("successUpdateCount : " + successUpdateCount); 
 		 
 			/* 새로운 보드 인서트 */
@@ -111,52 +116,37 @@ public class BoardController {
 		 return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+
 		 projectName;
 	}
-	
 
-	public String ModifyBoard(@RequestParam(name="title") String
-			title,@RequestParam(name="sprNo") int sprNo ,@RequestParam(name="pjtNo") int
-			pjtNo ,@RequestParam(name="projectName") String projectName
-			,RedirectAttributes redirect, Model model, RedirectAttributes rttr) {
+	@PostMapping(value="/board/deleteBoard")
+	public String deleteBoard(@RequestParam(name="sprNo") int sprNo, 
+			@RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName,
+			RedirectAttributes redirect, @ModelAttribute BoardDTO board) throws JsonProcessingException {
 		
-		System.out.println("title:" + title);
-		System.out.println("sprNo:" + sprNo);
-
-		BoardDTO newboard = new BoardDTO();
-		newboard.setBrdName(title);
-		newboard.setSprNo(sprNo);
-
-		boolean result = boardService.modifyBoard(newboard); 
-		System.out.println(result); 
-		 System.out.println(result);
-	 
-	
-	rttr.addFlashAttribute("message", "보드 등록에 성공하셨습니다.");
-		
-		System.out.println("수정한다?");
-		return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+
-				 projectName;
-	}
-	
-	@PostMapping(value="/board/deleteBoard", produces="applicaton/json; charset=UTF-8")
-	@ResponseBody
-	public String deleteBoard(Model model, @RequestParam(name="brdNo") int brdNo, @RequestParam(name="brdName") String brdName, RedirectAttributes rttr) throws JsonProcessingException {
-		
-		System.out.println("꼴까닥! : " + brdNo);
-		System.out.println("꼴까닥! : " + brdName);
-		
-		BoardDTO board = new BoardDTO();
-		board.getBrdNo();
-		board.getBrdName();
-		
-		
-		
+		System.out.println(board);
 		if(!boardService.deleteBoard(board)) {
-			rttr.addFlashAttribute("message", "보드 삭제 취소!");
+			redirect.addFlashAttribute("message", "보드 삭제 취소!");
 		} else {
-			rttr.addFlashAttribute("message", "보드 삭제 성공!");
+			redirect.addFlashAttribute("message", "보드 삭제 성공!");
 		}
 		
-		return new ObjectMapper().writeValueAsString(board);
+		return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+projectName;
+	}
+	
+	@PostMapping(value="/board/modifyBoard")
+	public String modifyBoard(@RequestParam(name="sprNo") int sprNo, 
+			@RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName,
+			RedirectAttributes redirect, @ModelAttribute BoardDTO board) throws JsonProcessingException {
+				System.out.println("왜 안오지??????");
+		
+				System.out.println("오랏!" + board);
+				if(!boardService.modifyBoard(board)) {
+					redirect.addFlashAttribute("message", "보드 수정 취소!");
+				} else {
+					redirect.addFlashAttribute("message", "보드 수정 완료!");
+				}
+		
+		System.out.println("수정 하려고요! " + board);
+		return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+projectName;
 	}
 
 }

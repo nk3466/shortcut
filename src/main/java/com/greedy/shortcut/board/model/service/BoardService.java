@@ -10,7 +10,6 @@ public interface BoardService {
 
 	boolean newBoard(BoardDTO board);
 
-
 	List<MemberDTO> selectMember(int pjtNo);
 
 	boolean insertnewBoard(BoardDTO newboard);
@@ -19,11 +18,14 @@ public interface BoardService {
 
 	int modifyBoardOrder(int brdNo);
 
-
-	boolean modifyBoard(BoardDTO newboard);
-
-
 	boolean deleteBoard(BoardDTO board);
+
+	boolean modifyBoard(BoardDTO board);
+
+
+
+
+
 
 
 }

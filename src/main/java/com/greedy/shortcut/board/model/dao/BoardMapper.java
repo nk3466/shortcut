@@ -11,7 +11,6 @@ public interface BoardMapper {
 
 	int newBoard(BoardDTO board);
 
-
 	List<MemberDTO> selectMember(int pjtNo);
 
 	boolean insertnewBoard(BoardDTO newboard);
@@ -20,11 +19,14 @@ public interface BoardMapper {
 
 	int modifyBoardOrder(int brdNo);
 
-	int modifyBoard(BoardDTO newboard);
+	boolean deleteBoard(int brdNo);
 
-	void deleteBoard(int brdNo);
+	int insertDeleteBoardHistory(BoardDTO board);
 
-	boolean insertDeleteBoardHistory(BoardDTO board);
+	int modifyBoard(BoardDTO board);
+
+	int insertModifyBoardHistory(BoardDTO board);
+
 
 
 }
