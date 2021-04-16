@@ -22,5 +22,9 @@ public interface BoardMapper {
 
 	int modifyBoard(BoardDTO newboard);
 
+	void deleteBoard(int brdNo);
+
+	boolean insertDeleteBoardHistory(BoardDTO board);
+
 
 }

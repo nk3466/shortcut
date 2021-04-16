@@ -113,4 +113,23 @@
 		 WHERE A.BRD_ORDER = #{brdOrder}
 	</update>
 	
+	<update id="deleteBoard" parameterType="BoardDTO">
+       UPDATE BOARD A
+          SET A.BRD_DEL_YN = 'Y'
+        WHERE A.BRD_NO = #{brdNo}
+	</update>
+	
+	<insert id="insertDeleteBoardHistory" parameterType="BoardDTO">
+       INSERT
+         INTO BOARD_HISTORY A
+       (
+         A.BRD_NO, A.BRD_NAME, A.UPDATE_DATE A.BRD_HIS_NO
+       )
+       VALUES
+       (
+         #{brdNo}, #{brdName}, SYSDATA, SEQ_BRD_HIS_NO.NEXTVAL
+       )
+	</insert>
+	
+	
  </mapper>

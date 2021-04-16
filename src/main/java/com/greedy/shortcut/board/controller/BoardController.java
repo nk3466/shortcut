@@ -1,8 +1,5 @@
 package com.greedy.shortcut.board.controller;
 
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,13 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.shortcut.board.model.dto.BoardDTO;
 import com.greedy.shortcut.board.model.dto.CardDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
@@ -115,7 +113,6 @@ public class BoardController {
 	}
 	
 
-	@PostMapping("/board/modify")
 	public String ModifyBoard(@RequestParam(name="title") String
 			title,@RequestParam(name="sprNo") int sprNo ,@RequestParam(name="pjtNo") int
 			pjtNo ,@RequestParam(name="projectName") String projectName
@@ -140,6 +137,26 @@ public class BoardController {
 				 projectName;
 	}
 	
-	 
+	@PostMapping(value="/board/deleteBoard", produces="applicaton/json; charset=UTF-8")
+	@ResponseBody
+	public String deleteBoard(Model model, @RequestParam(name="brdNo") int brdNo, @RequestParam(name="brdName") String brdName, RedirectAttributes rttr) throws JsonProcessingException {
+		
+		System.out.println("꼴까닥! : " + brdNo);
+		System.out.println("꼴까닥! : " + brdName);
+		
+		BoardDTO board = new BoardDTO();
+		board.getBrdNo();
+		board.getBrdName();
+		
+		
+		
+		if(!boardService.deleteBoard(board)) {
+			rttr.addFlashAttribute("message", "보드 삭제 취소!");
+		} else {
+			rttr.addFlashAttribute("message", "보드 삭제 성공!");
+		}
+		
+		return new ObjectMapper().writeValueAsString(board);
+	}
 
 }
