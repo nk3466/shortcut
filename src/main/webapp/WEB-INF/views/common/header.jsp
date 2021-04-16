@@ -36,7 +36,13 @@
 		}
 		
 		function onMessage(evt) {
-			$("#count").append(evt.data);
+			console.log(evt.data);
+			var $div = $("<div>").text(evt.data);
+			$div.attr("class", "alarmCount");
+			$div.attr("id", "allAlarmBtn");
+			
+			$(".abc").append($div);
+			/* $(".alarmCount").append(evt.data); */
 		}
 		
 		function onError(Evt) {
@@ -63,6 +69,7 @@
 			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/mypage/mypage">
 				<i class="fas fa-cog"></i>
 			</a>
+			<div class="abc" id="allAlarmBtn"></div>
 			<a class="menu_list">
 				<i class="far fa-bell" id="allAlarmBtn"></i>
 			</a>	
