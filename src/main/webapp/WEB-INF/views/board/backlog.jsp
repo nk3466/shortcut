@@ -54,51 +54,42 @@
 
 		<div class="sprint_box_area">			
 			<div class="sprint_text_btn">
-				<span class="sprint_text">Sprint</span>				
+				<span class="sprint_text">Sprint</span>		
 			</div>				
-			<div class="sprint_box on"></div>
-			<div class="table_area">
-				<div class="table_item">
-				<table style="width: 100%;"  id="sprintViewList">
-				<thead>
-					<tr>
-						<th class="th_detail type1">번호</th>
-						<th class="th_detail type1">스프린트번호</th>
-						<th class="th_detail type1">스프린트 이름</th>
-						<th class="th_detail type1">스프린트 시작날짜</th>
-						<th class="th_detail type1">스프린트 종료날짜</th>
-						<th class="th_detail type1">스프린트 목표</th>
-						<th class="th_detail type1">스프린트 시작/수정</th>
-					</tr>
-				</thead>
-				<tbody id="sprintBody">
-					<c:choose>
-							<c:when test="${fn:length(requestScope.sprintList) > 0 }">
-										<%-- <c:forEach var="sprint" items="${ requestScope.sprintList }" varStatus="st">
-											<tr class="trtr">
-												<td class="table_detail type1">${st.count }</td>
-												<td class="table_detail type1">${ sprint.sprNo }</td>
-												<td class="table_detail type1">${ sprint.sprName }</td>
-												<td class="table_detail type1">${ sprint.sprStardDate }</td>
-												<td class="table_detail type1">${ sprint.sprEndDate }</td>
-												<td class="table_detail type1">${ sprint.sprGoal }</td>
-												<td class="table_detail type1">
-												<button class="btn_detail on"  data-toggle="modal" data-target="#myModalEdit"  id="EditBackLog" onclick="btnDetail(this)" value=${ backlog.blgNo }>Edit Backlog</button>	
-												<button class="btn_detail startSprint"  data-toggle="modal" data-target="#myModal3">Start Sprint</button>
-												</td>
-											</tr>
-										</c:forEach>  --%>
+				<div class="backlog_line"></div>		
+					<div class="sprint_box on"></div>
+					<div class="table_area">
+						<div class="table_item nk">
+						<table style="width: 100%;"  id="sprintViewList">
+						<thead>
+							<tr>
+								<th class="th_detail type1">번호</th>
+								<th class="th_detail type1">스프린트번호</th>
+								<th class="th_detail type1">스프린트 이름</th>
+								<th class="th_detail type1">스프린트 시작날짜</th>
+								<th class="th_detail type1">스프린트 종료날짜</th>
+								<th class="th_detail type1">스프린트 목표</th>
+								<th class="th_detail type1">스프린트 시작/수정</th>
+							</tr>
+						</thead>
+						<tbody id="sprintBody">
+							<c:choose>
+									<c:when test="${fn:length(requestScope.sprintList) > 0 }">
+												
 									</c:when>
+									
 									<c:otherwise>
-										<tr>
-											<td colspan="8">조회된 결과가 없습니다.</td>
-										</tr>
+											<tr>
+												<td colspan="8">조회된 결과가 없습니다.</td>
+											</tr>
 									</c:otherwise>
-								</c:choose>
-							</tbody>
+							</c:choose>
+						</tbody>
 						</table>
-						<div id="sprintPagingArea" align="center">
-					</div>
+						 <c:if test="${fn:length(requestScope.sprintList) > 4 }"> 
+						<div id="sprintPagingArea" align="center"></div>
+					 	</c:if>
+					
 				</div>
 			</div>
 		</div>
@@ -144,14 +135,14 @@
 							for(let index in data) {
 								
 								/* 버튼 생성 */
-							 	var sprintBtnHtml = '<button class="btn_detail on"  data-toggle="modal" data-target="#myModalSprintEdit" id="EditBackLog" onclick="btnSprintDetail(this)" value=' +data[index].sprNo +'>Edit Sprint</button>'   
+							 	var sprintBtnHtml = '<button class="btn_detail nk"  data-toggle="modal" data-target="#myModalSprintEdit" id="EditBackLog" onclick="btnSprintDetail(this)" value=' +data[index].sprNo +'>Edit Sprint</button>'   
 					                              + '<a href="${pageContext.servletContext.contextPath }/board/kanbanboard/?pjtNo= + ${ requestScope.pjtNo } + &sprNo=1&projectName= + ${requestScope.projectName} + ">'
-					                              + '<button class="btn_detail on" >Start sprint </button>';
+					                              + '<button class="btn_detail nk" >Start sprint </button>';
 								
 								/* tr태그에 만들어 값 담기 */
 								$tr = $("<tr>");
 								$rnum = $("<td>").text(data[index].rnum);
-								$sprNo = $("<td>").text(data[index].sprNo);
+								$sprNo = $("<td>").text("SPRINT-" + data[index].sprNo);
 								$sprName = $("<td>").text(data[index].sprName);
 								$sprStardDate = $("<td>").text(data[index].sprStardDate);
 								$sprEndDate = $("<td>").text(data[index].sprEndDate);
@@ -282,87 +273,83 @@
 					<div class="header_detail type1">Edit Sprint</div>					
 				</div>
 				<p class="m_text"></p>
-				
- 		<div class="row detailpage">
-         	<div class="left_area">
-	         	<div class="modal-body">
-					<div class="sprint_item">
-									
-						<div class="item_name">
-							기존 스프린트 이름
-						</div>
-						<input class="input_detail" type="text" id="sprintRegistNameDetail" readonly>
-					</div>
-					<div class="sprint_item">
-						<div class="item_name">
-							기존 시작 날짜
-						</div>
-						<input class="input_detail" type="text" id="sprintRegistStartDateDetail"readonly>
-					</div>
-					<div class="sprint_item">
-						<div class="item_name">
-							기존 종료 날짜
-						</div>
-						<input class="input_detail" type="text" id="sprintRegistEndDateDetail" readonly>
-					</div>
-					<div class="sprint_item">
-						<div class="item_name">
-							스프린트 목표
-						</div>
-						<textarea class="textarea_detail" id="sprintRegistGoalDetail" readonly></textarea>
-					</div>
-					<div class="sprint_item">
-						<div class="item_name" style="display: none">
-							스프린트의 백로그 번호
-						</div>
-						<textarea class="textarea_detail" id="BacklogNoDetail" style="display: none"></textarea>
-					</div>
-	         	</div>
-       		</div>
+		 		<div class="row detailpage">
+		         	<div class="left_area">
+			         	<div class="modal-body">
+							<div class="sprint_item">
+								<div class="item_name">
+									기존 스프린트 이름
+								</div>
+								<input class="input_detail" type="text" id="sprintRegistNameDetail" readonly>
+							</div>
+							<div class="sprint_item">
+								<div class="item_name">
+									기존 시작 날짜
+								</div>
+								<input class="input_detail" type="text" id="sprintRegistStartDateDetail"readonly>
+							</div>
+							<div class="sprint_item">
+								<div class="item_name">
+									기존 종료 날짜
+								</div>
+								<input class="input_detail" type="text" id="sprintRegistEndDateDetail" readonly>
+							</div>
+							<div class="sprint_item">
+								<div class="item_name">
+									스프린트 목표
+								</div>
+								<textarea class="textarea_detail" id="sprintRegistGoalDetail" readonly></textarea>
+							</div>
+							<div class="sprint_item">
+								<div class="item_name" style="display: none">
+									스프린트의 백로그 번호
+								</div>
+								<textarea class="textarea_detail" id="BacklogNoDetail" style="display: none"></textarea>
+							</div>
+			         	</div>
+		       		</div>
          
-         
-				<!-- Modal body -->
-				<div class="modal-body">
-				
-					<div class="sprint_item">
-						<div class="item_name">
-							변경할 스프린트 이름
+	         
+					<!-- Modal body -->
+					<div class="modal-body">
+					
+						<div class="sprint_item">
+							<div class="item_name">
+								* 변경할 스프린트 이름
+							</div>
+							<input class="input_detail" type="text" id="sprintupdateNameDetail">
+						</div>	
+						<div class="sprint_item">
+							<div class="item_name">
+								* 변경 할 시작 날짜
+							</div>
+							<input class="input_detail" type="date" id="sprintupdateStartDateDetail">
 						</div>
-						<input class="input_detail" type="text" id="sprintupdateNameDetail">
-					</div>	
-					<div class="sprint_item">
-						<div class="item_name">
-							변경 할 시작 날짜
+						<div class="sprint_item">
+							<div class="item_name">
+								* 변경 할 종료 날짜
+							</div>
+							<input class="input_detail" type="date" id="sprintupdateEndDateDetail">
 						</div>
-						<input class="input_detail" type="date" id="sprintupdateStartDateDetail">
+						<div class="sprint_item">
+							<div class="item_name">
+								* 스프린트 목표
+							</div>
+							<textarea class="textarea_detail" id="sprintupdateGoalDetail"></textarea>
+						</div>
 					</div>
-					<div class="sprint_item">
-						<div class="item_name">
-							변경 할 종료 날짜
-						</div>
-						<input class="input_detail" type="date" id="sprintupdateEndDateDetail">
-					</div>
-					<div class="sprint_item">
-						<div class="item_name">
-							스프린트 목표
-						</div>
-						<textarea class="textarea_detail" id="sprintupdateGoalDetail"></textarea>
+					<!-- Modal footer -->
+					<div class="modal_btn_area">
+						<button type="button" class="btn_detail" id="EditSprint">수정</button>
+						<button type="button" class="btn_detail" id="RemoveSprint">삭제</button>
+						<button type="button" class="btn_detail" data-dismiss="modal">취소</button>
 					</div>
 				</div>
-				<!-- Modal footer -->
-				<div class="modal_btn_area">
-					<button type="button" class="btn_detail" id="EditSprint">수정</button>
-					<button type="button" class="btn_detail" id="RemoveSprint">삭제</button>
-					<button type="button" class="btn_detail" data-dismiss="modal">취소</button>
-				</div>
-				
-
 			</div>
 		</div>
-	</div>
-</div>	
-	
+	</div>	
 		
+			
 		
 		
 	<script>
@@ -421,7 +408,7 @@
 					}else{
 						return;
 						}
-			})
+				});
 			
 			/* 스프린트 수정 */
 				$("#EditSprint").click(function(){ 
@@ -429,8 +416,9 @@
 					 var sprStardDate = document.getElementById("sprintupdateStartDateDetail").value;
 					 var sprEndDate = document.getElementById("sprintupdateEndDateDetail").value;
 					 var sprGoal = document.getElementById("sprintupdateGoalDetail").value;
-
-					 	$.ajax({
+					
+					 if(!vali(sprName) && !vali(sprStardDate) && !vali(sprEndDate) && !vali(sprGoal)){
+					 $.ajax({
 								url : "${pageContext.servletContext.contextPath}/board/sprint/sprint_Edit",
 								type : "post",
 								data : {
@@ -449,6 +437,9 @@
 									alert("스프린트 수정이 취소되었습니다.");
 								}
 					 })
+					 }else{
+						 alert("빠진 부분을 채워주세요~");
+					 }
 				})
 			} 
 	</script>        
@@ -477,20 +468,7 @@
 							<tbody id="backlogBody">
 								<c:choose>
 									<c:when test="${fn:length(requestScope.backlogList) > 0 }">
-										<%-- <c:forEach var="backlog" items="${ requestScope.backlogList }" varStatus="st">
-											<tr class="trtr">
-												<td class="table_detail type1">${st.count }</td>
-												<td class="table_detail type1">${ backlog.blgName }</td>
-												<td class="table_detail type1">${ backlog.blgPri }</td>
-												<td class="table_detail type1">${ backlog.blgDemoMemo }</td>
-												<td class="table_detail type1">${ backlog.blgRefMemo }</td>
-												<td class="table_detail type1"  style="display: none;"><input type="text" class="blgNoTomakeSprint" id="blgNoTomakeSprint" value=${ backlog.blgNo } style="display: none;"></td> 
-												<td class="table_detail type1">
-												<button class="btn_detail on"  data-toggle="modal" data-target="#myModalEdit"  id="EditBackLog" onclick="btnDetail(this)" value=${ backlog.blgNo }>Edit Backlog</button>	
-												<button class="btn_detail startSprint"  data-toggle="modal" data-target="#myModal3">Start Sprint</button>
-												</td>
-											</tr>
-										</c:forEach> --%>
+										
 									</c:when>
 									<c:otherwise>
 										<tr>
@@ -501,8 +479,7 @@
 							</tbody>
 						</table>
 						<div id="backlogPagingArea" align="center">
-					</div>
-				</div>
+						</div>
 			</div>
 		</div>
 
@@ -557,7 +534,7 @@
 								/* tr태그에 만들어 값 담기 */
 								$tr = $("<tr>");
 								$rnum = $("<td>").text(data[index].rnum);
-								$blgNo = $("<td>").text(data[index].blgNo);
+								$blgNo = $("<td>").text("BACKLOG-" + data[index].blgNo);
 								$nameTd = $("<td>").text(data[index].blgName);
 								$priTd = $("<td>").text(data[index].blgPri);
 								$demoMemoTd = $("<td>").text(data[index].blgDemoMemo);
@@ -703,7 +680,7 @@
 								$("#DemoDetail11").attr('placeholder',"");
 								$("#Reference11").attr('placeholder',"");
 								
-								$("#backlogNo11").attr('value',data.blgNo);
+								$("#backlogNo11").attr('value',"BACKLOG-" + data.blgNo);
 								//$("#BacklogNoTosprintRegist").attr('value',data.blgNo);				//스프린트 생성할 때 도 부여
 								//$("#BacklogNoTosprintRegist").attr('placeholder',data.blgNo);				//스프린트 생성할 때 도 부여
 								$("#backlogName11").attr('placeholder',data.blgName);
@@ -730,6 +707,7 @@
 		return html;
 	}
 	</script>  
+	
 	
 	<!-- 스프린트 생성 버튼 클릭시 -->
 	<script>
@@ -938,7 +916,7 @@
 											
 											/* tr태그에 만들어 값 담기 */
 											$tr = $("<tr>");
-											$noTd = $("<td>").text(data[index].blgNo);
+											$noTd = $("<td>").text("BACKLOG-" +data[index].blgNo);
 											$nameTd = $("<td>").text(data[index].blgName);
 											$priTd = $("<td>").text(data[index].blgPri);
 											$enrollDateTd = $("<td>").text(data[index].blgEnrollDate);
@@ -1089,11 +1067,11 @@
 						<div class="backlog_info">
 							
 							<div class="info_item">
-								<div class="info_detail">이름</div>
+								<div class="info_detail">* 이름</div>
 								<input class="input_detail" type="text" id="backlogName">
 							</div>
 							<div class="info_item">
-								<div class="info_detail">중요도</div>
+								<div class="info_detail">* 중요도</div>
 								<select id="importance">
 									<option>1</option>
 									<option>2</option>
@@ -1103,11 +1081,11 @@
 						</div>
 						<div class="backlog_textarea">
 							<div class="text_item">
-								<div class="text_detail">데모 방식</div>
+								<div class="text_detail">* 데모 방식</div>
 								<textarea class="textarea_detail" id="DemoDetail"></textarea>
 							</div>
 							<div class="text_item">
-								<div class="text_detail">참고</div>
+								<div class="text_detail">* 참고</div>
 								<textarea class="textarea_detail" id="Reference"></textarea>
 							</div>
 						</div>
@@ -1126,13 +1104,21 @@
 	
 	<!-- 백로그 생성 버튼 클릭시 -->
 		<script>
+		/* null 체크 */
+		function vali(value){
+		    if (value === null) return true; 
+		    if (typeof value === 'string' && value === '') return true;
+		    if (typeof value === 'undefined') return true;
+		    return false;
+		}
+		
 			$("#createBacklog").click(function(){ 
 				var pjtNo = ${ requestScope.pjtNo };
 				 var blgName = document.getElementById("backlogName").value;
 				 var blgPri = document.getElementById("importance").value;
 				 var blgDemoMemo = document.getElementById("DemoDetail").value;
 				 var blgRefMemo = document.getElementById("Reference").value;
-				 
+				if(!vali(blgName) && !vali(blgPri) && !vali(blgDemoMemo) && !vali(blgRefMemo)){
 				 $.ajax({
 					url : "${pageContext.servletContext.contextPath}/board/backlog/backlog_regist",
 					type : "post",
@@ -1152,6 +1138,9 @@
 						alert("백로그 생성이 취소되었습니다");
 					}
 				 })
+				}else{
+					alert("필수 항목을 채워주세요.");
+				}
 			});
 		</script>
 		
@@ -1174,7 +1163,7 @@
 					<div class="row nk3">
 						<div class="backlog_info">
 							<div class="info_item">
-								<div class="info_detail">이름</div>
+								<div class="info_detail">* 이름</div>
 								<input class="input_detail" type="text" id="backlogName11" placeholder="" >
 							</div>
 							
@@ -1185,7 +1174,7 @@
 							
 							
 							<div class="info_item">
-								<div class="info_detail">중요도</div>
+								<div class="info_detail">* 중요도</div>
 								<select id="importance11">
 									<option>1</option>
 									<option>2</option>
@@ -1195,11 +1184,11 @@
 						</div>
 						<div class="backlog_textarea">
 							<div class="text_item">
-								<div class="text_detail">데모 방식</div>
+								<div class="text_detail">* 데모 방식</div>
 								<textarea class="textarea_detail" id="DemoDetail11"  placeholder="" ></textarea>
 							</div>
 							<div class="text_item">
-								<div class="text_detail">참고</div>
+								<div class="text_detail">* 참고</div>
 								<textarea class="textarea_detail" id="Reference11"  placeholder="" ></textarea>
 							</div>
 						</div>
@@ -1237,6 +1226,7 @@
 				 console.log("넘ㅂ : " + blgPri);
 				 console.log("넘ㅂ : " + blgDemoMemo);
 				 console.log("넘ㅂ : " + blgPri);
+				 if(!vali(blgNo) && !vali(blgName) && !vali(blgPri) && !vali(blgDemoMemo) && !vali(blgRefMemo)){
 				 $.ajax({
 					url : "${pageContext.servletContext.contextPath}/board/backlog/backlog_Edit",
 					type : "post",
@@ -1257,86 +1247,90 @@
 						alert("백로그 수정이 취소되었습니다.");
 					}
 				 })
-			})
-		
-		</script>
-		
-<!-- 백로그 삭제 버튼 클릭시 -->
-		<script>
-			$("#removeBacklog").click(function(){ 
-				 if(confirm("정말 삭제하시겠습니까 ?") == true){
-				var pjtNo = ${ requestScope.pjtNo };
-				 var blgNo = document.getElementById("backlogNo11").value;
-				 
-				 $.ajax({
-					url : "${pageContext.servletContext.contextPath}/board/backlog/backlog_Remove",
-					type : "post",
-					data : {
-						pjtNo : pjtNo,
-						blgNo : blgNo,
-					},
-					success : function(data, textStatus, xhr){
-						alert("백로그 삭제가 완료되었습니다");
-						document.location.reload();
-					},
-					error : function(xhr, status, error){
-						console.log(error);
-						alert("백로그 삭제가 취소되었습니다");
-					}
-				 })
-			}else{
-				return;
+				 }else{
+						alert("빠진 부분을 채워주세요~");					 
+				 }
 				}
-			})
+			)
+		
 		</script>
+		
+		<!-- 백로그 삭제 버튼 클릭시 -->
+			<script>
+				$("#removeBacklog").click(function(){ 
+					 if(confirm("정말 삭제하시겠습니까 ?") == true){
+					var pjtNo = ${ requestScope.pjtNo };
+					 var blgNo = document.getElementById("backlogNo11").value;
+					 
+					 $.ajax({
+						url : "${pageContext.servletContext.contextPath}/board/backlog/backlog_Remove",
+						type : "post",
+						data : {
+							pjtNo : pjtNo,
+							blgNo : blgNo,
+						},
+						success : function(data, textStatus, xhr){
+							alert("백로그 삭제가 완료되었습니다");
+							document.location.reload();
+						},
+						error : function(xhr, status, error){
+							console.log(error);
+							alert("백로그 삭제가 취소되었습니다");
+						}
+					 })
+				}else{
+					return;
+					}
+				})
+			</script>
 
 
 	
 	
-<!-- 프로젝트 수정 모달 -->
-<div class="modal fade" id="project_produce_Detail">
-   <div class="modal-dialog">
-      <div class="modal-content">
-
-         <!-- Modal Header -->
-         <div class="row detailpage">
-         	<div class="left_area">
-         		<div class="modal-header">
-					<div class="item_detail">프로젝트 이름</div>
-					<input class="input_detail nk type" type="text" id="projectName" placeholder="${projectList.projectName }" readonly>            
-				</div>
-		         <div class="modal-header">
-		         	<div class="item_detail">시작 날짜 </div>
-		         	<input class="input_detail nk type" type="text" id="projectStartDate" placeholder="${projectList.projectStartDate } " readonly style="border : 0;"/>
-		         </div>
-         		<div class="modal-header">
-		         	<div class="item_detail">종료 날짜</div>
-		         	<input class="input_detail nk type" type="text" id="projectEndDate" placeholder="${projectList.projectEndDate } " readonly style="border : 0;"/>
-		         </div>
-		         <div class="modal-header">
-		            <div class="item_detail">프로젝트 색상</div>
-		        	<input class="input_detail nk type" style="background-color: ${projectList.projectColor};" id="projectColor" readonly style="border : 0;">  
-		         </div> 
-         	</div>
-         	<div class="right_area">
-				<div class="modal-header">
-					<div class="item_detail">프로젝트 이름</div>
-					<input class="input_detail nk type" type="text" id="projectNameEdit" placeholder="수정할 프로젝트 이름">            
-				</div>
-				<div class="modal-header">
-					<div class="item_detail">수정 시작 날짜</div>
-		            <input class="input_detail nk type" type="date" id="projectStartDateEdit"  placeholder="${projectList.projectStartDate }">         
-		         </div>
-		         <div class="modal-header">
-		            <div class="item_detail">수정 종료 날짜</div>
-		         	<input class="input_detail nk type" type="date" id="projectEndDateEdit">  
-		         </div>
-		         <div class="modal-header">
-		            <div class="item_detail">수정할 프로젝트 색상</div>
-		        	<input class="input_detail nk type" type="color" id="projectColorEdit">  
-		         </div> 
-         	</div>
-         </div>
+	<!-- 프로젝트 수정 모달 -->
+	<div class="modal fade" id="project_produce_Detail">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	
+	         <!-- Modal Header -->
+	         <div class="row detailpage">
+	         	<div class="left_area">
+	         		<div class="modal-header">
+						<div class="item_detail">프로젝트 이름</div>
+						<input class="input_detail nk type" type="text" id="projectName" placeholder="${projectList.projectName }" readonly>            
+					</div>
+			         <div class="modal-header">
+			         	<div class="item_detail">시작 날짜 </div>
+			         	<input class="input_detail nk type" type="text" id="projectStartDate" placeholder="${projectList.projectStartDate } " readonly style="border : 0;"/>
+			         </div>
+	         		<div class="modal-header">
+			         	<div class="item_detail">종료 날짜</div>
+			         	<input class="input_detail nk type" type="text" id="projectEndDate" placeholder="${projectList.projectEndDate } " readonly style="border : 0;"/>
+			         </div>
+			         <div class="modal-header">
+			            <div class="item_detail">프로젝트 색상</div>
+			        	<input class="input_detail nk type" style="background-color: ${projectList.projectColor};" id="projectColor" readonly style="border : 0;">  
+			         </div> 
+	         	</div>
+	         	<div class="right_area">
+					<div class="modal-header">
+						<div class="item_detail">* 프로젝트 이름</div>
+						<input class="input_detail nk type" type="text" id="projectNameEdit" placeholder="수정할 프로젝트 이름">            
+					</div>
+					<div class="modal-header">
+						<div class="item_detail">* 수정 시작 날짜</div>
+			            <input class="input_detail nk type" type="date" id="projectStartDateEdit"  placeholder="${projectList.projectStartDate }">         
+			         </div>
+			         <div class="modal-header">
+			            <div class="item_detail">* 수정 종료 날짜</div>
+			         	<input class="input_detail nk type" type="date" id="projectEndDateEdit">  
+			         </div>
+			         <div class="modal-header">
+			            <div class="item_detail">* 수정할 프로젝트 색상</div>
+			        	<input class="input_detail nk type" type="color" id="projectColorEdit">  
+			         </div> 
+	         	</div>
+	         </div>
          
                 
          <!-- Modal body -->
@@ -1384,10 +1378,8 @@
 					</c:if> 
 					</tbody>
 				</table>
-         </div>
-            
-         
-         <div class="modal_btn_area">
+       		  </div>
+       	 	 <div class="modal_btn_area">
             <button class="btn_detail" id="editProject">Edit Project</button>
             <button class="btn_detail" id="removeProject">Remove Project</button>
          </div>            
@@ -1477,9 +1469,6 @@
 				return hiddenTag
 			}
 			
-			
-		 
-			
 		   var memberNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};
 		   console.log(memberNo);
 			const projectMemberList = document.getElementById('dynamicTbody').innerHTML;
@@ -1531,6 +1520,8 @@
 		   
 		   console.table("얍 " + nk1);
 		   console.log("djdjdndnd : " + pjtNo);
+		   
+		   if(!vali(projectName) && !vali(projectStartDate) && !vali(projectEndDate) && !vali(projectColor)){
 		   $.ajax({
 			   url :"${pageContext.servletContext.contextPath}/board/backlog/project_edit",
 			   type : "post",
@@ -1548,7 +1539,11 @@
 					location.href = "${pageContext.servletContext.contextPath}/board/backlog";
 				}
 		   });
-		})
+		   }else{
+			   alert("빠진 부분을 채워주세요~");
+		   }
+		   
+		});
 		</script>
 		<script>
 		var memberNo = ${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no};

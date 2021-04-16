@@ -99,21 +99,21 @@
 
          <!-- Modal Header -->
          <div class="modal-header">
-            <input class="input_detail" type="text" id="projectNameNK" placeholder="Add Project Title">            
+            <input class="input_detail" type="text" id="projectNameNK" placeholder="* Add Project Title">            
          </div>
          
 		<div class="modal-header">
-			<div>시작 날짜</div>
+			<div>* 시작 날짜</div>
             <input class="input_detail nk" type="date" id="projectStartDate">         
          </div>
          
          <div class="modal-header">
-            <p>종료 날짜</p>
+            <p>* 종료 날짜</p>
          <input class="input_detail  nk" type="date" id="projectEndDate">  
          </div>
          
          <div class="modal-header">
-            <p>프로젝트 색상</p>
+            <p>* 프로젝트 색상</p>
          <input class="input_detail  nk1" type="color" id="projectColor">  
          </div> 
          
@@ -189,7 +189,14 @@ if(document.getElementById("pjSelectOne")) {
 		
 		 const $pjSelectOne = document.getElementById("pjSelectOne");
 	  	 
-				
+		 /* null 체크 */
+			function vali(value){
+			    if (value === null) return true; 
+			    if (typeof value === 'string' && value === '') return true;
+			    if (typeof value === 'undefined') return true;
+			    return false;
+			}
+		 
 		/* 멤버 수 count */
 		var idcount = 1;
 		$("#addpersonButton").click(function(){
@@ -233,16 +240,13 @@ if(document.getElementById("pjSelectOne")) {
 			idcount--;
 		});
 		
-		/* 이메일 null 체크 */
-		function vali(value){
-		    if (value === null) return true; 
-		    if (typeof value === 'string' && value === '') return true;
-		    if (typeof value === 'undefined') return true;
-		    return false;
-		}
 		
+		projectStartDate
 		/* 프로젝트 생성 버튼 클릭 시*/
 		$("#createProject").click(function(){ 
+			if(!vali($("#projectNameNK").val()) && !vali($("#projectStartDate").val()) && !vali($("#projectEndDate").val()) && !vali($("#projectColor").val())){
+				
+							
 			function makeTag(name, value){
 				var hiddenTag = document.createElement('input');
 				hiddenTag.setAttribute("type", "hidden")
@@ -259,7 +263,7 @@ if(document.getElementById("pjSelectOne")) {
 		   const projectMemberList = document.getElementById('dynamicTbody').innerHTML;
 		   var projectName = document.getElementById("projectNameNK").value;
 		   var projectStartDate = document.getElementById("projectStartDate").value;
-		   var projectEndDate = document.getElementById("projectEndDate").value.defaultValue = "2999-12-31";
+		   var projectEndDate = document.getElementById("projectEndDate").value;
 		   var projectColor = document.getElementById("projectColor").value;
 		   console.log("projectName : " + projectName);
 		   console.log("projectStartDate : " + projectStartDate);
@@ -313,6 +317,10 @@ if(document.getElementById("pjSelectOne")) {
 					location.href = "${pageContext.servletContext.contextPath}/board/project_board";
 				}
 		   });
+		   
+			}else{
+				alert("필수 항목을 모두 채워주세요!");
+			}
 		})
 </script>
 
