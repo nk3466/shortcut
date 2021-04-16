@@ -32,12 +32,6 @@ public class CardServiceImpl implements CardService {
 	}
 
 	@Override
-	public boolean cardMember(int memberNo, int cNo) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public boolean registCard(RequestCardDTO card) {
 		
 		boolean result = false;
@@ -113,6 +107,12 @@ public class CardServiceImpl implements CardService {
 	@Override
 	public List<RequestCardDTO> selectCardInfo(int cardNo) {
 		return cardMapper.selectCardInfo(cardNo);
+	}
+
+	@Override
+	public boolean cardMember(int memberNo, int cNo) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 

@@ -141,7 +141,7 @@ console.log("boardList" +  "${requestScope.boardList}");
          <input type="text" value="" name="type" style="display: none;" id="pleaseType">
             <div class="modal-content">
                <div class="modal-body">
-                  <div class="row">
+                  <div class="row selectCardtype">
                      <div class="modal_list">
                         <i class="fas fa-check"><button id="workBtn" type="button"
                         style="background: #00ff0000; border: 0;" value="1">업무</button></i>
@@ -304,9 +304,10 @@ console.log("boardList" +  "${requestScope.boardList}");
          </div>
       </div>
    </div>
-   
+   <jsp:include page="../board/cardModal.jsp"></jsp:include>
 </body>
 <script>
+
    function selectCardInfo(crdNo) {
 		console.log("셀렉트카드" + crdNo);
       $.ajax({
@@ -314,39 +315,32 @@ console.log("boardList" +  "${requestScope.boardList}");
          type: "get",
          data: {crdNo: crdNo},
          success: function(data, status, xhr) {
-            console.table(data);
-            /* var cardTitle = selectCardInfo.title;
-   			var cardMemNo = data.selectCardInfo;
-   			var memberList = data.memberList;
+           // console.table(data);
+            var title = data.title;
+            var enrolldate = data.enrollDate;
+            var type = data.type;
+            console.log("cardType:!!!! : " + type);
+            var memNo = data.memNo;
+            var member	= data.member;
+            var place	= data.place;
+            var alert	= data.alert;
    			var cardTxt = data.txt; 
-   			var cardPlace = data.place;
-   			var cardAlert = data.alert;
    			var cardTaskStartDate = data.taskStartDate;
    			var cardTaskEndDate = data.taskEndDate;
    			var cardScheduleStartDate = data.scheduleStartDate;
    			var cardScheduleEndDate = data.scheduleEndDate;
-   			console.log("cardTitle :"+ cardTitle);
-   			console.log("cardMemNo :"+ cardMemNo);
-   			console.log("memberList :"+ memberList);
-   			console.log("cardTxt :"+ cardTxt);
-   			console.log("cardPlace :"+ cardPlace);
-   			console.log("cardAlert :"+ cardAlert);
-   			console.log("cardTaskStartDate :"+ cardTaskStartDate);
-   			console.log("cardTaskEndDate :"+ cardTaskEndDate);
-   			console.log("cardScheduleStartDate :"+ cardScheduleStartDate);
-   			console.log("cardScheduleEndDate :"+ cardScheduleEndDate);
-   			var appendPlace = 'CardTitleDetail';
-   			var appendPlace1 = 'CardMemNoDetail';	
-   			var appendPlace2 = 'CardMemberListDetail';
-   			var appendPlace3 = 'cardTxtDetail';
-   			var appendPlace4 = 'cardPlaceDetail';
-   			var appendPlace5 = 'cardAlertDetail';
-   			var appendPlace6 = 'cardTaskStartDateDetail';
-   			var appendPlace7 = 'cardTaskEndDateDetail';
-   			var appendPlace8 = 'cardScheduleStartDateDetail';
-   			var appendPlace9 = 'cardScheduleEndDateDetail';
-   		
    			
+   			if(type === 2 ) {
+   				$(".work_btn").show();
+   			} else if ( type === 3){
+   				$(".calendar_btn").show();
+   			} else if ( type === 4) {
+   			 	$(".work_btn").show();
+   			 	$(".calendar_btn").show();
+   			} 
+   			
+   		
+   			/* 
    			 	new insertCardTitle(cardTitle,appendPlace); 
    			 	new insertCardMemNo(cardMemNo, appendPlace1);
    				new insertCardMemberList(memberList,appendPlace2);
@@ -364,8 +358,10 @@ console.log("boardList" +  "${requestScope.boardList}");
          }
       });
    }
+   
+
 </script>
-<!-- <script>
+<script>
 
 	/* 참석자 이름 넣어주기 */
 	function insertPerson(memberList,appendPlace){
@@ -460,18 +456,10 @@ console.log("boardList" +  "${requestScope.boardList}");
 	   $("#"+appendPlace+"").append(insertTitle);
 }
 
-</script> -->
+</script>
 <script type="text/javascript">
 
-$(function(){
-      
-      $(".board_item.card").click(function(){
-          
-         $("#myModal2").modal();
-          
-      });
-      
-   })
+
    $(function(){
       
       $(".board_item.card").click(function(){
@@ -480,14 +468,14 @@ $(function(){
           
       });
       
-        $(".board_item.card").click(function(e){
+        $(".board_item.card1").click(function(e){
             
            	var crdNo = $(this).children("#crdNo").val();
            	console.log(crdNo);
          	e.preventDefault();                  
-         	$("#myModal2").modal();
+         	$("#updateCardModal").modal();
          	selectCardInfo(crdNo);
-            
+        	   
          });   
    })
 </script>
