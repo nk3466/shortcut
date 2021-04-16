@@ -6,6 +6,7 @@ import com.greedy.shortcut.board.model.dto.CardAttendListDTO;
 import com.greedy.shortcut.board.model.dto.CardDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.RequestCardDTO;
+import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 public interface CardMapper {
 
@@ -23,7 +24,13 @@ public interface CardMapper {
 
 	boolean registSchAttendList(CardAttendListDTO cal);
 
+//	RequestCardDTO selectCardDetail(int cardNo);
+//
+//	List<MemberDTO> selectCardDetailMember(int cardNo);
+
+//	List<RequestCardDTO> selectCardInfo(int cardNo);
 	List<RequestCardDTO> selectCardInfo(int cardNo);
+
 
 
 

@@ -305,18 +305,58 @@ console.log("boardList" +  "${requestScope.boardList}");
       </div>
    </div>
    
-   <jsp:include page="../board/card_detail.jsp"/>
-
 </body>
 <script>
    function selectCardInfo(crdNo) {
-
+		console.log("셀렉트카드" + crdNo);
       $.ajax({
          url: "${pageContext.servletContext.contextPath}/select/cardInfo",
          type: "get",
          data: {crdNo: crdNo},
          success: function(data, status, xhr) {
-            console.log(data);
+            console.table(data);
+            /* var cardTitle = selectCardInfo.title;
+   			var cardMemNo = data.selectCardInfo;
+   			var memberList = data.memberList;
+   			var cardTxt = data.txt; 
+   			var cardPlace = data.place;
+   			var cardAlert = data.alert;
+   			var cardTaskStartDate = data.taskStartDate;
+   			var cardTaskEndDate = data.taskEndDate;
+   			var cardScheduleStartDate = data.scheduleStartDate;
+   			var cardScheduleEndDate = data.scheduleEndDate;
+   			console.log("cardTitle :"+ cardTitle);
+   			console.log("cardMemNo :"+ cardMemNo);
+   			console.log("memberList :"+ memberList);
+   			console.log("cardTxt :"+ cardTxt);
+   			console.log("cardPlace :"+ cardPlace);
+   			console.log("cardAlert :"+ cardAlert);
+   			console.log("cardTaskStartDate :"+ cardTaskStartDate);
+   			console.log("cardTaskEndDate :"+ cardTaskEndDate);
+   			console.log("cardScheduleStartDate :"+ cardScheduleStartDate);
+   			console.log("cardScheduleEndDate :"+ cardScheduleEndDate);
+   			var appendPlace = 'CardTitleDetail';
+   			var appendPlace1 = 'CardMemNoDetail';	
+   			var appendPlace2 = 'CardMemberListDetail';
+   			var appendPlace3 = 'cardTxtDetail';
+   			var appendPlace4 = 'cardPlaceDetail';
+   			var appendPlace5 = 'cardAlertDetail';
+   			var appendPlace6 = 'cardTaskStartDateDetail';
+   			var appendPlace7 = 'cardTaskEndDateDetail';
+   			var appendPlace8 = 'cardScheduleStartDateDetail';
+   			var appendPlace9 = 'cardScheduleEndDateDetail';
+   		
+   			
+   			 	new insertCardTitle(cardTitle,appendPlace); 
+   			 	new insertCardMemNo(cardMemNo, appendPlace1);
+   				new insertCardMemberList(memberList,appendPlace2);
+   				new insertCardTxt(cardTxt,appendPlace3);
+   				new insertCardPlace(cardPlace,appendPlace4);
+   				new insertCardAlert(cardAlert,appendPlace5);
+   				new insertCardTaskStartDate(cardTaskStartDate,appendPlace6);
+   				new insertCardTaskEndDate(cardTaskEndDate,appendPlace7);
+   				new insertCardScheduleStartDate(cardScheduleStartDate,appendPlace8);
+   				new insertCardScheduleEndDate(cardScheduleEndDate,appendPlace9); */
             
          },
          error: function(xhr, status, error) {
@@ -325,6 +365,102 @@ console.log("boardList" +  "${requestScope.boardList}");
       });
    }
 </script>
+<!-- <script>
+
+	/* 참석자 이름 넣어주기 */
+	function insertPerson(memberList,appendPlace){
+	   $("#"+appendPlace+"").empty();
+	   for(let i = 0; i < memberList.length; i++){
+        console.table( $("#"+appendPlace+"") );
+        var insertSpan="";
+        insertSpan = '<span class="item_text on">' + memberList[i].name + '<i id="delBtn" class="fas fa-times-circle"></i>' + '<input class="item_num" name="member' + [i] + '" type="hidden" value="' + memberList[i].no + '">' + '</span>';
+        count++
+        $("#"+appendPlace+"").append(insertSpan);
+     }
+}
+
+	/* 카드 상세페이지 타이틀 넣어주기 */
+	function insertCardTitle(cardTitle,appendPlace){
+	   $("#"+appendPlace+"").empty();
+	   
+	   var insertTitle="";
+	   insertTitle = '<span>' + cardTitle + '</span>'
+	   $("#"+appendPlace+"").append(insertTitle);
+}
+	/* 카드 상세페이지 담당자 넣어주기 */
+	function insertCardMemNo(cardMemNo,appendPlace){
+	   $("#"+appendPlace+"").empty();
+	   
+	   var insertTitle="";
+	   insertTitle = '<span>' + cardMemNo + '</span>'
+	   $("#"+appendPlace+"").append(insertTitle);
+}
+	/* 카드 상세페이지 멤버리스트 넣어주기 */
+	function insertCardMemberList(memberList,appendPlace){
+	   $("#"+appendPlace+"").empty();
+	   
+	   var insertTitle="";
+	   insertTitle = '<span>' + memberList + '</span>'
+	   $("#"+appendPlace+"").append(insertTitle);
+}
+	/* 카드 상세페이지 텍스트아레아 넣어주기 */
+	function insertCardTxt(cardTxt,appendPlace){
+	   $("#"+appendPlace+"").empty();
+	   
+	   var insertTitle="";
+	   insertTitle = '<span>' + cardTxt + '</span>'
+	   $("#"+appendPlace+"").append(insertTitle);
+}
+	/* 카드 상세페이지 장소 넣어주기 */
+	function insertCardPlace(cardPlace,appendPlace){
+	   $("#"+appendPlace+"").empty();
+	   
+	   var insertTitle="";
+	   insertTitle = '<span>' + cardPlace + '</span>'
+	   $("#"+appendPlace+"").append(insertTitle);
+}
+	/* 카드 상세페이지 알림 넣어주기 */
+	function insertCardAlert(cardAlert,appendPlace){
+	   $("#"+appendPlace+"").empty();
+	   
+	   var insertTitle="";
+	   insertTitle = '<span>' + cardAlert + '</span>'
+	   $("#"+appendPlace+"").append(insertTitle);
+}
+	/* 카드 상세페이지 업무시작일 넣어주기 */
+	function insertCardTaskStartDate(cardTaskStartDate,appendPlace){
+	   $("#"+appendPlace+"").empty();
+	   
+	   var insertTitle="";
+	   insertTitle = '<span>' + cardTaskStartDate + '</span>'
+	   $("#"+appendPlace+"").append(insertTitle);
+}
+	/* 카드 상세페이지 업무종료일 넣어주기 */
+	function insertCardTaskEndDate(cardTaskEndDate,appendPlace){
+	   $("#"+appendPlace+"").empty();
+	   
+	   var insertTitle="";
+	   insertTitle = '<span>' + cardTaskEndDate + '</span>'
+	   $("#"+appendPlace+"").append(insertTitle);
+}
+	/* 카드 상세페이지 일정시작일 넣어주기 */
+	function insertCardScheduleStartDate(cardScheduleStartDate,appendPlace){
+	   $("#"+appendPlace+"").empty();
+	   
+	   var insertTitle="";
+	   insertTitle = '<span>' + cardScheduleStartDate + '</span>'
+	   $("#"+appendPlace+"").append(insertTitle);
+}
+	/* 카드 상세페이지 일정종료일 넣어주기 */
+	function insertCardScheduleEndDate(cardScheduleEndDate,appendPlace){
+	   $("#"+appendPlace+"").empty();
+	   
+	   var insertTitle="";
+	   insertTitle = '<span>' + cardScheduleEndDate + '</span>'
+	   $("#"+appendPlace+"").append(insertTitle);
+}
+
+</script> -->
 <script type="text/javascript">
 
 $(function(){
@@ -445,12 +581,6 @@ $(function(){
 				}
 	})
    
-   
-   
-   
-   
-   
-
    /* 일정, 업무 버튼 */
    var count1 = 0;
    var count2 = 0;
