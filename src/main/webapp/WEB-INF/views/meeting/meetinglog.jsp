@@ -46,13 +46,16 @@
    </header>
    <section class="content-left">
       <div class="left-main">
+      	<div class="issue_collect">
+      		<div>이슈 모아보기</div> 
+      	</div>
          <div class="main-wrap">
             <div class="main-day"></div>
             <div class="main-date"></div>
          </div>
          <div class="todo-wrap">
             <div class="todo-title">Todo List</div>
-            <button class="conference_update">올리기</button>
+            <button class="conference_update" >올리기</button>
             <form class="input-form">
                <input type="text" placeholder="write here!!" class="input-box" />
                <button type="submit" class="input-btn clickBtn">INPUT</button>
@@ -111,17 +114,7 @@
                            </div>                     
                         </div>
                         <div class="modal_line"></div>
-                     <!--    <div class="row">
-                           <div class="item_type type">
-     			                         팀원추가
-                           </div>
-                           <div class="item_type">
-                              <input class="input_detail" type="text" id="memberEmail" name="" placeholder="회의 참가자 추가" onclick="this.value=''">
-                              <button type="button" id="memberAddBtn" class="btn_detail">Add</button>
-                           </div>
-                           
-                        </div>
-                        <div class="modal_line"></div> -->
+                     
                         <div class="row">
                            <div class="item_type type">
                       		        참석자
@@ -172,6 +165,7 @@
    <jsp:include page="../meeting/meeting_modify.jsp"></jsp:include>
    
    
+   
 </body>
 
 
@@ -196,6 +190,7 @@
 	      console.log('id : '+ $(this).attr('id'));
 	      selectMeetingDetail($(this).attr('id'));
     	  
+	      
       })
       
       // 삭제 
@@ -209,10 +204,12 @@
 			e.preventDefault();
 			
 			$('#conference_detail').modal("hide");
-			$('#conference_modify').modal("toggle");
+			$('#conference_modify').modal("show");
 			
 		    
 		    new modifyMeeting(iddd)
+
+
 		});
       
       /* 모달 수정 페이지 완료 버튼 클릭시  */
@@ -474,7 +471,7 @@
   
    /* 상세페이지 타이틀 넣어주기 */
    function insertMeetingName(meetingNameee,appendPlace){
-	   $("#"+appendPlace+"").empty();
+	   $("#"+appendPlace+"").empty();s
 	   
 	   var insertTitle="";
 	   insertTitle = '<span>' + meetingNameee + '</span>'
@@ -623,12 +620,6 @@
        })
    }
 
-
-  
-  
-   
-   
-   
 </script>
 
 

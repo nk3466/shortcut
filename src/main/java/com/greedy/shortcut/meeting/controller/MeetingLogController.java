@@ -52,7 +52,6 @@ public class MeetingLogController {
 		/* 미팅조회 */
 		List<MeetingDTO> meetingList = meetingService.selectMeetingList(pjtNo);
 		
-		System.out.println("이거뜸??????????" + meetingList);
 		
 		model.addAttribute("pjtNo", pjtNo);
 		model.addAttribute("projectName", projectName);
@@ -120,14 +119,7 @@ public class MeetingLogController {
 		
 		int mNo = meetingNo.getMeetingNo();
 		
-		System.out.println("몬데이거 ;;" + mNo);
 		
-		
-		/*
-		 * int mNo = (int) meetingNo;
-		 * 
-		 * System.out.println("아 돌겠네 ;;" + mNo);
-		 */
 		
 		for(int i = 0; i < projectMemberList.size(); i++ ) {
 			int memberNo = projectMemberList.get(i).getMemberNo();
@@ -147,7 +139,6 @@ public class MeetingLogController {
 	public List<MemberDTO> selectProjectMember(@ModelAttribute MemberDTO member,   @RequestParam Map<String, String> parameters) {
 		
 		int pjtNo = Integer.parseInt(parameters.get("pjtNo"));
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@넘ㅁ버 " + pjtNo);
 		
 		List<MemberDTO> memberList = meetingService.selectProjectMember(member, pjtNo);
 		
@@ -159,10 +150,6 @@ public class MeetingLogController {
 		
 	}
 	
-//	@RequestMapping(value="meetinglog/meeitinglog_detail", produces="application/json; charset=UTF-8")
-//	@ResponseBody
-//	public void meeting_detail() {}
-//	
 	@PostMapping(value="meetinglog/selectAllmeeting", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public String meetingList( Model model, @RequestParam Map<String, String> parameters) throws JsonProcessingException {
@@ -229,7 +216,7 @@ public class MeetingLogController {
 		System.out.println("수정 완료 : " + modifyTitle);
 		System.out.println("수정 완료 : " + modifyContent);
 		
-		int result = meetingService.modifyComplete(meetingNo, modifyTitle,modifyContent);
+		int result = meetingService.modifyComplete(meetingNo,modifyTitle,modifyContent);
 		
 		return result;
 	}
