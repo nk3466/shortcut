@@ -6,5 +6,11 @@ public interface AlarmMapper {
 
 	String selectGitUrl(int memNo);
 	
-	int registGitUrl(Map transferMap);
+	int registGitUrl(Map<String, Object> transferMap);
+	
+	int modifyGitUrl(Map<String, Object> transferMap);
+	
+	int removeGitUrl(int memNo);
+
+	CharSequence countReceiveNote(String payload);
 }

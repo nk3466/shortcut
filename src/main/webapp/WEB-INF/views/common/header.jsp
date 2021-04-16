@@ -1,11 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<meta name="_csrf" content="${_csrf.token}">
+	<meta name="_csrf_header" content="${_csrf.headerName}">
+	
+	<!-- 알람 -->
+	<security:authorize access="isAuthenticated()">
+	<security:authentication property="principal.username" var="nick"/>
+	<script>
+		var wsUri = "ws://127.0.0.01:8001/shortcut/count";
+		
+		function send_message() {
+			websocket = new WebSocket(wsUri);
+			websocket.onopen = function(evt) {
+				onOpen(evt);
+			}
+			
+			websocket.onmessage = function(evt) {
+				onMessage(evt);
+			}
+			
+			websocket.onerror = function(evt) {
+				onError(evt);
+			}
+		}
+		
+		function onOpen(evt) {
+			websocket.send("${nick}");
+		}
+		
+		function onMessage(evt) {
+			$("#count").append(evt.data);
+		}
+		
+		function onError(Evt) {
+			
+		}
+		
+		$(document).ready(function() {
+			send_message();
+			console.log("시작!");
+		})
+	</script>
+	</security:authorize>
 </head>
 <body>
 	<div class="top_area">
@@ -61,26 +104,31 @@
 				<div class="generalAlarmArea">
 					<br>
 					<h4>Alarm</h4>
+					<span id="count" class=""></span>
 				</div>
 				<div class="githubAlarmArea">
 					<c:if test="${ empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.gitUrl }">
 					<form action="${ pageContext.servletContext.contextPath }/alarm/github/regist" method="POST">										
 						<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
 						<input name="memNo" type="text" id="memNo" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" style="display: none;">
-						<input name="githubInfo" type="text" id="githubInfo" placeholder="깃허브 주소">
-						<input type="submit" value="등록">
+						<input name="githubInfo" style="width: 100%;" type="text" id="githubInfo" placeholder="깃허브 주소">
+						<br><br>
+						<input class="btn btn-default" style="width: 100%;" type="submit" value="등록">
 					</form>
 					</c:if> 
 					<c:if test="${ !empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.gitUrl }">
-						<h4 id="githubUrlArea" class="ghu1"></h4>
-						<h4 id="githubUrlArea" class="ghu2"></h4>
-						<button class="btn btn-default" type="button">수정</button>
+						<div id="githubUrlArea" class="ghu1 main"></div>
+						<div id="githubUrlArea" class="ghu2 main"></div>
+						<div class="ghu3"></div>
+						<br>
+						<button class="btn btn-default" id="modifyGitUrl" type="button" onclick="modifyGitUrlBtn();" style="width: 100%">수정</button>
 					</c:if>
+					<br>
 					<br>
 					<table>
 						<thead>
 							<tr>
-								<th><h4 align="center">Github Issues</h4></th>
+								<th><h4 align="center" style="font-weight: bold;">Github Issues</h4></th>
 							</tr>
 							<tr style="height: 10px;"></tr>
 						</thead>
@@ -92,7 +140,72 @@
 			</div>
 		</div>
 			<script>
+				function modifyGitUrlBtn() {
+					
+					const token = $("meta[name='_csrf']").attr("content");
+					const header = $("meta[name='_csrf_header']").attr("content");
+					
+					$(".ghu3").empty();
+					
+					$("#modifyGitUrl").remove();
+					
+					$(".ghu3").append('<br>');
+					$(".ghu3").append('<form id="gitForm" method="POST">');
+					$("#gitForm").append('<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>');
+					$("#gitForm").append('<input name="memNo" type="text" id="memNo" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" style="display: none;">');
+					$("#gitForm").append('<input type="text" class="im" name="modifyUrl" value="${ sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.gitUrl }" style="margin: 3px; width: 100%; font-size: 15px;">');
+					$("#gitForm").append('<button id="rModifyGitUrl" class="btn btn-default" type="button" style="margin: 3px; width: 100%; background-color: white;">등록</button>');
+					$("#gitForm").append('<button id="dModifyGitUrl" class="btn btn-default" type="button" style="margin: 3px; width: 100%; background-color: white;">삭제</button>');
+					$("#gitForm").append('<br>');
+					$("#gitForm").append('<br>');
+					$("#gitForm").append('<button class="btn btn-default" type="button" style="margin: 3px; width: 100%; background-color: white;" onclick="cancelGitBtn();">취소</button>');
+					$("#gitForm").append('<hr>');
+					$("#gitForm").append('</form>');
+				}
+				
+				function cancelGitBtn() {
+	
+					$(".ghu3").empty();
+					
+					$(".ghu3").append('<br>');
+					$(".ghu3").append('<button class="btn btn-default" id="modifyGitUrl" type="button" onclick="modifyGitUrlBtn();" style="width: 100%">수정</button>');
+					
+				}
+			</script>
+			<script>
 				$(function() {
+					
+		            const flashMessage = '${ requestScope.flashMessage }';
+		            if(flashMessage != null && flashMessage !== '') {
+		            	
+		                alert(flashMessage);
+		                
+		            	$.ajax({
+		            		url : "${pageContext.servletContext.contextPath}/session/expire",
+		            		method : "GET",
+		            		success : function(data, status, xhr) {
+		            			console.log(data);
+		            		},
+		            		error : function(xhr, status, error) {
+		            			console.log(error);
+		            		}
+		            	});
+		            	
+		            	location.reload();
+		            }
+					
+					$(document).on("click","#rModifyGitUrl", function() {
+						const $gitForm = document.getElementById("gitForm");
+						$gitForm.action = "${pageContext.servletContext.contextPath}/alarm/github/modify";
+						$gitForm.submit(); 
+					});
+					
+					$(document).on("click", "#dModifyGitUrl", function() {
+						const $gitForm = document.getElementById("gitForm");
+						$gitForm.action = "${pageContext.servletContext.contextPath}/alarm/github/remove";
+						$gitForm.submit(); 
+					});
+					
 					
 					/* const githubArea = document.getElementById("githubArea");
 					
@@ -124,6 +237,7 @@
 						
 						$(".alarmArea").toggleClass("on");
 						$(".githubAlarmArea").hide();
+						$(".generalAlarmArea").show();
 					})
 					
 					$("#generalAlarmBtn").click(function() {
@@ -153,13 +267,14 @@
 						
 						var ghu1 = $(".ghu1");
 						var ghu2 = $(".ghu2");
-						
-						ghu1.remove();
-						ghu2.remove();
 						var ghuInfo1 = "Id : " + gitId;
 						var ghuInfo2 = "Project : " + gitIdProject;
-						ghu1.append(ghuInfo1);
-						ghu2.append(ghuInfo2);
+						
+						ghu1.text("");
+						ghu2.text("");
+						
+						ghu1.text(ghuInfo1);
+						ghu2.text(ghuInfo2);
 						
 						let today = new Date();
 						
@@ -180,11 +295,11 @@
 						}
 						
 						//var url = "https://api.github.com/search/issues?q=author:" + gitId + " repo:" + gitId + "/" + gitIdProject;
-						//var url = "https://api.github.com/search/commits?q=repo:" + gitId + "/" + gitIdProject + " author-date:" + year + "-" + beforMonth + "-" + date +
-						//		".." + year + "-" + month + "-" + date;
+						var url = "https://api.github.com/search/commits?q=repo:" + gitId + "/" + gitIdProject + " author-date:" + year + "-" + beforMonth + "-" + date +
+								".." + year + "-" + month + "-" + date;
 						//var url = "https://api.github.com/search/commits?q=repo:" + "freecodecamp" + "/" + "freecodecamp" + " author-date:" + year + "-" + beforMonth + "-" + date +
 						//		".." + year + "-" + month + "-" + date;
-						var url = "https://api.github.com/search/commits?q=repo:freecodecamp/freecodecamp author-date:2021-02-01..2021-03-31";
+						//var url = "https://api.github.com/search/commits?q=repo:freecodecamp/freecodecamp author-date:2021-02-01..2021-03-31";
 						//var url="https://api.github.com/search/commits?q=repo:Gingmin/semi-project author-date:2021-02-01..2021-03-31";
 						console.log(url);
 						getCommits(url);
@@ -211,19 +326,31 @@
 						});
 						const result = await response.json();
 						
+						let count = 0;
+						
 						result.items.forEach(i=>{
+							count++;
+							/* console.log(i); */
 							const img = document.createElement("img");
-							img.src = i.author.avatar_url;
+							if(null != i.author && null != i.author.avatar_url) {
+								img.src = i.author.avatar_url;
+							} else {
+								img.setAttribute("src", "${pageContext.servletContext.contextPath}/resources/img/randompeople.png")
+							}
 							img.style.width = "32px";
 							img.style.height = "32px";
 							const anchor = document.createElement("a");
-							anchor.href = i.html_url;
+							if(null != i.author && null != i.html_url) {
+								anchor.href = i.html_url;
+							}
 							anchor.textContent = i.commit.message.substr(0, 70) + "...";
 							githubArea.appendChild(img); 
 							githubArea.appendChild(anchor);
 							githubArea.appendChild(document.createElement("br"));
 							githubArea.appendChild(document.createElement("hr"));
 						});
+						
+						console.log("count : " + count);
 						
 						urls.forEach(u => {
 							

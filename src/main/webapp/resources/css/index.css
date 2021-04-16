@@ -63,9 +63,11 @@
 /* 알람 */
 .alarmArea{border-bottom:1px solid #ed1745; border-left:1px solid #ed1745; width: 20%;  position: absolute; right: 0; z-index: 999; background-color: white;   z-index: 999;   padding: 15px; height: 500px; overflow-x: hidden; overflow-y: auto;}
 .alarmArea.on{display:none;}
+#generalAlarmBtn{width: 50%;}
+#githubAlarmBtn{width: 50%;}
 .gitPagingBtn{background-color: white; border: 0; }
 .alBtn{background-color: white; border: 1px solid black; margin-left: 50px; font-size: 20px;}
 .alBtnArea{;}
-
-
+.main{ font-style: italic; font-size: 20px;}
+.bt:hover {background-color: #ed1745;}
 
