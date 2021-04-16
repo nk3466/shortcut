@@ -33,4 +33,19 @@ public class AlarmServiceImpl implements AlarmService {
 		return alarmMapper.registGitUrl(transferMap);
 	}
 
+	@Override
+	public int modifyGitUrl(int memNo, String modifyUrl) {
+
+		Map<String, Object> transferMap = new HashMap<>();
+		transferMap.put("memNo", memNo);
+		transferMap.put("modifyUrl", modifyUrl);
+		
+		return alarmMapper.modifyGitUrl(transferMap);
+	}
+
+	@Override
+	public int removeGitUrl(int memNo) {
+		return alarmMapper.removeGitUrl(memNo);
+	}
+
 }

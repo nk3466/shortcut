@@ -16,4 +16,26 @@
 		 WHERE MEM_NO = #{memNo}
 	</update>
 
+	<update id="removeGitUrl" parameterType="_int">
+		UPDATE
+               MEMBER
+           SET GIT_URL = ''
+         WHERE MEM_NO = #{memNo}
+	</update>
+
+	<update id="modifyGitUrl" parameterType="hashmap">
+		UPDATE
+               MEMBER
+           SET GIT_URL = #{modifyUrl}
+         WHERE MEM_NO = #{memNo}
+	</update>
+
+	<select id="countReceiveNote" parameterType="String" resultType="String">
+		  SELECT
+                 COUNT(*)
+            FROM PROJECT A
+            JOIN MEMBER B ON(A.MEM_NO = B.MEM_NO)
+           WHERE B.MEM_NAME = #{payload}
+	</select>
+
 </mapper>
