@@ -8,18 +8,19 @@
 
 .sprint_box_area{margin-bottom: 50px; height: 250px; padding-top: 40px;}
 
-.sprint_box_area .sprint_text_btn{margin-bottom: 20px;}
+.sprint_box_area .sprint_text_btn{}
 .sprint_box_area .sprint_text_btn .sprint_text{}
 .sprint_box_area .sprint_text_btn .btn_detail{float: right; background-color: white;}
 .sprint_box_area .sprint_text_btn .btn_detail.on{display: none;}
 
 
-
+.sprint_box_area .backlog_line{border: 1px solid lightgray; margin: 10px 0;}
 
 .sprint_box_area .sprint_box{height: 100px; width: 100%; border: 1px solid lightgray;}
 .sprint_box_area .sprint_box.on{display: none;}
 .sprint_box_area .table_area{}
 .sprint_box_area .table_area .table_item{text-align: center;}
+.sprint_box_area .table_area .table_item.nk .th_detail.type1{text-align: center!important;}
 .sprint_box_area .table_area .table_item .row{margin: 0; margin-bottom: 5px; border: 1px solid lightgray;}
 .sprint_box_area .table_area .table_item .row .th_detail.type{text-align: center;}
 .sprint_box_area .table_area .table_item .row .table_detail{float:left;}
@@ -30,7 +31,7 @@
 
 
 .sprint_box_area .table_area .table_item .btn_detail{background-color: white; float: right;}
-
+.sprint_box_area .table_area .table_item .btn_detail.nk{background-color: white; float: none;}
 
 .backlog_create_area{height: 300px; }
 .backlog_create_area .create_sprint_btn{text-align: left;}
