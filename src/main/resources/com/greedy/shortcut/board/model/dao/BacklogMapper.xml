@@ -172,8 +172,8 @@
 	      , SYSDATE, 'Y', SEQ_PJT_HIS_NO.NEXTVAL, #{projectColor}
 	      )
 	</insert>
-	<select id="selectBacklogList" resultMap="backlogResultMap" parameterType="BacklogDTO">
-	     SELECT
+	<select id="selectBacklogList" resultMap="backlogResultMap" parameterType="_int">
+	           SELECT
       DISTINCT  A.BLG_NO
 	          , A.BLG_NAME
 	          , A.BLG_PRI
@@ -189,6 +189,48 @@
            AND A.BLG_DEL_YN = 'N'
        ORDER BY A.BLG_PRI ASC
 	</select>
+	
+	<select id="selectPagingSelectBacklog" resultMap="backlogResultMap" parameterType="hashMap">
+		SELECT
+	           D.RNUM
+	         , D.BLG_NO
+	         , D.BLG_NAME
+	         , D.BLG_PRI
+	         , D.BLG_ENROLL_DATE
+	         , D.PJT_NO
+	         , D.BLG_DEL_YN
+	         , D.BLG_DEMO_MEMO
+	         , D.BLG_REF_MEMO
+	     FROM (SELECT ROWNUM RNUM
+	                , C.BLG_NO
+	                , C.BLG_NAME
+	                , C.BLG_PRI
+	                , C.BLG_ENROLL_DATE
+	                , C.PJT_NO
+	                , C.BLG_DEL_YN
+	                , C.BLG_DEMO_MEMO
+	                , C.BLG_REF_MEMO
+	            FROM (SELECT  
+	                DISTINCT  A.BLG_NO
+	                        , A.BLG_NAME
+	                        , A.BLG_PRI
+	                        , A.BLG_ENROLL_DATE
+	                        , A.PJT_NO
+	                        , A.BLG_DEL_YN
+	                        , A.BLG_DEMO_MEMO
+	                        , A.BLG_REF_MEMO
+	                    FROM BACKLOG A
+	         LEFT OUTER JOIN SPRINT B ON(A.BLG_NO = B.BLG_NO)
+	                   WHERE A.PJT_NO = #{pjtNo}
+	                     AND B.SPR_NO IS NULL 
+	                     AND A.BLG_DEL_YN = 'N'
+	                   ORDER BY A.BLG_PRI ASC 
+	                ) C
+	          ) D
+	     WHERE D.RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	
 	
 	<insert  id="insertBacklog"  parameterType="BacklogDTO">
 	    INSERT
@@ -255,6 +297,47 @@
              AND A.SPR_END_DATE &gt; SYSDATE
              AND A.SPR_DEL_YN = 'N'
 		   ORDER BY B.BLG_PRI ASC
+	</select>
+	
+	<select id="selectPagingSelectSprint" resultMap="SprintResultMap" parameterType="hashMap">
+	SELECT
+               D.RNUM
+             , D.SPR_NO
+             , D.SPR_NAME
+             , D.SPR_START_DATE
+             , D.SPR_END_DATE
+             , D.SPR_GOAL
+             , D.SPR_DEL_YN
+             , D.BLG_NO
+             , D.PJT_NO
+         FROM (SELECT ROWNUM RNUM
+                    , C.SPR_NO
+                    , C.SPR_NAME
+                    , C.SPR_START_DATE
+                    , C.SPR_END_DATE
+                    , C.SPR_GOAL
+                    , C.SPR_DEL_YN
+                    , C.BLG_NO
+                    , C.PJT_NO
+                FROM ( SELECT
+						      A.SPR_NO
+			                , A.SPR_NAME
+			                , A.SPR_START_DATE
+			                , A.SPR_END_DATE
+			                , A.SPR_GOAL
+			                , A.SPR_DEL_YN
+			                , A.BLG_NO
+			                , B.PJT_NO
+					     FROM SPRINT A
+			       LEFT OUTER JOIN BACKLOG B ON (A.BLG_NO = B.BLG_NO)
+			   	  	    WHERE B.PJT_NO = #{pjtNo} 
+			              AND A.SPR_END_DATE &gt; SYSDATE
+			              AND A.SPR_DEL_YN = 'N'
+					    ORDER BY B.BLG_PRI ASC
+                     ) C
+               ) D
+          WHERE D.RNUM BETWEEN #{startRow} AND #{endRow}
+        
 	</select>
 	
 	<update id="EditBacklog" parameterType="BacklogDTO">

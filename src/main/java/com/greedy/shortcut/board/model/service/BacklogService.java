@@ -53,4 +53,10 @@ public interface BacklogService {
 	/* 스프린트 수정 */
 	boolean EditSprint(SprintDTO sprint);
 
+	List<BacklogDTO> selectPagingSelectBacklog(int pjtNo, PageInfoDTO pageInfo);
+
+	List<SprintDTO> selectPagingSelectSprint(int pjtNo, PageInfoDTO pageInfo);
+	
+	
+
 }
