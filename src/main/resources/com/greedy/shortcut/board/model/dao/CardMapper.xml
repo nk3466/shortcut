@@ -80,7 +80,7 @@
 		<result column="SCH_END_DATE" property="scheduleEndDate" />
 		<result column="TK_START_DATE" property="taskStartDate" />
 		<result column="TK_END_DATE" property="taskEndDate" />
-		<collection property="memberList" resultMap="CardAttendResultMap"/>
+		<!-- <collection property="memberList" resultMap="CardAttendResultMap"/> -->
 	</resultMap>
 	
 	<resultMap type="CardAttendListDTO" id="CardAttendResultMap">
@@ -251,4 +251,12 @@
 	  WHERE A.CRD_NO = #{no}
 	</select>
 	
+	<select id="selectCardDetailMember"  resultMap="memberResultSet">
+		SELECT
+			  B.MEM_NO
+			, B.MEM_NAME
+	    FROM CRD_SCH_ATTEND_LIST A
+	    JOIN MEMBER B ON (A.MEM_NO= B.MEM_NO)
+	   WHERE A.CRD_NO = #{no}
+	</select>
  </mapper>

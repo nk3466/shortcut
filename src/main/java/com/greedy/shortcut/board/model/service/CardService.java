@@ -1,5 +1,6 @@
 package com.greedy.shortcut.board.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.greedy.shortcut.board.model.dto.BoardDTO;
@@ -22,6 +23,10 @@ public interface CardService {
 
 	List<CardDTO> selectCardList(List<BoardDTO> boardList);
 
+//	HashMap<String, Object> selectCardInfo(int cardNo);
+
+//	List<RequestCardDTO> selectCardInfo(int cardNo);
+	
 	List<RequestCardDTO> selectCardInfo(int cardNo);
 
 

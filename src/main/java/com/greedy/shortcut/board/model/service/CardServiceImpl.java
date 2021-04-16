@@ -1,6 +1,7 @@
 package com.greedy.shortcut.board.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.greedy.shortcut.board.model.dto.CardAttendListDTO;
 import com.greedy.shortcut.board.model.dto.CardDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.RequestCardDTO;
+import com.greedy.shortcut.meeting.model.dto.MeetingDTO;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
 @Service("cardService")
@@ -91,6 +93,22 @@ public class CardServiceImpl implements CardService {
 		}
 		return cardList;
 	}
+
+//	@Override
+//	public HashMap<String, Object> selectCardInfo(int cardNo) {
+//		RequestCardDTO card = cardMapper.selectCardDetail(cardNo);
+//		
+//		List<MemberDTO> memberList = cardMapper.selectCardDetailMember(cardNo);
+//		
+//		HashMap<String,Object> cardDetail = new HashMap<String,Object>();
+//		
+//		cardDetail.put("card", card);
+//		cardDetail.put("memberList", memberList);
+//		
+//		
+//	
+//		return cardDetail;
+//	}
 
 	@Override
 	public List<RequestCardDTO> selectCardInfo(int cardNo) {

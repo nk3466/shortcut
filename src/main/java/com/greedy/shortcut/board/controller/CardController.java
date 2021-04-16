@@ -1,7 +1,9 @@
 package com.greedy.shortcut.board.controller;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,7 +92,7 @@ public class CardController {
 	
 	@GetMapping(value = "/select/cardInfo", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String selectCardInfo(HttpServletRequest request, Model model) throws JsonProcessingException {
+	public String selectCardInfo(@RequestParam Map<String, String> parameters, HttpServletRequest request, Model model) throws JsonProcessingException {
 		
 		int cardNo = Integer.parseInt(request.getParameter("crdNo"));
 		System.out.println("cardNo 무야호: " + cardNo);
@@ -103,5 +105,19 @@ public class CardController {
 		return new ObjectMapper().writeValueAsString(selectCardInfo);
 		
 	}
+	
+//	@PostMapping(value="/select/cardInfo", produces="application/json; charset=UTF-8")
+//	@ResponseBody
+//	public String selectMeetingDetail(@RequestParam Map<String, String> parameters, Model model) throws JsonProcessingException {
+//		int cardNo = Integer.parseInt(parameters.get("crdNo"));
+//		System.out.println("cardNo 무야호 : " + cardNo);
+//		HashMap<String,Object> card = cardService.selectCardInfo(cardNo);
+//		System.out.println("card무야호 : " + card);
+//
+//		model.addAttribute("card", card);
+//		
+//		
+//		return new ObjectMapper().writeValueAsString(card);
+//	}
 
 }

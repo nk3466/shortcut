@@ -35,8 +35,8 @@ public class CardAttendListDTO {
 		this.crdNo = crdNo;
 	}
 
-	public void setMemNo(int memNo) {
-		this.memNo = memNo;
+	public void setMemNo(int cardAttendListDTO) {
+		this.memNo = cardAttendListDTO;
 	}
 
 	@Override
