@@ -74,14 +74,16 @@
          
 <!-- 내가 만든 보드  -->
    <div class="asdfasdfasdf" style="width: 80%;  float: left;">
-<c:forEach var="boardList" items="${boardList}">
+<c:forEach var="boardList" items="${boardList }">
       <div class="kanban_item boardcolumn">
          <div class="kanbanboard type1" id="newBoard<c:out value="${boardList.brdOrder}"/>">
-            <div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/></div>
-            <i class="fas fa-ellipsis-v" id="modify3" data-toggle="modal" data-target="#myModal4"></i>
+            <div class="kanbanboard_title board-header card no-move" ><c:out value="${boardList.brdName}"/></div>
+	            <input type="text" value="${boardList.brdNo}" class="boardNo" name="" style="display: none;">
+            	<i class="fas fa-ellipsis-v" id="modify3" data-toggle="modal" data-target="#myModal4"></i>
+            
             
             <!--  카드 영역  -->
-            <c:forEach var="cardList" items="${cardList}">
+            <c:forEach var="cardList" items="${cardList }">
             
             <c:if test="${boardList.brdNo eq cardList.brdNo}">
                 <div class="board_item card">
@@ -105,12 +107,10 @@
                              <i class="fas fa-user-circle"><c:out value="${cardList.member}"/></i> <i
                                  class="fas fa-user-circle"><c:out value="${cardList.memberList}"/></i>
                          </div>
-                                 <input type="text" value="${cardList.no}" id="crdNo" name="" style="display: none;">
                      </div>
             </c:if>
              </c:forEach>
             <!-- /카드영역 -->
-            <input type="text" value="${boardList.brdNo}" class="boardNo" name="" style="display: none;">
             <div id="progressSet" class="insert_card" data-toggle="modal"
                data-target="#myModal2">
                <i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
@@ -201,6 +201,11 @@ console.log("boardList" +  "${requestScope.boardList}");
                   <input type='datetime-local' name="scheduleStartDate" style="display:inline-block; font-size: 12px"> ~ 
                   <input type='datetime-local' name="scheduleEndDate" style="font-size: 12px">
                </div>
+               <!-- <div class="item_area calendar_btn on">
+                  <i class="fas fa-user-plus"></i> <input class="input_detail type1"
+                     type="text" name="name" placeholder="Add Member"> <input
+                     class="input_detail type2" type="button" name="name" value="Add">
+               </div> -->
                <div class="item_area calendar_btn on">
                   <i class="fas fa-map-marker-alt"></i>
                   <input class="input_detail type3" type="text" name="place" size="20px"
@@ -217,7 +222,10 @@ console.log("boardList" +  "${requestScope.boardList}");
                </div>
                <div class="item_area calendar_btn on">
                   <i class="fas fa-user-plus"></i> 
+                  <!-- <input class="input_detail type1" id="selectmember" type="text" name="addMember" placeholder="Add Member" 
+                  value="">  -->
                   <div id="choisemember"></div>
+                  <!-- <input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회"> -->
                   <div id="member2"></div>
                   <input id="memberInput" type="hidden" value="">
                   <input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
@@ -284,23 +292,26 @@ console.log("boardList" +  "${requestScope.boardList}");
       
          <div class="modal-header type">shortcut</div>
             <div class="modal-content">
+            <form id="modifyform" method="post">
+            
             <input type="hidden" name="pjtNo" value="${pjtNo}">
             <input type="hidden" name="projectName" value="${projectName}">
             
                <div class="modal-body">
                
                   <input class="input_detail" type="text" name="boardtitle" id="boardtitletitle"
-                     placeholder="" size="50" style="border: none; background: transparent;">
+                     placeholder="" value="" size="50" style="border: none; background: transparent;">
                   <input name="sprNo" type="hidden" value="${sprNo}">   
             </div>
             <!-- Modal footer -->
             <div class="modal_footer">
                <div class="btn_area">
                <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-                  <input type="submit" class="upload_btn" id="editBoard" value="수정">
-                  <input type="submit" class="upload_btn" id="deleteBoard" value="삭제">
+                  <input type="button" class="upload_btn" id="editBoard" value="수정">
+                  <input type="button" class="upload_btn" id="deleteBoard" value="삭제">
                   <input type="reset" class="upload_btn" data-dismiss="modal" value="취소"></div>
             </div>
+            </form>
          </div>
       </div>
    </div>
@@ -308,51 +319,27 @@ console.log("boardList" +  "${requestScope.boardList}");
    <jsp:include page="../board/card_detail.jsp"/>
 
 </body>
-<script>
-   function selectCardInfo(crdNo) {
-
-      $.ajax({
-         url: "${pageContext.servletContext.contextPath}/select/cardInfo",
-         type: "get",
-         data: {crdNo: crdNo},
-         success: function(data, status, xhr) {
-            console.log(data);
-            
-         },
-         error: function(xhr, status, error) {
-            console.log(error);
-         }
-      });
-   }
-</script>
 <script type="text/javascript">
 
 $(function(){
       
       $(".board_item.card").click(function(){
           
-         $("#myModal2").modal();
+         $("#cardModalUpdate").modal();
           
       });
       
-   })
-   $(function(){
-      
-      $(".board_item.card").click(function(){
-          
-         $("#myModal2").modal();
-          
-      });
-      
-        $(".board_item.card").click(function(e){
+   /*    var iddd = "";
+         
+         $(".board_item.card").click(function(e){
+         e.preventDefault();                  
+            $("#cardModalUpdate").modal();
+            iddd = $(this).attr('id');
+            console.log('id : '+ $(this).attr('id'));
+            selectCardDetail($(this).attr('id'));
             
-           	var crdNo = $(this).children("#crdNo").val();
-           	console.log(crdNo);
-         	e.preventDefault();                  
-         	$("#myModal2").modal();
-         	selectCardInfo(crdNo);
-            
-         });   
+         }); */
+         
    })
 </script>
 
@@ -400,56 +387,35 @@ $(function(){
       }
    });
    
-   /* 칸반보드 수정 시 제목 가져오기 날려먹어서 기억이 안나ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ */
-   $('#modify3').click(function() {
-	   var title = $(this).closest(".type1").find(".board-header");
-	   console.table(title);
-	   console.log(title);
-	   
-	   $('#boardtitletitle').attr('placeholder', title);
+   /* 칸반보드 수정 시 제목 가져오기(한미화) */
+   $('.fa-ellipsis-v').click(function() {
+	   var title = $(this).closest('.type1').find('.kanbanboard_title').text();
+	   var brdNo = $(this).siblings('.boardNo').val();
+	   var html = '<input type="hidden" name="brdNo" value="'+ brdNo +'">'; 
+	  $('#boardtitletitle').attr('value', title);
+	  $('#modifyform').append(html);
    });
    
-   /* 보드 수정  */
    $('#editBoard').click(function() {
-	   $.ajax({
-           type:"POST",
-           url:"${pageContext.servletContext.contextPath}/board/editBoard",
-           data: {brdNo: brdNo},
-           success:function(data, status, xhr) {
-        	   
-           }
+	   var url = '${pageContext.servletContext.contextPath}/board/modifyBoard';
+	   var brdName =  document.getElementById("boardtitletitle").value;
+	   var html = '<input type="hidden" name="brdName" value="'+ brdName +'">'
+	   console.log("html" + html);
+	   
+	   $('#modifyform').append(html); 
+	   $('#modifyform').attr('action',url);
+	   $('#modifyform').submit(); 
    });
-	   });
-  
-   /* 보드 삭제 (한미화) */
-   $("#deleteBoard").click(function(){ 
-		 if(confirm("정말 삭제하시겠습니까 ?") == true){
-				var newBoard = document.getElementById("#newBoard");
-				console.log("보드 번호 : " + newBoard);
-				 console.log("djdjdjdj  : " + brdNo);
-					 $.ajax({
-							url : "${pageContext.servletContext.contextPath}/board/deleteBoard",
-							type : "post",
-							data : {brdNo : brdNo},
-							success : function(data, textStatus, xhr){
-								alert("보드 삭제가 완료되었습니다");
-								document.location.reload();
-							},
-							error : function(xhr, status, error){
-								console.log(error);
-								alert("보드 삭제가 취소되었습니다");
-							}
-					 })
-			}else{
-				return;
-				}
-	})
-   
-   
-   
-   
-   
-   
+   $('#deleteBoard').click(function() {
+	   var url = '${pageContext.servletContext.contextPath}/board/deleteBoard';
+	   var brdName =  document.getElementById("boardtitletitle").value;
+	   var html = '<input type="hidden" name="brdName" value="'+ brdName +'">'
+	   console.log("html" + html);
+	   
+	   $('#modifyform').append(html);
+	   $('#modifyform').attr('action',url);
+	   $('#modifyform').submit();
+   });
 
    /* 일정, 업무 버튼 */
    var count1 = 0;

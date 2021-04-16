@@ -21,7 +21,6 @@ public class BoardServiceImpl implements BoardService {
 		this.boardMapper = boardMapper;
 	 }
 	
-	
 	@Override
 	public boolean newBoard(BoardDTO board) {
 		
@@ -29,14 +28,11 @@ public class BoardServiceImpl implements BoardService {
 		
 	      return result >= 1 ? true : false;
 	   }
-	
-
 
 	@Override
 	public List<MemberDTO> selectMember(int pjtNo) {
 		return boardMapper.selectMember(pjtNo);
 	}
-
 
 	@Override
 	public boolean insertnewBoard(BoardDTO newboard) {
@@ -44,13 +40,11 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.insertnewBoard(newboard);
 	}
 
-
 	@Override
 	public List<BoardDTO> selectboardList(int sprNo) {
 		
 		return boardMapper.selectboardList(sprNo);
 	}
-
 
 	@Override
 	public int modifyBoardOrder(int brdNo) {
@@ -58,21 +52,23 @@ public class BoardServiceImpl implements BoardService {
 		return boardMapper.modifyBoardOrder(brdNo);
 	}
 
-
-	@Override
-	public boolean modifyBoard(BoardDTO newboard) {
-		int result = boardMapper.modifyBoard(newboard);
-		
-	      return result >= 1 ? true : false;
-	   }
-
-
 	@Override
 	public boolean deleteBoard(BoardDTO board) {
 
 		boardMapper.deleteBoard(board.getBrdNo());
 		
-		return boardMapper.insertDeleteBoardHistory(board);
+		return boardMapper.insertDeleteBoardHistory(board) > 0 ? true : false;
+	}
+
+	@Override
+	public boolean modifyBoard(BoardDTO board) {
+
+		System.out.println("보드 수정 : " + board);
+		int modify = boardMapper.modifyBoard(board);
+		System.out.println("안노옹~?");
+		int history = boardMapper.insertModifyBoardHistory(board);
+		
+		return modify + history > 1? true : false;
 	}
 
 
