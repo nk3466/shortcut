@@ -98,11 +98,13 @@ public class CardController {
 		System.out.println("cardNo 무야호: " + cardNo);
 		
 		List<RequestCardDTO> selectCardInfo = cardService.selectCardInfo(cardNo);
-		System.out.println("selectCardInfo무야호 : " + selectCardInfo);
 		
-		model.addAttribute("selectCardInfo", selectCardInfo);
+		RequestCardDTO selectOneCardInfo = selectCardInfo.get(0);
+		System.out.println("selectCardInfo무야호 : " + selectOneCardInfo);
 		
-		return new ObjectMapper().writeValueAsString(selectCardInfo);
+		//model.addAttribute("selectCardInfo", selectOneCardInfo);
+		
+		return new ObjectMapper().writeValueAsString(selectOneCardInfo);
 		
 	}
 	
