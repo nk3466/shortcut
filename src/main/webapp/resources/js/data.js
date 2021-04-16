@@ -12,7 +12,7 @@
 	const nextEl = document.querySelector('.next');
 	const inputBox = document.querySelector('.input-box');
 	const inputBtn = document.querySelector('.input-btn');
-	const inputList = document.querySelector('.todoList');
+	//const inputList = document.querySelector('.todoList');
 	const showList = document.querySelector('.showList');
 	const listText = document.querySelector('.listText');
 	const createDate = document.querySelector('.createDate');

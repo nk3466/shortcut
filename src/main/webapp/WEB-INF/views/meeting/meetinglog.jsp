@@ -58,7 +58,7 @@
             <button class="conference_update" >올리기</button>
             <form class="input-form">
                <input type="text" placeholder="write here!!" class="input-box" />
-               <button type="submit" class="input-btn clickBtn">INPUT</button>
+               <!-- <button type="submit" class="input-btn clickBtn">INPUT</button> -->
             </form>
             <ul class="todoList"></ul>
             <div class="showList">
@@ -163,6 +163,7 @@
    
    <jsp:include page="../meeting/meeting_detail.jsp"></jsp:include>
    <jsp:include page="../meeting/meeting_modify.jsp"></jsp:include>
+   <jsp:include page="../meeting/meeting_delete_modal.jsp"></jsp:include>
    
    
    
@@ -179,6 +180,11 @@
          
       })
       
+      $(".upload_btn.type1").click(function(){
+    	  
+    	  $("#conference_detail").modal("hide");
+    	  $("#deleteCheck").modal("show");
+      })
       
       var iddd = "";
       
@@ -471,7 +477,7 @@
   
    /* 상세페이지 타이틀 넣어주기 */
    function insertMeetingName(meetingNameee,appendPlace){
-	   $("#"+appendPlace+"").empty();s
+	   $("#"+appendPlace+"").empty();
 	   
 	   var insertTitle="";
 	   insertTitle = '<span>' + meetingNameee + '</span>'

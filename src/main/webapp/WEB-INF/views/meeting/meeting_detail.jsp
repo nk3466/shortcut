@@ -105,8 +105,7 @@
 					<!-- Modal footer -->
 					<div class="modal_footer">								
 						<div class="btn_area">
-							<input name="${_csrf.parameterName}" type="hidden"  value="${_csrf.token}">
-							<input type="button" id="deletedBtn" class="upload_btn" value="삭제">	
+							<input type="button" class="upload_btn type1" value="삭제">	
 							<input type="button" id="updateBtn" class="upload_btn" value="수정">	
 						</div>														
 					</div>
