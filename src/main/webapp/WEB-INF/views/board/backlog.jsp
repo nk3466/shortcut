@@ -48,9 +48,9 @@
 			</form>
 			<div class="meeting_btn"  data-toggle="modal" data-target="#project_produce_Detail">Edit Project</div>
 			<%-- <a class="meeting_btn" href="${ pageContext.servletContext.contextPath }/meeting/meetinglog">Meeting Log</a>  --%>
-				
-			
 		</div>
+		
+		<!-------------------------------------------- 스프린트 영역 -------------------------------------------------->
 
 		<div class="sprint_box_area">			
 			<div class="sprint_text_btn">
@@ -59,42 +59,312 @@
 			<div class="sprint_box on"></div>
 			<div class="table_area">
 				<div class="table_item">
-				<div class="row" >
-					<div class="table_detail type1 " style="font: bold;">번호</div>
-					<div class="table_detail type2 ">스프린트 이름</div>
-					<div class="table_detail type2 ">스프린트 시작날짜</div>
-					<div class="table_detail type2 ">스프린트 종료날짜</div>
-					<div class="table_detail type3 ">스프린트 목표</div>
-					<div class="table_detail type4">스프린트 시작/수정</div>
-				</div>
+				<table style="width: 100%;"  id="sprintViewList">
+				<thead>
+					<tr>
+						<th class="th_detail type1">번호</th>
+						<th class="th_detail type1">스프린트번호</th>
+						<th class="th_detail type1">스프린트 이름</th>
+						<th class="th_detail type1">스프린트 시작날짜</th>
+						<th class="th_detail type1">스프린트 종료날짜</th>
+						<th class="th_detail type1">스프린트 목표</th>
+						<th class="th_detail type1">스프린트 시작/수정</th>
+					</tr>
+				</thead>
+				<tbody id="sprintBody">
 					<c:choose>
 							<c:when test="${fn:length(requestScope.sprintList) > 0 }">
-								<c:forEach var="sprint" items="${ requestScope.sprintList }" varStatus="st">
-											<div class="row">						
-												<div class="table_detail type1">${st.count }</div>
-												<div class="table_detail type2">${ sprint.sprName }</div>
-												<div class="table_detail type2">${ sprint.sprStardDate }</div>
-												<div class="table_detail type2">${ sprint.sprEndDate }</div>
-												<div class="table_detail type3" style="text-overflow:ellipsis; ">${ sprint.sprGoal }</div>
-												<div class="table_detail type3" style="display: none; ">${ sprint.sprBlgNo }</div>
-												<div class="table_detail type4">
-													<button class="btn_detail on"  data-toggle="modal" data-target="#myModalSprintEdit" id="EditBackLog" onclick="btnSprintDetail(this)" value=${ sprint.sprNo }>Edit Sprint</button>	
-													<a href="${pageContext.servletContext.contextPath }/board/kanbanboard/?pjtNo=${ requestScope.pjtNo }&sprNo=1&projectName=${projectName}">
-														<button class="btn_detail on" >Start sprint </button>
-													</a>
-												</div>					
-											</div>
-									</c:forEach>
-							</c:when>
-					<c:otherwise>
-						<tr>
-							<td colspan="8">조회된 결과가 없습니다.</td>
-						</tr>
-					</c:otherwise>
-					</c:choose>
+										<%-- <c:forEach var="sprint" items="${ requestScope.sprintList }" varStatus="st">
+											<tr class="trtr">
+												<td class="table_detail type1">${st.count }</td>
+												<td class="table_detail type1">${ sprint.sprNo }</td>
+												<td class="table_detail type1">${ sprint.sprName }</td>
+												<td class="table_detail type1">${ sprint.sprStardDate }</td>
+												<td class="table_detail type1">${ sprint.sprEndDate }</td>
+												<td class="table_detail type1">${ sprint.sprGoal }</td>
+												<td class="table_detail type1">
+												<button class="btn_detail on"  data-toggle="modal" data-target="#myModalEdit"  id="EditBackLog" onclick="btnDetail(this)" value=${ backlog.blgNo }>Edit Backlog</button>	
+												<button class="btn_detail startSprint"  data-toggle="modal" data-target="#myModal3">Start Sprint</button>
+												</td>
+											</tr>
+										</c:forEach>  --%>
+									</c:when>
+									<c:otherwise>
+										<tr>
+											<td colspan="8">조회된 결과가 없습니다.</td>
+										</tr>
+									</c:otherwise>
+								</c:choose>
+							</tbody>
+						</table>
+						<div id="sprintPagingArea" align="center">
+					</div>
 				</div>
-			</div>				
+			</div>
 		</div>
+			
+		<!-- 	<!-- =====================스프린트 페이징 처리 =======================-->
+			<script>
+			/* 페이지 로드 될 때 시작 */
+			$('document2').ready(function() {
+				
+				/* 프로젝트 번호 */
+				var pjtNo = ${requestScope.pjtNo};
+				/* 게시판 Body */
+				var $sprintBody = $("#sprintBody");
+				/* 페이징 버튼 */
+				var $sprintPagingArea = $("#sprintPagingArea");
+				/* 페이징 함수 호출 */
+				sprintPagingAjax(pjtNo, 1, $sprintBody, $sprintPagingArea);
+				
+			});
+			
+			/* 페이징 함수 */
+			function sprintPagingAjax(pjtNo, currentSprintPage, $sprintBody, $sprintPagingArea) {
+				
+				/* Body 영역 지우기 */
+				$sprintBody.empty();
+				/* ajax 호출 */
+				$.ajax({
+					url : "${pageContext.servletContext.contextPath}/board/sprint/sprintPaging",
+					method : "post",
+					data : {
+						pjtNo : pjtNo,
+						currentSprintPage : currentSprintPage
+					},
+					success : function(data, status, xhr) {
+						console.log(data);
+						if(0 == data.length) {
+
+						} else {
+							/* DTO에 담긴 시작페이지, 끝페이지, 마지막페이지 꺼내기 */
+							var startSprintPage = data[0].startPage;
+							var endSprintPage = data[0].endPage;
+							var maxSprintPage = data[0].maxPage;
+							for(let index in data) {
+								
+								/* 버튼 생성 */
+							 	var sprintBtnHtml = '<button class="btn_detail on"  data-toggle="modal" data-target="#myModalSprintEdit" id="EditBackLog" onclick="btnSprintDetail(this)" value=' +data[index].sprNo +'>Edit Sprint</button>'   
+					                              + '<a href="${pageContext.servletContext.contextPath }/board/kanbanboard/?pjtNo= + ${ requestScope.pjtNo } + &sprNo=1&projectName= + ${requestScope.projectName} + ">'
+					                              + '<button class="btn_detail on" >Start sprint </button>';
+								
+								/* tr태그에 만들어 값 담기 */
+								$tr = $("<tr>");
+								$rnum = $("<td>").text(data[index].rnum);
+								$sprNo = $("<td>").text(data[index].sprNo);
+								$sprName = $("<td>").text(data[index].sprName);
+								$sprStardDate = $("<td>").text(data[index].sprStardDate);
+								$sprEndDate = $("<td>").text(data[index].sprEndDate);
+								$sprGoal = $("<td>").text(data[index].sprGoal);
+								$sprintBtnHtml = $("<td>").html(sprintBtnHtml);
+								
+								/* $tr.append($backlogCountNumber); */
+								$tr.append($rnum);
+								$tr.append($sprNo);
+								$tr.append($sprName);
+								$tr.append($sprStardDate);
+								$tr.append($sprEndDate);
+								$tr.append($sprGoal);
+								$tr.append($sprintBtnHtml);
+								
+								/* 테이블에 추가 */
+								$sprintBody.append($tr);
+							}
+							
+							/* 페이징 버튼 함수 호출 - 페이지 정보와 페이징영역 정보 인자로 전달 */
+							navisprint(startSprintPage, endSprintPage, maxSprintPage, $sprintPagingArea, currentSprintPage);
+						}
+						
+						console.log(data);
+						console.log(status);
+						console.log(xhr);
+					},
+					error : function(xhr, status, error) {
+						console.log(xhr);
+						console.log(status);
+						console.log(error);
+					}
+				});
+			}
+			
+			/* 페이징 버튼 함수 */
+			function navisprint(startSprintPage, endSprintPage, maxSprintPage, $sprintPagingArea, currentSprintPage) {
+				
+				/* 페이징영역 지우기 */
+				$sprintPagingArea.empty();
+				
+				/* 시작페이지가 1페이지일 때 disabled된 <<, < 버튼 추가
+				      아니라면, 활성화된 버튼 추가하고 startBacklogPage(), prevBacklogPage 함추 호출
+				*/
+				if(startPage <= 1) {
+					$sprintPagingArea.append('<button disabled><<</button>')
+					$sprintPagingArea.append('<button disabled><</button>');
+				} else {
+					$sprintPagingArea.append('<button onclick="startSprintPage();"><<</button>');
+					$sprintPagingArea.append('<button onclick="prevSprintPage(' + startSprintPage + ');"><</button>');
+				}
+				
+				/* 현재 페이지와 같지 않는 버튼은 moveBacklogPage()함수 호출 가능 */
+				for(let i = startSprintPage; i <= endSprintPage; i++) {
+					if(i == currentSprintPage) {
+						$sprintPagingArea.append('<button disabled>' + i + '</button>');
+					} else {
+						$sprintPagingArea.append('<button onclick="moveSprintPage(' + i + ')">' + i + '</button>');
+					}
+				}
+				
+				if(endSprintPage == maxSprintPage) {
+					$sprintPagingArea.append('<button disabled>></button>');
+					$sprintPagingArea.append('<button disabled>>></button>');
+				} else {
+					$sprintPagingArea.append('<button onclick="nextSprintPage(' + endSprintPage + ')">></button>');
+					$sprintPagingArea.append('<button onclick="maxSprintPage(' + maxSprintPage + ')">>></button>');
+				}
+			}
+			
+			/* 페이징 버튼 함수들 */
+			function startPage1() {
+				
+				var pjtNo = ${requestScope.pjtNo};
+				var $sprintBody = $("#sprintBody");
+				var $sprintPagingArea = $("#sprintPagingArea");
+				
+				/* 다시 pagingAjax 함수 호출해서 정보 뿌려주기 */
+				new sprintPagingAjax(pjtNo, 1, $sprintBody, $sprintPagingArea);
+			}
+			
+			function prevSprintPage(currentSprintPage) {
+				
+				var pjtNo = ${requestScope.pjtNo};
+				var $sprintBody = $("#sprintBody");
+				var $sprintPagingArea = $("#sprintPagingArea");
+				
+				new sprintPagingAjax(pjtNo, currentSprintPage - 1, $sprintBody, $sprintPagingArea);
+			}
+			
+			function nextSprintPage(currentSprintPage) {
+				
+				var pjtNo = ${requestScope.pjtNo};
+				var $sprintBody = $("#sprintBody");
+				var $sprintPagingArea = $("#sprintPagingArea");
+				
+				new sprintPagingAjax(pjtNo, currentSprintPage + 1, $sprintBody, $sprintPagingArea);
+			}
+			
+			function maxSprintPage(maxSprintPage) {
+				
+				var pjtNo = ${requestScope.pjtNo};
+				var $sprintBody = $("#sprintBody");
+				var $sprintPagingArea = $("#sprintPagingArea");
+				
+				new sprintPagingAjax(pjtNo, maxSprintPage, $sprintBody, $sprintPagingArea);
+			}
+			
+			function moveSprintPage(chooseSprintPage) {
+				
+				var pjtNo = ${requestScope.pjtNo};
+				var $sprintBody = $("#sprintBody");
+				var $sprintPagingArea = $("#sprintPagingArea");
+				
+				new sprintPagingAjax(pjtNo, chooseSprintPage, $sprintBody, $sprintPagingArea);
+			}
+			
+			</script>
+	
+	
+	<!-- 스프린트 수정 -->
+	<div class="modal fade" id="myModalSprintEdit">
+		<div class="modal-dialog type2">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<div class="header_detail type1">Edit Sprint</div>					
+				</div>
+				<p class="m_text"></p>
+				
+ 		<div class="row detailpage">
+         	<div class="left_area">
+	         	<div class="modal-body">
+					<div class="sprint_item">
+									
+						<div class="item_name">
+							기존 스프린트 이름
+						</div>
+						<input class="input_detail" type="text" id="sprintRegistNameDetail" readonly>
+					</div>
+					<div class="sprint_item">
+						<div class="item_name">
+							기존 시작 날짜
+						</div>
+						<input class="input_detail" type="text" id="sprintRegistStartDateDetail"readonly>
+					</div>
+					<div class="sprint_item">
+						<div class="item_name">
+							기존 종료 날짜
+						</div>
+						<input class="input_detail" type="text" id="sprintRegistEndDateDetail" readonly>
+					</div>
+					<div class="sprint_item">
+						<div class="item_name">
+							스프린트 목표
+						</div>
+						<textarea class="textarea_detail" id="sprintRegistGoalDetail" readonly></textarea>
+					</div>
+					<div class="sprint_item">
+						<div class="item_name" style="display: none">
+							스프린트의 백로그 번호
+						</div>
+						<textarea class="textarea_detail" id="BacklogNoDetail" style="display: none"></textarea>
+					</div>
+	         	</div>
+       		</div>
+         
+         
+				<!-- Modal body -->
+				<div class="modal-body">
+				
+					<div class="sprint_item">
+						<div class="item_name">
+							변경할 스프린트 이름
+						</div>
+						<input class="input_detail" type="text" id="sprintupdateNameDetail">
+					</div>	
+					<div class="sprint_item">
+						<div class="item_name">
+							변경 할 시작 날짜
+						</div>
+						<input class="input_detail" type="date" id="sprintupdateStartDateDetail">
+					</div>
+					<div class="sprint_item">
+						<div class="item_name">
+							변경 할 종료 날짜
+						</div>
+						<input class="input_detail" type="date" id="sprintupdateEndDateDetail">
+					</div>
+					<div class="sprint_item">
+						<div class="item_name">
+							스프린트 목표
+						</div>
+						<textarea class="textarea_detail" id="sprintupdateGoalDetail"></textarea>
+					</div>
+				</div>
+				<!-- Modal footer -->
+				<div class="modal_btn_area">
+					<button type="button" class="btn_detail" id="EditSprint">수정</button>
+					<button type="button" class="btn_detail" id="RemoveSprint">삭제</button>
+					<button type="button" class="btn_detail" data-dismiss="modal">취소</button>
+				</div>
+				
+
+			</div>
+		</div>
+	</div>
+</div>	
+	
+		
+		
+		
 	<script>
 	/* 스프린트 수정하기 위해 수정 버튼 누루면 조회된 결과 출력 */
 		function btnSprintDetail(beta){
@@ -183,9 +453,9 @@
 			} 
 	</script>        
 		
-		<!-- -----------------------백로그 영역-------------------------- -->
+		<!-- -------------------------------------백로그 영역------------------------------------------ -->
 		<div class="backlog_create_area">
-			<div class="create_sprint_btn">backlog						<!-- 왼쪽으로 보내고싶음!!!!!!!!!!!!!!!! -->
+			<div class="create_sprint_btn">backlog						
 			</div>
 			<div class="backlog_line"></div>
 			<div class="backlog_table_area">				
@@ -195,19 +465,19 @@
 							<thead>
 								<tr>
 									<th class="th_detail type">No</th>
+									<th class="th_detail type">백로그 번호</th>
 									<th class="th_detail type">백로그 이름</th>
 									<th class="th_detail type">우선순위</th>
 									<th class="th_detail type">데모방식</th>
 									<th class="th_detail type">비고</th>
-									<th class="th_detail type">스프린트 생성</th>
-									<th class="th_detail type"  style="display: none;">백로그 번호</th>
+									<th class="th_detail type">백로그 수정/스프린트 생성</th>
 									<!-- <th class="">스프린트 생성</th> -->
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="backlogBody">
 								<c:choose>
 									<c:when test="${fn:length(requestScope.backlogList) > 0 }">
-										<c:forEach var="backlog" items="${ requestScope.backlogList }" varStatus="st">
+										<%-- <c:forEach var="backlog" items="${ requestScope.backlogList }" varStatus="st">
 											<tr class="trtr">
 												<td class="table_detail type1">${st.count }</td>
 												<td class="table_detail type1">${ backlog.blgName }</td>
@@ -220,7 +490,7 @@
 												<button class="btn_detail startSprint"  data-toggle="modal" data-target="#myModal3">Start Sprint</button>
 												</td>
 											</tr>
-										</c:forEach>
+										</c:forEach> --%>
 									</c:when>
 									<c:otherwise>
 										<tr>
@@ -230,14 +500,192 @@
 								</c:choose>
 							</tbody>
 						</table>
+						<div id="backlogPagingArea" align="center">
 					</div>
 				</div>
 			</div>
+		</div>
+
+			
+			
+			<!-- =====================백로그 페이징 처리 =======================-->
+			<script>
+			/* 페이지 로드 될 때 시작 */
+			$('document1').ready(function() {
+				
+				/* 프로젝트 번호 */
+				var pjtNo = ${requestScope.pjtNo};
+				/* 게시판 Body */
+				var $backlogBody = $("#backlogBody");
+				/* 페이징 버튼 */
+				var $backlogPagingArea = $("#backlogPagingArea");
+				/* 페이징 함수 호출 */
+				boardPagingAjax(pjtNo, 1, $backlogBody, $backlogPagingArea);
+				
+				
+			});
+			
+			/* 페이징 함수 */
+			function boardPagingAjax(pjtNo, currentBacklogPage, $backlogBody, $backlogPagingArea) {
+				
+				/* Body 영역 지우기 */
+				$backlogBody.empty();
+				/* ajax 호출 */
+				$.ajax({
+					url : "${pageContext.servletContext.contextPath}/board/backlog/backlogPaging",
+					method : "post",
+					data : {
+						pjtNo : pjtNo,
+						currentBacklogPage : currentBacklogPage
+					},
+					success : function(data, status, xhr) {
+						console.log(data);
+						if(0 == data.length) {
+
+						} else {
+							/* DTO에 담긴 시작페이지, 끝페이지, 마지막페이지 꺼내기 */
+							var startBacklogPage = data[0].startPage;
+							var endBacklogPage = data[0].endPage;
+							var maxBacklogPage = data[0].maxPage;
+							for(let index in data) {
+								
+								
+								/* 버튼 생성 */
+								var backlogBtnHtml = '<button class="btn_detail on"  data-toggle="modal" data-target="#myModalEdit"  id="EditBackLog" onclick="EditBacklogBtn(this)" value='+data[index].blgNo+'>Edit Backlog</button>'
+								                   + '<button class="btn_detail "  data-toggle="modal" id="makeSprint" onclick="MakeSprintByn(this)" value=' + data[index].blgNo + ' data-target="#myModal3">Make Sprint</button>';
+								
+								/* tr태그에 만들어 값 담기 */
+								$tr = $("<tr>");
+								$rnum = $("<td>").text(data[index].rnum);
+								$blgNo = $("<td>").text(data[index].blgNo);
+								$nameTd = $("<td>").text(data[index].blgName);
+								$priTd = $("<td>").text(data[index].blgPri);
+								$demoMemoTd = $("<td>").text(data[index].blgDemoMemo);
+								$refMemoTd = $("<td>").text(data[index].blgRefMemo);
+								$backlogBtnHtml = $("<td>").html(backlogBtnHtml);
+								
+								/* $tr.append($backlogCountNumber); */
+								$tr.append($rnum);
+								$tr.append($blgNo);
+								$tr.append($nameTd);
+								$tr.append($priTd);
+								$tr.append($demoMemoTd);
+								$tr.append($refMemoTd);
+								$tr.append($backlogBtnHtml);
+								
+								/* 테이블에 추가 */
+								$backlogBody.append($tr);
+							}
+							
+							/* 페이징 버튼 함수 호출 - 페이지 정보와 페이징영역 정보 인자로 전달 */
+							navibacklog(startBacklogPage, endBacklogPage, maxBacklogPage, $backlogPagingArea, currentBacklogPage);
+						}
+						
+						console.log(data);
+						console.log(status);
+						console.log(xhr);
+					},
+					error : function(xhr, status, error) {
+						console.log(xhr);
+						console.log(status);
+						console.log(error);
+					}
+				});
+			}
+			
+			/* 페이징 버튼 함수 */
+			function navibacklog(startBacklogPage, endBacklogPage, maxBacklogPage, $backlogPagingArea, currentBacklogPage) {
+				
+				/* 페이징영역 지우기 */
+				$backlogPagingArea.empty();
+				
+				/* 시작페이지가 1페이지일 때 disabled된 <<, < 버튼 추가
+				      아니라면, 활성화된 버튼 추가하고 startBacklogPage(), prevBacklogPage 함추 호출
+				*/
+				if(startPage <= 1) {
+					$backlogPagingArea.append('<button disabled><<</button>')
+					$backlogPagingArea.append('<button disabled><</button>');
+				} else {
+					$backlogPagingArea.append('<button onclick="startBacklogPage();"><<</button>');
+					$backlogPagingArea.append('<button onclick="prevBacklogPage(' + startBacklogPage + ');"><</button>');
+				}
+				
+				/* 현재 페이지와 같지 않는 버튼은 moveBacklogPage()함수 호출 가능 */
+				for(let i = startBacklogPage; i <= endBacklogPage; i++) {
+					if(i == currentBacklogPage) {
+						$backlogPagingArea.append('<button disabled>' + i + '</button>');
+					} else {
+						$backlogPagingArea.append('<button onclick="moveBacklogPage(' + i + ')">' + i + '</button>');
+					}
+				}
+				
+				if(endBacklogPage == maxBacklogPage) {
+					$backlogPagingArea.append('<button disabled>></button>');
+					$backlogPagingArea.append('<button disabled>>></button>');
+				} else {
+					$backlogPagingArea.append('<button onclick="nextBacklogPage(' + endBacklogPage + ')">></button>');
+					$backlogPagingArea.append('<button onclick="maxBacklogPage(' + maxBacklogPage + ')">>></button>');
+				}
+			}
+			
+			/* 페이징 버튼 함수들 */
+			function startPage1() {
+				
+				var pjtNo = ${requestScope.pjtNo};
+				var $backlogBody = $("#backlogBody");
+				var $backlogPagingArea = $("#backlogPagingArea");
+				
+				/* 다시 pagingAjax 함수 호출해서 정보 뿌려주기 */
+				new boardPagingAjax(pjtNo, 1, $backlogBody, $backlogPagingArea);
+			}
+			
+			function prevBacklogPage(currentBacklogPage) {
+				
+				var pjtNo = ${requestScope.pjtNo};
+				var $backlogBody = $("#backlogBody");
+				var $backlogPagingArea = $("#backlogPagingArea");
+				
+				new boardPagingAjax(pjtNo, currentBacklogPage - 1, $backlogBody, $backlogPagingArea);
+			}
+			
+			function nextBacklogPage(currentBacklogPage) {
+				
+				var pjtNo = ${requestScope.pjtNo};
+				var $backlogBody = $("#backlogBody");
+				var $backlogPagingArea = $("#backlogPagingArea");
+				
+				new boardPagingAjax(pjtNo, currentBacklogPage + 1, $backlogBody, $backlogPagingArea);
+			}
+			
+			function maxBacklogPage(maxBacklogPage) {
+				
+				var pjtNo = ${requestScope.pjtNo};
+				var $backlogBody = $("#backlogBody");
+				var $backlogPagingArea = $("#backlogPagingArea");
+				
+				new boardPagingAjax(pjtNo, maxBacklogPage, $backlogBody, $backlogPagingArea);
+			}
+			
+			function moveBacklogPage(chooseBacklogPage) {
+				
+				var pjtNo = ${requestScope.pjtNo};
+				var $backlogBody = $("#backlogBody");
+				var $backlogPagingArea = $("#backlogPagingArea");
+				
+				new boardPagingAjax(pjtNo, chooseBacklogPage, $backlogBody, $backlogPagingArea);
+			}
+			
+			</script>
+			
+			
+			
+			
+			
 	<script>
 	/* 백로그 수정하기 위해 수정 버튼 누루면 조회된 결과 출력 */
-		function btnDetail(beta){
+		function EditBacklogBtn(beta){
 			var blgNo = $(beta).val();
-			console.log(blgNo);
+			console.log("ㅇ응ㅇ:?" + blgNo);
 			var projectNo = ${ requestScope.pjtNo };
 			console.log("백로그 번호 :"  + blgNo);
 			console.log("플젝" + projectNo);
@@ -282,6 +730,53 @@
 		return html;
 	}
 	</script>  
+	
+	<!-- 스프린트 생성 버튼 클릭시 -->
+	<script>
+		function MakeSprintByn(beta){
+			var sprBlgNo = $(beta).val();
+			console.log("ㅇ응ㅇ:?" + sprBlgNo);
+			/* var sprBlgNo = ""; */
+			/* $("#makeSprint").click(function(){
+				sprBlgNo = $(this).closest(".trtr").find("#blgNoTomakeSprint").val();
+				console.log(sprBlgNo);
+			})
+			 */
+			$("#MakeSprint").click(function(){ 
+				console.log("wefihweif");
+				 var sprName = document.getElementById("sprintRegistName").value;
+				 var sprStardDate = document.getElementById("sprintRegistStartDate").value;
+				 var sprEndDate = document.getElementById("sprintRegistEndDate").value;
+				 var sprGoal = document.getElementById("sprintRegistGoal").value;
+				 //var sprBlgNo = document.getElementById("blgNoTomakeSprint").value;
+				 
+			console.log("호오?" + sprBlgNo);	
+				 
+				 $.ajax({
+					url : "${pageContext.servletContext.contextPath}/board/sprint/sprint_regist",
+					type : "post",
+					data : {
+						sprBlgNo : sprBlgNo,
+						sprName : sprName,
+						sprStardDate : sprStardDate,
+						sprEndDate : sprEndDate,
+						sprGoal : sprGoal
+					},
+					success : function(data, textStatus, xhr){
+						location.reload();//새로고침
+						alert("스프린트 생성이 완료되었습니다");
+					},
+					error : function(xhr, status, error){
+						console.log(error);
+						alert("스프린트 생성이 취소되었습니다");
+					}
+				 })
+			})
+		}
+		</script>
+	
+	
+	
 			<div class="create_backlog_btn">
 				<label>
 					<i class="fas fa-plus"></i>
@@ -291,6 +786,63 @@
 	</div>	
 
 
+
+
+	
+	<!-- 스프린트 생성 -->
+	<div class="modal fade" id="myModal3">
+		<div class="modal-dialog type2">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<div class="header_detail type1">Start Sprint</div>					
+				</div>
+				<p class="m_text"></p>
+
+				<!-- Modal body -->
+				<div class="modal-body type3">
+					<div class="sprint_item">
+						
+					
+						<div class="item_name">
+							Sprint name
+						</div>
+						<input class="input_detail" type="text" id="sprintRegistName">
+					</div>
+					<div class="sprint_item">
+						<div class="item_name">
+							Start Date
+						</div>
+						<input class="input_detail" type="date" id="sprintRegistStartDate">
+					</div>
+					<div class="sprint_item">
+						<div class="item_name">
+							End Date
+						</div>
+						<input class="input_detail" type="date" id="sprintRegistEndDate">
+					</div>
+					<div class="sprint_item">
+						<div class="item_name">
+							Sprint Goal
+						</div>
+						<textarea class="textarea_detail" id="sprintRegistGoal"></textarea>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn_detail" id="MakeSprint">생성</button>
+					<button type="button" class="btn_detail" data-dismiss="modal">취소</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
 		<div class="sprint_box_area">			
 			
 			<div class="sprint_text_btn">
@@ -520,7 +1072,7 @@
 		</div>
 	</div>
 	
-<!-- 백로그 생성 -->
+<!-- 백로그 생성 모달 -->
   <!-- The Modal -->
 	<div class="modal fade" id="myModal">
 		<div class="modal-dialog">
@@ -571,7 +1123,42 @@
 			</div>
 		</div>
 	</div>
-	<!-- 백로그 수정 -->
+	
+	<!-- 백로그 생성 버튼 클릭시 -->
+		<script>
+			$("#createBacklog").click(function(){ 
+				var pjtNo = ${ requestScope.pjtNo };
+				 var blgName = document.getElementById("backlogName").value;
+				 var blgPri = document.getElementById("importance").value;
+				 var blgDemoMemo = document.getElementById("DemoDetail").value;
+				 var blgRefMemo = document.getElementById("Reference").value;
+				 
+				 $.ajax({
+					url : "${pageContext.servletContext.contextPath}/board/backlog/backlog_regist",
+					type : "post",
+					data : {
+						pjtNo : pjtNo,
+						blgName : blgName,
+						blgPri : blgPri,
+						blgDemoMemo : blgDemoMemo,
+						blgRefMemo : blgRefMemo
+					},
+					success : function(data, textStatus, xhr){
+						location.reload();//새로고침
+						alert("백로그 생성이 완료되었습니다");
+					},
+					error : function(xhr, status, error){
+						console.log(error);
+						alert("백로그 생성이 취소되었습니다");
+					}
+				 })
+			});
+		</script>
+		
+	
+	
+	
+	<!-- 백로그 수정 모달 -->
 	<!-- The Modal -->
 	<div class="modal fade" id="myModalEdit">
 		<div class="modal-dialog">
@@ -632,41 +1219,6 @@
 	
 	
 	
-	
-	
-	
-	
-<!-- 백로그 생성 버튼 클릭시 -->
-		<script>
-			$("#createBacklog").click(function(){ 
-				var pjtNo = ${ requestScope.pjtNo };
-				 var blgName = document.getElementById("backlogName").value;
-				 var blgPri = document.getElementById("importance").value;
-				 var blgDemoMemo = document.getElementById("DemoDetail").value;
-				 var blgRefMemo = document.getElementById("Reference").value;
-				 
-				 $.ajax({
-					url : "${pageContext.servletContext.contextPath}/board/backlog/backlog_regist",
-					type : "post",
-					data : {
-						pjtNo : pjtNo,
-						blgName : blgName,
-						blgPri : blgPri,
-						blgDemoMemo : blgDemoMemo,
-						blgRefMemo : blgRefMemo
-					},
-					success : function(data, textStatus, xhr){
-						location.reload();//새로고침
-						alert("백로그 생성이 완료되었습니다");
-					},
-					error : function(xhr, status, error){
-						console.log(error);
-						alert("백로그 생성이 취소되었습니다");
-					}
-				 })
-			});
-		</script>
-		
 <!-- 백로그 수정 버튼 클릭시 -->
 		<script>
 		/* function btnDetail(beta){
@@ -739,192 +1291,6 @@
 		</script>
 
 
-	<!-- 스프린트 생성 -->
-	<div class="modal fade" id="myModal3">
-		<div class="modal-dialog type2">
-			<div class="modal-content">
-
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<div class="header_detail type1">Start Sprint</div>					
-				</div>
-				<p class="m_text"></p>
-
-				<!-- Modal body -->
-				<div class="modal-body type3">
-					<div class="sprint_item">
-						
-					
-						<div class="item_name">
-							Sprint name
-						</div>
-						<input class="input_detail" type="text" id="sprintRegistName">
-					</div>
-					<div class="sprint_item">
-						<div class="item_name">
-							Start Date
-						</div>
-						<input class="input_detail" type="date" id="sprintRegistStartDate">
-					</div>
-					<div class="sprint_item">
-						<div class="item_name">
-							End Date
-						</div>
-						<input class="input_detail" type="date" id="sprintRegistEndDate">
-					</div>
-					<div class="sprint_item">
-						<div class="item_name">
-							Sprint Goal
-						</div>
-						<textarea class="textarea_detail" id="sprintRegistGoal"></textarea>
-					</div>
-				</div>
-
-				<!-- Modal footer -->
-				<div class="modal-footer">
-					<button type="button" class="btn_detail" id="MakeSprint">생성</button>
-					<button type="button" class="btn_detail" data-dismiss="modal">취소</button>
-				</div>
-
-			</div>
-		</div>
-	</div>
-	
-	<!-- 스프린트 생성 버튼 클릭시 -->
-		<script>
-		 		
-			var sprBlgNo = "";
-			$(".startSprint").click(function(){
-				sprBlgNo = $(this).closest(".trtr").find("#blgNoTomakeSprint").val();
-				console.log(sprBlgNo);
-			})
-			
-			
-			$("#MakeSprint").click(function(){ 
-				
-			
-				 var sprName = document.getElementById("sprintRegistName").value;
-				 var sprStardDate = document.getElementById("sprintRegistStartDate").value;
-				 var sprEndDate = document.getElementById("sprintRegistEndDate").value;
-				 var sprGoal = document.getElementById("sprintRegistGoal").value;
-				 //var sprBlgNo = document.getElementById("blgNoTomakeSprint").value;
-				 
-			console.log("호오?" + sprBlgNo);	
-				 
-				 $.ajax({
-					url : "${pageContext.servletContext.contextPath}/board/sprint/sprint_regist",
-					type : "post",
-					data : {
-						sprBlgNo : sprBlgNo,
-						sprName : sprName,
-						sprStardDate : sprStardDate,
-						sprEndDate : sprEndDate,
-						sprGoal : sprGoal
-					},
-					success : function(data, textStatus, xhr){
-						location.reload();//새로고침
-						alert("스프린트 생성이 완료되었습니다");
-					},
-					error : function(xhr, status, error){
-						console.log(error);
-						alert("스프린트 생성이 취소되었습니다");
-					}
-				 })
-			});
-		</script>
-	myModalSprintEdit
-	
-	
-	<!-- 스프린트 수정 -->
-	<div class="modal fade" id="myModalSprintEdit">
-		<div class="modal-dialog type2">
-			<div class="modal-content">
-
-				<!-- Modal Header -->
-				<div class="modal-header">
-					<div class="header_detail type1">Edit Sprint</div>					
-				</div>
-				<p class="m_text"></p>
-				
- 		<div class="row detailpage">
-         	<div class="left_area">
-	         	<div class="modal-body">
-					<div class="sprint_item">
-									
-						<div class="item_name">
-							기존 스프린트 이름
-						</div>
-						<input class="input_detail" type="text" id="sprintRegistNameDetail" readonly>
-					</div>
-					<div class="sprint_item">
-						<div class="item_name">
-							기존 시작 날짜
-						</div>
-						<input class="input_detail" type="text" id="sprintRegistStartDateDetail"readonly>
-					</div>
-					<div class="sprint_item">
-						<div class="item_name">
-							기존 종료 날짜
-						</div>
-						<input class="input_detail" type="text" id="sprintRegistEndDateDetail" readonly>
-					</div>
-					<div class="sprint_item">
-						<div class="item_name">
-							스프린트 목표
-						</div>
-						<textarea class="textarea_detail" id="sprintRegistGoalDetail" readonly></textarea>
-					</div>
-					<div class="sprint_item">
-						<div class="item_name" style="display: none">
-							스프린트의 백로그 번호
-						</div>
-						<textarea class="textarea_detail" id="BacklogNoDetail" style="display: none"></textarea>
-					</div>
-	         	</div>
-       		</div>
-         
-         
-				<!-- Modal body -->
-				<div class="modal-body">
-				
-					<div class="sprint_item">
-						<div class="item_name">
-							변경할 스프린트 이름
-						</div>
-						<input class="input_detail" type="text" id="sprintupdateNameDetail">
-					</div>	
-					<div class="sprint_item">
-						<div class="item_name">
-							변경 할 시작 날짜
-						</div>
-						<input class="input_detail" type="date" id="sprintupdateStartDateDetail">
-					</div>
-					<div class="sprint_item">
-						<div class="item_name">
-							변경 할 종료 날짜
-						</div>
-						<input class="input_detail" type="date" id="sprintupdateEndDateDetail">
-					</div>
-					<div class="sprint_item">
-						<div class="item_name">
-							스프린트 목표
-						</div>
-						<textarea class="textarea_detail" id="sprintupdateGoalDetail"></textarea>
-					</div>
-				</div>
-				<!-- Modal footer -->
-				<div class="modal_btn_area">
-					<button type="button" class="btn_detail" id="EditSprint">수정</button>
-					<button type="button" class="btn_detail" id="RemoveSprint">삭제</button>
-					<button type="button" class="btn_detail" data-dismiss="modal">취소</button>
-				</div>
-				
-
-			</div>
-		</div>
-	</div>
-</div>	
-	
 	
 	
 <!-- 프로젝트 수정 모달 -->

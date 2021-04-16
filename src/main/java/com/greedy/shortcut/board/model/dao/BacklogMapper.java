@@ -95,6 +95,10 @@ public interface BacklogMapper {
 
 	/* 백로그 번호 조회 (스프린트 삭제를 위한) */
 	int selectBacklogNo(int sprNo);
+
+	List<BacklogDTO> selectPagingSelectBacklog(Map<String, Object> pagingMap);
+
+	List<SprintDTO> selectPagingSelectSprint(Map<String, Object> pagingMap);
 	
 	
 	

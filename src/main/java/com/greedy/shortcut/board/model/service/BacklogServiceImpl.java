@@ -185,5 +185,28 @@ public class BacklogServiceImpl implements BacklogService {
 		
 		return  a + b > 1? true : false;
 	}
+
+	@Override
+	public List<BacklogDTO> selectPagingSelectBacklog(int pjtNo, PageInfoDTO pageInfo) {
+
+		Map<String, Object> pagingMap = new HashMap<>();
+		pagingMap.put("pjtNo", pjtNo);
+		pagingMap.put("startRow", pageInfo.getStartRow());
+		pagingMap.put("endRow", pageInfo.getEndRow());
+		
+		return backlogMapper.selectPagingSelectBacklog(pagingMap);
+	}
+
+	@Override
+	public List<SprintDTO> selectPagingSelectSprint(int pjtNo, PageInfoDTO pageInfo) {
+
+		Map<String, Object> pagingMap = new HashMap<>();
+		pagingMap.put("pjtNo", pjtNo);
+		pagingMap.put("startRow", pageInfo.getStartRow());
+		pagingMap.put("endRow", pageInfo.getEndRow());
+		
+		return backlogMapper.selectPagingSelectSprint(pagingMap);
+	}
+
 	
 }
