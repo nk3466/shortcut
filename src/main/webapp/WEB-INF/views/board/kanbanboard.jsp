@@ -59,16 +59,13 @@
                   <c:forEach var="memberList" items="${memberList}">
                      <i class="fas fa-user-circle"><c:out value="${ memberList.name }"/></i>            
                   </c:forEach>
-               
                   </div>
                </div>
-               
                <div class="info_item">
                <div id="newBoard" class="insert_board" data-toggle="modal"
                   data-target="#myModal3">
                   <i class="fas fa-plus"></i> 보드 생성하기</div>
                </div>
-               
             </div>
          </div> 
          <!-- 보드 정보 영역 끝 -->
@@ -80,10 +77,9 @@
 <c:forEach var="boardList" items="${boardList }">
       <div class="kanban_item boardcolumn">
          <div class="kanbanboard type1" id="newBoard<c:out value="${boardList.brdOrder}"/>">
-            <div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/><i class="fas fa-ellipsis-v" id="modify"></i></div>
-            
-            
             <div class="kanbanboard_title board-header card no-move"><c:out value="${boardList.brdName}"/></div>
+            <i class="fas fa-ellipsis-v" id="modify3" data-toggle="modal" data-target="#myModal4"></i>
+            
             <!--  카드 영역  -->
             <c:forEach var="cardList" items="${cardList }">
             
@@ -112,34 +108,28 @@
                      </div>
             </c:if>
              </c:forEach>
-                                                               
             <!-- /카드영역 -->
             <input type="text" value="${boardList.brdNo}" class="boardNo" name="" style="display: none;">
-            
-            
             <div id="progressSet" class="insert_card" data-toggle="modal"
                data-target="#myModal2">
                <i class="fas fa-plus" id="cardCreate"></i> 카드 생성하기
             </div>
          </div>
       </div>   
-               
  </c:forEach>
-   </div>   
-
-
+   </div><!-- 내가 만든 보드 영역 끝 --> 
+    
       </div>
    </div>
 
-<script type="text/javascript">
+<script>
 console.log("boardList" +  "${requestScope.boardList}");
 </script>
 
+
+
    <input type="text" value="${ requestScope.pjtNo }" name="" id="" style="display: none;">
-
-
    <!-- The Modal -->
-   <!--  -->
    <div class="modal fade" id="myModal2">
       <div class="modal-dialog">
          <div class="modal-header type">Short Cut</div>
@@ -295,6 +285,33 @@ console.log("boardList" +  "${requestScope.boardList}");
       </div>
    </div>
    
+   <!-- Modal 보드 수정(한미화) -->
+   <div class="modal fade" id="myModal4">
+      <div class="modal-dialog">
+      
+         <div class="modal-header type">shortcut</div>
+            <div class="modal-content">
+            <input type="hidden" name="pjtNo" value="${pjtNo}">
+            <input type="hidden" name="projectName" value="${projectName}">
+            
+               <div class="modal-body">
+               
+                  <input class="input_detail" type="text" name="boardtitle" id="boardtitletitle"
+                     placeholder="" size="50" style="border: none; background: transparent;">
+                  <input name="sprNo" type="hidden" value="${sprNo}">   
+            </div>
+            <!-- Modal footer -->
+            <div class="modal_footer">
+               <div class="btn_area">
+               <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+                  <input type="submit" class="upload_btn" id="editBoard" value="수정">
+                  <input type="submit" class="upload_btn" id="deleteBoard" value="삭제">
+                  <input type="reset" class="upload_btn" data-dismiss="modal" value="취소"></div>
+            </div>
+         </div>
+      </div>
+   </div>
+   
    <jsp:include page="../board/card_detail.jsp"/>
 
 </body>
@@ -365,26 +382,57 @@ $(function(){
          hiddenTag.setAttribute("value", value)
       }
    });
-   /* $("#newBoard").click(fuction() {
-      $.ajax({
-         url : "newBoard";
-         success : function(data, status, xhr) {
-         console.log(data);
-         
-         const $div = $("#newBoard1");
-         $div.html("");
-         
-
-         
-         return hiddenTag
-      }
-      
-      const kanbanboardList = document.getElement({'newBoard1', 'newBoard2', 'newBoard3'}).innerHTML;
-      var brdName = document.getElementById("brdName").value;
-      console.log("brdName : " + brdName);
-      });
-   */
-   //}); 
+   
+   /* 칸반보드 수정 시 제목 가져오기 날려먹어서 기억이 안나ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ */
+   $('#modify3').click(function() {
+	   var title = $(this).closest(".type1").find(".board-header");
+	   console.table(title);
+	   console.log(title);
+	   
+	   $('#boardtitletitle').attr('placeholder', title);
+   });
+   
+   /* 보드 수정  */
+   $('#editBoard').click(function() {
+	   $.ajax({
+           type:"POST",
+           url:"${pageContext.servletContext.contextPath}/board/editBoard",
+           data: {brdNo: brdNo},
+           success:function(data, status, xhr) {
+        	   
+           }
+   });
+	   });
+  
+   /* 보드 삭제 (한미화) */
+   $("#deleteBoard").click(function(){ 
+		 if(confirm("정말 삭제하시겠습니까 ?") == true){
+				var newBoard = document.getElementById("#newBoard");
+				console.log("보드 번호 : " + newBoard);
+				 console.log("djdjdjdj  : " + brdNo);
+					 $.ajax({
+							url : "${pageContext.servletContext.contextPath}/board/deleteBoard",
+							type : "post",
+							data : {brdNo : brdNo},
+							success : function(data, textStatus, xhr){
+								alert("보드 삭제가 완료되었습니다");
+								document.location.reload();
+							},
+							error : function(xhr, status, error){
+								console.log(error);
+								alert("보드 삭제가 취소되었습니다");
+							}
+					 })
+			}else{
+				return;
+				}
+	})
+   
+   
+   
+   
+   
+   
 
    /* 일정, 업무 버튼 */
    var count1 = 0;

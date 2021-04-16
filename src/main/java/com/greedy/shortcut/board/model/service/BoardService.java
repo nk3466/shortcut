@@ -23,4 +23,7 @@ public interface BoardService {
 	boolean modifyBoard(BoardDTO newboard);
 
 
+	boolean deleteBoard(BoardDTO board);
+
+
 }

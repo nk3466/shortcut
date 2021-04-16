@@ -67,4 +67,13 @@ public class BoardServiceImpl implements BoardService {
 	   }
 
 
+	@Override
+	public boolean deleteBoard(BoardDTO board) {
+
+		boardMapper.deleteBoard(board.getBrdNo());
+		
+		return boardMapper.insertDeleteBoardHistory(board);
+	}
+
+
 }
