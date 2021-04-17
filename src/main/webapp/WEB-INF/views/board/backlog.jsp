@@ -578,28 +578,28 @@
 				      아니라면, 활성화된 버튼 추가하고 startBacklogPage(), prevBacklogPage 함추 호출
 				*/
 				if(startPage <= 1) {
-					$backlogPagingArea.append('<button disabled><<</button>')
-					$backlogPagingArea.append('<button disabled><</button>');
+					$backlogPagingArea.append('<button class="pageBtn" disabled><<</button>')
+					$backlogPagingArea.append('<button class="pageBtn" disabled><</button>');
 				} else {
-					$backlogPagingArea.append('<button onclick="startBacklogPage();"><<</button>');
-					$backlogPagingArea.append('<button onclick="prevBacklogPage(' + startBacklogPage + ');"><</button>');
+					$backlogPagingArea.append('<button class="pageBtn" onclick="startBacklogPage();"><<</button>');
+					$backlogPagingArea.append('<button class="pageBtn" onclick="prevBacklogPage(' + startBacklogPage + ');"><</button>');
 				}
 				
 				/* 현재 페이지와 같지 않는 버튼은 moveBacklogPage()함수 호출 가능 */
 				for(let i = startBacklogPage; i <= endBacklogPage; i++) {
 					if(i == currentBacklogPage) {
-						$backlogPagingArea.append('<button disabled>' + i + '</button>');
+						$backlogPagingArea.append('<button class="pageBtn on" disabled>' + i + '</button>');
 					} else {
-						$backlogPagingArea.append('<button onclick="moveBacklogPage(' + i + ')">' + i + '</button>');
+						$backlogPagingArea.append('<button class="pageBtn" onclick="moveBacklogPage(' + i + ')">' + i + '</button>');
 					}
 				}
 				
 				if(endBacklogPage == maxBacklogPage) {
-					$backlogPagingArea.append('<button disabled>></button>');
-					$backlogPagingArea.append('<button disabled>>></button>');
+					$backlogPagingArea.append('<button class="pageBtn" disabled>></button>');
+					$backlogPagingArea.append('<button class="pageBtn" disabled>>></button>');
 				} else {
-					$backlogPagingArea.append('<button onclick="nextBacklogPage(' + endBacklogPage + ')">></button>');
-					$backlogPagingArea.append('<button onclick="maxBacklogPage(' + maxBacklogPage + ')">>></button>');
+					$backlogPagingArea.append('<button class="pageBtn" onclick="nextBacklogPage(' + endBacklogPage + ')">></button>');
+					$backlogPagingArea.append('<button class="pageBtn" onclick="maxBacklogPage(' + maxBacklogPage + ')">>></button>');
 				}
 			}
 			
@@ -910,7 +910,7 @@
 											}
 											
 											/* 버튼 생성 */
-											var retrospectBtnHtml = '<input style="background-color: white;" type="button" value="' + retrospectButtonType + '" onclick="retrospect(this);">';
+											var retrospectBtnHtml = '<input class="retrospectBtn" type="button" value="' + retrospectButtonType + '" onclick="retrospect(this);">';
 											
 											/* tr태그에 만들어 값 담기 */
 											$tr = $("<tr>");
@@ -960,28 +960,28 @@
 							      아니라면, 활성화된 버튼 추가하고 startPage(), prevPage 함추 호출
 							*/
 							if(startPage <= 1) {
-								$pagingArea.append('<button disabled><<</button>')
-								$pagingArea.append('<button disabled><</button>');
+								$pagingArea.append('<button class="pageBtn" disabled><<</button>')
+								$pagingArea.append('<button class="pageBtn" disabled><</button>');
 							} else {
-								$pagingArea.append('<button onclick="startPage();"><<</button>');
-								$pagingArea.append('<button onclick="prevPage(' + startPage + ');"><</button>');
+								$pagingArea.append('<button class="pageBtn" onclick="startPage();"><<</button>');
+								$pagingArea.append('<button class="pageBtn" onclick="prevPage(' + startPage + ');"><</button>');
 							}
 							
 							/* 현재 페이지와 같지 않는 버튼은 movePage()함수 호출 가능 */
 							for(let i = startPage; i <= endPage; i++) {
 								if(i == currentPage) {
-									$pagingArea.append('<button disabled>' + i + '</button>');
+									$pagingArea.append('<button class="pageBtn on" disabled>' + i + '</button>');
 								} else {
-									$pagingArea.append('<button onclick="movePage(' + i + ')">' + i + '</button>');
+									$pagingArea.append('<button class="pageBtn" onclick="movePage(' + i + ')">' + i + '</button>');
 								}
 							}
 							
 							if(endPage == maxPage) {
-								$pagingArea.append('<button disabled>></button>');
-								$pagingArea.append('<button disabled>>></button>');
+								$pagingArea.append('<button class="pageBtn" disabled>></button>');
+								$pagingArea.append('<button class="pageBtn" disabled>>></button>');
 							} else {
-								$pagingArea.append('<button onclick="nextPage(' + endPage + ')">></button>');
-								$pagingArea.append('<button onclick="maxPage(' + maxPage + ')">>></button>');
+								$pagingArea.append('<button class="pageBtn" onclick="nextPage(' + endPage + ')">></button>');
+								$pagingArea.append('<button class="pageBtn" onclick="maxPage(' + maxPage + ')">>></button>');
 							}
 						}
 						

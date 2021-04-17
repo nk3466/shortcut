@@ -239,7 +239,7 @@
 					}
 					for( let i = firstPage; i <= lastPage; i++ ){
 						if( i == page){
-						domain.append('<button class="pnbutton" disabled>'+i+'</button>');	
+						domain.append('<button class="pnbutton on"  disabled>'+i+'</button>');	
 						} else {
 						domain.append('<button class="pnbutton" onclick="movePage('+ i +',this)">'+i+'</button>');
 						}
@@ -306,20 +306,20 @@
 											 /* 버튼 넣기 */
 											 if( i == 3){
 												 if(type == 1){
-												 var inputBtnHtml ='<input type="button" value="수락" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 2 +')" title="진행 중으로 카드를 옮깁니다."/> <input type="button" value="보류" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 4 +')" title="보류로 카드를 옮깁니다."/> <br>'
+												 var inputBtnHtml ='<input type="button" class="remarkBtn" value="수락" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 2 +')" title="진행 중으로 카드를 옮깁니다."/> <input type="button" class="remarkBtn" value="보류" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 4 +')" title="보류로 카드를 옮깁니다."/> <br>'
 												 
 													 $(slect[3]).append(inputBtnHtml);
 												 }
 												 if(type == 2){
-													 var inputBtnHtml ='<input type="button" value="완료" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 3 +')" title="완료로 카드를 옮깁니다."/><br>'
+													 var inputBtnHtml ='<input type="button" class="remarkBtn" value="완료" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 3 +')" title="완료로 카드를 옮깁니다."/><br>'
 														 $(slect[3]).append(inputBtnHtml);
 												 }
 												 if(type == 3){
-													 var inputBtnHtml ='<input type="button" value="진행" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 2 +')" title="진행 중으로 카드를 옮깁니다."/><br>'
+													 var inputBtnHtml ='<input type="button" class="remarkBtn" value="진행" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 2 +')" title="진행 중으로 카드를 옮깁니다."/><br>'
 														 $(slect[3]).append(inputBtnHtml);
 												 }
 												 if(type == 4){
-													 var inputBtnHtml ='<input type="button" value="진행" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 2 +')" title="진행 중으로 카드를 옮깁니다."/><br>'
+													 var inputBtnHtml ='<input type="button" class="remarkBtn" value="진행" onclick="updateProgress('+data[j].crdNo+','+ type+',' + 2 +')" title="진행 중으로 카드를 옮깁니다."/><br>'
 														 $(slect[3]).append(inputBtnHtml);
 												 }
 												 
