@@ -20,6 +20,11 @@
 .sprint_box_area .sprint_box.on{display: none;}
 .sprint_box_area .table_area{}
 .sprint_box_area .table_area .table_item{text-align: center;}
+.sprint_box_area .table_area .table_item.nk table{table-layout: fixed;}
+.sprint_box_area .table_area .table_item.nk td{overflow: hidden; text-overflow: ellipsis;  white-space: nowrap;}
+.sprint_box_area .table_area .table_item table{table-layout: fixed;}
+.sprint_box_area .table_area .table_item td{overflow: hidden; text-overflow: ellipsis;  white-space: nowrap;}
+
 .sprint_box_area .table_area .table_item.nk .th_detail.type1{text-align: center!important;}
 .sprint_box_area .table_area .table_item .row{margin: 0; margin-bottom: 5px; border: 1px solid lightgray;}
 .sprint_box_area .table_area .table_item .row .th_detail.type{text-align: center;}
@@ -44,6 +49,8 @@
 .backlog_create_area .backlog_table_area{}
 .backlog_create_area .backlog_table_area .table_area{}
 .backlog_create_area .backlog_table_area .table_area .table_item{text-align: center;}
+.backlog_create_area .backlog_table_area .table_area .table_item table{table-layout: fixed;}
+.backlog_create_area .backlog_table_area .table_area .table_item td{ overflow: hidden; text-overflow: ellipsis;  white-space: nowrap;}
 .backlog_create_area .backlog_table_area .table_area .table_item .btn_detail{background-color: white; color:lightgray; margin:2px; border: 1px solid lightgray;}
 .backlog_create_area .backlog_table_area .table_area .table_item .btn_detail:hover{color:black; border: 1px solid black;}
 

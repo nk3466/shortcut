@@ -186,28 +186,28 @@
 				      아니라면, 활성화된 버튼 추가하고 startBacklogPage(), prevBacklogPage 함추 호출
 				*/
 				if(startPage <= 1) {
-					$sprintPagingArea.append('<button disabled><<</button>')
-					$sprintPagingArea.append('<button disabled><</button>');
+					$sprintPagingArea.append('<button class="pageBtn" disabled><<</button>')
+					$sprintPagingArea.append('<button class="pageBtn" disabled><</button>');
 				} else {
-					$sprintPagingArea.append('<button onclick="startSprintPage();"><<</button>');
-					$sprintPagingArea.append('<button onclick="prevSprintPage(' + startSprintPage + ');"><</button>');
+					$sprintPagingArea.append('<button class="pageBtn" onclick="startSprintPage();"><<</button>');
+					$sprintPagingArea.append('<button class="pageBtn" onclick="prevSprintPage(' + startSprintPage + ');"><</button>');
 				}
 				
 				/* 현재 페이지와 같지 않는 버튼은 moveBacklogPage()함수 호출 가능 */
 				for(let i = startSprintPage; i <= endSprintPage; i++) {
 					if(i == currentSprintPage) {
-						$sprintPagingArea.append('<button disabled>' + i + '</button>');
+						$sprintPagingArea.append('<button class="pageBtn on" disabled>' + i + '</button>');
 					} else {
-						$sprintPagingArea.append('<button onclick="moveSprintPage(' + i + ')">' + i + '</button>');
+						$sprintPagingArea.append('<button class="pageBtn" onclick="moveSprintPage(' + i + ')">' + i + '</button>');
 					}
 				}
 				
 				if(endSprintPage == maxSprintPage) {
-					$sprintPagingArea.append('<button disabled>></button>');
-					$sprintPagingArea.append('<button disabled>>></button>');
+					$sprintPagingArea.append('<button class="pageBtn" disabled>></button>');
+					$sprintPagingArea.append('<button class="pageBtn" disabled>>></button>');
 				} else {
-					$sprintPagingArea.append('<button onclick="nextSprintPage(' + endSprintPage + ')">></button>');
-					$sprintPagingArea.append('<button onclick="maxSprintPage(' + maxSprintPage + ')">>></button>');
+					$sprintPagingArea.append('<button class="pageBtn" onclick="nextSprintPage(' + endSprintPage + ')">></button>');
+					$sprintPagingArea.append('<button class="pageBtn" onclick="maxSprintPage(' + maxSprintPage + ')">>></button>');
 				}
 			}
 			

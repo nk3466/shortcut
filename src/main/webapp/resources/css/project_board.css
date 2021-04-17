@@ -15,7 +15,7 @@
 .project_content .row .project_board_area .row .board_list .board_detail{display: block; border: 1px solid gray; text-align: center; width: 150px; height: 150px; line-height: 150px; border-radius: 15px; margin: 0 auto;}
 .project_content .row .project_board_area .row .board_list .board_detail.type{ background-color: red;}
 .project_content .row .project_board_area .row .board_list .board_detail .fa-plus{color: gray; font-size: 30px;}
-.project_content .row .project_board_area .row .board_list .board_text{text-align: center;}
+.project_content .row .project_board_area .row .board_list .board_text{text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 150px;}
 
 
 
