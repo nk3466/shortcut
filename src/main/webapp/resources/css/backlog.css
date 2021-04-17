@@ -3,8 +3,8 @@
 .backlog_area .backlog_header_area{ margin-bottom: 20px;}
 .backlog_area .backlog_header_area .backlog_header{font-size: 25px; font-weight: bold;}
 .backlog_area .backlog_header_area .meeting_btn{float: right; border:1px solid lightgray; border-radius: 8px; background-color: white; font-size: 18px;     width: 125px;
-    height: 40px;  line-height: 40px;  text-align: center; margin-left: 15px; color: black;}
-
+    height: 40px;  line-height: 40px;  text-align: center; margin-left: 15px; color: lightgray;}
+.backlog_area .backlog_header_area .meeting_btn:hover{color:black; border: 1px solid black;}
 
 .sprint_box_area{margin-bottom: 50px; height: 250px; padding-top: 40px;}
 
@@ -31,7 +31,8 @@
 
 
 .sprint_box_area .table_area .table_item .btn_detail{background-color: white; float: right;}
-.sprint_box_area .table_area .table_item .btn_detail.nk{background-color: white; float: none;}
+.sprint_box_area .table_area .table_item .btn_detail.nk{background-color: white; float: none; color:lightgray; margin:2px; border: 1px solid lightgray;}
+.sprint_box_area .table_area .table_item .btn_detail.nk:hover{color:black; border: 1px solid black;}
 
 .backlog_create_area{height: 300px; }
 .backlog_create_area .create_sprint_btn{text-align: left;}
@@ -43,6 +44,10 @@
 .backlog_create_area .backlog_table_area{}
 .backlog_create_area .backlog_table_area .table_area{}
 .backlog_create_area .backlog_table_area .table_area .table_item{text-align: center;}
+.backlog_create_area .backlog_table_area .table_area .table_item .btn_detail{background-color: white; color:lightgray; margin:2px; border: 1px solid lightgray;}
+.backlog_create_area .backlog_table_area .table_area .table_item .btn_detail:hover{color:black; border: 1px solid black;}
+
+
 .backlog_create_area .backlog_table_area .table_area .table_item .th_detail.type{text-align: center;}
 .backlog_create_area .backlog_table_area .table_area .table_item .row{margin: 0; margin-bottom: 5px; border: 1px solid lightgray;}
 .backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail{}
@@ -55,11 +60,13 @@
 .btn_detail_retro{background-color: white;}
 
 
+.pageBtn{background-color:white; border:0; margin:0 3px; color:lightgray;}
+.pageBtn:hover{color:black;}
+.pageBtn.on{color:black; font-weight: bold;}
 
 
-
-
-
+.retrospectBtn{background-color:white; color:lightgray; border: 1px solid lightgray;}
+.retrospectBtn:hover{color:black; border: 1px solid black;}
 
 
 
