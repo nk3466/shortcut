@@ -86,9 +86,7 @@
 							</c:choose>
 						</tbody>
 						</table>
-						 <c:if test="${fn:length(requestScope.sprintList) > 4 }"> 
 						<div id="sprintPagingArea" align="center"></div>
-					 	</c:if>
 					
 				</div>
 			</div>
