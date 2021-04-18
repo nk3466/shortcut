@@ -51,7 +51,8 @@
             <c:forEach var="cardList" items="${cardList}">
             
             <c:if test="${boardList.brdNo eq cardList.brdNo}">
-                <div class="board_item card">
+                <div class="board_item card" id="cardDetail">
+                <input type="hidden" value="${ cardList.no }" name="crdNo" id="crdNo">
                          <div class="item type1 card-header bg-white"><c:out value="${cardList.title}"/></div>
                          <div class="item type2 card-body">
                          <c:if test="${ 1 eq cardList.type}">

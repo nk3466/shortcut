@@ -88,21 +88,6 @@ public class CardServiceImpl implements CardService {
 		return cardList;
 	}
 
-//	@Override
-//	public HashMap<String, Object> selectCardInfo(int cardNo) {
-//		RequestCardDTO card = cardMapper.selectCardDetail(cardNo);
-//		
-//		List<MemberDTO> memberList = cardMapper.selectCardDetailMember(cardNo);
-//		
-//		HashMap<String,Object> cardDetail = new HashMap<String,Object>();
-//		
-//		cardDetail.put("card", card);
-//		cardDetail.put("memberList", memberList);
-//		
-//		
-//	
-//		return cardDetail;
-//	}
 
 	@Override
 	public List<RequestCardDTO> selectCardInfo(int cardNo) {
@@ -113,6 +98,44 @@ public class CardServiceImpl implements CardService {
 	public boolean cardMember(int memberNo, int cNo) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<CardAttendListDTO> selectCardMember(int crdNo) {
+		return cardMapper.selectCardMember(crdNo);
+	}
+
+	@Override
+	public boolean modifyCard(RequestCardDTO card) {
+		boolean result = false;
+		
+		result = cardMapper.udateCard(card);
+		
+		if(result) {
+			
+			if( 1 == card.getType()) {
+				
+			}else if (2 == card.getType()) {
+				result = cardMapper.updateCardTask(card);
+			}else if (3 == card.getType()) {
+				result = cardMapper.updateCardSchedule(card);
+				for(int i = 0; i < card.getMemberList().size(); i++) {
+					CardAttendListDTO cal = new CardAttendListDTO();
+					cal.setMemNo(card.getMemberList().get(i));
+					result = cardMapper.updateSchAttendList(cal);
+				}
+				
+			}else if (4 == card.getType()) {
+				result = cardMapper.updateCardTask(card);
+				result = cardMapper.updateCardSchedule(card);
+				for(int i = 0; i < card.getMemberList().size(); i++) {
+					CardAttendListDTO cal = new CardAttendListDTO();
+					cal.setMemNo(card.getMemberList().get(i));
+					result = cardMapper.updateSchAttendList(cal);
+				}
+			}
+		}
+		return result;
 	}
 
 
