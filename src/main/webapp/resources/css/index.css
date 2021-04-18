@@ -63,7 +63,8 @@
 /* 알람 */
 .alarmArea{border-bottom:1px solid #ed1745; border-left:1px solid #ed1745; width: 20%;  position: absolute; right: 0; z-index: 999; background-color: white;   z-index: 999;   padding: 15px; height: 500px; overflow-x: hidden; overflow-y: auto;}
 .alarmCount{opacity: 0.5; text-align: center; line-height: 1.5; border-radius: 50%; border:0px solid #000000; width: 35px;  position: absolute; right: -6px; top: -4px; background-color: rgba( 255, 255, 255, 0.5 );   z-index: 998;   padding: 5px; height: 35px; color: red; font-weight: bold;}
-.abc{border-radius: 50%; border:0px solid #000000; width: 20px;  position: absolute; right: 50px; top: 8px; background-color: white;   z-index: 997;   padding: 5px; height: 20px; }
+.alarmCount2{opacity: 0; text-align: center; line-height: 1.5; border-radius: 50%; border:0px solid #000000; width: 35px;  position: absolute; right: -6px; top: -4px; background-color: rgba( 255, 255, 255, 0.5 );   z-index: 998;   padding: 5px; height: 35px; color: red; font-weight: bold;}
+.aab{opacity: 0; border-radius: 50%; border:0px solid #000000; width: 20px;  position: absolute; right: 50px; top: 8px; background-color: white;   z-index: 997;   padding: 5px; height: 20px; }
 .alarmArea.on{display:none;}
 #generalAlarmBtn{width: 50%;}
 #githubAlarmBtn{width: 50%;}
@@ -72,4 +73,9 @@
 .alBtnArea{;}
 .main{ font-style: italic; font-size: 20px;}
 .bt:hover {background-color: #ed1745;}
+
+#generalAlarmDiv{ text-decoration: none; }
+.altTxt{ font-size: 13px; text-align: left; color: black; width: 80%; float: left;}
+.altDelBtn{ font-size: 13px; background-color: white; border: 0px solid lightgray; color: black; width: 20%; margin-top: 0px; float: left;}
+.altEnrollDate{ font-size: 11px; text-align: left; /* margin: 10px; padding: 10px; */}
 

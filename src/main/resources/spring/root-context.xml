@@ -40,11 +40,20 @@
 		</tx:attributes>
 	</tx:advice>
 	
+	<bean id="projectAfterReturning" class="com.greedy.shortcut.alarm.aop.ProjectAfterReturningAdvice"/>
+	
 	<aop:config proxy-target-class="true">
 		<aop:pointcut id="serviceMethod"
 			expression="execution(* com.greedy.shortcut..*ServiceImpl.*(..))" />
 		<aop:advisor id="transactionAdvisor" pointcut-ref="serviceMethod"
 			advice-ref="txAdvice" />
+	</aop:config>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* com.greedy.shortcut.board.model.dao.ProjectMapper.insertProjectMember(..))" id="alarmPointcut"/>
+		<aop:aspect id="alarmAdvisor" ref="projectAfterReturning">
+			<aop:after-returning method="projectAfterReturning" pointcut-ref="alarmPointcut" returning="result"/>
+		</aop:aspect>
 	</aop:config>
 	
 	<mybatis-spring:scan 

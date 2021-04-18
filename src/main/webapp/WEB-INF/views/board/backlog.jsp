@@ -914,7 +914,7 @@
 											
 											/* tr태그에 만들어 값 담기 */
 											$tr = $("<tr>");
-											$noTd = $("<td>").text("BACKLOG-" +data[index].blgNo);
+											$noTd = $("<td>").text(data[index].blgNo);
 											$nameTd = $("<td>").text(data[index].blgName);
 											$priTd = $("<td>").text(data[index].blgPri);
 											$enrollDateTd = $("<td>").text(data[index].blgEnrollDate);

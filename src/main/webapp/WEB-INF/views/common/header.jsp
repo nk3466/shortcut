@@ -12,7 +12,7 @@
 	
 	<!-- 알람 -->
 	<security:authorize access="isAuthenticated()">
-	<security:authentication property="principal.username" var="nick"/>
+	<security:authentication property="principal.no" var="no"/>
 	<script>
 		var wsUri = "ws://127.0.0.01:8001/shortcut/count";
 		
@@ -32,17 +32,26 @@
 		}
 		
 		function onOpen(evt) {
-			websocket.send("${nick}");
+			websocket.send("${no}");
 		}
 		
 		function onMessage(evt) {
 			console.log(evt.data);
 			var $div = $("<div>").text(evt.data);
+			/* $div.attr("id", "allAlarmBtn"); */
 			$div.attr("class", "alarmCount");
-			$div.attr("id", "allAlarmBtn");
+			$(".aab").css("opacity", "0");
+			/* $div.attr("class", "alarmCount2");
+			$div.removeClass("alarmCount"); */
 			
-			$(".abc").append($div);
-			/* $(".alarmCount").append(evt.data); */
+			if(evt.data > 0) {
+				/* $div.removeClass("alarmCount2");
+				$div.attr("class", "alarmCount"); */
+				$div.attr("id", "allAlarmBtn");
+				$(".aab").css("opacity", "1");
+				$(".aab").append($div);
+			}
+			
 		}
 		
 		function onError(Evt) {
@@ -69,8 +78,8 @@
 			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/mypage/mypage">
 				<i class="fas fa-cog"></i>
 			</a>
-			<div class="abc" id="allAlarmBtn"></div>
-			<a class="menu_list">
+			<div class="aab" id=""></div>
+			<a class="menu_list" id="">
 				<i class="far fa-bell" id="allAlarmBtn"></i>
 			</a>	
 			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/messenger/messenger">
@@ -109,9 +118,8 @@
 				</div>
 				<hr>
 				<div class="generalAlarmArea">
-					<br>
-					<h4>Alarm</h4>
-					<span id="count" class=""></span>
+					<h4 align="center" style="font-weight: bold;">Alarm</h4>
+					<div id="generalAlarmDiv"></div>
 				</div>
 				<div class="githubAlarmArea">
 					<c:if test="${ empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.gitUrl }">
@@ -148,9 +156,6 @@
 		</div>
 			<script>
 				function modifyGitUrlBtn() {
-					
-					const token = $("meta[name='_csrf']").attr("content");
-					const header = $("meta[name='_csrf_header']").attr("content");
 					
 					$(".ghu3").empty();
 					
@@ -213,6 +218,42 @@
 						$gitForm.submit(); 
 					});
 					
+					/* 알람 삭제 */
+					$(document).on("click", ".altDelBtn", function() {
+						
+						var altDelNo = $(this).attr("id");
+						console.log(altDelNo);
+						
+						const token = $("meta[name='_csrf']").attr("content");
+						const header = $("meta[name='_csrf_header']").attr("content");
+						
+						$(document).ajaxSend(function(e, xhr, options) {
+						    xhr.setRequestHeader(header, token);
+						});
+						
+						$.ajax({
+							url : "${pageContext.servletContext.contextPath}/alarm/general/remove",
+							method : "POST", 
+							data : {
+								altDelNo : altDelNo	
+							},
+							success : function(data, status, xhr) {
+								
+								console.log(data);	
+							
+								var $generalAlarmDiv = document.getElementById("generalAlarmDiv");
+								while($generalAlarmDiv.firstChild) {
+									$generalAlarmDiv.removeChild($generalAlarmDiv.firstChild);
+								}
+								
+								generalAlarm();
+							},
+							error : function(xhr, status, error) {
+								console.log(error);
+							}
+						});
+						
+					});
 					
 					/* const githubArea = document.getElementById("githubArea");
 					
@@ -240,12 +281,96 @@
 						
 					}); */
 					
-					$("#allAlarmBtn").click(function(){
+					function generalAlarm() {
+
+						var $generalAlarmDiv = document.getElementById("generalAlarmDiv");
+						
+						$.ajax({
+							url : "${pageContext.servletContext.contextPath}/alarm/general",
+							method : "GET",
+							data : { no : "${ sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no }" },
+							success : function(data, status, xhr) {
+								console.log(data);
+								
+								for(index in data) {
+									
+									let alarmToday = new Date(data[index].altEnrollDate);
+									
+									let alarmYear = alarmToday.getFullYear();
+									let alarmMonth = "" + (alarmToday.getMonth() + 1);
+									let alarmDate = "" + alarmToday.getDate();
+									let alarmDay = alarmToday.getDay();
+									let alarmHour = alarmToday.getHours();
+									let alarmMinutes = alarmToday.getMinutes();
+									
+									const $altTxt = document.createElement("a");
+									const $altEnrollDate = document.createElement("div");
+									const $altDelBtn = document.createElement("button");
+									const $hr = document.createElement("hr");
+									
+									$altTxt.setAttribute("class", "altTxt");
+									$altDelBtn.setAttribute("class", "altDelBtn");
+									$altDelBtn.setAttribute("type", "button");
+									$altDelBtn.setAttribute("id", data[index].altNo);
+									$altEnrollDate.setAttribute("class", "altEnrollDate");
+									
+									$altTxt.text = data[index].altTxt;
+									$altTxt.href = data[index].altUri;
+									$altDelBtn.innerHTML = "X";
+									$altEnrollDate.innerHTML = alarmYear + "-" + alarmMonth + "-" + alarmDate;
+									
+									$generalAlarmDiv.append($altTxt);
+									$generalAlarmDiv.append($altDelBtn);
+									$generalAlarmDiv.append($altEnrollDate);
+									$generalAlarmDiv.append($hr);
+								}
+							},
+							error : function(xhr, status, error) {
+								console.log(error);
+							}
+						});
+					}
+					
+					/* 알람 읽었음 */
+					function alarmRead() {
+						
+						const token = $("meta[name='_csrf']").attr("content");
+						const header = $("meta[name='_csrf_header']").attr("content");
+						
+						$(document).ajaxSend(function(e, xhr, options) {
+						    xhr.setRequestHeader(header, token);
+						});
+					
+						$.ajax({
+							url : "${pageContext.servletContext.contextPath}/alarm/general/read",
+							method : "POST", 
+							data : {
+								no : "${ sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no }" 
+							},
+							success : function(data, status, xhr) {
+								console.log(data);
+							},
+							error : function(xhr, status, error) {
+								console.log(error);
+							}
+						});
+					}
+					
+					$(document).on("click", "#allAlarmBtn", function() {
+					/* $("#allAlarmBtn").click(function(){ */
+						var $gaDiv = document.getElementById("generalAlarmDiv");
+
+					    while($gaDiv.firstChild) {
+					    	$gaDiv.removeChild($gaDiv.firstChild);
+						}
 						
 						$(".alarmArea").toggleClass("on");
 						$(".githubAlarmArea").hide();
 						$(".generalAlarmArea").show();
-					})
+						
+						generalAlarm();
+						alarmRead();
+					});
 					
 					$("#generalAlarmBtn").click(function() {
 						$(".generalAlarmArea").show();

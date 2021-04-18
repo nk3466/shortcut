@@ -56,6 +56,8 @@
  		
  		<typeAlias alias="CardAttendListDTO" type="com.greedy.shortcut.board.model.dto.CardAttendListDTO"/>
  		
+ 		<typeAlias alias="AlertDTO" type="com.greedy.shortcut.alarm.model.dto.AlertDTO"/>
+ 		
  	</typeAliases>
  	
  </configuration>

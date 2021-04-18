@@ -1,12 +1,14 @@
 package com.greedy.shortcut.alarm.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.greedy.shortcut.alarm.model.dao.AlarmMapper;
+import com.greedy.shortcut.alarm.model.dto.AlertDTO;
 
 @Service("alarmService")
 public class AlarmServiceImpl implements AlarmService {
@@ -46,6 +48,21 @@ public class AlarmServiceImpl implements AlarmService {
 	@Override
 	public int removeGitUrl(int memNo) {
 		return alarmMapper.removeGitUrl(memNo);
+	}
+
+	@Override
+	public List<AlertDTO> selectGeneralAlarmList(int no) {
+		return alarmMapper.selectGeneralAlarmList(no);
+	}
+
+	@Override
+	public int modifyAlarmRead(int memNo) {
+		return alarmMapper.modifyAlarmRead(memNo);
+	}
+
+	@Override
+	public int modifyAlarmRemove(int altDelNo) {
+		return alarmMapper.modifyAlarmRemove(altDelNo);
 	}
 
 }
