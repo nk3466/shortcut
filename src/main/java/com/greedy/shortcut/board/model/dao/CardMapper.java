@@ -24,12 +24,17 @@ public interface CardMapper {
 
 	boolean registSchAttendList(CardAttendListDTO cal);
 
-//	RequestCardDTO selectCardDetail(int cardNo);
-//
-//	List<MemberDTO> selectCardDetailMember(int cardNo);
-
-//	List<RequestCardDTO> selectCardInfo(int cardNo);
 	List<RequestCardDTO> selectCardInfo(int cardNo);
+
+	List<CardAttendListDTO> selectCardMember(int crdNo);
+
+	boolean udateCard(RequestCardDTO card);
+
+	boolean updateCardTask(RequestCardDTO card);
+
+	boolean updateCardSchedule(RequestCardDTO card);
+
+	boolean updateSchAttendList(CardAttendListDTO cal);
 
 
 

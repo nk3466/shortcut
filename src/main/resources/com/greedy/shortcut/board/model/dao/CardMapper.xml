@@ -29,6 +29,7 @@
 		<result column="CRD_TYPE" property="type" />
 		<result column="MEM_NO" property="memNo" />
 		<result column="CRD_TXT" property="txt" />
+		<collection property="cardMemberList" resultMap="memberResultSet"/>
 	</resultMap>
 	
 	<resultMap id="ProjectResultSet" type="ProjectDTO">
@@ -80,7 +81,7 @@
 		<result column="SCH_END_DATE" property="scheduleEndDate" />
 		<result column="TK_START_DATE" property="taskStartDate" />
 		<result column="TK_END_DATE" property="taskEndDate" />
-		<!-- <collection property="memberList" resultMap="CardAttendResultMap"/> -->
+		<collection property="cardMemberList" resultMap="memberResultSet"/>
 	</resultMap>
 	
 	<resultMap type="CardAttendListDTO" id="CardAttendResultMap">
@@ -149,7 +150,9 @@
 	       , A.CRD_TYPE
 	       , A.MEM_NO
 	       , A.CRD_TXT
+	       , B.MEM_NAME
 	  FROM CARD A
+	  JOIN MEMBER B ON (A.MEM_NO = B.MEM_NO)
 	  WHERE A.BRD_NO = #{brdNo}
 	</select>
 	<insert id="registCardTask" parameterType="RequestCardDTO">
@@ -172,8 +175,8 @@
 	      1
 	    , #{no}
 	    , #{member}
-	    , #{taskStartDate}
-	    , #{taskEndDate}
+	    , TO_DATE(#{taskStartDate}, 'YYYYMMDDHH24MISS')
+	    , TO_DATE(#{taskEndDate}, 'YYYYMMDDHH24MISS')
 	    )
 	</insert>
 	<insert id="registCardSchedule" parameterType="RequestCardDTO">
@@ -244,14 +247,18 @@
 	       , D.ATTEND_SIGN
 	       , D.CRD_NO
 	       , D.MEM_NO
+           , E.MEM_NAME
+           , F.MEM_NAME
 	  FROM CARD A
 	  JOIN CRD_TASK B ON (A.CRD_NO = B.CRD_NO)
 	  JOIN CRD_SCHEDULE C ON (A.CRD_NO = C.CRD_NO)
 	  JOIN CRD_SCH_ATTEND_LIST D ON (A.CRD_NO = D.CRD_NO)
+	  JOIN MEMBER E ON (B.MEM_NO = E.MEM_NO)
+      JOIN MEMBER F ON (D.MEM_NO = F.MEM_NO)
 	  WHERE A.CRD_NO = #{no}
 	</select>
 	
-	<select id="selectCardDetailMember"  resultMap="memberResultSet">
+	<select id="selectCardMember" resultMap="memberResultSet">
 		SELECT
 			  B.MEM_NO
 			, B.MEM_NAME
@@ -259,4 +266,36 @@
 	    JOIN MEMBER B ON (A.MEM_NO= B.MEM_NO)
 	   WHERE A.CRD_NO = #{no}
 	</select>
+	
+	<update id="udateCard" parameterType="RequestCardDTO">
+        UPDATE CARD A
+           SET A.CRD_NAME = #{title}
+             , A.CRD_TYPE = #{type}
+             , A.CRD_TXT = #{txt}
+         WHERE A.CRD_NO = #{no}
+	</update>
+	
+	<update id="updateCardTask" parameterType="RequestCardDTO">
+        UPDATE CRD_TASK A
+           SET A.TK_PROGRESS = 1
+             , A.MEM_NO = #{member}
+             , A.TK_START_DATE = #{taskStartDate}
+             , A.TK_END_DATE = #{taskEndDate}
+         WHERE A.CRD_NO = #{no}
+	</update>
+	
+	<update id="updateCardSchedule" parameterType="RequestCardDTO">
+        UPDATE CRD_SCHEDULE A
+           SET A.SCH_ALERT = #{alert}
+             , A.SCH_PLACE = #{place}
+             , A.SCH_START_DATE = #{scheduleStartDate}
+             , A.SCH_END_DATE = #{scheduleEndDate}
+         WHERE A.CRD_NO = #{no}
+	</update>
+	
+	<update id="updateSchAttendList" parameterType="RequestCardDTO">
+        UPDATE CRD_SCH_ATTEND_LIST A
+           SET A.MEM_NO = #{memNo}
+         WHERE A.CRD_NO = #{no}
+	</update>
  </mapper>

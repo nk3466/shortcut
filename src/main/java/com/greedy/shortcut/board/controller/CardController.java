@@ -20,6 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.greedy.shortcut.board.model.dto.BoardDTO;
+import com.greedy.shortcut.board.model.dto.CardAttendListDTO;
 import com.greedy.shortcut.board.model.dto.CardScheduleDTO;
 import com.greedy.shortcut.board.model.dto.CardTaskDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
@@ -46,6 +48,7 @@ public class CardController {
 		System.out.println("pjtNo : " + pjtNo);
 
 		List<ProjectAuthorityDTO> memberList = cardService.selectMember(pjtNo);
+		System.out.println("memberList!!!!!!!! : " + memberList);
 
 		return memberList;
 	}
@@ -71,8 +74,12 @@ public class CardController {
 		 
 		 String schA = card.getScheduleStartDate().replace("T", "").replace("-", "").replace(":", "");
 		 String schB = card.getScheduleEndDate().replace("T", "").replace("-", "").replace(":", "");
+		 String schC = card.getTaskStartDate().replace("T", "").replace("-", "").replace(":", "");
+		 String schD = card.getTaskEndDate().replace("T", "").replace("-", "").replace(":", "");
 		 card.setScheduleEndDate(schB);
 		 card.setScheduleStartDate(schA);
+		 card.setTaskStartDate(schC);
+		 card.setTaskEndDate(schD);
 		
 		System.out.println("card: " + card);
 		
@@ -80,8 +87,6 @@ public class CardController {
 			System.out.println(card);
 		}
 
-		//CardDTO currentCardNo = cardService.currentCardNo();
-		//System.out.println("currentCardNo??? : " + currentCardNo);
 		
 		rttr.addFlashAttribute("message", "카드 등록에 성공하셨습니다.");
 
@@ -102,24 +107,51 @@ public class CardController {
 		RequestCardDTO selectOneCardInfo = selectCardInfo.get(0);
 		System.out.println("selectCardInfo무야호 : " + selectOneCardInfo);
 		
-		//model.addAttribute("selectCardInfo", selectOneCardInfo);
+		model.addAttribute("selectCardInfo", selectOneCardInfo);
 		
 		return new ObjectMapper().writeValueAsString(selectOneCardInfo);
 		
 	}
 	
-//	@PostMapping(value="/select/cardInfo", produces="application/json; charset=UTF-8")
-//	@ResponseBody
-//	public String selectMeetingDetail(@RequestParam Map<String, String> parameters, Model model) throws JsonProcessingException {
-//		int cardNo = Integer.parseInt(parameters.get("crdNo"));
-//		System.out.println("cardNo 무야호 : " + cardNo);
-//		HashMap<String,Object> card = cardService.selectCardInfo(cardNo);
-//		System.out.println("card무야호 : " + card);
-//
-//		model.addAttribute("card", card);
-//		
-//		
-//		return new ObjectMapper().writeValueAsString(card);
-//	}
+	@RequestMapping(value = "/card/member", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public List<CardAttendListDTO> selectCardMember(@ModelAttribute CardAttendListDTO pAuth,
+			HttpServletRequest request) {
 
+		int crdNo = Integer.parseInt(request.getParameter("crdNo"));
+		System.out.println("crdNo : " + crdNo);
+
+		List<CardAttendListDTO> memberList = cardService.selectCardMember(crdNo);
+		System.out.println("memberList!!!!!!!! : " + memberList);
+
+		return memberList;
+	}
+	
+	@PostMapping(value="/card/modifyCard")
+	public String modifyCard(@ModelAttribute RequestCardDTO card, @RequestParam(name="sprNo") int sprNo, 
+			@RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName,
+			RedirectAttributes redirect) {
+				System.out.println("왜 안오지??????");
+				
+				 String schA = card.getScheduleStartDate().replace("T", "").replace("-", "").replace(":", "");
+				 String schB = card.getScheduleEndDate().replace("T", "").replace("-", "").replace(":", "");
+				 String schC = card.getTaskStartDate().replace("T", "").replace("-", "").replace(":", "");
+				 String schD = card.getTaskEndDate().replace("T", "").replace("-", "").replace(":", "");
+				 card.setScheduleEndDate(schB);
+				 card.setScheduleStartDate(schA);
+				 card.setTaskStartDate(schC);
+				 card.setTaskEndDate(schD);
+		
+				System.out.println("오랏!" + card);
+				if(!cardService.modifyCard(card)) {
+					redirect.addFlashAttribute("message", "카드 수정 취소!");
+				} else {
+					redirect.addFlashAttribute("message", "카드 수정 완료!");
+				}
+		
+		System.out.println("수정 하려고요! " + card);
+		return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+projectName;
+	}
+	
+	
 }

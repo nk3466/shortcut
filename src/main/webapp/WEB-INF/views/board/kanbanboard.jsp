@@ -87,6 +87,7 @@
             
             <c:if test="${boardList.brdNo eq cardList.brdNo}">
                 <div class="board_item card">
+                <input type="text" value="${ cardList.no }" name="" id="crdNo" class="crdNo" style="display: none;">
                          <div class="item type1 card-header bg-white"><c:out value="${cardList.title}"/></div>
                          <div class="item type2 card-body">
                          <c:if test="${ 1 eq cardList.type}">
@@ -104,8 +105,8 @@
                          </c:if>  
                          </div>
                          <div class="item type3">
-                             <i class="fas fa-user-circle"><c:out value="${cardList.member}"/></i> <i
-                                 class="fas fa-user-circle"><c:out value="${cardList.memberList}"/></i>
+                             <i class="fas fa-user-circle"><c:out value="${cardList.cardMemberList.name}"/></i><br>
+                             <i class="fas fa-user-circle"><c:out value="${cardList.memberList}"/></i>
                          </div>
                      </div>
             </c:if>
@@ -160,12 +161,12 @@ console.log("boardList" +  "${requestScope.boardList}");
                   </div>
                </div>
                      
-
+			<c:forEach var="cardInfo" items="selectOneCardInfo">
                <div class="item_area">
                   <input class="input_detail" type="text" name="title" id="title"
                      placeholder="제목을 입력해주세요." style="border: none; background: transparent;">
                </div>
-
+			</c:forEach>
                <!-- 업무 영역 -->
                <div class="item_area work_btn on">
                   <i class="fas fa-spinner"></i>
@@ -189,9 +190,9 @@ console.log("boardList" +  "${requestScope.boardList}");
                </div>
                <div class="item_area work_btn on">
                   <i class="far fa-calendar-plus"></i> <input
-                     class="input_detail type4" type="date" name="taskStartDate"> &nbsp; -
+                     class="input_detail type4" type="datetime-local" name="taskStartDate"> &nbsp; -
                   &nbsp; <i class="far fa-calendar-minus"></i> <input
-                     class="input_detail type4" type="date" name="taskEndDate">
+                     class="input_detail type4" type="datetime-local" name="taskEndDate">
                </div>
                <!-- 업무영역 끝 -->
 
@@ -258,6 +259,150 @@ console.log("boardList" +  "${requestScope.boardList}");
          </form>
       </div>
    </div>
+   <!-- 상세페이지 -->
+   <input type="text" value="${ requestScope.pjtNo }" name="" id="" style="display: none;">
+   <!-- The Modal -->
+   <div class="modal fade" id="myModal3">
+      <div class="modal-dialog">
+         <div class="modal-header type">Short Cut</div>
+
+         <!-- name="projectMemberList" -->
+         <form id="cardDetail" action="${pageContext.servletContext.contextPath}/card/create" method="post">
+         <input type="hidden" value="${ requestScope.pjtNo }" name="pjtNo">
+         <input type="text" value="" name="type" style="display: none;" id="pleaseType">
+            <div class="modal-content">
+               <div class="modal-body">
+                  <div class="row selectCardtype">
+                     <div class="modal_list">
+                        <i class="fas fa-check"><button id="workBtn" type="button"
+                        style="background: #00ff0000; border: 0;" value="1">업무</button></i>
+                     </div>
+                     <div class="modal_list">
+                        <i class="fas fa-calendar-week"><button id="calendarBtn" type="button"
+                        style="background: #00ff0000; border: 0;" value="2">일정</button></i>
+                     </div>
+                  </div>
+
+               <div class="item_area">
+                  <i class="fas fa-user-circle"></i>
+                  <div class="login_info">
+                     <div class="info_detail">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}</div>
+                     <div class="info_detail type"><%= sf.format(nowTime) %></div>
+                  </div>
+               </div>
+                     
+               <div class="item_area">
+                  <input class="input_detail" type="text" name="cardTitle" id="detailCardTitle" value=""
+                     placeholder="" style="border: none; background: transparent;">
+               </div>
+               <!-- 업무 영역 -->
+               <div class="item_area work_btn on">
+                  <i class="fas fa-spinner"></i>
+                  <div class="btn-group">
+                     <button class="button on" name="request" id="requestDetail" type="button" value="" autofocus="autofocus">요청</button>
+                     <button class="button on" name="progress" id="progress" type="button" disabled>진행</button>
+                     <button class="button" name="completion" id="completion" type="button" disabled>완료</button>
+                     <button class="button" name="hold" id="hold" type="button" disabled>보류</button>
+                  </div>
+
+               </div>
+               <div class="item_area work_btn on">
+                  <i class="fas fa-user-plus"></i> 
+                  <!-- <input class="input_detail type1" id="selectmember" type="text" name="addMember" placeholder="Add Member" 
+                  value="">  -->
+                  <div id="choisemember"></div>
+                  <!-- <input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회"> -->
+                  <div id="memberDetail"></div>
+                  <input id="detailMemberInput" value="">
+                  <input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
+               </div>
+               <div class="item_area work_btn on">
+               <div style="display: inline-block;">시작일자</div>
+               <div style="display: inline-block;" id="startTaskDate"></div>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               
+               <div style="display: inline-block;">종료일자</div>
+               <div style="display: inline-block;" id="endTaskDate"></div><br><br>
+                  <i class="far fa-calendar-plus"></i>
+                  <input class="input_detail type4" type="datetime-local" name="taskStartDate" id="detailTaskStartDate" value=""> &nbsp; -
+                  &nbsp; <i class="far fa-calendar-minus"></i> <input
+                     class="input_detail type4" type="datetime-local" name="taskEndDate" id="detailTaskEndDate" value="">
+               </div>
+               <!-- 업무영역 끝 -->
+
+               <!-- 일정 -->
+               <div class="item_area calendar_btn on">
+               <div style="display: inline-block;">시작일자</div>
+               <div style="display: inline-block;" id="startScheduleTaskDate"></div>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <div style="display: inline-block;">종료일자</div>
+               <div style="display: inline-block;" id="endScheduleTaskDate"></div><br><br>
+                  <i class="far fa-clock"></i> 
+                  <input type='datetime-local' name="scheduleStartDate" id="detailScheduleStartDate" value=""> &nbsp; - &nbsp; 
+                  <i class="far fa-calendar-minus"></i>
+                  <input type='datetime-local' name="scheduleEndDate" id="detailScheduleEndDate" value="">
+               </div>
+               <!-- <div class="item_area calendar_btn on">
+                  <i class="fas fa-user-plus"></i> <input class="input_detail type1"
+                     type="text" name="name" placeholder="Add Member"> <input
+                     class="input_detail type2" type="button" name="name" value="Add">
+               </div> -->
+               <div class="item_area calendar_btn on">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <input class="input_detail type3" type="text" name="place" size="20px" id="placeDetail" value=""
+                     placeholder="장소를 입력하세요"
+                     style="border: none; background: transparent;">
+               </div>
+               <div class="item_area calendar_btn on">
+                  <i class="fas fa-bell"></i> 
+                  <select class="select_detail" name="alert" id="detailAlert">
+                     <option value="1" id="detailAlert">30분 전 미리 알림</option>
+                     <option value="2" id="detailAlert">하루 전 미리 알림</option>
+                     <option value="3" id="detailAlert">알리지 않음</option>
+                  </select>
+               </div>
+               <div class="item_area calendar_btn on">
+                  <i class="fas fa-user-plus"></i> 
+                  <!-- <input class="input_detail type1" id="selectmember" type="text" name="addMember" placeholder="Add Member" 
+                  value="">  -->
+                  <div id="choisemember"></div>
+                  <!-- <input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회"> -->
+                  <div id="memberDetail2"></div>
+                  <input id="memberInput" value="">
+                  <input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
+               </div>
+               <!-- 일정 영역 끝 -->
+
+               <div class="item_area" id="detailTxt">
+                  <i class="far fa-comment-alt" id="detailTxt"></i>
+                  <textarea name="txt" id="cardDetailTxt"></textarea>
+               </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal_footer">
+               <div class="modal_icon">
+                  <i class="fas fa-paperclip"></i>
+               </div>
+               <div class="modal_icon">
+                  <i class="fas fa-hashtag"></i>
+               </div>
+
+               <div class="btn_area">
+               <input type="hidden" name="projectName" value="${projectName}">
+               <input name="sprNo" type="hidden" value="${sprNo}">   
+               <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+                  <input type="button" class="upload_btn" id="editCard" value="수정">
+                  <input type="button" class="upload_btn" id="deleteCard" value="삭제">
+                  <input type="reset" class="upload_btn" data-dismiss="modal" value="취소"></div>
+               </div>
+            </div>
+         </div>
+         </form>
+      </div>
+   </div>
    
    <!-- Modal 보드 생성 (한미화) -->
    <div class="modal fade" id="myModal3">
@@ -278,8 +423,9 @@ console.log("boardList" +  "${requestScope.boardList}");
             <!-- Modal footer -->
             <div class="modal_footer">
                <div class="btn_area">
-               <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-                  <input type="submit" class="upload_btn" id="newBoard" value="올리기">               </div>
+               		<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+                  	<input type="submit" class="upload_btn" id="newBoard" value="올리기">               
+               </div>
             </div>
          </form>
          </div>
@@ -315,7 +461,7 @@ console.log("boardList" +  "${requestScope.boardList}");
          </div>
       </div>
    </div>
-   <jsp:include page="../board/cardModal.jsp"></jsp:include>
+   <%-- <jsp:include page="../board/cardModal.jsp"></jsp:include> --%>
 </body>
 <script>
 
@@ -326,11 +472,14 @@ console.log("boardList" +  "${requestScope.boardList}");
          type: "get",
          data: {crdNo: crdNo},
          success: function(data, status, xhr) {
-           // console.table(data);
+           	console.table(data);
+           	var cardNo = data.no;
+           	var cardName = data.cardMemberList.name;
+           	console.log("cardName : " + cardName);
             var title = data.title;
             var enrolldate = data.enrollDate;
+            var order = data.order;
             var type = data.type;
-            console.log("cardType:!!!! : " + type);
             var memNo = data.memNo;
             var member	= data.member;
             var place	= data.place;
@@ -341,6 +490,61 @@ console.log("boardList" +  "${requestScope.boardList}");
    			var cardScheduleStartDate = data.scheduleStartDate;
    			var cardScheduleEndDate = data.scheduleEndDate;
    			
+   	           	var crdNo = cardNo;
+   	           	console.log(crdNo);
+   	         	$('#myModal2').modal("hide");
+   	         	$("#myModal3").modal();
+   	         	
+   				   	var html = '<input type="hidden" name="cardNo" value="'+ cardNo +'">'; 
+   				    $("#cardDetailTxt").empty();
+   				    $("#startTaskDate").empty();
+   				    $("#endTaskDate").empty();
+   				    $("#startScheduleTaskDate").empty();
+   				    $("#endScheduleTaskDate").empty();
+   				   	$('#placeDetail').attr('value', place);
+   				   	$('#detailCardTitle').attr('value', title);
+   				  	$('#detailMemberInput').attr('value', cardName);
+   				  	$('#cardDetailTxt').append(cardTxt);
+   				 	
+   				  	$('#startTaskDate').append(cardTaskStartDate);
+   				  	$('#endTaskDate').append(cardTaskEndDate);
+   				  	$('#startScheduleTaskDate').append(cardScheduleStartDate);
+   				  	$('#endScheduleTaskDate').append(cardScheduleEndDate);
+   				  	
+   				  	$('#cardDetail').append(html);
+   				  	
+   				  	
+   			       $.ajax({
+   			           type:"POST",
+   			           url:"${pageContext.servletContext.contextPath}/card/member",
+   			           data: {crdNo: crdNo},
+   			           success:function(data, status, xhr)
+   			           {
+   			              
+   			              console.log(data)
+   			            if(data !==0){
+   			               
+   			               let memberList = data; 
+   			               let list="";
+   			            	$("#memberDetail2").empty();
+   			               for(let i = 0; i < memberList.length; i++){
+   			            	
+   			                  var insertSpan="";
+   			                  insertSpan += '<span class="item_text on">' + memberList[i].name 
+   			                  + '<i id="delBtn" class="fas fa-times-circle"></i>' 
+   			                    + '<input class="item_num" name="memberList" type="hidden" value="' + memberList[i].no + '">' + '</span>';
+   			                  count++;
+   			                  $("#memberDetail2").append(insertSpan);
+   			               }
+   			            } 
+   			              
+   			           
+   			       },
+   			           error:function(data){
+   			            console.log(error);
+   			         }
+   			         });
+   	                  
    			if(type === 2 ) {
    				$(".work_btn").show();
    			} else if ( type === 3){
@@ -350,18 +554,6 @@ console.log("boardList" +  "${requestScope.boardList}");
    			 	$(".calendar_btn").show();
    			} 
    			
-   		
-   			/* 
-   			 	new insertCardTitle(cardTitle,appendPlace); 
-   			 	new insertCardMemNo(cardMemNo, appendPlace1);
-   				new insertCardMemberList(memberList,appendPlace2);
-   				new insertCardTxt(cardTxt,appendPlace3);
-   				new insertCardPlace(cardPlace,appendPlace4);
-   				new insertCardAlert(cardAlert,appendPlace5);
-   				new insertCardTaskStartDate(cardTaskStartDate,appendPlace6);
-   				new insertCardTaskEndDate(cardTaskEndDate,appendPlace7);
-   				new insertCardScheduleStartDate(cardScheduleStartDate,appendPlace8);
-   				new insertCardScheduleEndDate(cardScheduleEndDate,appendPlace9); */
             
          },
          error: function(xhr, status, error) {
@@ -370,104 +562,28 @@ console.log("boardList" +  "${requestScope.boardList}");
       });
    }
    
-
+   $('#editCard').click(function() {
+	   var url = '${pageContext.servletContext.contextPath}/card/modifyCard';
+	   var title =  document.getElementById("detailCardTitle").value;
+	   var order =  document.getElementById("requestDetail").value;
+	   var name =  document.getElementById("detailMemberInput").value;
+	   var taskStartDate =  document.getElementById("detailTaskStartDate").value;
+	   var taskEndDate =  document.getElementById("detailTaskEndDate").value;
+	   var scheduleStartDate =  document.getElementById("detailScheduleStartDate").value;
+	   var scheduleEndDate =  document.getElementById("detailScheduleEndDate").value;
+	   var place =  document.getElementById("placeDetail").value;
+	   var memNo =  document.getElementById("memberDetail2").value;
+	   var CardmemberInput =  document.getElementById("memberInput").value;
+	   var html = '<input type="hidden" name="crdNo" value="'+ crdNo +'">'
+	   console.log("html" + html);
+	   
+	   $('#cardDetail').append(html); 
+	   $('#cardDetail').attr('action',url);
+	   $('#cardDetail').submit(); 
+   });
+   
 </script>
-<script>
 
-	/* 참석자 이름 넣어주기 */
-	function insertPerson(memberList,appendPlace){
-	   $("#"+appendPlace+"").empty();
-	   for(let i = 0; i < memberList.length; i++){
-        console.table( $("#"+appendPlace+"") );
-        var insertSpan="";
-        insertSpan = '<span class="item_text on">' + memberList[i].name + '<i id="delBtn" class="fas fa-times-circle"></i>' + '<input class="item_num" name="member' + [i] + '" type="hidden" value="' + memberList[i].no + '">' + '</span>';
-        count++
-        $("#"+appendPlace+"").append(insertSpan);
-     }
-}
-
-	/* 카드 상세페이지 타이틀 넣어주기 */
-	function insertCardTitle(cardTitle,appendPlace){
-	   $("#"+appendPlace+"").empty();
-	   
-	   var insertTitle="";
-	   insertTitle = '<span>' + cardTitle + '</span>'
-	   $("#"+appendPlace+"").append(insertTitle);
-}
-	/* 카드 상세페이지 담당자 넣어주기 */
-	function insertCardMemNo(cardMemNo,appendPlace){
-	   $("#"+appendPlace+"").empty();
-	   
-	   var insertTitle="";
-	   insertTitle = '<span>' + cardMemNo + '</span>'
-	   $("#"+appendPlace+"").append(insertTitle);
-}
-	/* 카드 상세페이지 멤버리스트 넣어주기 */
-	function insertCardMemberList(memberList,appendPlace){
-	   $("#"+appendPlace+"").empty();
-	   
-	   var insertTitle="";
-	   insertTitle = '<span>' + memberList + '</span>'
-	   $("#"+appendPlace+"").append(insertTitle);
-}
-	/* 카드 상세페이지 텍스트아레아 넣어주기 */
-	function insertCardTxt(cardTxt,appendPlace){
-	   $("#"+appendPlace+"").empty();
-	   
-	   var insertTitle="";
-	   insertTitle = '<span>' + cardTxt + '</span>'
-	   $("#"+appendPlace+"").append(insertTitle);
-}
-	/* 카드 상세페이지 장소 넣어주기 */
-	function insertCardPlace(cardPlace,appendPlace){
-	   $("#"+appendPlace+"").empty();
-	   
-	   var insertTitle="";
-	   insertTitle = '<span>' + cardPlace + '</span>'
-	   $("#"+appendPlace+"").append(insertTitle);
-}
-	/* 카드 상세페이지 알림 넣어주기 */
-	function insertCardAlert(cardAlert,appendPlace){
-	   $("#"+appendPlace+"").empty();
-	   
-	   var insertTitle="";
-	   insertTitle = '<span>' + cardAlert + '</span>'
-	   $("#"+appendPlace+"").append(insertTitle);
-}
-	/* 카드 상세페이지 업무시작일 넣어주기 */
-	function insertCardTaskStartDate(cardTaskStartDate,appendPlace){
-	   $("#"+appendPlace+"").empty();
-	   
-	   var insertTitle="";
-	   insertTitle = '<span>' + cardTaskStartDate + '</span>'
-	   $("#"+appendPlace+"").append(insertTitle);
-}
-	/* 카드 상세페이지 업무종료일 넣어주기 */
-	function insertCardTaskEndDate(cardTaskEndDate,appendPlace){
-	   $("#"+appendPlace+"").empty();
-	   
-	   var insertTitle="";
-	   insertTitle = '<span>' + cardTaskEndDate + '</span>'
-	   $("#"+appendPlace+"").append(insertTitle);
-}
-	/* 카드 상세페이지 일정시작일 넣어주기 */
-	function insertCardScheduleStartDate(cardScheduleStartDate,appendPlace){
-	   $("#"+appendPlace+"").empty();
-	   
-	   var insertTitle="";
-	   insertTitle = '<span>' + cardScheduleStartDate + '</span>'
-	   $("#"+appendPlace+"").append(insertTitle);
-}
-	/* 카드 상세페이지 일정종료일 넣어주기 */
-	function insertCardScheduleEndDate(cardScheduleEndDate,appendPlace){
-	   $("#"+appendPlace+"").empty();
-	   
-	   var insertTitle="";
-	   insertTitle = '<span>' + cardScheduleEndDate + '</span>'
-	   $("#"+appendPlace+"").append(insertTitle);
-}
-
-</script>
 <script type="text/javascript">
 
    $(function(){
@@ -478,15 +594,17 @@ console.log("boardList" +  "${requestScope.boardList}");
           
       });
       
-        $(".board_item.card1").click(function(e){
+       $(".board_item.card").click(function(e){
             
            	var crdNo = $(this).children("#crdNo").val();
            	console.log(crdNo);
          	e.preventDefault();                  
-         	$("#updateCardModal").modal();
+         	$('#myModal2').modal("hide");
+         	$("#myModal3").modal();
          	selectCardInfo(crdNo);
         	   
-         });   
+         });
+        
    })
 </script>
 
@@ -563,7 +681,7 @@ console.log("boardList" +  "${requestScope.boardList}");
 	   $('#modifyform').attr('action',url);
 	   $('#modifyform').submit();
    });
-	   });
+	   /* }); */
   
    /* 보드 삭제 (한미화) */
    $("#deleteBoard").click(function(){ 

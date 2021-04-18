@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.greedy.shortcut.board.model.dto.BoardDTO;
+import com.greedy.shortcut.board.model.dto.CardAttendListDTO;
 import com.greedy.shortcut.board.model.dto.CardDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.RequestCardDTO;
@@ -23,11 +24,12 @@ public interface CardService {
 
 	List<CardDTO> selectCardList(List<BoardDTO> boardList);
 
-//	HashMap<String, Object> selectCardInfo(int cardNo);
-
-//	List<RequestCardDTO> selectCardInfo(int cardNo);
 	
 	List<RequestCardDTO> selectCardInfo(int cardNo);
+
+	List<CardAttendListDTO> selectCardMember(int crdNo);
+
+	boolean modifyCard(RequestCardDTO card);
 
 
 }
