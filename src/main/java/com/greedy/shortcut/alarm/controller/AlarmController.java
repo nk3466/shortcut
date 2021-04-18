@@ -1,5 +1,7 @@
 package com.greedy.shortcut.alarm.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.greedy.shortcut.alarm.model.dto.AlertDTO;
 import com.greedy.shortcut.alarm.model.service.AlarmService;
 
 @Controller
@@ -96,4 +99,32 @@ public class AlarmController {
 		
 		return new ObjectMapper().writeValueAsString("session expire!");
 	}
+	
+	@GetMapping(value="alarm/general", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String generalAlarm(@RequestParam int no) throws JsonProcessingException {
+
+		List<AlertDTO> generalAlarmList = alarmService.selectGeneralAlarmList(no);
+		
+		return new ObjectMapper().writeValueAsString(generalAlarmList);
+	}
+	
+	@PostMapping(value="alarm/general/read", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String generalAlarmRead(@RequestParam int no) throws JsonProcessingException {
+		
+		int success = alarmService.modifyAlarmRead(no);
+		
+		return new ObjectMapper().writeValueAsString(success);
+	}
+	
+	@PostMapping(value="alarm/general/remove", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String generalAlarmRemove(@RequestParam int altDelNo) throws JsonProcessingException {
+		
+		int success = alarmService.modifyAlarmRemove(altDelNo);
+		
+		return new ObjectMapper().writeValueAsString(success);
+	}
+	
 }

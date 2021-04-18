@@ -1,5 +1,10 @@
 package com.greedy.shortcut.alarm.model.service;
 
+import java.util.List;
+
+import com.greedy.shortcut.alarm.model.dto.AlertDTO;
+
+
 public interface AlarmService {
 
 	String selectGitUrl(int memNo);
@@ -9,4 +14,10 @@ public interface AlarmService {
 	int modifyGitUrl(int memNo, String modifyUrl);
 
 	int removeGitUrl(int memNo);
+
+	List<AlertDTO> selectGeneralAlarmList(int no);
+
+	int modifyAlarmRead(int no);
+
+	int modifyAlarmRemove(int altDelNo);
 }
