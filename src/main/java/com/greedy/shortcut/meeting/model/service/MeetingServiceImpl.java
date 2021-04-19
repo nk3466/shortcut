@@ -68,10 +68,13 @@ public class MeetingServiceImpl implements MeetingService{
 		
 		List<MemberDTO> memberList = mapper.selectMeetingDetailMember(meetingNo);
 		
+		List<SprintDTO> sprintName = mapper.selectSprintName(meetingNo);
+		
 		HashMap<String,Object> MeetingDetail = new HashMap<String,Object>();
 		
 		MeetingDetail.put("meeting", meeting);
 		MeetingDetail.put("memberList", memberList);
+		MeetingDetail.put("sprintName", sprintName);
 		
 		
 	

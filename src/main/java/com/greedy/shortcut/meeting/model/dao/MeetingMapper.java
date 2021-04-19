@@ -37,6 +37,8 @@ public interface MeetingMapper {
 
 	List<SprintDTO> selectSprintNumber(int pjtNo);
 
+	List<SprintDTO> selectSprintName(int meetingNo);
+
 	
 
 

@@ -47,7 +47,12 @@
    <section class="content-left">
       <div class="left-main">
       	<div class="issue_collect">
-      		<div>이슈 모아보기</div> 
+      		<div class="issue_text">이슈 모아보기</div>
+      		<div class="row">
+      			<div class="issue_btn on">진행중</div>
+      			<div class="issue_btn">완료</div>
+      			
+      		</div> 
       	</div>
          <div class="main-wrap">
             <div class="main-day"></div>
@@ -265,19 +270,21 @@
 	   			var meetingName2 = data.meeting.meetingName;
 	   			var meetingText2= data.meeting.meetingText;
 	   			var enrollDate2 = data.meeting.enrollDate; 
+	   			var sprintNumber2 = data.sprintName[0].sprName;
 	   			console.log("meetingTexttt :"+ meetingText2);
 	   			console.log("meetingNameee :"+ meetingName2);
 	   			var appendPlace = 'meetingMemberDetailList1';
 	   			var appendPlace1 = 'meetingDateDetail1';	
 	   			var appendPlace2 = 'meetingTitleDetail1';
 	   			var appendPlace3 = 'meetingContentDetail1';
+	   			var appendPlace4 = 'sprintItem1';
 	   		
 	   			
-	   			 new insertPerson(memberList2,appendPlace); 
-	   			 new insertDate(enrollDate2, appendPlace1);
-	   			//new insertSprintName();
+	   			new insertPerson(memberList2,appendPlace); 
+	   			new insertDate(enrollDate2, appendPlace1);
 	   			new insertMeetingName1(meetingName2,appendPlace2);
 	   			new insertMeetingText1(meetingText2,appendPlace3);
+	   			new insertSprintNo1(sprintNumber2,appendPlace4);
 		   },
 		   error : function(error){
 			   console.log(error);
@@ -329,16 +336,15 @@
 	        data : {"meetingNo" : meetingNo},
 	   		success: function(data, status, xhr){
 	   			console.table(data) ;
-	   			/* console.table(data.memberList[0].name); */
 	   			var memberListtt = data.memberList;
 	   			var meetingNameee = data.meeting.meetingName;
 	   			var meetingTexttt= data.meeting.meetingText;
 	   			var enrollDate = data.meeting.enrollDate; 
-	   			var sprintNumber1 = data.meeting.sprintNo
+	   			var sprintNumber1 = data.sprintName[0].sprName;
+	   			console.log("sprintNumber1" + sprintNumber1)
 	   			console.log("enrollDate :"+ enrollDate);
 	   			console.log("meetingTexttt :"+ meetingTexttt);
 	   			console.log("meetingNameee :"+ meetingNameee);
-	   			//console.log("memberListtt :" + memberListtt[0]);
 	   			var appendPlace = 'meetingMemberDetailList';
 	   			var appendPlace1 = 'meetingDateDetail';	
 	   			var appendPlace2 = 'meetingTitleDetail';
@@ -346,9 +352,8 @@
 	   			var appendPlace4 = 'sprintItem';
 	   		
 	   			
-	   			 new insertPerson(memberListtt,appendPlace); 
-	   			 new insertDate(enrollDate, appendPlace1);
-	   			//new insertSprintName();
+	   			new insertPerson(memberListtt,appendPlace); 
+	   			new insertDate(enrollDate, appendPlace1);
 	   			new insertMeetingName(meetingNameee,appendPlace2);
 	   			new insertMeetingText(meetingTexttt,appendPlace3);
 	   			new insertSprintNo(sprintNumber1,appendPlace4);
@@ -491,6 +496,15 @@
 	   
 	    var insertSprint="";
 	    insertSprint = '<span>' + sprintNumber1 + '</span>'
+	    $("#"+appendPlace+"").append(insertSprint);
+   }
+   /* 수정페이지 스프린트 번호 넣어주기 */
+   function insertSprintNo1(sprintNumber2,appendPlace){
+		$("#"+appendPlace+"").empty();
+	   
+	   
+	    var insertSprint="";
+	    insertSprint = '<span>' + sprintNumber2 + '</span>'
 	    $("#"+appendPlace+"").append(insertSprint);
    }
    

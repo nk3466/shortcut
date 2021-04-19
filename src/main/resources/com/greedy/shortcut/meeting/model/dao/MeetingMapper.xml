@@ -136,8 +136,10 @@
 		     , A.MEET_ENROLL_DATE
 		     , A.MEET_DEL_YN
 		     , A.SPR_NO
-		     , A.PJT_NO     
+		     , A.PJT_NO  
+		     , B.SPR_NAME   
 		  FROM MEETING A
+		  JOIN SPRINT B ON (A.SPR_NO = B.SPR_NO)
 		 WHERE A.MEET_NO = #{meetingNo}
 	</select>
 	
@@ -173,5 +175,14 @@
 		  FROM SPRINT A
 		  JOIN BACKLOG B ON (A.BLG_NO = B.BLG_NO)
 		 WHERE PJT_NO = #{pjtNo}
+	</select>
+	
+	<select id="selectSprintName" resultMap="SprintResultMap">
+		SELECT
+		       A.SPR_NO
+		     , A.SPR_NAME
+		  FROM SPRINT A
+		  JOIN MEETING M ON (A.SPR_NO = M.SPR_NO)
+		 WHERE M.MEET_NO = #{meetingNo}
 	</select>
 </mapper>
