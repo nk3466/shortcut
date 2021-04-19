@@ -53,6 +53,16 @@
 		<result column="MEET_HIS_NO" property="meetHisNo"/>
 	</resultMap>
 	
+	<resultMap type="SprintDTO" id="SprintResultMap">
+		<id property="sprNo" column="SPR_NO"/>
+		<result property="sprName" column="SPR_NAME"/>
+		<result property="sprStardDate" column="SPR_START_DATE"/>
+		<result property="sprEndDate" column="SPR_END_DATE"/>
+		<result property="sprGoal" column="SPR_GOAL"/>
+		<result property="sprDelYn" column="SPR_DEL_YN"/>
+		<result property="sprBlgNo" column="BLG_NO"/>
+	</resultMap>
+	
 	<insert id="insertMeeting" parameterType="MeetingDTO">
 		INSERT
 		  INTO MEETING A
@@ -63,7 +73,7 @@
 		VALUES
 		(
 		  SEQ_MEET_NO.NEXTVAL, #{meetingName}, #{meetingText}
-		, #{enrollDate}, 1, #{pjtNo}
+		, #{enrollDate}, #{sprintNo}, #{pjtNo}
 		)
 	</insert>
 	
@@ -73,7 +83,7 @@
 		     , A.MEM_NO 
 		  FROM MEMBER A 
 		  JOIN PJT_AUTHORITY B ON (B.MEM_NO = A.MEM_NO)
-		 WHERE B.PJT_NO = ${pjtNo}
+		 WHERE B.PJT_NO = #{pjtNo}
 	</select>
 	
 	
@@ -113,8 +123,7 @@
 		     , A.MEET_DEL_YN
 		     , A.SPR_NO     
 		  FROM MEETING A
-		 WHERE A.SPR_NO = 1
-		   AND A.MEET_DEL_YN = 'N'
+		 WHERE A.MEET_DEL_YN = 'N'
 		   AND A.PJT_NO = #{pjtNo}
 	</select>
 	
@@ -157,4 +166,12 @@
 	</update>
 	
 
+	<select id="selectSprintNumber" resultMap="SprintResultMap">
+		SELECT
+		       A.SPR_NO
+		     , A.SPR_NAME
+		  FROM SPRINT A
+		  JOIN BACKLOG B ON (A.BLG_NO = B.BLG_NO)
+		 WHERE PJT_NO = #{pjtNo}
+	</select>
 </mapper>

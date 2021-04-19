@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.greedy.shortcut.board.model.dto.ProjectAndAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.ProjectDTO;
+import com.greedy.shortcut.board.model.dto.SprintDTO;
 import com.greedy.shortcut.meeting.model.dao.MeetingMapper;
 import com.greedy.shortcut.meeting.model.dto.AttendListDTO;
 import com.greedy.shortcut.meeting.model.dto.MeetingDTO;
@@ -87,6 +88,12 @@ public class MeetingServiceImpl implements MeetingService{
 	public int modifyComplete(int meetingNo, String modifyTitle, String modifyContent) {
 
 		return mapper.modifyComplete(meetingNo, modifyTitle, modifyContent);
+	}
+
+	@Override
+	public List<SprintDTO> selectSprintNumber(int pjtNo) {
+
+		return mapper.selectSprintNumber(pjtNo);
 	}
 
 

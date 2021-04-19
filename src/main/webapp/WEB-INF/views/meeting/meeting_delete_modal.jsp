@@ -37,8 +37,8 @@
 				<div class="modal_footer">								
 					<div class="btn_area">
 						<input name="${_csrf.parameterName}" type="hidden"  value="${_csrf.token}">
-						<input type="button" id="deletedBtn" class="upload_btn" value="삭제하기">	
-						<button type="button" class="upload_btn" data-dismiss="modal">취소하기</button>
+						<input type="button" id="deletedBtn" class="upload_btn meetingBtn" value="삭제하기">	
+						<button type="button" class="upload_btn meetingBtn" data-dismiss="modal">취소하기</button>
 					</div>														
 				</div>
 

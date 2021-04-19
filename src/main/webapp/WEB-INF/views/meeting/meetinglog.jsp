@@ -110,7 +110,7 @@
                   		            스프린트
                            </div>                     
                            <div class="item_text">
-                              
+								<select id="sprintNumberArea"></select>
                            </div>                     
                         </div>
                         <div class="modal_line"></div>
@@ -119,7 +119,7 @@
                            <div class="item_type type">
                       		        참석자
                            </div>
-                           <div class="item_type" id="meetingMember">
+                           <div class="item_type type3" id="meetingMember">
                               
                            </div>
                            
@@ -152,7 +152,7 @@
                <div class="modal_footer">                        
                   <div class="btn_area">
                      <input name="${_csrf.parameterName}" type="hidden"  value="${_csrf.token}">
-                     <input type="button" id="upload" class="upload_btn" value="완료">   
+                     <input type="button" id="upload" class="upload_btn meetingBtn" value="완료">   
                   </div>                                          
                </div>
             </form>
@@ -334,6 +334,7 @@
 	   			var meetingNameee = data.meeting.meetingName;
 	   			var meetingTexttt= data.meeting.meetingText;
 	   			var enrollDate = data.meeting.enrollDate; 
+	   			var sprintNumber1 = data.meeting.sprintNo
 	   			console.log("enrollDate :"+ enrollDate);
 	   			console.log("meetingTexttt :"+ meetingTexttt);
 	   			console.log("meetingNameee :"+ meetingNameee);
@@ -342,6 +343,7 @@
 	   			var appendPlace1 = 'meetingDateDetail';	
 	   			var appendPlace2 = 'meetingTitleDetail';
 	   			var appendPlace3 = 'meetingContentDetail';
+	   			var appendPlace4 = 'sprintItem';
 	   		
 	   			
 	   			 new insertPerson(memberListtt,appendPlace); 
@@ -349,6 +351,7 @@
 	   			//new insertSprintName();
 	   			new insertMeetingName(meetingNameee,appendPlace2);
 	   			new insertMeetingText(meetingTexttt,appendPlace3);
+	   			new insertSprintNo(sprintNumber1,appendPlace4);
 	   		},
 	   		error: function(xhr, status, data){
 	   			console.log(data);
@@ -420,7 +423,7 @@
       
    var pjtNo = ${pjtNo};
    var count = 0;
-      
+   var sprintCount = 0;   
    /* 프로젝트에 참여하고 인원 리스트*/
    $(".conference_update").click(function(){
       
@@ -431,12 +434,15 @@
          data : {"pjtNo" : pjtNo},
          
          success: function(data, status, xhr){
-           /*  console.table(data) */
+           console.table(data)
             if(data !==0){
                
-               let memberList = data; 
-               let list="";
+               let memberList = data.memberList; 
                let meetingMember = 'meetingMember';
+               
+               let sprintNumber = data.sprintNo;
+               
+               new insertSprintNumber(sprintNumber);
                new insertPerson(memberList,meetingMember);
                
               /*  console.log(count); */
@@ -463,6 +469,29 @@
            count++
            $("#"+appendPlace+"").append(insertSpan);
         }
+   }
+   
+   /* 스프린트 이름 번호 넣기 */
+   function insertSprintNumber(sprintNumber){
+	   $("#sprintNumberArea").empty();
+	   
+	   for(let i = 0; i < sprintNumber.length; i++){
+		   
+		   var insertOption="";
+		   insertOption = '<option>' + sprintNumber[i].sprName + '<input class="sprintNono" name="sprintno' + [i] + '" type="hidden" value="' + sprintNumber[i].sprNo + '">' + '</option>';
+		   sprintCount++;
+		   $("#sprintNumberArea").append(insertOption);
+	   }
+   }
+   
+   /* 상세페이지 스프린트 번호 넣어주기 */
+   function insertSprintNo(sprintNumber1,appendPlace){
+		$("#"+appendPlace+"").empty();
+	   
+	   
+	    var insertSprint="";
+	    insertSprint = '<span>' + sprintNumber1 + '</span>'
+	    $("#"+appendPlace+"").append(insertSprint);
    }
    
    /* 상세페이지 날짜 넣어주기  */
@@ -532,11 +561,12 @@
 
       var enrollDate = $("#meetingDate").val();                  // input date 값
       var meetingInfo= new calculateDate(enrollDate);
-                              
+                 
+      
+      var sprintNo = $("#sprintNumberArea option:selected").find(".sprintNono").val();
       
       var meetingName = $("#titleName").val();
       var meetingText = $("#meetingContent").val();
-      
       
       var meetingMember = $('form[name=projectMemberList]').serializeArray();
       for(let i = 0; i < count; i++){
@@ -546,7 +576,7 @@
          console.log(memberAttend);
       }
       
-      insertMeeting(pjtNo,meetingMember,enrollDate,meetingName,index,meetingText,meetingInfo);
+      insertMeeting(pjtNo,meetingMember,enrollDate,meetingName,index,meetingText,meetingInfo,sprintNo);
       console.log(meetingMember);
       
 
@@ -600,7 +630,7 @@
    
 	   
    
-   function insertMeeting(pjtNo,meetingMember,enrollDate,meetingName,index,meetingText,meetingInfo){
+   function insertMeeting(pjtNo,meetingMember,enrollDate,meetingName,index,meetingText,meetingInfo, sprintNo){
       $.ajax({
           url : "${pageContext.servletContext.contextPath}/meeting/meetinglog",
           type : "POST",   
@@ -611,7 +641,8 @@
                 "enrollDate" : enrollDate,
                 "meetingName" : meetingName,
                 "meetingText" : meetingText,
-                "index" : index
+                "index" : index,
+                "sprintNo" : sprintNo
                 },
           success : function(data, status, xhr){
              /* console.log( enrollDateInfo.EnrollDate === enrollDateInfo.meetDate); */
