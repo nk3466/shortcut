@@ -51,7 +51,7 @@
 									<div class="item_type type1">
 										스프린트
 									</div>							
-									<div class="item_text">
+									<div id="sprintItem1" class="item_text">
 
 									</div>							
 								</div>

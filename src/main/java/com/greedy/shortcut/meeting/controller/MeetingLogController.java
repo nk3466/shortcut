@@ -208,9 +208,6 @@ public class MeetingLogController {
 
 		model.addAttribute("meeting", meeting);
 		
-		System.out.println("모오냐야" + meeting);
-		
-		System.out.println("이거 수정 미팅넘버" + meetingNo);
 		
 		
 		return new ObjectMapper().writeValueAsString(meeting);
