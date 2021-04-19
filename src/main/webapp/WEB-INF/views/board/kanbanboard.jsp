@@ -78,8 +78,8 @@
       <div class="kanban_item boardcolumn">
          <div class="kanbanboard type1" id="newBoard<c:out value="${boardList.brdOrder}"/>">
             <div class="kanbanboard_title board-header card no-move" ><c:out value="${boardList.brdName}"/></div>
-	            <input type="text" value="${boardList.brdNo}" class="boardNo" name="" style="display: none;">
-            	<i class="fas fa-ellipsis-v" id="modify3" data-toggle="modal" data-target="#myModal4"></i>
+               <input type="text" value="${boardList.brdNo}" class="boardNo" name="" style="display: none;">
+               <i class="fas fa-ellipsis-v" id="modify3" data-toggle="modal" data-target="#myModal4"></i>
             
             
             <!--  카드 영역  -->
@@ -260,7 +260,7 @@ console.log("boardList" +  "${requestScope.boardList}");
    <!-- 상세페이지 -->
    <input type="text" value="${ requestScope.pjtNo }" name="" id="" style="display: none;">
    <!-- The Modal -->
-   <div class="modal fade" id="myModal3">
+   <div class="modal fade" id="myModal5">
       <div class="modal-dialog">
          <div class="modal-header type">Short Cut</div>
 
@@ -405,6 +405,7 @@ console.log("boardList" +  "${requestScope.boardList}");
       </div>
    </div>
    
+   
    <!-- Modal 보드 생성 (한미화) -->
    <div class="modal fade" id="myModal3">
       <div class="modal-dialog">
@@ -424,8 +425,8 @@ console.log("boardList" +  "${requestScope.boardList}");
             <!-- Modal footer -->
             <div class="modal_footer">
                <div class="btn_area">
-               		<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-                  	<input type="submit" class="upload_btn" id="newBoard" value="올리기">               
+                     <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+                     <input type="submit" class="upload_btn" id="newBoard" value="올리기">               
                </div>
             </div>
          </form>
@@ -463,147 +464,123 @@ console.log("boardList" +  "${requestScope.boardList}");
       </div>
    </div>
 </body>
+
 <script>
-	
+   
    function selectCardInfo(crdNo) {
-		console.log("셀렉트카드" + crdNo);
       $.ajax({
          url: "${pageContext.servletContext.contextPath}/select/cardInfo",
          type: "get",
          data: {crdNo: crdNo},
          success: function(data, status, xhr) {
-           	console.table(data);
-           	var cardNo = data.no;
-           	var cardName = data.cardMemberList.name;
-           	console.log("cardName : " + cardName);
+            
+        	console.table(data);
+            
+            var cardNo = data.no;
+            var cardName = data.cardMemberList.name;
             var title = data.title;
             var enrolldate = data.enrollDate;
             var order = data.order;
             var type = data.type;
-            console.log("type!!!!!" + type);
             var memNo = data.memNo;
-            console.log("memNo1!!! : " + memNo);
-            var member	= data.member;
-            console.log("member!!!!!! : " + member);
-            var place	= data.place;
-            var alert	= data.alert;
-   			var cardTxt = data.txt;
-   			var memberList = data.memberList;
-   			console.log("memberList!!! : " + memberList);
-   			var cardTaskStartDate = data.taskStartDate;
-   			var cardTaskEndDate = data.taskEndDate;
-   			var cardScheduleStartDate = data.scheduleStartDate;
-   			var cardScheduleEndDate = data.scheduleEndDate;
-   			
-   	           	var no = cardNo;
-   	           	console.log(no);
-   	         	$('#myModal2').modal("hide");
-   	         	$("#myModal3").modal();
-   	         	
-   				   	var html = '<input type="hidden" name="no" value="'+ no +'">'; 
-   				    $("#cardDetailTxt").empty();
-   				    $("#startTaskDate").empty();
-   				    $("#endTaskDate").empty();
-   				    $("#startScheduleTaskDate").empty();
-   				    $("#endScheduleTaskDate").empty();
-   				   	$('#placeDetail').attr('value', place);
-   				   	$('#detailCardTitle').attr('value', title);
-   				  	$('#detailMemberInput').attr('value', cardName);
-   				  	$('#pleaseType1').attr('value', type);
-   				  	$('#crdNo').attr('value', cardNo);
-   				  	
-   				  	$('#cardDetailTxt').append(cardTxt);
-   				 	
-   				  	$('#startTaskDate').append(cardTaskStartDate);
-   				  	$('#endTaskDate').append(cardTaskEndDate);
-   				  	$('#startScheduleTaskDate').append(cardScheduleStartDate);
-   				  	$('#endScheduleTaskDate').append(cardScheduleEndDate);
-   				  	
-   				  	$('#cardDetailUpdate').append(html);
-   				  	
-   				  	
-   			       $.ajax({
-   			           type:"POST",
-   			           url:"${pageContext.servletContext.contextPath}/card/member",
-   			           data: {crdNo: crdNo},
-   			           success:function(data, status, xhr)
-   			           {
-   			              
-   			              console.log(data)
-   			            if(data !==0){
-   			               
-   			               let memberList = data; 
-   			               let list="";
-   			            	$("#memberDetail2").empty();
-   			               for(let i = 0; i < memberList.length; i++){
-   			            	
-   			                  var insertSpan="";
-   			                  insertSpan += '<span class="item_text on">' + memberList[i].name 
-   			                  + '<i id="delBtn" class="fas fa-times-circle"></i>' 
-   			                    + '<input class="item_num" name="memberList" type="hidden" value="' + memberList[i].no + '">' + '</span>';
-   			                  count++;
-   			                  $("#memberDetail2").append(insertSpan);
-   			               }
-   			            } 
-   			              
-   			           
-   			       },
-   			           error:function(data){
-   			            console.log(error);
-   			         }
-   			         });
-   	                  
-   			if(type === 2 ) {
-   				$(".work_btn").show();
-   			} else if ( type === 3){
-   				$(".calendar_btn").show();
-   			} else if ( type === 4) {
-   			 	$(".work_btn").show();
-   			 	$(".calendar_btn").show();
-   			} 
-   			
+            var member   = data.member;
+            var place   = data.place;
+            var alert   = data.alert;
+            var cardTxt = data.txt;
+            var memberList = data.memberList;
+            var cardTaskStartDate = data.taskStartDate;
+            var cardTaskEndDate = data.taskEndDate;
+            var cardScheduleStartDate = data.scheduleStartDate;
+            var cardScheduleEndDate = data.scheduleEndDate;
+            
+                  var no = cardNo;
+                  console.log(no);
+                  	$('#myModal2').modal("hide");
+                  	$("#myModal5").modal();
+                  
+                  var html = '<input type="hidden" name="no" value="'+ no +'">'; 
+                   	$("#cardDetailTxt").empty();
+                   	$("#startTaskDate").empty();
+                   	$("#endTaskDate").empty();
+                   	$("#startScheduleTaskDate").empty();
+                   	$("#endScheduleTaskDate").empty();
+                    $('#placeDetail').attr('value', place);
+                    $('#detailCardTitle').attr('value', title);
+                    $('#detailMemberInput').attr('value', cardName);
+                    $('#pleaseType1').attr('value', type);
+                    $('#crdNo').attr('value', cardNo);
+                    $('#cardDetailTxt').append(cardTxt);
+                    $('#startTaskDate').append(cardTaskStartDate);
+                    $('#endTaskDate').append(cardTaskEndDate);
+                    $('#startScheduleTaskDate').append(cardScheduleStartDate);
+                    $('#endScheduleTaskDate').append(cardScheduleEndDate);
+                    $('#cardDetailUpdate').append(html);
+                    
+                   $.ajax({
+                       type:"POST",
+                       url:"${pageContext.servletContext.contextPath}/card/member",
+                       data: {crdNo: crdNo},
+                       success:function(data, status, xhr)
+                       {
+                        console.log(data)
+                        if(data !==0){
+                           
+                           let memberList = data; 
+                           let list="";
+                           $("#memberDetail2").empty();
+                           for(let i = 0; i < memberList.length; i++){
+                           
+                              var insertSpan="";
+                              insertSpan += '<span class="item_text on">' + memberList[i].name 
+                              + '<i id="delBtn" class="fas fa-times-circle"></i>' 
+                                + '<input class="item_num" name="memberList" type="hidden" value="' + memberList[i].no + '">' + '</span>';
+                              count++;
+                              $("#memberDetail2").append(insertSpan);
+                           }
+                        } 
+                          
+                       
+                   },
+                       error:function(data){
+                        console.log(error);
+                     }
+                     });
+                        
+            if(type === 2 ) {
+               $(".work_btn").show();
+            } else if ( type === 3) {
+               $(".calendar_btn").show();
+            } else if ( type === 4) {
+                $(".work_btn").show();
+                $(".calendar_btn").show();
+            } 
             
          },
          error: function(xhr, status, error) {
             console.log(error);
          }
+         
       });
+      
    }
-   	   $('#editCard').click(function() {
-	   var url = '${pageContext.servletContext.contextPath}/card/modifyCard';
-	   var no = document.getElementById("crdNo").value;
-	   alert(no);
-	   var title =  document.getElementById("detailCardTitle").value;
-	   var type =  document.getElementById("pleaseType1").value;
-	   var member =  document.getElementById("detailMemberInput").value;
-	   var taskStartDate =  document.getElementById("detailTaskStartDate").value;
-	   var taskEndDate =  document.getElementById("detailTaskEndDate").value;
-	   var scheduleStartDate =  document.getElementById("detailScheduleStartDate").value;
-	   var scheduleEndDate =  document.getElementById("detailScheduleEndDate").value;
-	   var place =  document.getElementById("placeDetail").value;
-	   var memberList =  document.getElementById("memberDetail2").value;
-	   var html1 = '<input type="hidden" name="title" value="'+ title +'">'
-	   var html2 = '<input type="hidden" name="member" value="'+ member +'">'
-	   var html3 = '<input type="hidden" name="taskStartDate" value="'+ taskStartDate +'">'
-	   var html4 = '<input type="hidden" name="taskEndDate" value="'+ taskEndDate +'">'
-	   var html5 = '<input type="hidden" name="scheduleStartDate" value="'+ scheduleStartDate +'">'
-	   var html6 = '<input type="hidden" name="scheduleEndDate" value="'+ scheduleEndDate +'">'
-	   var html7 = '<input type="hidden" name="place" value="'+ place +'">'
-	   var html8 = '<input type="hidden" name="memberList" value="'+ memberList +'">'
-	   var html9 = '<input type="hidden" name="type" value="'+ type +'">'
-	   
-	   $('#cardDetailUpdate').append(html1);
-	   $('#cardDetailUpdate').append(html2);
-	   $('#cardDetailUpdate').append(html3);
-	   $('#cardDetailUpdate').append(html4);
-	   $('#cardDetailUpdate').append(html5);
-	   $('#cardDetailUpdate').append(html6);
-	   $('#cardDetailUpdate').append(html7);
-	   $('#cardDetailUpdate').append(html8);
-	   $('#cardDetailUpdate').append(html9);
-	   $('#cardDetailUpdate').attr('action',url);
-	   $('#cardDetailUpdate').submit();
+   
+      $('#editCard').click(function() {
+      
+    	  var url = '${pageContext.servletContext.contextPath}/card/modifyCard';
+      
+      		$('#cardDetailUpdate').attr('action',url);
+     	 	$('#cardDetailUpdate').submit();
    });
+      
+      $('#deleteCard').click(function() {
+          
+    	  var url = '${pageContext.servletContext.contextPath}/card/deleteCard';
+    	  	var no = document.getElementById("crdNo").value;
+          	alert(no);
+
+          	$('#cardDetailUpdate').attr('action',url);
+          	$('#cardDetailUpdate').submit();
+      });
    
 </script>
 
@@ -619,15 +596,14 @@ console.log("boardList" +  "${requestScope.boardList}");
       
        $(".board_item.card").click(function(e){
             
-           	var crdNo = $(this).children("#crdNo").val();
-           	console.log(crdNo);
-         	e.preventDefault();                  
-         	$('#myModal2').modal("hide");
-         	$("#myModal3").modal();
-         	selectCardInfo(crdNo);
-        	   
+              var crdNo = $(this).children("#crdNo").val();
+            	e.preventDefault();                  
+            	$('#myModal2').modal("hide");
+            	$("#myModal5").modal();
+            	selectCardInfo(crdNo);
+              
          });
-        
+       
    })
 </script>
 
@@ -677,58 +653,58 @@ console.log("boardList" +  "${requestScope.boardList}");
    
    /* 칸반보드 수정 시 제목 가져오기(한미화) */
    $('.fa-ellipsis-v').click(function() {
-	   var title = $(this).closest('.type1').find('.kanbanboard_title').text();
-	   var brdNo = $(this).siblings('.boardNo').val();
-	   var html = '<input type="hidden" name="brdNo" value="'+ brdNo +'">'; 
-	  $('#boardtitletitle').attr('value', title);
-	  $('#modifyform').append(html);
+      var title = $(this).closest('.type1').find('.kanbanboard_title').text();
+      var brdNo = $(this).siblings('.boardNo').val();
+      var html = '<input type="hidden" name="brdNo" value="'+ brdNo +'">'; 
+     $('#boardtitletitle').attr('value', title);
+     $('#modifyform').append(html);
    });
    
    $('#editBoard').click(function() {
-	   var url = '${pageContext.servletContext.contextPath}/board/modifyBoard';
-	   var brdName =  document.getElementById("boardtitletitle").value;
-	   var html = '<input type="hidden" name="brdName" value="'+ brdName +'">'
-	   console.log("html" + html);
-	   
-	   $('#modifyform').append(html); 
-	   $('#modifyform').attr('action',url);
-	   $('#modifyform').submit(); 
+      var url = '${pageContext.servletContext.contextPath}/board/modifyBoard';
+      var brdName =  document.getElementById("boardtitletitle").value;
+      var html = '<input type="hidden" name="brdName" value="'+ brdName +'">'
+      console.log("html" + html);
+      
+      $('#modifyform').append(html); 
+      $('#modifyform').attr('action',url);
+      $('#modifyform').submit(); 
    });
    $('#deleteBoard').click(function() {
-	   var url = '${pageContext.servletContext.contextPath}/board/deleteBoard';
-	   var brdName =  document.getElementById("boardtitletitle").value;
-	   var html = '<input type="hidden" name="brdName" value="'+ brdName +'">'
-	   console.log("html" + html);
-	   
-	   $('#modifyform').append(html);
-	   $('#modifyform').attr('action',url);
-	   $('#modifyform').submit();
+      var url = '${pageContext.servletContext.contextPath}/board/deleteBoard';
+      var brdName =  document.getElementById("boardtitletitle").value;
+      var html = '<input type="hidden" name="brdName" value="'+ brdName +'">'
+      console.log("html" + html);
+      
+      $('#modifyform').append(html);
+      $('#modifyform').attr('action',url);
+      $('#modifyform').submit();
    });
-	   /* }); */
+      /* }); */
   
    /* 보드 삭제 (한미화) */
    $("#deleteBoard").click(function(){ 
-		 if(confirm("정말 삭제하시겠습니까 ?") == true){
-				var newBoard = document.getElementById("#newBoard");
-				console.log("보드 번호 : " + newBoard);
-				 console.log("djdjdjdj  : " + brdNo);
-					 $.ajax({
-							url : "${pageContext.servletContext.contextPath}/board/deleteBoard",
-							type : "post",
-							data : {brdNo : brdNo},
-							success : function(data, textStatus, xhr){
-								alert("보드 삭제가 완료되었습니다");
-								document.location.reload();
-							},
-							error : function(xhr, status, error){
-								console.log(error);
-								alert("보드 삭제가 취소되었습니다");
-							}
-					 })
-			}else{
-				return;
-				}
-	})
+       if(confirm("정말 삭제하시겠습니까 ?") == true){
+            var newBoard = document.getElementById("#newBoard");
+            console.log("보드 번호 : " + newBoard);
+             console.log("djdjdjdj  : " + brdNo);
+                $.ajax({
+                     url : "${pageContext.servletContext.contextPath}/board/deleteBoard",
+                     type : "post",
+                     data : {brdNo : brdNo},
+                     success : function(data, textStatus, xhr){
+                        alert("보드 삭제가 완료되었습니다");
+                        document.location.reload();
+                     },
+                     error : function(xhr, status, error){
+                        console.log(error);
+                        alert("보드 삭제가 취소되었습니다");
+                     }
+                })
+         }else{
+            return;
+            }
+   })
    
 
    /* 일정, 업무 버튼 */
