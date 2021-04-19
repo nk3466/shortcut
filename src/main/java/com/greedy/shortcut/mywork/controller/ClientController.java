@@ -168,8 +168,11 @@ public class ClientController {
 			temp.add(sprintAndTaskList.get(i).getSprintAndCardTaskList().size());
 		}
 		System.out.println("temp : " + temp);
-		max = Collections.max(temp);
-		System.out.println("max : " + max);
+		
+		if(temp.size() > 0) {
+			max = Collections.max(temp);
+			System.out.println("max : " + max);
+		}
 		
 		/* 날짜 타입 지정 */
 		DateFormat dtFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -178,38 +181,41 @@ public class ClientController {
 		String assemblyString = "";
 		String result = "";
 		System.out.println("sprintAndTaskList.size() : " + sprintAndTaskList.size());
-		for(int i = 0; i < sprintAndTaskList.size(); i++) {
-			for(int j = 0; j < max; j++) {
-				
-				/* break - 각 업무 수가 다 찼을 때는 break */
-				int eachAmount = sprintAndTaskList.get(i).getSprintAndCardTaskList().size();
-				if(eachAmount == j) {
-					break;
+		
+		if(sprintAndTaskList.size() > 0) {
+			for(int i = 0; i < sprintAndTaskList.size(); i++) {
+				for(int j = 0; j < max; j++) {
+					
+					/* break - 각 업무 수가 다 찼을 때는 break */
+					int eachAmount = sprintAndTaskList.get(i).getSprintAndCardTaskList().size();
+					if(eachAmount == j) {
+						break;
+					}
+					
+					/* 날짜 잘라서 String 타입의 배열에 담기(문자열이 아니면 dateFormat 사용불가) */
+					String[] startDateArray = dtFormat.format(sprintAndTaskList.get(i).getSprintAndCardTaskList().get(j).getCardTaskDTO().getStartDate()).split("-"); 
+					String[] endDateArray = dtFormat.format(sprintAndTaskList.get(i).getSprintAndCardTaskList().get(j).getCardTaskDTO().getEndDate()).split("-"); 
+					
+					/* 자른 년, 월, 일을 int형으로 다시 바꾸고 문자열로 만들기 */
+					assemblyString += "[ \"" + sprintAndTaskList.get(i).getSprintName() + "\"" + ", "
+							        + "\"" + sprintAndTaskList.get(i).getSprintAndCardTaskList().get(j).getMemberDTO().getName() + "-"
+							        + sprintAndTaskList.get(i).getSprintAndCardTaskList().get(j).getCardDTO().getCrdTxt() + "\"" + ", "
+							        + "new Date(" + Integer.parseInt(startDateArray[0]) + ", " + Integer.parseInt(startDateArray[1]) + ", " + Integer.parseInt(startDateArray[2]) + ")" + ", "
+							        + "new Date(" + Integer.parseInt(endDateArray[0]) + ", " + Integer.parseInt(endDateArray[1]) + ", " + Integer.parseInt(endDateArray[2]) + ")" + "]"; 
+					
+					if(!(i == (sprintAndTaskList.size()))) {
+						assemblyString += ", ";
+					}
 				}
-				
-				/* 날짜 잘라서 String 타입의 배열에 담기(문자열이 아니면 dateFormat 사용불가) */
-				String[] startDateArray = dtFormat.format(sprintAndTaskList.get(i).getSprintAndCardTaskList().get(j).getCardTaskDTO().getStartDate()).split("-"); 
-				String[] endDateArray = dtFormat.format(sprintAndTaskList.get(i).getSprintAndCardTaskList().get(j).getCardTaskDTO().getEndDate()).split("-"); 
-				
-				/* 자른 년, 월, 일을 int형으로 다시 바꾸고 문자열로 만들기 */
-				assemblyString += "[ \"" + sprintAndTaskList.get(i).getSprintName() + "\"" + ", "
-						        + "\"" + sprintAndTaskList.get(i).getSprintAndCardTaskList().get(j).getMemberDTO().getName() + "-"
-						        + sprintAndTaskList.get(i).getSprintAndCardTaskList().get(j).getCardDTO().getCrdTxt() + "\"" + ", "
-						        + "new Date(" + Integer.parseInt(startDateArray[0]) + ", " + Integer.parseInt(startDateArray[1]) + ", " + Integer.parseInt(startDateArray[2]) + ")" + ", "
-						        + "new Date(" + Integer.parseInt(endDateArray[0]) + ", " + Integer.parseInt(endDateArray[1]) + ", " + Integer.parseInt(endDateArray[2]) + ")" + "]"; 
-				
-				if(!(i == (sprintAndTaskList.size()))) {
-					assemblyString += ", ";
-				}  
 			}
-		}
-		
-		/* 완성된 구글 차트 문자열 */
-		String assemblyResult = assemblyString.substring(0, assemblyString.lastIndexOf(","));
-		System.out.println("assemblyResult : " + assemblyResult);
-		
-		result += "[" + assemblyResult + "]";
-		System.out.println("result : " + result);
+			
+			/* 완성된 구글 차트 문자열 */
+			String assemblyResult = assemblyString.substring(0, assemblyString.lastIndexOf(","));
+			System.out.println("assemblyResult : " + assemblyResult);
+			
+			result += "[" + assemblyResult + "]";
+			System.out.println("result : " + result);
+		} 
 		
 		model.addAttribute("projectList", projectList);                                                                                                                                                                                                                                                                                                      
 		model.addAttribute("projectInfo", projectInfo);
