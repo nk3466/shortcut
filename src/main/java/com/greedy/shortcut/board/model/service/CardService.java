@@ -31,5 +31,8 @@ public interface CardService {
 
 	boolean modifyCard(RequestCardDTO card);
 
+	boolean deleteCard(RequestCardDTO card);
+
+
 
 }

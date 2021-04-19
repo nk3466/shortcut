@@ -36,8 +36,13 @@ public interface CardMapper {
 
 	boolean updateSchAttendList(CardAttendListDTO cal);
 
+	boolean deleteCard(RequestCardDTO card);
 
+	boolean deleteCardTask(RequestCardDTO card);
 
+	boolean deleteCardSchedule(RequestCardDTO card);
+
+	boolean deleteSchAttendList(RequestCardDTO card);
 
 
 

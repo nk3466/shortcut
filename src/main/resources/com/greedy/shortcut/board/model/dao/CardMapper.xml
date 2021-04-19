@@ -298,4 +298,25 @@
            SET A.MEM_NO = #{memNo}
          WHERE A.CRD_NO = #{crdNo}
 	</update>
+	
+	<delete id="deleteCard" parameterType="RequestCardDTO">
+		DELETE CARD A
+        WHERE A.CRD_NO = #{no}
+	</delete>
+	
+	<delete id="deleteCardTask" parameterType="RequestCardDTO">
+		DELETE CRD_TASK A
+        WHERE A.CRD_NO = #{no}
+	</delete>
+	
+	<delete id="deleteCardSchedule" parameterType="RequestCardDTO">
+		DELETE CRD_SCHEDULE A
+        WHERE A.CRD_NO = #{no}
+	</delete>
+	
+	<delete id="deleteSchAttendList" parameterType="RequestCardDTO">
+		DELETE CRD_SCH_ATTEND_LIST A
+        WHERE A.CRD_NO = #{no}
+	</delete>
+	
  </mapper>

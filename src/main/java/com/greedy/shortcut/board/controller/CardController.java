@@ -104,12 +104,15 @@ public class CardController {
 		
 		List<RequestCardDTO> selectCardInfo = cardService.selectCardInfo(cardNo);
 		
-		RequestCardDTO selectOneCardInfo = selectCardInfo.get(0);
-		System.out.println("selectCardInfo : " + selectOneCardInfo);
-		
-		model.addAttribute("selectCardInfo", selectOneCardInfo);
-		
+		RequestCardDTO selectOneCardInfo = null;
+		if(selectCardInfo.size() != 0) {
+			
+			selectOneCardInfo = selectCardInfo.get(0);
+			System.out.println("selectCardInfo : " + selectOneCardInfo);
+			model.addAttribute("selectCardInfo", selectOneCardInfo);
+		}
 		return new ObjectMapper().writeValueAsString(selectOneCardInfo);
+		
 		
 	}
 	
@@ -149,8 +152,21 @@ public class CardController {
 		
 		return "redirect:/board/kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+
 		 projectName;
-				 
 	}
 	
+	@PostMapping("/card/deleteCard")
+	public String deleteCard(@ModelAttribute RequestCardDTO card, 
+			@RequestParam(name="sprNo") int sprNo ,@RequestParam(name="pjtNo") int
+			pjtNo ,@RequestParam(name="projectName") String projectName
+			,RedirectAttributes redirect, Model model) {
+		
+		if (!cardService.deleteCard(card)) {
+			System.out.println(card);
+					
+		}
+		
+		return "redirect:/board/kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+
+		 projectName;
+	}
 	
 }
