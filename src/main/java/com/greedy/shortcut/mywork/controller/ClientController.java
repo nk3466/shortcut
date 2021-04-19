@@ -72,7 +72,13 @@ public class ClientController {
 		 * List<ClientProjectDTO> projectList = clientService.selectProjectList(email);
 		 * for(ClientProjectDTO project : projectList) { System.out.println(project); }
 		 */
-		List<ClientProjectDTO> projectList = clientService.selectProjectList(email);
+		List<Integer> projectNumberList = clientService.selectProjectNuber(email);
+		List<ClientProjectDTO> projectList = new ArrayList<>();
+		for(int i = 0; i < projectNumberList.size(); i++) {
+			ClientProjectDTO pjt = clientService.selectProjectList(projectNumberList.get(i));
+			projectList.add(pjt);
+		}
+		
 		for(ClientProjectDTO project : projectList) {
 			System.out.println(project);
 		}
@@ -121,7 +127,18 @@ public class ClientController {
 	public String selectProjectInfo(Model model, @PathVariable("pjtNo") int pjtNo) {
 		
 		/* 프로젝트 재조회(위에 다시 view에 보여줘야하므로) */
-		List<ClientProjectDTO> projectList = clientService.selectProjectList2(pjtNo);
+//		List<ClientProjectDTO> projectList = clientService.selectProjectList2(pjtNo);
+		
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails = (UserDetails) principal;
+		String email = userDetails.getUsername();
+		
+		List<Integer> projectNumberList = clientService.selectProjectNuber(email);
+		List<ClientProjectDTO> projectList = new ArrayList<>();
+		for(int i = 0; i < projectNumberList.size(); i++) {
+			ClientProjectDTO pjt = clientService.selectProjectList(projectNumberList.get(i));
+			projectList.add(pjt);
+		}
 		
 		/* 선택한 프로젝트의 정보들 조회(스프린트 정보) */
 		ClientProjectAndSprintDTO projectInfo = clientService.selectOneProjectByPjNo(pjtNo);

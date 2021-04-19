@@ -9,7 +9,7 @@ import com.greedy.shortcut.mywork.model.dto.ClientProjectDTO;
 
 public interface ClientMapper {
 
-	List<ClientProjectDTO> selectProjectList(String email);
+	ClientProjectDTO selectProjectList(int pjtNo);
 	
 	ClientProjectAndSprintDTO selectOneProjectByPjNo(int pjtNo);
 	
@@ -18,4 +18,7 @@ public interface ClientMapper {
 	int selectSprintCount(int pjtNo);
 	
 	List<ClientCardTaskAndCardAndMemberDTO> selectBarInfo(int sprNo);
+
+	List<Integer> selectProjectNuber(String email);
 }
+

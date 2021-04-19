@@ -22,8 +22,8 @@ public class ClientServiceImpl implements ClientService {
 	}
 	
 	@Override
-	public List<ClientProjectDTO> selectProjectList(String email) {
-		return clientMapper.selectProjectList(email);
+	public ClientProjectDTO selectProjectList(int pjtNo) {
+		return clientMapper.selectProjectList(pjtNo);
 	}
 
 	@Override
@@ -44,6 +44,11 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public List<ClientCardTaskAndCardAndMemberDTO> selectBarInfo(int sprNo) {
 		return clientMapper.selectBarInfo(sprNo);
+	}
+
+	@Override
+	public List<Integer> selectProjectNuber(String email) {
+		return clientMapper.selectProjectNuber(email);
 	}
 
 
