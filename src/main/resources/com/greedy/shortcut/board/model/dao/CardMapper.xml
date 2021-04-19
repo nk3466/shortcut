@@ -267,9 +267,10 @@
 	   WHERE A.CRD_NO = #{no}
 	</select>
 	
-	<update id="udateCard" parameterType="RequestCardDTO">
+	<update id="modifyCard" parameterType="RequestCardDTO">
         UPDATE CARD A
            SET A.CRD_NAME = #{title}
+             , A.CRD_ORDER = #{order}
              , A.CRD_TYPE = #{type}
              , A.CRD_TXT = #{txt}
          WHERE A.CRD_NO = #{no}
@@ -277,10 +278,9 @@
 	
 	<update id="updateCardTask" parameterType="RequestCardDTO">
         UPDATE CRD_TASK A
-           SET A.TK_PROGRESS = 1
-             , A.MEM_NO = #{member}
-             , A.TK_START_DATE = #{taskStartDate}
-             , A.TK_END_DATE = #{taskEndDate}
+           SET A.MEM_NO = #{member}
+             , A.TK_START_DATE = TO_DATE(#{taskStartDate}, 'YYYYMMDDHH24MISS')
+             , A.TK_END_DATE = TO_DATE(#{taskEndDate}, 'YYYYMMDDHH24MISS')
          WHERE A.CRD_NO = #{no}
 	</update>
 	
@@ -288,14 +288,14 @@
         UPDATE CRD_SCHEDULE A
            SET A.SCH_ALERT = #{alert}
              , A.SCH_PLACE = #{place}
-             , A.SCH_START_DATE = #{scheduleStartDate}
-             , A.SCH_END_DATE = #{scheduleEndDate}
+             , A.SCH_START_DATE = TO_DATE(#{scheduleStartDate}, 'YYYYMMDDHH24MISS')
+             , A.SCH_END_DATE = TO_DATE(#{scheduleEndDate}, 'YYYYMMDDHH24MISS')
          WHERE A.CRD_NO = #{no}
 	</update>
 	
 	<update id="updateSchAttendList" parameterType="RequestCardDTO">
         UPDATE CRD_SCH_ATTEND_LIST A
            SET A.MEM_NO = #{memNo}
-         WHERE A.CRD_NO = #{no}
+         WHERE A.CRD_NO = #{crdNo}
 	</update>
  </mapper>

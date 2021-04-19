@@ -109,7 +109,7 @@ public class CardServiceImpl implements CardService {
 	public boolean modifyCard(RequestCardDTO card) {
 		boolean result = false;
 		
-		result = cardMapper.udateCard(card);
+		result = cardMapper.modifyCard(card);
 		
 		if(result) {
 			

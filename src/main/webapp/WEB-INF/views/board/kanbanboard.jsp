@@ -106,7 +106,6 @@
                          </div>
                          <div class="item type3">
                              <i class="fas fa-user-circle"><c:out value="${cardList.cardMemberList.name}"/></i><br>
-                             <i class="fas fa-user-circle"><c:out value="${cardList.memberList}"/></i>
                          </div>
                      </div>
             </c:if>
@@ -161,12 +160,10 @@ console.log("boardList" +  "${requestScope.boardList}");
                   </div>
                </div>
                      
-			<c:forEach var="cardInfo" items="selectOneCardInfo">
                <div class="item_area">
                   <input class="input_detail" type="text" name="title" id="title"
                      placeholder="제목을 입력해주세요." style="border: none; background: transparent;">
                </div>
-			</c:forEach>
                <!-- 업무 영역 -->
                <div class="item_area work_btn on">
                   <i class="fas fa-spinner"></i>
@@ -259,6 +256,7 @@ console.log("boardList" +  "${requestScope.boardList}");
          </form>
       </div>
    </div>
+   
    <!-- 상세페이지 -->
    <input type="text" value="${ requestScope.pjtNo }" name="" id="" style="display: none;">
    <!-- The Modal -->
@@ -267,9 +265,10 @@ console.log("boardList" +  "${requestScope.boardList}");
          <div class="modal-header type">Short Cut</div>
 
          <!-- name="projectMemberList" -->
-         <form id="cardDetail" action="${pageContext.servletContext.contextPath}/card/create" method="post">
+         <form id="cardDetailUpdate" method="post">
+         <input type="text" value="" name="" id="crdNo" class="crdNo" style="display: none;">
          <input type="hidden" value="${ requestScope.pjtNo }" name="pjtNo">
-         <input type="text" value="" name="type" style="display: none;" id="pleaseType">
+         <input type="text" value="" name="type" style="display: none;" id="pleaseType1">
             <div class="modal-content">
                <div class="modal-body">
                   <div class="row selectCardtype">
@@ -292,14 +291,14 @@ console.log("boardList" +  "${requestScope.boardList}");
                </div>
                      
                <div class="item_area">
-                  <input class="input_detail" type="text" name="cardTitle" id="detailCardTitle" value=""
+                  <input class="input_detail" type="text" name="title" id="detailCardTitle" value=""
                      placeholder="" style="border: none; background: transparent;">
                </div>
                <!-- 업무 영역 -->
                <div class="item_area work_btn on">
                   <i class="fas fa-spinner"></i>
                   <div class="btn-group">
-                     <button class="button on" name="request" id="requestDetail" type="button" value="" autofocus="autofocus">요청</button>
+                     <button class="button on" name="request" id="requestDetail" type="button" value="">요청</button>
                      <button class="button on" name="progress" id="progress" type="button" disabled>진행</button>
                      <button class="button" name="completion" id="completion" type="button" disabled>완료</button>
                      <button class="button" name="hold" id="hold" type="button" disabled>보류</button>
@@ -370,7 +369,7 @@ console.log("boardList" +  "${requestScope.boardList}");
                   <div id="choisemember"></div>
                   <!-- <input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회"> -->
                   <div id="memberDetail2"></div>
-                  <input id="memberInput" value="">
+                  <input id="memberDetail" value="">
                   <input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
                </div>
                <!-- 일정 영역 끝 -->
@@ -392,11 +391,13 @@ console.log("boardList" +  "${requestScope.boardList}");
 
                <div class="btn_area">
                <input type="hidden" name="projectName" value="${projectName}">
-               <input name="sprNo" type="hidden" value="${sprNo}">   
+               <input name="sprNo" type="hidden" value="${sprNo}"> 
                <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-                  <input type="button" class="upload_btn" id="editCard" value="수정">
-                  <input type="button" class="upload_btn" id="deleteCard" value="삭제">
-                  <input type="reset" class="upload_btn" data-dismiss="modal" value="취소"></div>
+               <input type="submit" class="upload_btn" id="editCard" value="수정">
+               <input type="button" class="upload_btn" id="deleteCard" value="삭제">
+               <input type="reset" class="upload_btn" data-dismiss="modal" value="취소">
+                  <!-- <input type="button" class="upload_btn" id="editCard" value="수정" >
+                  <input type="button" class="upload_btn" id="deleteCard" value="삭제"> -->
                </div>
             </div>
          </div>
@@ -453,7 +454,7 @@ console.log("boardList" +  "${requestScope.boardList}");
             <div class="modal_footer">
                <div class="btn_area">
                <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-                  <input type="button" class="upload_btn" id="editBoard" value="수정">
+                  <input type="submit" class="upload_btn" id="editBoard" value="수정">
                   <input type="button" class="upload_btn" id="deleteBoard" value="삭제">
                   <input type="reset" class="upload_btn" data-dismiss="modal" value="취소"></div>
             </div>
@@ -461,10 +462,9 @@ console.log("boardList" +  "${requestScope.boardList}");
          </div>
       </div>
    </div>
-   <%-- <jsp:include page="../board/cardModal.jsp"></jsp:include> --%>
 </body>
 <script>
-
+	
    function selectCardInfo(crdNo) {
 		console.log("셀렉트카드" + crdNo);
       $.ajax({
@@ -480,22 +480,27 @@ console.log("boardList" +  "${requestScope.boardList}");
             var enrolldate = data.enrollDate;
             var order = data.order;
             var type = data.type;
+            console.log("type!!!!!" + type);
             var memNo = data.memNo;
+            console.log("memNo1!!! : " + memNo);
             var member	= data.member;
+            console.log("member!!!!!! : " + member);
             var place	= data.place;
             var alert	= data.alert;
-   			var cardTxt = data.txt; 
+   			var cardTxt = data.txt;
+   			var memberList = data.memberList;
+   			console.log("memberList!!! : " + memberList);
    			var cardTaskStartDate = data.taskStartDate;
    			var cardTaskEndDate = data.taskEndDate;
    			var cardScheduleStartDate = data.scheduleStartDate;
    			var cardScheduleEndDate = data.scheduleEndDate;
    			
-   	           	var crdNo = cardNo;
-   	           	console.log(crdNo);
+   	           	var no = cardNo;
+   	           	console.log(no);
    	         	$('#myModal2').modal("hide");
    	         	$("#myModal3").modal();
    	         	
-   				   	var html = '<input type="hidden" name="cardNo" value="'+ cardNo +'">'; 
+   				   	var html = '<input type="hidden" name="no" value="'+ no +'">'; 
    				    $("#cardDetailTxt").empty();
    				    $("#startTaskDate").empty();
    				    $("#endTaskDate").empty();
@@ -504,6 +509,9 @@ console.log("boardList" +  "${requestScope.boardList}");
    				   	$('#placeDetail').attr('value', place);
    				   	$('#detailCardTitle').attr('value', title);
    				  	$('#detailMemberInput').attr('value', cardName);
+   				  	$('#pleaseType1').attr('value', type);
+   				  	$('#crdNo').attr('value', cardNo);
+   				  	
    				  	$('#cardDetailTxt').append(cardTxt);
    				 	
    				  	$('#startTaskDate').append(cardTaskStartDate);
@@ -511,7 +519,7 @@ console.log("boardList" +  "${requestScope.boardList}");
    				  	$('#startScheduleTaskDate').append(cardScheduleStartDate);
    				  	$('#endScheduleTaskDate').append(cardScheduleEndDate);
    				  	
-   				  	$('#cardDetail').append(html);
+   				  	$('#cardDetailUpdate').append(html);
    				  	
    				  	
    			       $.ajax({
@@ -561,25 +569,40 @@ console.log("boardList" +  "${requestScope.boardList}");
          }
       });
    }
-   
-   $('#editCard').click(function() {
+   	   $('#editCard').click(function() {
 	   var url = '${pageContext.servletContext.contextPath}/card/modifyCard';
+	   var no = document.getElementById("crdNo").value;
+	   alert(no);
 	   var title =  document.getElementById("detailCardTitle").value;
-	   var order =  document.getElementById("requestDetail").value;
-	   var name =  document.getElementById("detailMemberInput").value;
+	   var type =  document.getElementById("pleaseType1").value;
+	   var member =  document.getElementById("detailMemberInput").value;
 	   var taskStartDate =  document.getElementById("detailTaskStartDate").value;
 	   var taskEndDate =  document.getElementById("detailTaskEndDate").value;
 	   var scheduleStartDate =  document.getElementById("detailScheduleStartDate").value;
 	   var scheduleEndDate =  document.getElementById("detailScheduleEndDate").value;
 	   var place =  document.getElementById("placeDetail").value;
-	   var memNo =  document.getElementById("memberDetail2").value;
-	   var CardmemberInput =  document.getElementById("memberInput").value;
-	   var html = '<input type="hidden" name="crdNo" value="'+ crdNo +'">'
-	   console.log("html" + html);
+	   var memberList =  document.getElementById("memberDetail2").value;
+	   var html1 = '<input type="hidden" name="title" value="'+ title +'">'
+	   var html2 = '<input type="hidden" name="member" value="'+ member +'">'
+	   var html3 = '<input type="hidden" name="taskStartDate" value="'+ taskStartDate +'">'
+	   var html4 = '<input type="hidden" name="taskEndDate" value="'+ taskEndDate +'">'
+	   var html5 = '<input type="hidden" name="scheduleStartDate" value="'+ scheduleStartDate +'">'
+	   var html6 = '<input type="hidden" name="scheduleEndDate" value="'+ scheduleEndDate +'">'
+	   var html7 = '<input type="hidden" name="place" value="'+ place +'">'
+	   var html8 = '<input type="hidden" name="memberList" value="'+ memberList +'">'
+	   var html9 = '<input type="hidden" name="type" value="'+ type +'">'
 	   
-	   $('#cardDetail').append(html); 
-	   $('#cardDetail').attr('action',url);
-	   $('#cardDetail').submit(); 
+	   $('#cardDetailUpdate').append(html1);
+	   $('#cardDetailUpdate').append(html2);
+	   $('#cardDetailUpdate').append(html3);
+	   $('#cardDetailUpdate').append(html4);
+	   $('#cardDetailUpdate').append(html5);
+	   $('#cardDetailUpdate').append(html6);
+	   $('#cardDetailUpdate').append(html7);
+	   $('#cardDetailUpdate').append(html8);
+	   $('#cardDetailUpdate').append(html9);
+	   $('#cardDetailUpdate').attr('action',url);
+	   $('#cardDetailUpdate').submit();
    });
    
 </script>
