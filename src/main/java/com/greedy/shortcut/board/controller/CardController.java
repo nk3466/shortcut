@@ -61,7 +61,7 @@ public class CardController {
 		CardScheduleDTO crd_sch = new CardScheduleDTO();
 		CardTaskDTO crd_task = new CardTaskDTO();
 		
-		System.out.println("card : " + card);
+		System.out.println("card!!!!!!!!!!!!!! : " + card);
 		
 		Enumeration eParam = request.getParameterNames();
 		 
@@ -105,7 +105,7 @@ public class CardController {
 		List<RequestCardDTO> selectCardInfo = cardService.selectCardInfo(cardNo);
 		
 		RequestCardDTO selectOneCardInfo = selectCardInfo.get(0);
-		System.out.println("selectCardInfo무야호 : " + selectOneCardInfo);
+		System.out.println("selectCardInfo : " + selectOneCardInfo);
 		
 		model.addAttribute("selectCardInfo", selectOneCardInfo);
 		
@@ -122,35 +122,34 @@ public class CardController {
 		System.out.println("crdNo : " + crdNo);
 
 		List<CardAttendListDTO> memberList = cardService.selectCardMember(crdNo);
-		System.out.println("memberList!!!!!!!! : " + memberList);
+		System.out.println("memberList : " + memberList);
 
 		return memberList;
 	}
 	
-	@PostMapping(value="/card/modifyCard")
-	public String modifyCard(@ModelAttribute RequestCardDTO card, @RequestParam(name="sprNo") int sprNo, 
-			@RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName,
-			RedirectAttributes redirect) {
-				System.out.println("왜 안오지??????");
+	@PostMapping("/card/modifyCard")
+	public String modifyCard(@ModelAttribute RequestCardDTO card, 
+			@RequestParam(name="sprNo") int sprNo ,@RequestParam(name="pjtNo") int
+			pjtNo ,@RequestParam(name="projectName") String projectName
+			,RedirectAttributes redirect, Model model) {
+		
+		String schA = card.getScheduleStartDate().replace("T", "").replace("-", "").replace(":", "");
+		String schB = card.getScheduleEndDate().replace("T", "").replace("-", "").replace(":", "");
+		String schC = card.getTaskStartDate().replace("T", "").replace("-", "").replace(":", "");
+		String schD = card.getTaskEndDate().replace("T", "").replace("-", "").replace(":", "");
+		card.setScheduleEndDate(schB);
+		card.setScheduleStartDate(schA);
+		card.setTaskStartDate(schC);
+		card.setTaskEndDate(schD);
 				
-				 String schA = card.getScheduleStartDate().replace("T", "").replace("-", "").replace(":", "");
-				 String schB = card.getScheduleEndDate().replace("T", "").replace("-", "").replace(":", "");
-				 String schC = card.getTaskStartDate().replace("T", "").replace("-", "").replace(":", "");
-				 String schD = card.getTaskEndDate().replace("T", "").replace("-", "").replace(":", "");
-				 card.setScheduleEndDate(schB);
-				 card.setScheduleStartDate(schA);
-				 card.setTaskStartDate(schC);
-				 card.setTaskEndDate(schD);
+		if (!cardService.modifyCard(card)) {
+			System.out.println(card);
+					
+		}
 		
-				System.out.println("오랏!" + card);
-				if(!cardService.modifyCard(card)) {
-					redirect.addFlashAttribute("message", "카드 수정 취소!");
-				} else {
-					redirect.addFlashAttribute("message", "카드 수정 완료!");
-				}
-		
-		System.out.println("수정 하려고요! " + card);
-		return "redirect:kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+projectName;
+		return "redirect:/board/kanbanboard/?pjtNo="+pjtNo+"&sprNo="+sprNo+"&projectName="+
+		 projectName;
+				 
 	}
 	
 	

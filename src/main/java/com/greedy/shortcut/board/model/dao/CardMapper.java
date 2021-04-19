@@ -28,13 +28,14 @@ public interface CardMapper {
 
 	List<CardAttendListDTO> selectCardMember(int crdNo);
 
-	boolean udateCard(RequestCardDTO card);
+	boolean modifyCard(RequestCardDTO card);
 
 	boolean updateCardTask(RequestCardDTO card);
 
 	boolean updateCardSchedule(RequestCardDTO card);
 
 	boolean updateSchAttendList(CardAttendListDTO cal);
+
 
 
 

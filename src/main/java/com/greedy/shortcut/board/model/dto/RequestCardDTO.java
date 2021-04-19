@@ -59,140 +59,140 @@ public class RequestCardDTO {
 		return no;
 	}
 
-	public void setNo(int no) {
-		this.no = no;
-	}
-
 	public String getTitle() {
 		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public java.sql.Date getEnrollDate() {
 		return enrollDate;
 	}
 
-	public void setEnrollDate(java.sql.Date enrollDate) {
-		this.enrollDate = enrollDate;
-	}
-
 	public String getDelNo() {
 		return delNo;
-	}
-
-	public void setDelNo(String delNo) {
-		this.delNo = delNo;
 	}
 
 	public int getBrdNo() {
 		return brdNo;
 	}
 
-	public void setBrdNo(int brdNo) {
-		this.brdNo = brdNo;
-	}
-
 	public int getOrder() {
 		return order;
-	}
-
-	public void setOrder(int order) {
-		this.order = order;
 	}
 
 	public int getType() {
 		return type;
 	}
 
-	public void setType(int type) {
-		this.type = type;
-	}
-
 	public int getMemNo() {
 		return memNo;
-	}
-
-	public void setMemNo(int memNo) {
-		this.memNo = memNo;
 	}
 
 	public String getTxt() {
 		return txt;
 	}
 
-	public void setTxt(String txt) {
-		this.txt = txt;
-	}
-
 	public List<Integer> getMemberList() {
 		return memberList;
-	}
-
-	public void setMemberList(List<Integer> memberList) {
-		this.memberList = memberList;
 	}
 
 	public int getMember() {
 		return member;
 	}
 
-	public void setMember(int member) {
-		this.member = member;
-	}
-
 	public String getPlace() {
 		return place;
-	}
-
-	public void setPlace(String place) {
-		this.place = place;
 	}
 
 	public int getAlert() {
 		return alert;
 	}
 
-	public void setAlert(int alert) {
-		this.alert = alert;
-	}
-
 	public String getScheduleStartDate() {
 		return scheduleStartDate;
-	}
-
-	public void setScheduleStartDate(String scheduleStartDate) {
-		this.scheduleStartDate = scheduleStartDate;
 	}
 
 	public String getScheduleEndDate() {
 		return scheduleEndDate;
 	}
 
-	public void setScheduleEndDate(String scheduleEndDate) {
-		this.scheduleEndDate = scheduleEndDate;
-	}
-
 	public String getTaskStartDate() {
 		return taskStartDate;
-	}
-
-	public void setTaskStartDate(String taskStartDate) {
-		this.taskStartDate = taskStartDate;
 	}
 
 	public String getTaskEndDate() {
 		return taskEndDate;
 	}
 
-	public void setTaskEndDate(String taskEndDate) {
-		this.taskEndDate = taskEndDate;
-	}
-
 	public MemberDTO getCardMemberList() {
 		return cardMemberList;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setEnrollDate(java.sql.Date enrollDate) {
+		this.enrollDate = enrollDate;
+	}
+
+	public void setDelNo(String delNo) {
+		this.delNo = delNo;
+	}
+
+	public void setBrdNo(int brdNo) {
+		this.brdNo = brdNo;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public void setMemNo(int memNo) {
+		this.memNo = memNo;
+	}
+
+	public void setTxt(String txt) {
+		this.txt = txt;
+	}
+
+	public void setMemberList(List<Integer> memberList) {
+		this.memberList = memberList;
+	}
+
+	public void setMember(int member) {
+		this.member = member;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
+	public void setAlert(int alert) {
+		this.alert = alert;
+	}
+
+	public void setScheduleStartDate(String scheduleStartDate) {
+		this.scheduleStartDate = scheduleStartDate;
+	}
+
+	public void setScheduleEndDate(String scheduleEndDate) {
+		this.scheduleEndDate = scheduleEndDate;
+	}
+
+	public void setTaskStartDate(String taskStartDate) {
+		this.taskStartDate = taskStartDate;
+	}
+
+	public void setTaskEndDate(String taskEndDate) {
+		this.taskEndDate = taskEndDate;
 	}
 
 	public void setCardMemberList(MemberDTO cardMemberList) {
