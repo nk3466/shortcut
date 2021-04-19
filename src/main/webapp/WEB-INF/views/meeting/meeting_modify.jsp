@@ -52,7 +52,7 @@
 										스프린트
 									</div>							
 									<div class="item_text">
-										C1009-1
+
 									</div>							
 								</div>
 								<div class="modal_line"></div>
@@ -61,7 +61,7 @@
 									<div class="item_type type">
 										참석자 
 									</div>
-									<div class="item_type" id="meetingMemberDetailList1">
+									<div class="item_type type3" id="meetingMemberDetailList1">
 										
 									</div>
 									
@@ -94,8 +94,8 @@
 					<div class="modal_footer">								
 						<div class="btn_area">
 							<input name="${_csrf.parameterName}" type="hidden"  value="${_csrf.token}">
-							<input type="button" id="deletedBtn" class="upload_btn" value="삭제">	
-							<input type="button" id="completeBtn" class="upload_btn" value="완료">	
+							<input type="button" id="deletedBtn" class="upload_btn meetingBtn" value="삭제">	
+							<input type="button" id="completeBtn" class="upload_btn meetingBtn" value="완료">	
 						</div>														
 					</div>
 				<!-- </form> -->

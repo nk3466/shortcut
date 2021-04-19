@@ -13,7 +13,7 @@
 .modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_type.type1{padding:0 15px;}
 .modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_type.type3{width: 86%;}
 .modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_type .input_detail{margin-left: 5px;}
-.modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_text{padding-right:10px;}
+.modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_text{padding-right:10px; overflow: hidden;  text-overflow: ellipsis;  white-space: nowrap;  width: 150px;}
 .modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_text .fa-times-circle{padding:0 3px; display:none; cursor: pointer;}
 .modal.fade .modal-dialog .modal-content .modal-body .conference_item .row .item_text:hover .fa-times-circle{display:inline-block;}
 
@@ -35,8 +35,8 @@
 .content-left{position: relative;}
 .content-left .left-main .issue_collect{position: absolute; top: 0; background-color: whitesmoke; width: 100%; height: 60%;     padding: 15px;}
 
-
-
+.modal.fade .modal-dialog .modal-content .modal_footer .meetingBtn{background-color:white; border:1px solid lightgray; color:lightgray;}
+.modal.fade .modal-dialog .modal-content .modal_footer .meetingBtn:hover{border:1px solid black; color:black;}
 
 
 

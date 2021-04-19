@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.greedy.shortcut.board.model.dto.SprintDTO;
 import com.greedy.shortcut.meeting.model.dto.AttendListDTO;
 import com.greedy.shortcut.meeting.model.dto.MeetingDTO;
 import com.greedy.shortcut.meeting.model.service.MeetingService;
@@ -69,6 +70,7 @@ public class MeetingLogController {
 		
 		System.out.println("meeting : " + meeting);
 		System.out.println("memberList : " + memberList);
+		
 		
 		
 		SortedMap<String, String[]> projectMake = Collections
@@ -136,16 +138,26 @@ public class MeetingLogController {
 	
 	@PostMapping(value="meetinglog/selectProjectMember", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public List<MemberDTO> selectProjectMember(@ModelAttribute MemberDTO member,   @RequestParam Map<String, String> parameters) {
+	public String selectProjectMember(@ModelAttribute MemberDTO member,   @RequestParam Map<String, String> parameters, Model model) throws JsonProcessingException {
 		
 		int pjtNo = Integer.parseInt(parameters.get("pjtNo"));
 		
 		List<MemberDTO> memberList = meetingService.selectProjectMember(member, pjtNo);
+		List<SprintDTO> sprintNo = meetingService.selectSprintNumber(pjtNo);
+		
 		
 		System.out.println("넘버" + pjtNo);
 		System.out.println("프젝맴버" + memberList);
+		System.out.println("스프린트넘버" + sprintNo);
 		
-		return memberList;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("sprintNo", sprintNo);
+		map.put("memberList", memberList);
+		
+//		model.addAttribute("sprintNo" + sprintNo);
+//		model.addAttribute("memberList" + memberList);
+		
+		return new ObjectMapper().writeValueAsString(map);
 		
 		
 	}

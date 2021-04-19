@@ -53,8 +53,8 @@
 									<div class="item_type type1">
 										스프린트
 									</div>							
-									<div class="item_text">
-										C1009-1
+									<div id="sprintItem" class="item_text">
+
 									</div>							
 								</div>
 								<div class="modal_line"></div>
@@ -73,7 +73,7 @@
 									<div class="item_type type">
 										참석자 
 									</div>
-									<div class="item_type" id="meetingMemberDetailList">
+									<div class="item_type type3" id="meetingMemberDetailList">
 										
 									</div>
 									
@@ -105,8 +105,8 @@
 					<!-- Modal footer -->
 					<div class="modal_footer">								
 						<div class="btn_area">
-							<input type="button" class="upload_btn type1" value="삭제">	
-							<input type="button" id="updateBtn" class="upload_btn" value="수정">	
+							<input type="button" class="upload_btn type1 meetingBtn" value="삭제">	
+							<input type="button" id="updateBtn" class="upload_btn meetingBtn" value="수정">	
 						</div>														
 					</div>
 				<!-- </form> -->

@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.greedy.shortcut.board.model.dto.ProjectAndAuthorityDTO;
 import com.greedy.shortcut.board.model.dto.ProjectDTO;
+import com.greedy.shortcut.board.model.dto.SprintDTO;
 import com.greedy.shortcut.meeting.model.dto.MeetingDTO;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
 
@@ -33,6 +34,8 @@ public interface MeetingMapper {
 	int deletedMeeting(int meetingNo);
 
 	int modifyComplete(@Param("meetingNo") int meetingNo, @Param("modifyTitle") String modifyTitle, @Param("modifyContent") String modifyContent);
+
+	List<SprintDTO> selectSprintNumber(int pjtNo);
 
 	
 
