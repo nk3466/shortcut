@@ -86,7 +86,7 @@
 							</c:choose>
 						</tbody>
 						</table>
-						<div id="sprintPagingArea" align="center"></div>
+						<div id="sprintPagingArea" class="paging_area type" align="center"></div>
 					
 				</div>
 			</div>
@@ -480,7 +480,7 @@
 						</div>
 			</div>
 		</div>
-
+	</div>
 			
 			
 			<!-- =====================백로그 페이징 처리 =======================-->
@@ -824,7 +824,7 @@
 			<div class="sprint_text_btn">
 				<span class="sprint_text">Sprint Review</span>					
 			</div>	
-			
+			<div class="backlog_line"></div>
 			<div class="sprint_box on"></div>
 			
 			<div class="table_area">
@@ -856,9 +856,9 @@
 							</tbody>
 						</table>
 					</div>
-					<div id="pagingArea" align="center">
+					<div id="pagingArea" align="center"></div>
 					
-					</div>
+					
 					<!-- Ajax 스프린트 리뷰 게시판 페이징 시작 -->
 					<script>
 						/* 페이지 로드 될 때 시작 */
@@ -1046,7 +1046,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	
 	
 <!-- 백로그 생성 모달 -->
   <!-- The Modal -->

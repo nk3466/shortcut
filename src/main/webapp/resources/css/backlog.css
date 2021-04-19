@@ -6,13 +6,16 @@
     height: 40px;  line-height: 40px;  text-align: center; margin-left: 15px; color: lightgray;}
 .backlog_area .backlog_header_area .meeting_btn:hover{color:black; border: 1px solid black;}
 
-.sprint_box_area{margin-bottom: 50px; height: 250px; padding-top: 40px;}
+.sprint_box_area{margin-bottom: 50px; height: 295px; padding-top: 40px; position: relative;}
 
 .sprint_box_area .sprint_text_btn{}
-.sprint_box_area .sprint_text_btn .sprint_text{}
+.sprint_box_area .sprint_text_btn .sprint_text{ color: #ed1745; font-weight:bold;}
 .sprint_box_area .sprint_text_btn .btn_detail{float: right; background-color: white;}
 .sprint_box_area .sprint_text_btn .btn_detail.on{display: none;}
 
+.sprint_box_area .paging_area.type{ position: absolute; bottom: 0; width: 100%;}
+
+.sprint_box_area #pagingArea{ position: absolute; bottom: 0; width: 100%;}
 
 .sprint_box_area .backlog_line{border: 1px solid lightgray; margin: 10px 0;}
 
@@ -23,11 +26,11 @@
 .sprint_box_area .table_area .table_item.nk table{table-layout: fixed;}
 .sprint_box_area .table_area .table_item.nk td{overflow: hidden; text-overflow: ellipsis;  white-space: nowrap;}
 .sprint_box_area .table_area .table_item table{table-layout: fixed;}
-.sprint_box_area .table_area .table_item td{overflow: hidden; text-overflow: ellipsis;  white-space: nowrap;}
+.sprint_box_area .table_area .table_item td{overflow: hidden; text-overflow: ellipsis;  white-space: nowrap; padding: 0 25px;}
 
-.sprint_box_area .table_area .table_item.nk .th_detail.type1{text-align: center!important;}
-.sprint_box_area .table_area .table_item .row{margin: 0; margin-bottom: 5px; border: 1px solid lightgray;}
-.sprint_box_area .table_area .table_item .row .th_detail.type{text-align: center;}
+.sprint_box_area .table_area .table_item.nk .th_detail.type1{text-align: center!important; padding-bottom: 15px;}
+.sprint_box_area .table_area .table_item .row{margin: 0; margin-bottom: 5px; }
+.sprint_box_area .table_area .table_item .row .th_detail.type{text-align: center; padding-bottom:15px;}
 .sprint_box_area .table_area .table_item .row .table_detail{float:left;}
 .sprint_box_area .table_area .table_item .row .table_detail.type1{width: 7%}
 .sprint_box_area .table_area .table_item .row .table_detail.type2{width: 13%}
@@ -36,11 +39,11 @@
 
 
 .sprint_box_area .table_area .table_item .btn_detail{background-color: white; float: right;}
-.sprint_box_area .table_area .table_item .btn_detail.nk{background-color: white; float: none; color:lightgray; margin:2px; border: 1px solid lightgray;}
+.sprint_box_area .table_area .table_item .btn_detail.nk{background-color: white; float: none; color:lightgray; margin:4px 2px; border: 1px solid lightgray;}
 .sprint_box_area .table_area .table_item .btn_detail.nk:hover{color:black; border: 1px solid black;}
 
-.backlog_create_area{height: 300px; }
-.backlog_create_area .create_sprint_btn{text-align: left;}
+.backlog_create_area{height: 280px; position: relative;}
+.backlog_create_area .create_sprint_btn{text-align: left;  color: #ed1745; font-weight:bold;}
 .backlog_create_area .create_sprint_btn .sprint_btn_detail{background-color: white;}
 .backlog_create_area .backlog_line{border: 1px solid lightgray; margin: 10px 0;}
 .backlog_create_area .create_backlog_btn{}
@@ -50,12 +53,12 @@
 .backlog_create_area .backlog_table_area .table_area{}
 .backlog_create_area .backlog_table_area .table_area .table_item{text-align: center;}
 .backlog_create_area .backlog_table_area .table_area .table_item table{table-layout: fixed;}
-.backlog_create_area .backlog_table_area .table_area .table_item td{ overflow: hidden; text-overflow: ellipsis;  white-space: nowrap;}
-.backlog_create_area .backlog_table_area .table_area .table_item .btn_detail{background-color: white; color:lightgray; margin:2px; border: 1px solid lightgray;}
+.backlog_create_area .backlog_table_area .table_area .table_item td{ overflow: hidden; text-overflow: ellipsis;  white-space: nowrap; padding: 0 25px;}
+.backlog_create_area .backlog_table_area .table_area .table_item .btn_detail{background-color: white; color:lightgray; margin:4px 2px; border: 1px solid lightgray;}
 .backlog_create_area .backlog_table_area .table_area .table_item .btn_detail:hover{color:black; border: 1px solid black;}
 
 
-.backlog_create_area .backlog_table_area .table_area .table_item .th_detail.type{text-align: center;}
+.backlog_create_area .backlog_table_area .table_area .table_item .th_detail.type{text-align: center; padding-bottom: 15px}
 .backlog_create_area .backlog_table_area .table_area .table_item .row{margin: 0; margin-bottom: 5px; border: 1px solid lightgray;}
 .backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail{}
 /* .backlog_create_area .backlog_table_area .table_area .table_item .row .table_detail .btn_detail_retro{background-color: white;} */
@@ -66,13 +69,15 @@
 
 .btn_detail_retro{background-color: white;}
 
+.backlog_create_area #backlogPagingArea{ position: absolute; bottom: 0; width: 100%;}
+
 
 .pageBtn{background-color:white; border:0; margin:0 3px; color:lightgray;}
 .pageBtn:hover{color:black;}
 .pageBtn.on{color:black; font-weight: bold;}
 
 
-.retrospectBtn{background-color:white; color:lightgray; border: 1px solid lightgray;}
+.retrospectBtn{background-color:white; color:lightgray; border: 1px solid lightgray; margin:4px 2px;}
 .retrospectBtn:hover{color:black; border: 1px solid black;}
 
 
