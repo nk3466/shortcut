@@ -30,12 +30,6 @@ public class MeetingServiceImpl implements MeetingService{
 		return mapper.insertMeeting(meeting) > 0? true:false;
 	}
 
-	/*
-	 * @Override public List<MemberDTO> selectProjectMember(MemberDTO member) {
-	 * 
-	 * return mapper.selectProjectMember(member); }
-	 */
-
 
 	@Override
 	public MeetingDTO selectMeeting() {

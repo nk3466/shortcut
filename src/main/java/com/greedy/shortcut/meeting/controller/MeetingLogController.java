@@ -46,10 +46,6 @@ public class MeetingLogController {
 	@GetMapping("meetinglog")
 	public String meetinglog(Model model, @RequestParam(name="pjtNo") int pjtNo, @RequestParam(name="projectName") String projectName) {
 			
-		System.out.println("제발;;" + pjtNo);
-		System.out.println("제발;!!!;" + projectName);
-		
-		
 		/* 미팅조회 */
 		List<MeetingDTO> meetingList = meetingService.selectMeetingList(pjtNo);
 		
@@ -66,11 +62,6 @@ public class MeetingLogController {
 	@PostMapping(value="/meetinglog", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public String meeting(@ModelAttribute MeetingDTO meeting, RedirectAttributes rttr, @ModelAttribute AttendListDTO memberList ,@ModelAttribute MemberDTO member,HttpServletRequest request) throws JsonProcessingException{
-	
-		
-		System.out.println("meeting : " + meeting);
-		System.out.println("memberList : " + memberList);
-		
 		
 		
 		SortedMap<String, String[]> projectMake = Collections
@@ -88,8 +79,6 @@ public class MeetingLogController {
 		}
 		int memberListsize = Integer.parseInt(((String[])projectMake.get("index"))[0]);
 		
-		
-		System.out.println("사이즈 : " + projectMake.size());
 		/*회원 정보 담기*/
 		 List<AttendListDTO> projectMemberList = new ArrayList<>();
 		
@@ -105,12 +94,9 @@ public class MeetingLogController {
 			  
 		}
 		
-		System.out.println("이거 값이 있나? : " + projectMemberList);
-		
 		for(int i = 0; i < projectMemberList.size(); i++) {
 			System.out.println("DTO에 넣은 이름 : " + projectMemberList.get(i).getMemberNo());
 		}
-		
 		
 		/* 미팅 인서트 */
 		if(!meetingService.insertMeeting(meeting)) {}
@@ -118,10 +104,7 @@ public class MeetingLogController {
 		/* 미팅번호 */
 		MeetingDTO meetingNo = meetingService.selectMeeting();
 		
-		
 		int mNo = meetingNo.getMeetingNo();
-		
-		
 		
 		for(int i = 0; i < projectMemberList.size(); i++ ) {
 			int memberNo = projectMemberList.get(i).getMemberNo();
@@ -129,7 +112,6 @@ public class MeetingLogController {
 				System.out.println("입력완료!!" + memberNo) ;
 			}
 		}
-		//if(!meetingService.insertProjectMember(projectMemberList)) {}
 		
 		rttr.addFlashAttribute("message","회의 내용이 등록 되었습니다.");
 		
@@ -145,17 +127,10 @@ public class MeetingLogController {
 		List<MemberDTO> memberList = meetingService.selectProjectMember(member, pjtNo);
 		List<SprintDTO> sprintNo = meetingService.selectSprintNumber(pjtNo);
 		
-		
-		System.out.println("넘버" + pjtNo);
-		System.out.println("프젝맴버" + memberList);
-		System.out.println("스프린트넘버" + sprintNo);
-		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("sprintNo", sprintNo);
 		map.put("memberList", memberList);
 		
-//		model.addAttribute("sprintNo" + sprintNo);
-//		model.addAttribute("memberList" + memberList);
 		
 		return new ObjectMapper().writeValueAsString(map);
 		

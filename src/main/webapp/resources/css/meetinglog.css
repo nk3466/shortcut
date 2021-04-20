@@ -24,7 +24,6 @@
 .calendar-body .mtinfo{border: 1px solid #eb98aa;  border-radius: 10px;  background-color: #eb98aa;  color:white;}
 .calendar-body .mtinfo:hover{ border: 1px solid #ed1745;  border-radius: 10px;  background-color: #ed1745; color:white;}
 
-margin-bottom: 4px;
 .modal.fade .modal-dialog .modal-content .modal_footer{}
 .modal.fade .modal-dialog .modal-content .modal_footer .btn_area{text-align: right; background-color: white;}
 

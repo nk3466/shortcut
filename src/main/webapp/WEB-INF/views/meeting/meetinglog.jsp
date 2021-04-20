@@ -191,17 +191,16 @@
     	  $("#deleteCheck").modal("show");
       })
       
-      var iddd = "";
       
+      var iddd = "";
       
       $(this).on("click",".mtinfo", function(e){
 		e.preventDefault(); 			   	  
 	      $("#conference_detail").modal();
+	      
 	      iddd = $(this).attr('id');
-	      console.log('id : '+ $(this).attr('id'));
 	      selectMeetingDetail($(this).attr('id'));
     	  
-	      
       })
       
       // 삭제 
@@ -301,8 +300,6 @@
 	   var modifyTitle = $("#modifyTitle").val();
 	   var modifyContent = $("#modifyContent").val();
 	   
-	   console.log("모디파이수정 : " + modifyTitle);
-	   console.log("모디파이수정 : " + modifyContent);
 	   
 	   $.ajax({
 		   url : "modifyComplete",
@@ -341,10 +338,7 @@
 	   			var meetingTexttt= data.meeting.meetingText;
 	   			var enrollDate = data.meeting.enrollDate; 
 	   			var sprintNumber1 = data.sprintName[0].sprName;
-	   			console.log("sprintNumber1" + sprintNumber1)
-	   			console.log("enrollDate :"+ enrollDate);
-	   			console.log("meetingTexttt :"+ meetingTexttt);
-	   			console.log("meetingNameee :"+ meetingNameee);
+
 	   			var appendPlace = 'meetingMemberDetailList';
 	   			var appendPlace1 = 'meetingDateDetail';	
 	   			var appendPlace2 = 'meetingTitleDetail';
@@ -373,7 +367,6 @@
 		    EnrollDate : ""	   
 	   }
 	
-	/* console.log(enrollDateInfo); */
 	
    const token = $("meta[name='_csrf']").attr("content");
    const header = $("meta[name='_csrf_header']").attr("content");
@@ -384,9 +377,8 @@
    
    
    function gettoDate(data){
-	   var indexxxxx= data.indexOf(" ");
-	   var dataaaa = data.substring(0,indexxxxx);
-	   console.log(dataaaa);
+	   var indexx= data.indexOf(" ");
+	   var dataa = data.substring(0,indexx);
 	}
    
    var meetingNo = '';
@@ -412,7 +404,6 @@
 	   			console.table(data) ;
 	   			console.log("data.length : " + data.length);
 	   			for(var i = 0 ; i < data.length; i++){
-	   				/* console.log( ""+ gettoDate(data[i].enrollDate)); */
 	   				var meetingInfoooo= calculateDate(data[i].enrollDate);
 	   				new drawMeeting(enrollDateInfo,data[i].meetingName ,meetingInfoooo,data[i].meetingNo);
 	   			}
@@ -429,10 +420,10 @@
    var pjtNo = ${pjtNo};
    var count = 0;
    var sprintCount = 0;   
+   
    /* 프로젝트에 참여하고 인원 리스트*/
    $(".conference_update").click(function(){
       
-      /* console.log(pjtNo); */
       $.ajax({
          url:"selectProjectMember",
          type:"POST",
@@ -444,13 +435,11 @@
                
                let memberList = data.memberList; 
                let meetingMember = 'meetingMember';
-               
                let sprintNumber = data.sprintNo;
                
                new insertSprintNumber(sprintNumber);
                new insertPerson(memberList,meetingMember);
                
-              /*  console.log(count); */
             }  
          },
          error:function(data){
@@ -465,12 +454,12 @@
    /* 참석자 이름 넣어주기 */
    function insertPerson(memberList,appendPlace){
 	   $("#"+appendPlace+"").empty();
-	   /* console.log("insertPersonmemberList : " + memberList.length); */
 	   for(let i = 0; i < memberList.length; i++){
-           /* console.log("memberList[i].name : " + memberList[i].name);
-           console.table( $("#"+appendPlace+"") ); */
            var insertSpan="";
-           insertSpan = '<span class="item_text on">' + memberList[i].name + '<i id="delBtn" class="fas fa-times-circle"></i>' + '<input class="item_num" name="memberno' + [i] + '" type="hidden" value="' + memberList[i].no + '">' + '</span>';
+           insertSpan = '<span class="item_text on">' + memberList[i].name 
+           											  + '<i id="delBtn" class="fas fa-times-circle"></i>' 
+           											  + '<input class="item_num" name="memberno' + [i] + '" type="hidden" value="' 
+           											  + memberList[i].no + '">' + '</span>';
            count++
            $("#"+appendPlace+"").append(insertSpan);
         }
@@ -534,7 +523,6 @@
 	   var insertContent="";
 	   insertContent = '<span>' + meetingTexttt + '</span>'
 	   $("#"+appendPlace+"").append(insertContent); 
-	   console.log("이거내용이야" + meetingTexttt);
    }
    
    
@@ -573,25 +561,20 @@
    /* 왼쪽 중단 올리기 버튼 클릭시 미팅 입력및 업데이트 */
    $("#upload").click(function(){
 
-      var enrollDate = $("#meetingDate").val();                  // input date 값
-      var meetingInfo= new calculateDate(enrollDate);
-                 
+      var enrollDate = $("#meetingDate").val();                 							//input 날짜 입력값
+      var meetingInfo= new calculateDate(enrollDate);										//미팅 날짜와 캘린더 아이디값 비교
+      var sprintNo = $("#sprintNumberArea option:selected").find(".sprintNono").val();		//selectbox에서 스프린트선택 값
+      var meetingName = $("#titleName").val();												//회의 제목 입력 값
+      var meetingText = $("#meetingContent").val();											//회의 내용 입력 값
       
-      var sprintNo = $("#sprintNumberArea option:selected").find(".sprintNono").val();
-      
-      var meetingName = $("#titleName").val();
-      var meetingText = $("#meetingContent").val();
-      
-      var meetingMember = $('form[name=projectMemberList]').serializeArray();
+      var meetingMember = $('form[name=projectMemberList]').serializeArray();				//<form> 태그 내부의 값을 JSON 형태의 문자열을 배열로 리턴
       for(let i = 0; i < count; i++){
-         memberAttend = $('#meetingMember').find(".item_num").eq(i).val();
-         meetingMember.push({name : "memberAttend", value : memberAttend});
-         var index = i + 1;
-         console.log(memberAttend);
+         memberAttend = $('#meetingMember').find(".item_num").eq(i).val();					//아이디값 안에 클래스 값 가져오기 
+         meetingMember.push({name : "memberAttend", value : memberAttend});					//form 배열에 넣어주기 
+         var index = i + 1;																	//index변수에 값 저장 
       }
       
-      insertMeeting(pjtNo,meetingMember,enrollDate,meetingName,index,meetingText,meetingInfo,sprintNo);
-      console.log(meetingMember);
+      insertMeeting(pjtNo,meetingMember,enrollDate,meetingName,index,meetingText,meetingInfo,sprintNo); //insertMeeting함수에 매개변수로 전달
       
 
    })
@@ -605,39 +588,23 @@
    function calculateDate(enrollDate){
 	      
 
-	   	 /*  console.log("enrollDate" + enrollDate); */
-	      var enrollDate1 = enrollDate.substring(0,5);               //date 값의 년도 
-	      var enrollDate2 = enrollDate.substring(5,8);               //date 값의 월
-	      var enrollDate3 = enrollDate.substring(8,10);               //date 값의 일
+	      var enrollDate1 = enrollDate.substring(0,5);              	 //date 값의 년도 
+	      var enrollDate2 = enrollDate.substring(5,8);              	 //date 값의 월
+	      var enrollDate3 = enrollDate.substring(8,10);            		 //date 값의 일
 	      var enrollDate4 = enrollDate2.replace(/(^0+)/, "");            //0제외
 	      var enrollDate5 = enrollDate3.replace(/(^0+)/, "");            //0제외
-	      var enrollDate6 = enrollDate1 + enrollDate4 + enrollDate5;      //더하기
-	     /*  console.log("enrollDate1 : " + enrollDate1);
-	      console.log("enrollDate2 : " + enrollDate2);
-	      console.log("enrollDate3 : " + enrollDate3);
-	      console.log("enrollDate4 : " + enrollDate4);
-	      console.log("enrollDate5 : " + enrollDate5);
-	      console.log("enrollDate6 : " + enrollDate6); */
+	      var enrollDate6 = enrollDate1 + enrollDate4 + enrollDate5;     //더하기
 	      enrollDateInfo.EnrollDate = enrollDate6;
 	      
-	      var indexnum = parseInt(enrollDate5) - 5;                  //달력 인덱스값(정수로 파싱)
-	   
-	      var indexnum2 = parseInt(enrollDate5) - 1;                  //달력 뷰에 값넣기 위한 인덱스
-	    
-	      var meetDate = $("div[id^="+202+"]");                       //달력 div에 각각의 id값 가져오기
-	      
-	     // console.log(meetDate);
-	      var meetDate2 = meetDate.index() + indexnum;                 //입력한 date 값과  맞추기
-	      
-	      var meetDate3 = meetDate.eq(meetDate2);                    //몇번째 인덱스값과 같은지 비교
-	      
-	      var enrollDate7 = meetDate3.attr("id");   
+	      var indexnum = parseInt(enrollDate5) - 5;          	         //달력 인덱스값(정수로 파싱)
+	      var indexnum2 = parseInt(enrollDate5) - 1;            	     //달력 뷰에 값넣기 위한 인덱스
+	      var meetDate = $("div[id^="+202+"]");                       	 //달력 div에 각각의 id값 가져오기
+	      var meetDate2 = meetDate.index() + indexnum;               	 //입력한 date 값과  맞추기
+	      var meetDate3 = meetDate.eq(meetDate2);     	                 //몇번째 인덱스값과 같은지 비교
+	      var enrollDate7 = meetDate3.attr("id");   					 //id값 가져오기 	
 	      enrollDateInfo.meetDate = enrollDate7;
-	      //요소 속성값 가져오기
 	      var meetinginfo = meetDate.eq(indexnum2);
 	      
-	    /*   console.log(enrollDateInfo.meetDate);
-	      console.log(enrollDateInfo.EnrollDate); */
 	      
 	      return meetinginfo;
    }
@@ -659,7 +626,6 @@
                 "sprintNo" : sprintNo
                 },
           success : function(data, status, xhr){
-             /* console.log( enrollDateInfo.EnrollDate === enrollDateInfo.meetDate); */
              drawMeeting(enrollDateInfo,meetingName,meetingInfo,meetingNo)	
              $("#conference").modal("hide");
              location.reload();
