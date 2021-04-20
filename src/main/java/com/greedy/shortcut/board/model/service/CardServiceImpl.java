@@ -77,10 +77,10 @@ public class CardServiceImpl implements CardService {
 	}
 
 	@Override
-	public List<CardDTO> selectCardList(List<BoardDTO> boardList) {
-		List<CardDTO> cardList = new ArrayList<>();
+	public List<RequestCardDTO> selectCardList(List<BoardDTO> boardList) {
+		List<RequestCardDTO> cardList = new ArrayList<>();
 		for( int i = 0; i < boardList.size(); i++) {
-			List<CardDTO> preCardList = cardMapper.selctCardList(boardList.get(i).getBrdNo());
+			List<RequestCardDTO> preCardList = cardMapper.selctCardList(boardList.get(i).getBrdNo());
 			for( int j = 0; j < preCardList.size(); j++ ) {
 				cardList.add(preCardList.get(j));
 			}
@@ -144,22 +144,6 @@ public class CardServiceImpl implements CardService {
 
 		result = cardMapper.deleteCard(card);
 
-		if(result) {
-
-			if( 1 == card.getType()) {
-
-			}else if (2 == card.getType()) {
-				result = cardMapper.deleteCardTask(card);
-			}else if (3 == card.getType()) {
-				result = cardMapper.deleteCardSchedule(card);
-				result = cardMapper.deleteSchAttendList(card);
-			}
-
-		}else if (4 == card.getType()) {
-			result = cardMapper.deleteCardTask(card);
-			result = cardMapper.deleteCardSchedule(card);
-			result = cardMapper.deleteSchAttendList(card);
-		}
 		return result;
 	}
 }

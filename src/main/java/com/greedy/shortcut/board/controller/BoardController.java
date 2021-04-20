@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.shortcut.board.model.dto.BoardDTO;
 import com.greedy.shortcut.board.model.dto.CardDTO;
 import com.greedy.shortcut.board.model.dto.ProjectAuthorityDTO;
+import com.greedy.shortcut.board.model.dto.RequestCardDTO;
 import com.greedy.shortcut.board.model.service.BoardService;
 import com.greedy.shortcut.board.model.service.CardService;
 import com.greedy.shortcut.member.model.dto.MemberDTO;
@@ -49,7 +50,7 @@ public class BoardController {
 
 		List<MemberDTO> memberList = boardService.selectMember(pjtNo);
 		List<BoardDTO> boardList = boardService.selectboardList(sprNo);
-		List<CardDTO> cardList = cardService.selectCardList(boardList);
+		List<RequestCardDTO> cardList = cardService.selectCardList(boardList);
 		System.out.println("cardList다 들어있나? : " + cardList);
 		System.out.println("boardList :" + boardList);
 		System.out.println("memberList : " + memberList);

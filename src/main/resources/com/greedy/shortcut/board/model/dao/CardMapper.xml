@@ -139,7 +139,7 @@
         WHERE ROWNUM = 1
 	</select>
 	
-	<select id="selctCardList" resultMap="CardResultSet" parameterType="_int">
+	<select id="selctCardList" resultMap="RequestCardResultSet" parameterType="_int">
 	   SELECT 
 	         A.CRD_NO
 	       , A.CRD_NAME
@@ -299,24 +299,10 @@
          WHERE A.CRD_NO = #{crdNo}
 	</update>
 	
-	<delete id="deleteCard" parameterType="RequestCardDTO">
-		DELETE CARD A
+	<update id="deleteCard" parameterType="BoardDTO">
+       UPDATE CARD A
+          SET A.CRD_DEL_YN = 'Y'
         WHERE A.CRD_NO = #{no}
-	</delete>
-	
-	<delete id="deleteCardTask" parameterType="RequestCardDTO">
-		DELETE CRD_TASK A
-        WHERE A.CRD_NO = #{no}
-	</delete>
-	
-	<delete id="deleteCardSchedule" parameterType="RequestCardDTO">
-		DELETE CRD_SCHEDULE A
-        WHERE A.CRD_NO = #{no}
-	</delete>
-	
-	<delete id="deleteSchAttendList" parameterType="RequestCardDTO">
-		DELETE CRD_SCH_ATTEND_LIST A
-        WHERE A.CRD_NO = #{no}
-	</delete>
+	</update>
 	
  </mapper>

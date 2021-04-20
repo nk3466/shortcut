@@ -84,11 +84,13 @@
             
             <!--  카드 영역  -->
             <c:forEach var="cardList" items="${cardList }">
-            
-            <c:if test="${boardList.brdNo eq cardList.brdNo}">
+            <c:if test="${ cardList.delNo eq 'N' }">
+            	<c:if test="${boardList.brdNo eq cardList.brdNo}">
                 <div class="board_item card">
                 <input type="text" value="${ cardList.no }" name="" id="crdNo" class="crdNo" style="display: none;">
+                         
                          <div class="item type1 card-header bg-white"><c:out value="${cardList.title}"/></div>
+                         
                          <div class="item type2 card-body">
                          <c:if test="${ 1 eq cardList.type}">
                              <span class="item_detail type">일반</span> 
@@ -108,6 +110,7 @@
                              <i class="fas fa-user-circle"><c:out value="${cardList.cardMemberList.name}"/></i><br>
                          </div>
                      </div>
+            	</c:if>
             </c:if>
              </c:forEach>
             <!-- /카드영역 -->
@@ -464,17 +467,17 @@ console.log("boardList" +  "${requestScope.boardList}");
       </div>
    </div>
 </body>
-
 <script>
-   
+
    function selectCardInfo(crdNo) {
+	   
       $.ajax({
          url: "${pageContext.servletContext.contextPath}/select/cardInfo",
          type: "get",
          data: {crdNo: crdNo},
          success: function(data, status, xhr) {
             
-        	console.table(data);
+           console.table(data);
             
             var cardNo = data.no;
             var cardName = data.cardMemberList.name;
@@ -495,15 +498,15 @@ console.log("boardList" +  "${requestScope.boardList}");
             
                   var no = cardNo;
                   console.log(no);
-                  	$('#myModal2').modal("hide");
-                  	$("#myModal5").modal();
+                     $('#myModal2').modal("hide");
+                     $("#myModal5").modal();
                   
                   var html = '<input type="hidden" name="no" value="'+ no +'">'; 
-                   	$("#cardDetailTxt").empty();
-                   	$("#startTaskDate").empty();
-                   	$("#endTaskDate").empty();
-                   	$("#startScheduleTaskDate").empty();
-                   	$("#endScheduleTaskDate").empty();
+                      $("#cardDetailTxt").empty();
+                      $("#startTaskDate").empty();
+                      $("#endTaskDate").empty();
+                      $("#startScheduleTaskDate").empty();
+                      $("#endScheduleTaskDate").empty();
                     $('#placeDetail').attr('value', place);
                     $('#detailCardTitle').attr('value', title);
                     $('#detailMemberInput').attr('value', cardName);
@@ -538,7 +541,6 @@ console.log("boardList" +  "${requestScope.boardList}");
                               $("#memberDetail2").append(insertSpan);
                            }
                         } 
-                          
                        
                    },
                        error:function(data){
@@ -558,30 +560,41 @@ console.log("boardList" +  "${requestScope.boardList}");
          },
          error: function(xhr, status, error) {
             console.log(error);
+            
          }
          
       });
       
    }
    
+   $(".board_item.card").click(function(e){
+       
+       	var crdNo = $(this).children("#crdNo").val();
+        e.preventDefault();                  
+        $('#myModal2').modal("hide");
+        $("#myModal5").modal();
+        selectCardInfo(crdNo);
+       
+  });
+   
+   
       $('#editCard').click(function() {
       
-    	  var url = '${pageContext.servletContext.contextPath}/card/modifyCard';
+         var url = '${pageContext.servletContext.contextPath}/card/modifyCard';
       
-      		$('#cardDetailUpdate').attr('action',url);
-     	 	$('#cardDetailUpdate').submit();
+            $('#cardDetailUpdate').attr('action',url);
+            $('#cardDetailUpdate').submit();
    });
       
       $('#deleteCard').click(function() {
           
-    	  var url = '${pageContext.servletContext.contextPath}/card/deleteCard';
-    	  	var no = document.getElementById("crdNo").value;
-          	alert(no);
+         var url = '${pageContext.servletContext.contextPath}/card/deleteCard';
+            var no = document.getElementById("crdNo").value;
 
-          	$('#cardDetailUpdate').attr('action',url);
-          	$('#cardDetailUpdate').submit();
+             $('#cardDetailUpdate').attr('action',url);
+             $('#cardDetailUpdate').submit();
       });
-   
+      
 </script>
 
 <script type="text/javascript">
@@ -597,10 +610,10 @@ console.log("boardList" +  "${requestScope.boardList}");
        $(".board_item.card").click(function(e){
             
               var crdNo = $(this).children("#crdNo").val();
-            	e.preventDefault();                  
-            	$('#myModal2').modal("hide");
-            	$("#myModal5").modal();
-            	selectCardInfo(crdNo);
+               e.preventDefault();                  
+               $('#myModal2').modal("hide");
+               $("#myModal5").modal();
+               selectCardInfo(crdNo);
               
          });
        
@@ -702,10 +715,10 @@ console.log("boardList" +  "${requestScope.boardList}");
                      }
                 })
          }else{
-            return;
-            }
+        	 
+          return;
+         }
    })
-   
 
    /* 일정, 업무 버튼 */
    var count1 = 0;
@@ -928,5 +941,6 @@ console.log("boardList" +  "${requestScope.boardList}");
       $t.remove();
       count--;
    });
+   
 </script>
 </html>

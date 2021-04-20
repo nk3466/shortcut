@@ -16,7 +16,7 @@ public interface CardMapper {
 
 	CardDTO currentCardNo();
 
-	List<CardDTO> selctCardList(int brdNo);
+	List<RequestCardDTO> selctCardList(int brdNo);
 
 	boolean registCardTask(RequestCardDTO card);
 
@@ -37,13 +37,6 @@ public interface CardMapper {
 	boolean updateSchAttendList(CardAttendListDTO cal);
 
 	boolean deleteCard(RequestCardDTO card);
-
-	boolean deleteCardTask(RequestCardDTO card);
-
-	boolean deleteCardSchedule(RequestCardDTO card);
-
-	boolean deleteSchAttendList(RequestCardDTO card);
-
 
 
 }

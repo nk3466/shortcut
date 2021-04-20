@@ -22,7 +22,7 @@ public interface CardService {
 
 	CardDTO currentCardNo();
 
-	List<CardDTO> selectCardList(List<BoardDTO> boardList);
+	List<RequestCardDTO> selectCardList(List<BoardDTO> boardList);
 
 	
 	List<RequestCardDTO> selectCardInfo(int cardNo);
