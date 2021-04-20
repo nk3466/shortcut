@@ -219,7 +219,6 @@
 		    
 		    new modifyMeeting(iddd)
 
-
 		});
       
       /* 모달 수정 페이지 완료 버튼 클릭시  */
@@ -270,8 +269,7 @@
 	   			var meetingText2= data.meeting.meetingText;
 	   			var enrollDate2 = data.meeting.enrollDate; 
 	   			var sprintNumber2 = data.sprintName[0].sprName;
-	   			console.log("meetingTexttt :"+ meetingText2);
-	   			console.log("meetingNameee :"+ meetingName2);
+	   			
 	   			var appendPlace = 'meetingMemberDetailList1';
 	   			var appendPlace1 = 'meetingDateDetail1';	
 	   			var appendPlace2 = 'meetingTitleDetail1';
@@ -288,9 +286,7 @@
 		   error : function(error){
 			   console.log(error);
 		   }
-		   
 	   })
-	   
    }
    
    /* 수정 완료 버튼 클릭시  */
@@ -472,10 +468,22 @@
 	   for(let i = 0; i < sprintNumber.length; i++){
 		   
 		   var insertOption="";
-		   insertOption = '<option>' + sprintNumber[i].sprName + '<input class="sprintNono" name="sprintno' + [i] + '" type="hidden" value="' + sprintNumber[i].sprNo + '">' + '</option>';
+		   insertOption = '<option>' + sprintNumber[i].sprName
+		   							 + '<input class="sprintNono" name="sprintno' 
+		   							 + [i] + '" type="hidden" value="' + sprintNumber[i].sprNo + '">' 
+		   							 + '</option>';
 		   sprintCount++;
 		   $("#sprintNumberArea").append(insertOption);
 	   }
+   }
+   /* 수정페이지 스프린트 번호 넣어주기 */
+   function insertSprintNo1(sprintNumber2,appendPlace){
+		$("#"+appendPlace+"").empty();
+	   
+	   
+	    var insertSprint="";
+	    insertSprint = '<span>' + sprintNumber2 + '</span>'
+	    $("#"+appendPlace+"").append(insertSprint);
    }
    
    /* 상세페이지 스프린트 번호 넣어주기 */
@@ -485,15 +493,6 @@
 	   
 	    var insertSprint="";
 	    insertSprint = '<span>' + sprintNumber1 + '</span>'
-	    $("#"+appendPlace+"").append(insertSprint);
-   }
-   /* 수정페이지 스프린트 번호 넣어주기 */
-   function insertSprintNo1(sprintNumber2,appendPlace){
-		$("#"+appendPlace+"").empty();
-	   
-	   
-	    var insertSprint="";
-	    insertSprint = '<span>' + sprintNumber2 + '</span>'
 	    $("#"+appendPlace+"").append(insertSprint);
    }
    

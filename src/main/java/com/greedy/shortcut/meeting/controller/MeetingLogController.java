@@ -11,6 +11,8 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.greedy.shortcut.board.controller.ProjectBoardController;
 import com.greedy.shortcut.board.model.dto.SprintDTO;
 import com.greedy.shortcut.meeting.model.dto.AttendListDTO;
 import com.greedy.shortcut.meeting.model.dto.MeetingDTO;
@@ -35,6 +38,7 @@ import com.greedy.shortcut.member.model.dto.MemberDTO;
 @RequestMapping("/meeting/*")
 public class MeetingLogController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(MeetingLogController.class);
 	private final MeetingService meetingService;
 
 	@Autowired
@@ -48,6 +52,7 @@ public class MeetingLogController {
 			
 		/* 미팅조회 */
 		List<MeetingDTO> meetingList = meetingService.selectMeetingList(pjtNo);
+		
 		
 		
 		model.addAttribute("pjtNo", pjtNo);
@@ -157,7 +162,6 @@ public class MeetingLogController {
 
 		model.addAttribute("meeting", meeting);
 		
-		
 		return new ObjectMapper().writeValueAsString(meeting);
 	}
 	
@@ -165,8 +169,6 @@ public class MeetingLogController {
 	@ResponseBody
 	public int deletedMeeting(@RequestParam Map<String, String> parameters, Model model) throws JsonProcessingException {
 		int meetingNo = Integer.parseInt(parameters.get("meetingNo"));
-
-		System.out.println("이거 미팅넘버" + meetingNo);
 		
 		int result = meetingService.deletedMeeting(meetingNo);
 		
@@ -195,10 +197,6 @@ public class MeetingLogController {
 		int meetingNo = Integer.parseInt(parameters.get("meetingNo"));
 		String modifyTitle = (parameters.get("modifyTitle"));
 		String modifyContent = (parameters.get("modifyContent"));
-		
-		System.out.println("수정 완료 : " + meetingNo);
-		System.out.println("수정 완료 : " + modifyTitle);
-		System.out.println("수정 완료 : " + modifyContent);
 		
 		int result = meetingService.modifyComplete(meetingNo,modifyTitle,modifyContent);
 		
