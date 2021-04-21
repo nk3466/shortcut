@@ -917,7 +917,17 @@
 											$noTd = $("<td>").text(data[index].blgNo);
 											$nameTd = $("<td>").text(data[index].blgName);
 											$priTd = $("<td>").text(data[index].blgPri);
-											$enrollDateTd = $("<td>").text(data[index].blgEnrollDate);
+											
+											let spDate = new Date(data[index].sprEndDate);
+											console.log("spDate : " + spDate);
+											let spYear = spDate.getFullYear();
+											console.log(spYear);
+											let spMonth = (spDate.getMonth() + 1);
+											console.log(spMonth);
+											let sprrDate = spDate.getDate();
+											console.log(sprrDate); 
+											
+											$sprEndDate = $("<td>").text(spYear + "-" + spMonth + "-" + sprrDate);
 											$demoMemoTd = $("<td>").text(data[index].blgDemoMemo);
 											$refMemoTd = $("<td>").text(data[index].blgRefMemo);
 											$retrospectBtnTd = $("<td>").html(retrospectBtnHtml);
@@ -925,7 +935,7 @@
 											$tr.append($noTd);
 											$tr.append($nameTd);
 											$tr.append($priTd);
-											$tr.append($enrollDateTd);
+											$tr.append($sprEndDate);
 											$tr.append($demoMemoTd);
 											$tr.append($refMemoTd);
 											$tr.append($retrospectBtnTd);
