@@ -10,6 +10,8 @@ import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
@@ -43,8 +45,8 @@ public class BacklogsController {
 		@Test
 		public void backlogView() throws Exception {
 			this.mockMvc.perform(get("/board/backlog")
-						.param("pjtNo","1")
-						.param("projectName","PJOJECT1")
+						.param("pjtNo","3")
+						.param("projectName","PJOJECT16")
 			)
 			.andDo(print())
 			//정상 처리 되는지 확인
@@ -54,4 +56,6 @@ public class BacklogsController {
 			//메소드 이름이 listPage인지 확인
 			.andExpect(handler().methodName("project"));
 		}
+		
+		
 }
