@@ -678,7 +678,7 @@
 								$("#DemoDetail11").attr('placeholder',"");
 								$("#Reference11").attr('placeholder',"");
 								
-								$("#backlogNo11").attr('value',"BACKLOG-" + data.blgNo);
+								$("#backlogNo11").attr('value', data.blgNo);
 								//$("#BacklogNoTosprintRegist").attr('value',data.blgNo);				//스프린트 생성할 때 도 부여
 								//$("#BacklogNoTosprintRegist").attr('placeholder',data.blgNo);				//스프린트 생성할 때 도 부여
 								$("#backlogName11").attr('placeholder',data.blgName);
@@ -711,22 +711,13 @@
 	<script>
 		function MakeSprintByn(beta){
 			var sprBlgNo = $(beta).val();
-			console.log("ㅇ응ㅇ:?" + sprBlgNo);
-			/* var sprBlgNo = ""; */
-			/* $("#makeSprint").click(function(){
-				sprBlgNo = $(this).closest(".trtr").find("#blgNoTomakeSprint").val();
-				console.log(sprBlgNo);
-			})
-			 */
+			
 			$("#MakeSprint").click(function(){ 
 				console.log("wefihweif");
 				 var sprName = document.getElementById("sprintRegistName").value;
 				 var sprStardDate = document.getElementById("sprintRegistStartDate").value;
 				 var sprEndDate = document.getElementById("sprintRegistEndDate").value;
 				 var sprGoal = document.getElementById("sprintRegistGoal").value;
-				 //var sprBlgNo = document.getElementById("blgNoTomakeSprint").value;
-				 
-			console.log("호오?" + sprBlgNo);	
 				 
 				 $.ajax({
 					url : "${pageContext.servletContext.contextPath}/board/sprint/sprint_regist",

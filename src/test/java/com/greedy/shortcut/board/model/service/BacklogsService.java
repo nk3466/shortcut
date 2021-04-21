@@ -1,24 +1,26 @@
 package com.greedy.shortcut.board.model.service;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.greedy.shortcut.board.model.dao.BacklogMapper;
 import com.greedy.shortcut.board.model.dto.BacklogDTO;
+
+import junit.framework.TestCase;
 
 @RunWith(SpringJUnit4ClassRunner.class)			//spring-test에서 제공하는 단위 테스트를 위한 클래스 러너
 @WebAppConfiguration
@@ -28,28 +30,33 @@ import com.greedy.shortcut.board.model.dto.BacklogDTO;
 public class BacklogsService {
 
 	
-	  @Mock 
-	  private BacklogMapper backlogMapper;
-	  
-	  @InjectMocks BacklogServiceImpl backlogServiceImpl;
-	 
-	
-	@Autowired
 	BacklogServiceImpl backlogService;
 	
-	BacklogDTO backlogDTO;
+	@Mock
+	BacklogMapper backlogMapper;
 	
 	@Before
-    public void setUp() {
+	public void setup() {
 		MockitoAnnotations.initMocks(this);
-		backlogDTO = new BacklogDTO();
-		backlogDTO.setPjtNo(1);
-		
-	    }
+		backlogService = new BacklogServiceImpl(backlogMapper);
+	}
 	
 	@Test
-	public void BacklogViewtest() {
-		List<String> expected = Arrays.asList("회원가입", "로그인", "프로젝트", "백로그", "스프린트");
-		assertThat(backlogService.selectBacklogList(1),is(expected));
-	}
+	public void getBacklogView() {
+		BacklogDTO backlog= new BacklogDTO();
+		
+		List<BacklogDTO> backlogData = new ArrayList();
+		backlogData.add(backlog);
+		            
+		when(backlogMapper.selectBacklogList(1)).thenReturn(backlogData);
+		
+		List<BacklogDTO> backlogs = backlogService.selectBacklogList(1);
+		
+		assertEquals(backlogs.size(),1 );
+		
+		verify(backlogMapper, times(1)).selectBacklogList(1);
+				}
+	
+	
+
 }
