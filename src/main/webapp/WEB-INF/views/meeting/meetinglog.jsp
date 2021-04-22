@@ -177,7 +177,64 @@
 
 <script type="text/javascript">
 
+	const token = $("meta[name='_csrf']").attr("content");
+	const header = $("meta[name='_csrf_header']").attr("content");
+	
+	$(document).ajaxSend(function(e, xhr, options) {
+	    xhr.setRequestHeader(header, token);
+	});
+
+
+
+	/* 미팅로그 페이지 출력시 리스트 출력  */
+	$(document).ready(function(){
+		   
+		   new nextDraw();
+	   
+	});
+
+	$(".next").click(function(){
+		new nextDraw();
+		var meetDate1 = $("div[id^="+202+"]");
+		console.log("meetDate1 : " + meetDate1 )
+	})
+	$(".prev").click(function(){
+		new nextDraw();
+		var meetDate2 = $("div[id^="+202+"]");
+		console.log("meetDate2 : " + meetDate2 )
+	})
+	
+	
+
+	function nextDraw() {
+		var pjtNooo = ${pjtNo};
+		$.ajax({
+	        url:"selectAllmeeting",
+	        type:"POST",
+	        data : {"pjtNo" : pjtNooo},
+	   		success: function(data, status, xhr){
+	   			
+	   			console.table(data) ;
+	   			console.log("data.length : " + data.length);
+	   			for(var i = 0 ; i < data.length; i++){
+	   				var meetingInfoooo= calculateDate(data[i].enrollDate);
+	   				new drawMeeting(enrollDateInfo,data[i].meetingName ,meetingInfoooo,data[i].meetingNo);
+	   			}
+	   			
+	   		},
+	   		error: function(xhr, status, data){
+	   			console.log(data);
+	   		}
+	   })
+		
+	}
+
+
+
+
    $(function(){
+	   
+	   //올리기 버튼 
       $(".conference_update").click(function(e){
          e.preventDefault();
          
@@ -192,6 +249,7 @@
       })
       
       
+      // 상세보기
       var iddd = "";
       
       $(this).on("click",".mtinfo", function(e){
@@ -228,9 +286,45 @@
     	  new modifyComplete(iddd)
     	  
       })
-      
-      
+   
    })
+   
+   
+   var pjtNo = ${pjtNo};
+   var count = 0;
+   var sprintCount = 0;   
+   
+   /* 프로젝트에 참여하고 인원 리스트*/
+   $(".conference_update").click(function(){
+      
+      $.ajax({
+         url:"selectProjectMember",
+         type:"POST",
+         data : {"pjtNo" : pjtNo},
+         
+         success: function(data, status, xhr){
+           console.table(data)
+            if(data !==0){
+               
+               let memberList = data.memberList; 
+               let meetingMember = 'meetingMember';
+               let sprintNumber = data.sprintNo;
+               
+               new insertSprintNumber(sprintNumber);
+               new insertPerson(memberList,meetingMember);
+               
+            }  
+         },
+         error:function(data){
+            console.log(data);
+         }
+      })
+   });
+   
+   
+   
+   
+   
    /* 삭제 */
    function deleMeeting(meetingNo){
 	   
@@ -355,8 +449,7 @@
 
 	   
    }
-</script>
-<script type="text/javascript">
+
 
 	var enrollDateInfo = {
 		    meetDate : "",
@@ -364,19 +457,12 @@
 	   }
 	
 	
-   const token = $("meta[name='_csrf']").attr("content");
-   const header = $("meta[name='_csrf_header']").attr("content");
-   
-   $(document).ajaxSend(function(e, xhr, options) {
-       xhr.setRequestHeader(header, token);
-   });
-   
-   
    function gettoDate(data){
 	   var indexx= data.indexOf(" ");
 	   var dataa = data.substring(0,indexx);
 	}
    
+	
    var meetingNo = '';
    function drawMeeting(enrollDateInfo,meetingName,calenderPlace,meetingNo){
        
@@ -388,64 +474,10 @@
        }
    }
    
-   /* 미팅로그 페이지 출력시 리스트 출력  */
-   $(document).ready(function(){
-	   var pjtNooo = ${pjtNo};
-	   $.ajax({
-	        url:"selectAllmeeting",
-	        type:"POST",
-	        data : {"pjtNo" : pjtNooo},
-	   		success: function(data, status, xhr){
-	   			
-	   			console.table(data) ;
-	   			console.log("data.length : " + data.length);
-	   			for(var i = 0 ; i < data.length; i++){
-	   				var meetingInfoooo= calculateDate(data[i].enrollDate);
-	   				new drawMeeting(enrollDateInfo,data[i].meetingName ,meetingInfoooo,data[i].meetingNo);
-	   			}
-	   			
-	   		},
-	   		error: function(xhr, status, data){
-	   			console.log(data);
-	   		}
-	   })
-      
-   });
+  
    
       
-   var pjtNo = ${pjtNo};
-   var count = 0;
-   var sprintCount = 0;   
-   
-   /* 프로젝트에 참여하고 인원 리스트*/
-   $(".conference_update").click(function(){
-      
-      $.ajax({
-         url:"selectProjectMember",
-         type:"POST",
-         data : {"pjtNo" : pjtNo},
-         
-         success: function(data, status, xhr){
-           console.table(data)
-            if(data !==0){
-               
-               let memberList = data.memberList; 
-               let meetingMember = 'meetingMember';
-               let sprintNumber = data.sprintNo;
-               
-               new insertSprintNumber(sprintNumber);
-               new insertPerson(memberList,meetingMember);
-               
-            }  
-         },
-         error:function(data){
-            console.log(data);
-         }
-         
-      })
-      
-      
-   });
+  
    
    /* 참석자 이름 넣어주기 */
    function insertPerson(memberList,appendPlace){
