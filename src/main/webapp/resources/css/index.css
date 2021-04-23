@@ -43,6 +43,24 @@
 .modal.fade .modal-dialog .modal-content .modal-body .login_info .input_detail:focus {border: 1px solid #ed1745; outline: none;}
 
 
+
+
+.modal.fade .modal-dialog .modal-content .modal-body.type3{ padding:15px 45px; }
+.modal.fade .modal-dialog .modal-content .modal-body.type3 .participation_list{}
+.modal.fade .modal-dialog .modal-content .modal-body.type3 .participation_list .participation_item{}
+.modal.fade .modal-dialog .modal-content .modal-body.type3 .participation_list .participation_item .row{ margin: 0; border: 1px solid rgb(237, 23, 69);  height: 40px;  line-height: 40px;  border-radius: 15px; margin-bottom: 10px;}
+
+
+
+
+
+.modal.fade .modal-dialog .modal-content .modal-body.type3 .participation_list .participation_item .row .item_list.type1{float: left; width: 30%;  text-align: center; font-size: 16px;}
+.modal.fade .modal-dialog .modal-content .modal-body.type3 .participation_list .participation_item .row .item_list.type2{float:left; width: 50%;  text-align: center; font-size: 16px;}
+.modal.fade .modal-dialog .modal-content .modal-body.type3 .participation_list .participation_item .row .item_list.type3{float: left; width: 20%; text-align: center;}
+.modal.fade .modal-dialog .modal-content .modal-body.type3 .participation_list .participation_item .row .item_list.type3 .send_btn{width: 50px; height: 34px; line-height: 30px; background-color: white;border: 0px; outline: none;}
+.modal.fade .modal-dialog .modal-content .modal-body.type3 .participation_list .participation_item .row .item_list.type3 .send_btn:hover{font-weight: bold;}
+
+
 .modal.fade .modal-dialog .modal-content .login_btn_area{text-align: center;}
 .modal.fade .modal-dialog .modal-content .login_btn_area .login_btn{width: 85%; display: block; line-height: 50px;  margin: 0 auto;  height: 50px;  background-color: #ffccd7;  border: 1px solid #ffccd7; border-radius: 20px; outline: none; color: white;}
 
@@ -59,6 +77,28 @@
 .modal.fade .modal-dialog .modal-content .modal_btn_area{text-align: center;}
 .modal.fade .modal-dialog .modal-content .modal_btn_area .modal_btn{width: 85%;  height: 50px;  background-color: #ffccd7;  border: 1px solid #ffccd7; border-radius: 20px; outline: none; color: white;}
 
+
+
+.modal.fade .modal-dialog .modal-content.type3{background-color: lightgray;}
+.modal.fade .modal-dialog .modal-content.type3 .modal-header.type3{background-color: ghostwhite;}
+.modal.fade .modal-dialog .modal-content.type3 .modal-header.type3 .chatting_header{}
+.modal.fade .modal-dialog .modal-content.type3 .modal-header.type3 .chatting_header .row{margin: 0; line-height: 30px;}
+.modal.fade .modal-dialog .modal-content.type3 .modal-header.type3 .chatting_header .row .chatting_logo{float: left; width: 30px;
+    height: 30px;}
+.modal.fade .modal-dialog .modal-content.type3 .modal-header.type3 .chatting_header .row .chatting_logo .chatting_logo_detail{ width: 30px;
+    height: 30px; }
+
+.modal.fade .modal-dialog .modal-content.type3 .modal-header.type3 .chatting_header .row .chatting_info{float: left; padding: 0 20px;
+    font-size: 17px;
+    font-weight: bold;}
+
+.modal.fade .modal-dialog .modal-content.type3 .modal-body.type3{padding: 10px 0;}
+.modal.fade .modal-dialog .modal-content.type3 .modal-body.type3 .modal_textarea_detail{width: 100%; height: 500px; border:0;}
+
+.modal.fade .modal-dialog .input_area{width: 100%; height: 90px; position: relative;}
+.modal.fade .modal-dialog .input_area .messagebox_detail{height: 100%; width: 100%; padding: 10px 85px 10px 10px;}
+.modal.fade .modal-dialog .input_area .message_send{position: absolute; top: 0; right: 0; width: 15%;  height: 100%;
+    background: white;  border: 1px solid rgb(237, 23, 69); font-size: 17px;  font-weight: bold;}
 
 /* 알람 */
 .alarmArea{border-bottom:1px solid #ed1745; border-left:1px solid #ed1745; width: 20%;  position: absolute; right: 0; z-index: 999; background-color: white;   z-index: 999;   padding: 15px; height: 500px; overflow-x: hidden; overflow-y: auto;}

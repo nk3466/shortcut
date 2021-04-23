@@ -67,44 +67,190 @@
 </head>
 <body>
 	<div class="top_area">
-	<div class="row">
-		<div class="top_logo_area">
-			<a class="top_logo_detail" href="${ pageContext.servletContext.contextPath }/main">
-				<img class="logo_detail" src="${ pageContext.servletContext.contextPath }/resources/img/logo1.png">
-				<span class="logo_text">Short Cut</span>	
-			</a>			
-		</div>
-		<div class="top_menu_area">			
-			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/mypage/mypage">
-				<i class="fas fa-cog"></i>
-			</a>
-			<div class="aab" id=""></div>
-			<a class="menu_list" id="">
-				<i class="far fa-bell" id="allAlarmBtn"></i>
-			</a>	
-			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/messenger/messenger">
-				<i class="far fa-envelope"></i>	
-			</a>
-			<c:choose>
-				<c:when test="${!empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
-					<a class="menu_list" data-toggle="modal" data-target="#member_logout">로그아웃</a>
-					<a class="menu_list">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username} 님이 로그인 되었습니다.</a>	
-				</c:when>
+		<div class="row">
+			<div class="top_logo_area">
+				<a class="top_logo_detail" href="${ pageContext.servletContext.contextPath }/main">
+					<img class="logo_detail" src="${ pageContext.servletContext.contextPath }/resources/img/logo1.png">
+					<span class="logo_text">Short Cut</span>	
+				</a>			
+			</div>
+			<div class="top_menu_area">			
+				<a class="menu_list" href="${ pageContext.servletContext.contextPath }/mypage/mypage">
+					<i class="fas fa-cog"></i>
+				</a>
+				<div class="aab" id=""></div>
+				<a class="menu_list" id="">
+					<i class="far fa-bell" id="allAlarmBtn"></i>
+				</a>	
+				<a class="menu_list" data-toggle="modal" data-target="#messenger_show">
+					<i class="far fa-envelope"></i>	
+				</a>
+				<c:choose>
+					<c:when test="${!empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
+						<a class="menu_list" data-toggle="modal" data-target="#member_logout">로그아웃</a>
+						<a class="menu_list">${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username} 님이 로그인 되었습니다.</a>	
+					</c:when>
+					
+					<c:otherwise>
+						<a class="menu_list" data-toggle="modal" data-target="#member_regist">회원가입</a>
+						<a class="menu_list" data-toggle="modal" data-target="#member_login">로그인</a>
+					</c:otherwise>
+				</c:choose>
+				<input type="text" id="ABC" style="display: none;" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}">
+				<a class="menu_list" href="${ pageContext.servletContext.contextPath }/board/project_board/${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}">프로젝트</a>
+				<a class="menu_list" href="${ pageContext.servletContext.contextPath }/mywork/mywork">내업무</a>
+				<a class="menu_list" href="#">한국어</a>
+				<a class="menu_list">${requestScope.loginFailMsg}</a>
 				
-				<c:otherwise>
-					<a class="menu_list" data-toggle="modal" data-target="#member_regist">회원가입</a>
-					<a class="menu_list" data-toggle="modal" data-target="#member_login">로그인</a>
-				</c:otherwise>
-			</c:choose>
-			<input type="text" id="ABC" style="display: none;" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}">
-			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/board/project_board/${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}">프로젝트</a>
-			<a class="menu_list" href="${ pageContext.servletContext.contextPath }/mywork/mywork">내업무</a>
-			<a class="menu_list" href="#">한국어</a>
-			<a class="menu_list">${requestScope.loginFailMsg}</a>
-			
+			</div>
 		</div>
 	</div>
-</div>
+
+
+	<div class="modal fade" id="messenger_show" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            Project Member
+          </h4>
+        </div>
+        <div class="modal-body type3">
+          <div class="participation_list">
+            <div class="participation_item">
+              <div class="row">
+                <div class="item_list type1">
+             	     추지훈
+                </div>
+                <div class="item_list type2">
+                  shortcut@spring.com
+                </div>                
+                <div class="item_list type3">
+                  <button class="send_btn">전송</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="item_list type1">
+               		   추지훈
+                </div>
+                <div class="item_list type2">
+                  shortcut@spring.com
+                </div>                
+                <div class="item_list type3">
+                  <button class="send_btn">전송</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="item_list type1">
+                  	추지훈
+                </div>
+                <div class="item_list type2">
+                  shortcut@spring.com
+                </div>                
+                <div class="item_list type3">
+                  <button class="send_btn">전송</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="item_list type1">
+                 	 추지훈
+                </div>
+                <div class="item_list type2">
+                  shortcut@spring.com
+                </div>                
+                <div class="item_list type3">
+                  <button class="send_btn">전송</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="item_list type1">
+           		       추지훈
+                </div>
+                <div class="item_list type2">
+                  shortcut@spring.com
+                </div>                
+                <div class="item_list type3">
+                  <button class="send_btn">전송</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="item_list type1">
+               		   추지훈
+                </div>
+                <div class="item_list type2">
+                  shortcut@spring.com
+                </div>                
+                <div class="item_list type3">
+                  <button class="send_btn">전송</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="messenger_chatting" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content type3">
+        <div class="modal-header type3">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <div class="chatting_header">
+            <div class="row">
+              <div class="chatting_logo">
+                <img class="chatting_logo_detail" src="${ pageContext.servletContext.contextPath }/resources/img/logo1.png">
+              </div>              
+              <div class="chatting_info">
+                <span>추지훈</span>
+              </div>  
+            </div>            
+          </div>         
+        </div>
+        <div class="modal-body type3">
+         <textarea class="modal_textarea_detail"></textarea>
+        </div>        
+        <div class="input_area">
+          <input class="messagebox_detail" type="text" name="" placeholder="내용을 입력해주세요">
+          <button class="message_send">보내기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+<script type="text/javascript">
+  $(function(){
+
+    $(this).on("click",".send_btn", function(){
+
+      $("#messenger_show").modal("hide")
+      $("#messenger_chatting").modal("show")
+    })
+  })
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <c:choose>
 	<c:when test="${!empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
