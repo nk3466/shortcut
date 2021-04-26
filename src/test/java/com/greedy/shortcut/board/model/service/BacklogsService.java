@@ -53,8 +53,7 @@ public class BacklogsService {
 		List<BacklogDTO> backlogs = backlogService.selectBacklogList(1);
 		
 		assertEquals(backlogs.size(),1 );
-		
-		verify(backlogMapper, times(1)).selectBacklogList(1);
+
 				}
 	
 	

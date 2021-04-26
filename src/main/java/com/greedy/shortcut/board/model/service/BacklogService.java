@@ -16,7 +16,7 @@ public interface BacklogService {
 
 	List<ProjectAuthorityDTO> selectMemberList(int pjtNo);
 
-	int idprojectcheck(MemberDTO member);
+	int idprojectcheck(String string);
 
 	boolean insertEditProject(ProjectDTO project);
 

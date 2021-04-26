@@ -18,7 +18,7 @@ public class ProjectAuthorityDTO {
 	public ProjectAuthorityDTO() {}
 
 	public ProjectAuthorityDTO(int projectRole, int pjtNo, int memberNo, int projectRoleNo,
-			List<ProjectAuthorityDTO> memberList, String memberId) {
+			/* List<ProjectAuthorityDTO> memberList, */ String memberId) {
 		super();
 		this.projectRole = projectRole;
 		this.pjtNo = pjtNo;

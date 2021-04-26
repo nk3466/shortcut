@@ -45,15 +45,15 @@ public class BacklogServiceImpl implements BacklogService {
 
 		/* 아이디 유무 체크 */
 	@Override
-	public int idprojectcheck(MemberDTO member) {
+	public int idprojectcheck(String member) {
 		
-		MemberDTO userNo = backlogMapper.selectMemberDupCheck(member.getEmail());
-		if(userNo == null) {
+		int userNo = backlogMapper.selectMemberDupCheck(member).getNo();
+		if(userNo == 0) {
 			System.out.println("가입된 회원이 아님");
 			return 0;
 		}else {
-			System.out.println("사용자 넘버는 ? " + userNo.getNo());
-			return userNo.getNo();
+			System.out.println("사용자 넘버는 ? " + userNo);
+			return userNo;
 		}
 		
 	}
