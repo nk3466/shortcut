@@ -22,21 +22,11 @@ public class MsgServiceImpl implements MsgService {
 	}
 
 	@Override
-	public List<PmDTO> selectMember(PmDTO pmDTO) {
-
-		return msgMapper.selectPm(pmDTO);
-	}
-
-	@Override
-	public List<MessengerDTO> selectReceive() {
+	public List<MemberDTO> selectMember(int userNo) {
 		
-		return msgMapper.selectReceive();
+		return msgMapper.selectMember(userNo);
 	}
 
-	@Override
-	public List<MessengerDTO> selectSend() {
-
-		return msgMapper.selectSend();
-	}
+	
 
 }

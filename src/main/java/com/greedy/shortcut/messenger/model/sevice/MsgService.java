@@ -10,11 +10,7 @@ import com.greedy.shortcut.messenger.model.dto.PmDTO;
 
 public interface MsgService {
 
-	List<PmDTO> selectMember(PmDTO pmDTO);
-
-	List<MessengerDTO> selectReceive();
-
-	List<MessengerDTO> selectSend();
+	List<MemberDTO> selectMember(int userNo);
 
 
 }

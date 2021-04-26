@@ -21,78 +21,32 @@
 		<result column="PJT_END_DATE" property="projectEndDate" />
 		<result column="PJT_COLOR" property="projectColor" />
 	</resultMap>
-	
-	<resultMap id="msgResultSet" type="MessengerDTO">
-		<id column="MSG_NO" property="no"/>
-		<result column="MSG_TYPE" property="type"/>
-		<result column="MSG_TXT" property="txt"/>
-		<result column="PJT_NO" property="pjtNo"/>
-		<result column="MSG_TO" property="msgTo"/>
-		<result column="MEM_NAME" property="memName"/>
-		<result column="MSG_FROM" property="msgFrom"/>
-		<result column="MSG_DEL_YN" property="del"/>
-		<result column="PJT_NAME" property="pjtName"/>
-		<result column="MSG_ENROLL_DATE" property="date"/>
-	</resultMap>
-	
-	<resultMap id="pmResultSet" type="PmDTO">
-		<id column="PJT_NO" property="pjtNo"/>
-		<result column="MEM_NO" property="memNo"/>
-		<result column="PJT_NAME" property="pjtName"/>
-		<result column="MEM_NAME" property="memName"/>
+
+	<resultMap id="ProjectAuthorityResultSet" type="ProjectAuthorityDTO">
+		<id column="PA_NO" property="projectRoleNo" />
+		<result column="PJT_NO" property="pjtNo" />
+		<result column="MEM_NO" property="memberNo" />
+		<result column="PA_ROLE" property="projectRole" />
 	</resultMap>
 
-	<!-- <select id="selectPjt" resultMap="memberResultSet" parameterType="MemberDTO">
-	 SELECT 
-	        A.MEM_NO
-          , A.MEM_NAME
-          , B.PJT_NAME
-       FROM MEMBER A
-       JOIN PROJECT B ON (A.MEM_NO = B.MEM_NO)
-	</select>  -->
-	
-	<select id="selectPm" resultMap="pmResultSet" parameterType="PmDTO">     
-        SELECT 
-               DISTINCT
-	           A.MEM_NO
-             , A.MEM_NAME
-             , B.PJT_NAME
-             , C.MEM_NO
-          FROM MEMBER A
-          JOIN PROJECT B ON (A.MEM_NO = B.MEM_NO)
-          JOIN PJT_AUTHORITY C ON (A.MEM_NO = C.MEM_NO)
-	</select>
-	
-	<!-- 보낸 쪽지함 -->
-	<select id="selectReceive" resultMap="msgResultSet" parameterType="MessengerDTO">
-       SELECT
-              A.MSG_NO
-            , B.PJT_NAME
-            , A.MSG_TYPE
-            , A.MSG_TXT
-            , A.MSG_TO
-            , A.MSG_ENROLL_DATE
-            , C.MEM_NAME
-         FROM MESSAGE A
-         JOIN PROJECT B ON (A.PJT_NO = B.PJT_NO)
-         JOIN MEMBER C ON (A.MSG_FROM = C.MEM_NO)
-         ORDER BY A.MSG_NO DESC
-	</select>
-	
-	<!-- 보낸 쪽지함 -->
-	<select id="selectSend" resultMap="msgResultSet" parameterType="MessengerDTO">
-       SELECT
-              A.MSG_NO
-            , B.PJT_NAME
-            , A.MSG_TYPE
-            , A.MSG_TXT
-            , A.MSG_FROM
-            , A.MSG_ENROLL_DATE
-            , C.MEM_NAME
-         FROM MESSAGE A
-         JOIN PROJECT B ON (A.PJT_NO = B.PJT_NO)
-         JOIN MEMBER C ON (A.MSG_FROM = C.MEM_NO)
-         ORDER BY A.MSG_NO DESC
+	<select id="selectMember" resultMap="memberResultSet" parameterType="hashmap">
+		SELECT 
+	       DISTINCT(D.MEM_NO)
+	     , D.MEM_NAME
+	     , D.MEM_ID 
+	  FROM ( SELECT
+	                B.MEM_NAME
+	              , C.MEM_NO
+	              , B.MEM_ID
+	           FROM PJT_AUTHORITY C
+	           JOIN MEMBER B ON (C.MEM_NO = B.MEM_NO)
+	          WHERE NOT B.MEM_NO = #{userNo}
+	            AND C.PJT_NO IN ( SELECT
+	                                   A.PJT_NO
+	                              FROM PJT_AUTHORITY A
+	                             WHERE A.MEM_NO =  #{userNo}
+	                           )
+	       )D
 	</select>
 	
         

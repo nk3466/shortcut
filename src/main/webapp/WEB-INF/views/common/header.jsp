@@ -82,9 +82,11 @@
 				<a class="menu_list" id="">
 					<i class="far fa-bell" id="allAlarmBtn"></i>
 				</a>	
-				<a class="menu_list" data-toggle="modal" data-target="#messenger_show">
+				<c:if test="${!empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username }">
+				<a class="menu_list" data-toggle="modal" data-target="#messenger_show" onclick="messengerShow(${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no})">
 					<i class="far fa-envelope"></i>	
 				</a>
+				</c:if>
 				<c:choose>
 					<c:when test="${!empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
 						<a class="menu_list" data-toggle="modal" data-target="#member_logout">로그아웃</a>
@@ -117,73 +119,7 @@
         </div>
         <div class="modal-body type3">
           <div class="participation_list">
-            <div class="participation_item">
-              <div class="row">
-                <div class="item_list type1">
-             	     추지훈
-                </div>
-                <div class="item_list type2">
-                  shortcut@spring.com
-                </div>                
-                <div class="item_list type3">
-                  <button class="send_btn">전송</button>
-                </div>
-              </div>
-              <div class="row">
-                <div class="item_list type1">
-               		   추지훈
-                </div>
-                <div class="item_list type2">
-                  shortcut@spring.com
-                </div>                
-                <div class="item_list type3">
-                  <button class="send_btn">전송</button>
-                </div>
-              </div>
-              <div class="row">
-                <div class="item_list type1">
-                  	추지훈
-                </div>
-                <div class="item_list type2">
-                  shortcut@spring.com
-                </div>                
-                <div class="item_list type3">
-                  <button class="send_btn">전송</button>
-                </div>
-              </div>
-              <div class="row">
-                <div class="item_list type1">
-                 	 추지훈
-                </div>
-                <div class="item_list type2">
-                  shortcut@spring.com
-                </div>                
-                <div class="item_list type3">
-                  <button class="send_btn">전송</button>
-                </div>
-              </div>
-              <div class="row">
-                <div class="item_list type1">
-           		       추지훈
-                </div>
-                <div class="item_list type2">
-                  shortcut@spring.com
-                </div>                
-                <div class="item_list type3">
-                  <button class="send_btn">전송</button>
-                </div>
-              </div>
-              <div class="row">
-                <div class="item_list type1">
-               		   추지훈
-                </div>
-                <div class="item_list type2">
-                  shortcut@spring.com
-                </div>                
-                <div class="item_list type3">
-                  <button class="send_btn">전송</button>
-                </div>
-              </div>
+            <div class="participation_item messengermodallist">
             </div>
           </div>
         </div>
@@ -206,8 +142,7 @@
               <div class="chatting_logo">
                 <img class="chatting_logo_detail" src="${ pageContext.servletContext.contextPath }/resources/img/logo1.png">
               </div>              
-              <div class="chatting_info">
-                <span>추지훈</span>
+              <div class="chatting_info messengerto">
               </div>  
             </div>            
           </div>         
@@ -216,8 +151,8 @@
          <textarea class="modal_textarea_detail"></textarea>
         </div>        
         <div class="input_area">
-          <input class="messagebox_detail" type="text" name="" placeholder="내용을 입력해주세요">
-          <button class="message_send">보내기</button>
+          <input id="msg" class="messagebox_detail" type="text" name="" placeholder="내용을 입력해주세요">
+          <button id="msg_process" class="message_send">보내기</button>
         </div>
       </div>
     </div>
@@ -225,18 +160,153 @@
 
 
 
-
-
+<!-- <script src="/socket.io/socket.io.js"></script> -->
+<script src="http://localhost:8002/socket.io/socket.io.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
+	var toUserNo = "";
   $(function(){
-
+	 /*유저의 Login값 저장*/
+	  const userNo = "${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}";
+	
+	  /* 유저 로그인 시 소켓 연결 */ 
+    if( userNo ){
+    	console.log("ID조회가 가능, 소켓 연결을 시작함")
+    	 const socket = io("http://localhost:8002", {
+             withCredentials: false,
+             extraHeaders: {
+               "Access-Control-Allow-Origin": "*"
+             },
+             transport: ['websocket']
+         });
+    	
+    	//UserNo 전달 
+    	socket.emit("send_user_Id",userNo);
+    	console.log("아이디를 전송하였음.")
+    	
+    	//UserNo에 따른 확인하지 않은 메세지 존재하는지 여부 확인
+    	 //msg에서 키를 누를떄
+        $("#msg").keydown(function(key){
+            //해당하는 키가 엔터키(13) 일떄
+            if(key.keyCode == 13){
+                //msg_process를 클릭해준다.
+                msg_process.click();
+            }
+        });
+        
+       
+    
+	  
+	 /* 목록에서 '대화'버튼 클릭 시 */
     $(this).on("click",".send_btn", function(){
 
+      let num= this.dataset.num;
+      toUserNo = num;
+      let name= this.dataset.name;
+      console.log("num:" + num);
+      console.log("name:" + name);
+      
+      /* 리스트를 접고, 대화창 오픈 */
       $("#messenger_show").modal("hide")
       $("#messenger_chatting").modal("show")
-    })
-  })
+      $("#messenger_chatting").find(".messengerto").append("<span>"+name+"</span>");
+      
+    });
+    //msg_process를 클릭할 때
+    $("#msg_process").click(function(){
+        //소켓에 send_msg라는 이벤트로 input에 #msg의 벨류를 담고 보내준다.
+         socket.emit("send_msg", toUserNo,$("#msg").val());
+        //#msg에 벨류값을 비워준다.
+        $("#msg").val("");
+    });
+    
+    
+    
+    
+    }
+	  
+  });
+  
+    const token = $("meta[name='_csrf']").attr("content");
+	const header = $("meta[name='_csrf_header']").attr("content");
+	
+	$(document).ajaxSend(function(e, xhr, options) {
+	    xhr.setRequestHeader(header, token);
+	});
+	
+	
+	
+/*메신저 클릭 시 (리스트 노출)*/	
+  function messengerShow(userNo){
+	  console.log("userNo: " + userNo);
+	  $.ajax({
+		 url: "${pageContext.servletContext.contextPath}/messenger/member",
+		 method: "post",
+		 data: {"userNo": userNo
+		      },
+		 success: function(data, status, xhr) {
+				console.table(data); 
+				let messengerList = $('.messengermodallist')
+				for (let i = 0 ; i < data.length; i++){
+					let html ='<div class="row">'+'<div class="item_list type1">'+ data[i].name 
+					+'</div>'+'<div class="item_list type2">'+data[i].email
+					+'</div><div class="item_list type3"><button class="send_btn" data-num="'+data[i].no+'" data-name="'+data[i].name+'">'
+					+'대화</button></div></div>';  	
+					messengerList.append(html);
+				}
+				 
+		},
+		 error: function(xhr, status, error){
+			 console.log(error);
+		 }
+		
+	  });
+  }
+  
+  
+ 
+  /*
+        $(document).ready(function(){
+                //var socket = io("http://localhost:8002");
+                
+                //const io = require("socket.io-client");
+                const socket = io("http://localhost:8002", {
+                  withCredentials: false,
+                  extraHeaders: {
+                    "Access-Control-Allow-Origin": "*"
+                  },
+                  transport: ['websocket']
+                });
+                
+                
+               
+                
+                
+                //msg에서 키를 누를떄
+                $("#msg").keydown(function(key){
+                    //해당하는 키가 엔터키(13) 일떄
+                    if(key.keyCode == 13){
+                        //msg_process를 클릭해준다.
+                        msg_process.click();
+                    }
+                });
+                
+                //msg_process를 클릭할 때
+                $("#msg_process").click(function(){
+                    //소켓에 send_msg라는 이벤트로 input에 #msg의 벨류를 담고 보내준다.
+                     socket.emit("send_msg", $("#msg").val());
+                    //#msg에 벨류값을 비워준다.
+                    $("#msg").val("");
+                });
+                
+                //소켓 서버로 부터 send_msg를 통해 이벤트를 받을 경우 
+                socket.on('send_msg', function(msg) {
+                    //div 태그를 만들어 텍스트를 msg로 지정을 한뒤 #chat_box에 추가를 시켜준다.
+                    $('<div></div>').text(msg).appendTo("#chat_box");
+                });
 
+            });
+ */
 </script>
 
 
