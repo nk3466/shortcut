@@ -134,7 +134,7 @@
 								
 								/* 버튼 생성 */
 							 	var sprintBtnHtml = '<button class="btn_detail nk"  data-toggle="modal" data-target="#myModalSprintEdit" id="EditBackLog" onclick="btnSprintDetail(this)" value=' +data[index].sprNo +'>Edit Sprint</button>'   
-					                              + '<a href="${pageContext.servletContext.contextPath }/board/kanbanboard/?pjtNo= + ${ requestScope.pjtNo } + &sprNo=1&projectName= + ${requestScope.projectName} + ">'
+					                              + '<a href="${pageContext.servletContext.contextPath }/board/kanbanboard/?pjtNo= + ${ requestScope.pjtNo } + &sprNo='+ data[index].sprNo +'&projectName= + ${requestScope.projectName} + ">'
 					                              + '<button class="btn_detail nk" >Start sprint </button>';
 								
 								/* tr태그에 만들어 값 담기 */
