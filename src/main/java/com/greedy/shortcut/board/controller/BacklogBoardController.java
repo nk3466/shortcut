@@ -43,6 +43,8 @@ public class BacklogBoardController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProjectBoardController.class);
 	private final BacklogService backlogService;
+	
+	
 
 	@Autowired
 	public BacklogBoardController(BacklogService backlogService) {
@@ -183,7 +185,7 @@ public class BacklogBoardController {
 	@ResponseBody
 	public int idprojectcheck(@ModelAttribute MemberDTO member, HttpServletRequest request) {
 		
-		int result = backlogService.idprojectcheck(member);
+		int result = backlogService.idprojectcheck(member.getEmail());
 		return result;
 	}
 	

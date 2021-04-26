@@ -24,6 +24,14 @@ public class BacklogDTO implements java.io.Serializable {
 	private int sprNo;
 	
 	public BacklogDTO() {}
+	
+	public BacklogDTO(int blgNo, String blgName, int blgPri, String blgDemoMemo, String blgRefMemo) {
+		this.blgNo = blgNo;
+		this.blgName = blgName;
+		this.blgPri = blgPri;
+		this.blgDemoMemo = blgDemoMemo;
+		this.blgRefMemo = blgRefMemo;
+	}
 
 	public BacklogDTO(int rnum, int blgNo, String blgName, int blgPri, Date blgEnrollDate, Date sprEndDate, int pjtNo,
 			String blgDelYn, String blgDemoMemo, String blgRefMemo, int startPage, int endPage, int maxPage,
