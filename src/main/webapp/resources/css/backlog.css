@@ -97,13 +97,15 @@
 .modal.fade .modal-dialog .modal-content .modal-body .row{margin: 0;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info{float:left; width: 50%;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item{margin-bottom: 75px;}
-.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item .info_detail{color: lightgray; margin-bottom: 7px;}
+.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item .info_detail{ margin-bottom: 7px;font-weight: bold;}
+.modal.fade .modal-dialog .modal-content .modal-body .row.nk3 .backlog_info .info_item .info_detail.nk{font-weight: bold;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item .info_detail.nk{color: black;margin-bottom: 7px;font-weight: bold; }
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item .input_detail{ width: 80%; }
 
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea{float:left; width: 50%;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea .text_item{margin-bottom: 20px;}
-.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea .text_item .text_detail{color: lightgray; margin-bottom: 7px;}
+.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea .text_item .text_detail{ margin-bottom: 7px;font-weight: bold;}
+.modal.fade .modal-dialog .modal-content .modal-body .row.nk3 .backlog_textarea .text_item .info_detail.nk{ margin-bottom: 7px;font-weight: bold;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea .text_item .textarea_detail{width: 100%; height: 150px;}
 
 .modal.fade .modal-dialog .modal-content .modal-footer{}

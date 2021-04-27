@@ -141,10 +141,10 @@ public class BacklogServiceImpl implements BacklogService {
 	@Override
 	public boolean RemoveBacklog(BacklogDTO backlogRemove) {
 		
-		int a = backlogMapper.RemoveBacklog(backlogRemove);
+		//boolean backlogMapper.RemoveBacklog(backlogRemove);
 		//int b = backlogMapper.insertRemoveBacklogHistory(backlogRemove);
 		
-		return a > 0? true : false;
+		return backlogMapper.RemoveBacklog(backlogRemove)? true : false;
 	}
 
 	/* 스프린트 생성 */
