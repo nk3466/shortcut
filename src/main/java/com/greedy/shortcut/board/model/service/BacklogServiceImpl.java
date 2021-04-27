@@ -46,14 +46,13 @@ public class BacklogServiceImpl implements BacklogService {
 		/* 아이디 유무 체크 */
 	@Override
 	public int idprojectcheck(String member) {
-		
-		int userNo = backlogMapper.selectMemberDupCheck(member).getNo();
-		if(userNo == 0) {
+		MemberDTO memberinfo = backlogMapper.selectMemberDupCheck(member);
+		if(memberinfo.getNo() == 0) {
 			System.out.println("가입된 회원이 아님");
 			return 0;
 		}else {
-			System.out.println("사용자 넘버는 ? " + userNo);
-			return userNo;
+			System.out.println("사용자 넘버는 ? " + memberinfo.getNo());
+			return memberinfo.getNo();
 		}
 		
 	}
@@ -132,10 +131,10 @@ public class BacklogServiceImpl implements BacklogService {
 	@Override
 	public boolean EditBacklog(BacklogDTO backlog) {
 
-			int a = backlogMapper.EditBacklog(backlog);
-			int b = backlogMapper.insertEditBacklogHistory(backlog);
+		boolean a = backlogMapper.EditBacklog(backlog);
+		boolean b = backlogMapper.insertEditBacklogHistory(backlog);
 		
-		return a + b > 1? true : false;
+		return a && b ? true : false;
 	}
 
 	/* 백로그 삭제 */

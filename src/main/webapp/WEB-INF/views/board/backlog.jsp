@@ -275,34 +275,34 @@
 		         	<div class="left_area">
 			         	<div class="modal-body">
 							<div class="sprint_item">
-								<div class="item_name">
+								<div class="item_name nk">
 									기존 스프린트 이름
 								</div>
-								<input class="input_detail" type="text" id="sprintRegistNameDetail" readonly>
+								<input class="input_detail nk" type="text" id="sprintRegistNameDetail" readonly>
 							</div>
 							<div class="sprint_item">
-								<div class="item_name">
+								<div class="item_name nk">
 									기존 시작 날짜
 								</div>
-								<input class="input_detail" type="text" id="sprintRegistStartDateDetail"readonly>
+								<input class="input_detail nk" type="text" id="sprintRegistStartDateDetail"readonly>
 							</div>
 							<div class="sprint_item">
-								<div class="item_name">
+								<div class="item_name nk">
 									기존 종료 날짜
 								</div>
-								<input class="input_detail" type="text" id="sprintRegistEndDateDetail" readonly>
+								<input class="input_detail nk" type="text" id="sprintRegistEndDateDetail" readonly>
 							</div>
 							<div class="sprint_item">
-								<div class="item_name">
+								<div class="item_name nk">
 									스프린트 목표
 								</div>
-								<textarea class="textarea_detail" id="sprintRegistGoalDetail" readonly></textarea>
+								<input class="input_detail nk" id="sprintRegistGoalDetail" readonly>
 							</div>
 							<div class="sprint_item">
-								<div class="item_name" style="display: none">
+								<div class="item_name nk" style="display: none">
 									스프린트의 백로그 번호
 								</div>
-								<textarea class="textarea_detail" id="BacklogNoDetail" style="display: none"></textarea>
+								<textarea class="textarea_detail nk" id="BacklogNoDetail" style="display: none"></textarea>
 							</div>
 			         	</div>
 		       		</div>
@@ -318,19 +318,19 @@
 							<input class="input_detail" type="text" id="sprintupdateNameDetail">
 						</div>	
 						<div class="sprint_item">
-							<div class="item_name">
+							<div class="item_name nk">
 								* 변경 할 시작 날짜
 							</div>
 							<input class="input_detail" type="date" id="sprintupdateStartDateDetail">
 						</div>
 						<div class="sprint_item">
-							<div class="item_name">
+							<div class="item_name nk">
 								* 변경 할 종료 날짜
 							</div>
 							<input class="input_detail" type="date" id="sprintupdateEndDateDetail">
 						</div>
 						<div class="sprint_item">
-							<div class="item_name">
+							<div class="item_name nk">
 								* 스프린트 목표
 							</div>
 							<textarea class="textarea_detail" id="sprintupdateGoalDetail"></textarea>
@@ -674,16 +674,16 @@
 								console.table(data);
 								console.log(data.blgNo);
 								$("#importance11").empty();
-								$("#backlogName11").attr('placeholder',"");
-								$("#DemoDetail11").attr('placeholder',"");
-								$("#Reference11").attr('placeholder',"");
+								$("#backlogName11").attr('value',"");
+								$("#DemoDetail11").attr('value',"");
+								$("#Reference11").attr('value',"");
 								
 								$("#backlogNo11").attr('value', data.blgNo);
 								//$("#BacklogNoTosprintRegist").attr('value',data.blgNo);				//스프린트 생성할 때 도 부여
 								//$("#BacklogNoTosprintRegist").attr('placeholder',data.blgNo);				//스프린트 생성할 때 도 부여
-								$("#backlogName11").attr('placeholder',data.blgName);
-								$("#DemoDetail11").attr('placeholder',data.blgDemoMemo);
-								$("#Reference11").attr('placeholder',data.blgRefMemo);
+								$("#backlogName11").attr('value',data.blgName);
+								$("#DemoDetail11").attr('value',data.blgDemoMemo);
+								$("#Reference11").attr('value',data.blgRefMemo);
 								$("#importance11").append( Eggpri(data.blgPri));
 							},
 							error : function (xhr, status, data){
@@ -709,6 +709,7 @@
 	
 	<!-- 스프린트 생성 버튼 클릭시 -->
 	<script>
+	
 		function MakeSprintByn(beta){
 			var sprBlgNo = $(beta).val();
 			
@@ -1162,18 +1163,18 @@
 					<div class="row nk3">
 						<div class="backlog_info">
 							<div class="info_item">
-								<div class="info_detail">* 이름</div>
-								<input class="input_detail" type="text" id="backlogName11" placeholder="" >
+								<div class="info_detail nk">* 이름</div>
+								<input class="input_detail" type="text" id="backlogName11" value="" >
 							</div>
 							
 							<div class="info_item">
-								<div class="info_detail"><!--  style="display: none;" -->백로그 번호</div>
+								<div class="info_detail nk"><!--  style="display: none;" -->백로그 번호</div>
 								<input class="input_detail" type="text" id="backlogNo11" value="" readonly> <!-- style="display: none;" -->
 							</div>
 							
 							
 							<div class="info_item">
-								<div class="info_detail">* 중요도</div>
+								<div class="info_detail nk">* 중요도</div>
 								<select id="importance11">
 									<option>1</option>
 									<option>2</option>
@@ -1183,12 +1184,12 @@
 						</div>
 						<div class="backlog_textarea">
 							<div class="text_item">
-								<div class="text_detail">* 데모 방식</div>
-								<textarea class="textarea_detail" id="DemoDetail11"  placeholder="" ></textarea>
+								<div class="info_detail nk">* 데모 방식</div>
+								<input type="text" class="textarea_detail" id="DemoDetail11"  value="" >
 							</div>
 							<div class="text_item">
-								<div class="text_detail">* 참고</div>
-								<textarea class="textarea_detail" id="Reference11"  placeholder="" ></textarea>
+								<div class="info_detail nk">* 참고</div>
+								<input type="text" class="textarea_detail" id="Reference11"  value="" >
 							</div>
 						</div>
 					</div>
