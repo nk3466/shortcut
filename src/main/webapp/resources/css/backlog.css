@@ -98,6 +98,7 @@
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info{float:left; width: 50%;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item{margin-bottom: 75px;}
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item .info_detail{color: lightgray; margin-bottom: 7px;}
+.modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item .info_detail.nk{color: black;margin-bottom: 7px;font-weight: bold; }
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_info .info_item .input_detail{ width: 80%; }
 
 .modal.fade .modal-dialog .modal-content .modal-body .row .backlog_textarea{float:left; width: 50%;}
@@ -140,8 +141,10 @@
 .modal.fade .modal-dialog.type2 .modal-content .modal-body{float:left;}
 .modal.fade .modal-dialog.type2 .modal-content .modal-body.type3{float:none;}
 .modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item{ margin-bottom: 20px; }
-.modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item .item_name{}
+.modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item .item_name{ font-weight: bold;}
+.modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item .item_name.nk{}
 .modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item .input_detail{width: 100%; height: 35px;}
+.modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item .input_detail.nk{width: 100%; height: 35px;border: 0; outline: none;}
 .modal.fade .modal-dialog.type2 .modal-content .modal-body .sprint_item .textarea_detail{width: 100%; height: 150px;}
 
 .modal.fade .modal-dialog.type2 .modal-content .modal-footer{border:0;}
@@ -155,7 +158,7 @@
 .modal.fade .modal-dialog .modal-content .row.detailpage .left_area{float: left;width:50%;}
 .modal.fade .modal-dialog .modal-content .row.detailpage .left_area .modal-header{ line-height: 40px;}
 .modal.fade .modal-dialog .modal-content .row.detailpage .left_area .modal-header .item_detail{letter-spacing: -2.5px; width:45%; float:left;}
-.modal.fade .modal-dialog .modal-content .row.detailpage .left_area .modal-header .input_detail.nk.type{width:55%;}
+.modal.fade .modal-dialog .modal-content .row.detailpage .left_area .modal-header .input_detail.nk.type{width:55%; border: 0; outline: none;}
 
 .modal.fade .modal-dialog .modal-content .row.detailpage .right_area{float: left; width:50%;}
 .modal.fade .modal-dialog .modal-content .row.detailpage .right_area .modal-header{ line-height: 40px;}

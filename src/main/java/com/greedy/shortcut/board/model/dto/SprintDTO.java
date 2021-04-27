@@ -28,7 +28,15 @@ public class SprintDTO {
 	
 	public SprintDTO() {}
 
-
+	public SprintDTO(int sprNo, String sprName, Date sprStardDate, Date sprEndDate, String sprGoal, int sprBlgNo) {
+		super();
+		this.sprNo = sprNo;
+		this.sprName = sprName;
+		this.sprStardDate = sprStardDate;
+		this.sprEndDate = sprEndDate;
+		this.sprGoal = sprGoal;
+		this.sprBlgNo = sprBlgNo;
+	}
 
 	public SprintDTO(int rnum, int sprNo, String sprName, Date sprStardDate, Date sprEndDate, String sprGoal,
 			String sprDelYn, int sprBlgNo, int startPage, int endPage, int maxPage) {

@@ -20,7 +20,7 @@ public interface BacklogMapper {
 	List<ProjectAuthorityDTO> selectMemberList(int pjtNo);
 
 	/* 프로젝트 수정용 아이디 유무  */
-	MemberDTO selectMemberDupCheck(String email);
+	MemberDTO selectMemberDupCheck(String member);
 
 	/* 프로젝트 수정   */
 	int updateProject(ProjectDTO project);
@@ -56,10 +56,10 @@ public interface BacklogMapper {
 	BacklogDTO selectBacklogToEdit(@Param("blgNo")int blgNo,@Param("pjtNo") int pjtNo);
 
 	/* 백로그 수정 등록 */
-	int EditBacklog(BacklogDTO backlog);
+	boolean EditBacklog(BacklogDTO backlog);
 
 	/* 백로그 수정 히스토리  등록 */
-	int insertEditBacklogHistory(BacklogDTO backlog);
+	boolean insertEditBacklogHistory(BacklogDTO backlog);
 
 	/* 백로그 삭제 */
 	int RemoveBacklog(BacklogDTO backlogRemove);
