@@ -174,7 +174,7 @@
 	    (
 	      1
 	    , #{no}
-	    , #{memNo}
+	    , #{member}
 	    , TO_DATE(#{taskStartDate}, 'YYYYMMDDHH24MISS')
 	    , TO_DATE(#{taskEndDate}, 'YYYYMMDDHH24MISS')
 	    )

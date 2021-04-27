@@ -143,14 +143,14 @@ public class RetrospectController {
 		System.out.println("memName.length : " + memName.length);
 
 		List<ReviewDTO> insertReviewList = new ArrayList<>();
-
+		int blgNumber = retrospectService.selectSprintNo(blgNo2);
 		for(int i = 0; i < memName.length; i++) {
 			ReviewDTO rv = new ReviewDTO();
 			rv.setReviewLikeTxt(reviewLikeTxt[i]);
 			rv.setReviewLearnTxt(reviewLearnTxt[i]);
 			rv.setReviewMissTxt(reviewMissTxt[i]);
 			rv.setMemName(memName[i]);
-			rv.setSprNo(retrospectService.selectSprintNo(blgNo2));
+			rv.setSprNo(blgNumber);
 			
 			insertReviewList.add(rv);
 		}
@@ -201,14 +201,14 @@ public class RetrospectController {
 		System.out.println("memName.length : " + memName.length);
 
 		List<ReviewDTO> updateReviewList = new ArrayList<>();
-
+		int blgNumber = retrospectService.selectSprintNo(blgNo2);
 		for(int i = 0; i < memName.length; i++) {
 			ReviewDTO rv = new ReviewDTO();
 			rv.setReviewLikeTxt(reviewLikeTxt[i]);
 			rv.setReviewLearnTxt(reviewLearnTxt[i]);
 			rv.setReviewMissTxt(reviewMissTxt[i]);
 			rv.setMemName(memName[i]);
-			rv.setSprNo(blgNo2);
+			rv.setSprNo(blgNumber);
 			
 			updateReviewList.add(rv);
 		}
@@ -255,13 +255,13 @@ public class RetrospectController {
 		String[] memName = review.getMemName().split(",", -1);
 
 		System.out.println("memName.length : " + memName.length);
-
+		
 		List<ReviewDTO> removeReviewList = new ArrayList<>();
-
+		int blgNumber = retrospectService.selectSprintNo(blgNo2);
 		for(int i = 0; i < memName.length; i++) {
 			ReviewDTO rv = new ReviewDTO();
 			rv.setMemName(memName[i]);
-			rv.setSprNo(blgNo2);
+			rv.setSprNo(blgNumber);
 			
 			removeReviewList.add(rv);
 		}

@@ -111,7 +111,7 @@
                            FROM CRD_SCHEDULE A
                            JOIN CARD B ON (A.CRD_NO = B.CRD_NO )
                           WHERE B.MEM_NO = #{memNo}
-                            AND B.CRD_TYPE = 3
+                            AND (B.CRD_TYPE = 2 OR B.CRD_TYPE = 4 )
                         ) F
               )D 
               
@@ -146,7 +146,7 @@
                            FROM CRD_TASK A
                            JOIN CARD B ON (A.CRD_NO = B.CRD_NO )
                           WHERE A.MEM_NO = #{memNo}
-                            AND B.CRD_TYPE = 2
+                            AND (B.CRD_TYPE = 2 OR B.CRD_TYPE = 4 )
                             AND A.TK_PROGRESS = #{type}
                         ) F
               )D 
