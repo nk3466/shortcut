@@ -32,7 +32,7 @@
 .kanbanboard_area .row .kanban_item .kanbanboard.type2{border-top: 10px solid #70E8D9;}
 .kanbanboard_area .row .kanban_item .kanbanboard.type3{border-top: 10px solid #E88D70;}
 .kanbanboard_area .row .kanban_item .kanbanboard.type4{border-top: 10px solid #8592D6;}
-
+.cardDetailText{width: 100%;}
 
 /*모달*/
 .modal.fade{}

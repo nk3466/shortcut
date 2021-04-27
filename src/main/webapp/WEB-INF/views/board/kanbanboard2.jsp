@@ -337,8 +337,12 @@ console.log("boardList" +  "${requestScope.boardList}");
                      style="border: none; background: transparent;" ></div>
                </div>
                <div class="item_area calendar_btn on">
-                  <i class="fas fa-bell" style="float:left"></i>
-                   <div class="detailAlert"></div>
+                  <i class="fas fa-bell"></i> 
+                  <select class="select_detail" name="alert" id="detailAlert">
+                     <option value="1" id="detailAlert">30분 전 미리 알림</option>
+                     <option value="2" id="detailAlert">하루 전 미리 알림</option>
+                     <option value="3" id="detailAlert">알리지 않음</option>
+                  </select>
                </div>
                <div class="item_area calendar_btn on">
                   <i class="fas fa-user-plus"></i> 
@@ -347,13 +351,14 @@ console.log("boardList" +  "${requestScope.boardList}");
                   <div id="choisemember"></div>
                   <!-- <input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회"> -->
                   <div id="memberDetail2"></div>
-                  <input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none; width:100%">
+                  <input id="memberDetail" value="">
+                  <input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
                </div>
                <!-- 일정 영역 끝 -->
 
                <div class="item_area" id="detailTxt">
                   <i class="far fa-comment-alt" id="detailTxt"></i>
-                  <textarea class="cardDetailText" name="txt" id="cardDetailTxt" readonly></textarea>
+                  <textarea name="txt" id="cardDetailTxt"></textarea>
                </div>
             </div>
 
@@ -611,12 +616,10 @@ console.log("boardList" +  "${requestScope.boardList}");
             var enrolldate = data.enrollDate;
             var order = data.order;
             var type = data.type;
-            console.log("type : "+ type);
             var memNo = data.memNo;
             var member   = data.member;
             var place   = data.place;
             var alert   = data.alert;
-            console.log("alert : "+ alert);
             var cardTxt = data.txt;
             var memberList = data.memberList;
             var cardTaskStartDate = data.taskStartDate;
@@ -648,14 +651,6 @@ console.log("boardList" +  "${requestScope.boardList}");
                     $('#endScheduleTaskDate').append(cardScheduleEndDate);
                     $('#cardDetailUpdate').append(html);
                     
-                    if(alert==1){
-                    	 $('.detailAlert').text("30분 전 미리 알림");
-                    } else if(alert==2){
-                    	 $('.detailAlert').text("하루 전 미리 알림");
-                    } else if(alert==3){
-                    	 $('.detailAlert').text("알리지 않음");
-                    }
-                    
                    $.ajax({
                        type:"POST",
                        url:"${pageContext.servletContext.contextPath}/card/member",
@@ -671,7 +666,9 @@ console.log("boardList" +  "${requestScope.boardList}");
                            for(let i = 0; i < memberList.length; i++){
                            
                               var insertSpan="";
-                              insertSpan += '<span>' + memberList[i].name+ '</span>&nbsp;';
+                              insertSpan += '<span class="item_text on">' + memberList[i].name 
+                              + '<i id="delBtn" class="fas fa-times-circle"></i>' 
+                                + '<input class="item_num" name="memberList" type="hidden" value="' + memberList[i].no + '">' + '</span>';
                               count++;
                               $("#memberDetail2").append(insertSpan);
                            }

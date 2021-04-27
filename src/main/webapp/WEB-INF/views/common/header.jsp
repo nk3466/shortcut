@@ -282,17 +282,21 @@
 	  
   });
   
-    const token = $("meta[name='_csrf']").attr("content");
-	const header = $("meta[name='_csrf_header']").attr("content");
-	
-	$(document).ajaxSend(function(e, xhr, options) {
-	    xhr.setRequestHeader(header, token);
-	});
+  
 	
 	
 	
 /*메신저 클릭 시 (리스트 노출)*/	
   function messengerShow(userNo){
+	
+	  const token = $("meta[name='_csrf']").attr("content");
+		const header = $("meta[name='_csrf_header']").attr("content");
+		
+		$(document).ajaxSend(function(e, xhr, options) {
+		    xhr.setRequestHeader(header, token);
+		});
+		
+		
 	  console.log("userNo: " + userNo);
 	  $.ajax({
 		 url: "${pageContext.servletContext.contextPath}/messenger/member",

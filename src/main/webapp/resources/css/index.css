@@ -45,7 +45,7 @@
 
 
 
-.modal.fade .modal-dialog .modal-content .modal-body.type3{ padding:15px 45px; }
+.modal.fade .modal-dialog .modal-content .modal-body.type3{ padding:15px 45px; margin: 10px 0;  background-color: white;}
 .modal.fade .modal-dialog .modal-content .modal-body.type3 .participation_list{}
 .modal.fade .modal-dialog .modal-content .modal-body.type3 .participation_list .participation_item{}
 .modal.fade .modal-dialog .modal-content .modal-body.type3 .participation_list .participation_item .row{ margin: 0; border: 1px solid rgb(237, 23, 69);  height: 40px;  line-height: 40px;  border-radius: 15px; margin-bottom: 10px;}
@@ -80,6 +80,14 @@
 
 
 .modal.fade .modal-dialog .modal-content.type3{background-color: lightgray;}
+.modal.fade .modal-dialog .modal-content.type3 .modal-body.chat-list{margin: 10px 0; background-color:#ffe3e8; overflow-y: scroll;  height: 500px;}
+.modal.fade .modal-dialog .modal-content.type3 .modal-body.chat-list .other{border: 1px solid lightpink;  border-radius: 8px;   
+    max-width: 35%; padding: 7px; background-color: white; letter-spacing: 1px; word-break: break-all;}
+    
+.modal.fade .modal-dialog .modal-content.type3 .modal-body.chat-list .mine{margin-left: auto; border: 1px solid lightpink;  border-radius: 8px;  
+    max-width: 35%; padding: 7px; background-color: #FFF4A7; letter-spacing: 1px; word-break: break-all;}
+
+
 .modal.fade .modal-dialog .modal-content.type3 .modal-header.type3{background-color: ghostwhite;}
 .modal.fade .modal-dialog .modal-content.type3 .modal-header.type3 .chatting_header{}
 .modal.fade .modal-dialog .modal-content.type3 .modal-header.type3 .chatting_header .row{margin: 0; line-height: 30px;}
@@ -98,7 +106,7 @@
 .modal.fade .modal-dialog .input_area{width: 100%; height: 90px; position: relative;}
 .modal.fade .modal-dialog .input_area .messagebox_detail{height: 100%; width: 100%; padding: 10px 85px 10px 10px;}
 .modal.fade .modal-dialog .input_area .message_send{position: absolute; top: 0; right: 0; width: 15%;  height: 100%;
-    background: white;  border: 1px solid rgb(237, 23, 69); font-size: 17px;  font-weight: bold;}
+    background: white;  font-size: 17px;  font-weight: bold; border: 1px solid gray;}
 
 /* 알람 */
 .alarmArea{border-bottom:1px solid #ed1745; border-left:1px solid #ed1745; width: 20%;  position: absolute; right: 0; z-index: 999; background-color: white;   z-index: 999;   padding: 15px; height: 500px; overflow-x: hidden; overflow-y: auto;}
