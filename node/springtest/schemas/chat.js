@@ -1,19 +1,17 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const { Types: { ObjectId } } = Schema;
+//const { Types: { ObjectId } } = Schema;
 const chatSchema = new Schema({
-  room: {
-    type: ObjectId,
-    required: true,
-    ref: 'Room',
-  },
-  user: {
+  toUser: {
     type: String,
     required: true,
   },
-  chat: String,
-  gif: String,
+  fromUser: {
+    type: String,
+    required: true,
+  },
+  msg: String,
   createdAt: {
     type: Date,
     default: Date.now,
