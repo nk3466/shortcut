@@ -4,12 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- 파비콘 -->
-<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
-<meta name="_csrf" content="${_csrf.token}">
-<meta name="_csrf_header" content="${_csrf.headerName}">
-
-<meta charset="UTF-8">
+	<!-- 파비콘 -->
+	<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
+	<meta name="_csrf" content="${_csrf.token}">
+	<meta name="_csrf_header" content="${_csrf.headerName}">
+	
+	<meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/project_board.css">
@@ -36,7 +36,6 @@
             <div class="project_line"></div>
             <div class="project_text2">
                Why do we use it?
-
             </div>
             <div class="project_text3">
            		It is a long established fact
@@ -77,15 +76,15 @@
                   </div> --> 
                   </div>
                   <c:forEach var="project" items="${ requestScope.projectList }">
-                  <div class="board_list">
-						<!-- <div class="board_text"  data-toggle="modal" data-target="#project_modify"> -->
-						<form action="${ pageContext.servletContext.contextPath }/board/backlog" method="get">
-							<input type="text" value="${project.pjtNo }" id="pjtNo" name="pjtNo" style="display: none;">
-							<input type="text" value="${project.projectName }" id="projectName" name="projectName" style="display: none;">
-							<button class="board_detail type" style="background-color: ${project.projectColor};" id="moveProject" type="submit">
-								<img src="${ pageContext.servletContext.contextPath }/resources/img/board_icon.png" style="height:70px; width:70px;">
-							</button>
-						</form>
+					    <div class="board_list">
+							<!-- <div class="board_text"  data-toggle="modal" data-target="#project_modify"> -->
+							<form action="${ pageContext.servletContext.contextPath }/board/backlog" method="get">
+								<input type="text" value="${project.pjtNo }" id="pjtNo" name="pjtNo" style="display: none;">
+								<input type="text" value="${project.projectName }" id="projectName" name="projectName" style="display: none;">
+								<button class="board_detail type" style="background-color: ${project.projectColor};" id="moveProject" type="submit">
+									<img src="${ pageContext.servletContext.contextPath }/resources/img/board_icon.png" style="height:70px; width:70px;">
+								</button>
+							</form>
 							<div style="display: none;">
 								<c:out value="${ project.pjtNo }"/>
 							</div>
@@ -94,10 +93,7 @@
 							</div>	
 						</div>
 					</c:forEach>				
-						
 					<!-- </div> -->
-					          
-               
               </div>
             </div>
          </div>         
@@ -106,46 +102,45 @@
 
 
 
-<div class="modal fade" id="project_produce">
-   <div class="modal-dialog">
-      <div class="modal-content">
-
-         <!-- Modal Header -->
-         <div class="modal-header">
-            <input class="input_detail" type="text" id="projectNameNK" placeholder="* Add Project Title">            
-         </div>
-         
-		<div class="modal-header">
-			<div>* 시작 날짜</div>
-            <input class="input_detail nk" type="date" id="projectStartDate">         
-         </div>
-         
-         <div class="modal-header">
-            <p>* 종료 날짜</p>
-         <input class="input_detail  nk" type="date" id="projectEndDate">  
-         </div>
-         
-         <div class="modal-header">
-            <p>* 프로젝트 색상</p>
-         <input class="input_detail  nk1" type="color" id="projectColor">  
-         </div> 
-         
-                
-         <!-- Modal body -->
-         
-         <div class="modal-body">
-            <div class="row">
-               <i class="fas fa-search"></i>
-               <input class="input_detail1" type="text" id="email" placeholder="Add Member">
-               <select class="select_detail nk" id="selectroll">
-                  <option>Admin</option>
-                  <option>Member</option>
-                  <option>Client</option>
-               </select>
-               <input class="input_detail2 nk" type="button" id="addpersonButton" value="+">      
-               <input class="input_detail2 nk" type="button" id="removepersonButton" value="-">      
-            </div>
-
+	<div class="modal fade" id="project_produce">
+	   <div class="modal-dialog">
+	      <div class="modal-content">
+	
+	         <!-- Modal Header -->
+	         <div class="modal-header">
+	            <input class="input_detail" type="text" id="projectNameNK" placeholder="* Add Project Title">            
+	         </div>
+	         
+			<div class="modal-header">
+				<div>* 시작 날짜</div>
+	            <input class="input_detail nk" type="date" id="projectStartDate">         
+	         </div>
+	         
+	         <div class="modal-header">
+	            <p>* 종료 날짜</p>
+	         <input class="input_detail  nk" type="date" id="projectEndDate">  
+	         </div>
+	         
+	         <div class="modal-header">
+	            <p>* 프로젝트 색상</p>
+	         <input class="input_detail  nk1" type="color" id="projectColor">  
+	         </div> 
+	         
+	                
+	         <!-- Modal body -->
+	         
+	         <div class="modal-body">
+	            <div class="row">
+	               <i class="fas fa-search"></i>
+	               <input class="input_detail1" type="text" id="email" placeholder="Add Member">
+	               <select class="select_detail nk" id="selectroll">
+	                  <option>Admin</option>
+	                  <option>Member</option>
+	                  <option>Client</option>
+	               </select>
+	               <input class="input_detail2 nk" type="button" id="addpersonButton" value="+">      
+	               <input class="input_detail2 nk" type="button" id="removepersonButton" value="-">      
+	            </div>
 				<table class="select_member" id="projectMember" border="1" style="width:100%; height:30px; text-align: center">
 					<thead>
 					<tr>
@@ -164,15 +159,13 @@
 					<tbody  id="dynamicTbody">
 						</tbody>
 				</table>
-         </div>
-            
-         
-         <div class="modal_btn_area">
-            <button class="btn_detail" id="createProject">Create Project</button>
-         </div>            
-      </div>
-   </div>
-</div>
+	         </div>
+	         <div class="modal_btn_area">
+	            <button class="btn_detail" id="createProject">Create Project</button>
+	         </div>            
+	      </div>
+	   </div>
+	</div>
 <!-- <script>
 if(document.getElementById("pjSelectOne")) {
 	
@@ -191,7 +184,7 @@ if(document.getElementById("pjSelectOne")) {
 	  
   }
 </script> -->
-<script>
+	<script>
 		/* 시큐리티 권한  */
 		const token = $("meta[name='_csrf']").attr("content");
 		const header = $("meta[name='_csrf_header']").attr("content");
@@ -335,7 +328,7 @@ if(document.getElementById("pjSelectOne")) {
 				alert("필수 항목을 모두 채워주세요!");
 			}
 		})
-</script>
+	</script>
 
 </body>
 </html>

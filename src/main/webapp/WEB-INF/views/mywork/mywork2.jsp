@@ -6,8 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- 파비콘 -->
-<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
+	<!-- 파비콘 -->
+	<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
 	<meta name="_csrf" content="${_csrf.token}">
 	<meta name="_csrf_header" content="${_csrf.headerName}">
 	<meta charset="UTF-8">
@@ -31,31 +31,31 @@
 	<title>Short Cut</title>
 
 	<script type="text/javascript">
-	var request = ${fn:length(requestScope.cardProgress1List) };
-	var doing = ${fn:length(requestScope.cardProgress2List) };
-	var done = ${fn:length(requestScope.cardProgress3List) };
-	var wait = ${fn:length(requestScope.cardProgress4List) };
-	console.log(request);
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['요청 중',     request],
-          ['진행 중',      doing],
-          ['완료',  done],
-          ['보류', wait]
-          
-        ]);
-
-        var options = {
-          title: '내 업무 그래프',
-          pieHole: 0.4,
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
-      }
+		var request = ${fn:length(requestScope.cardProgress1List) };
+		var doing = ${fn:length(requestScope.cardProgress2List) };
+		var done = ${fn:length(requestScope.cardProgress3List) };
+		var wait = ${fn:length(requestScope.cardProgress4List) };
+		console.log(request);
+		google.charts.load("current", {packages:["corechart"]});
+		google.charts.setOnLoadCallback(drawChart);
+		function drawChart() {
+		  var data = google.visualization.arrayToDataTable([
+		    ['Task', 'Hours per Day'],
+		    ['요청 중',     request],
+		    ['진행 중',      doing],
+		    ['완료',  done],
+		    ['보류', wait]
+		     
+		   ]);
+		
+		  var options = {
+		    title: '내 업무 그래프',
+		    pieHole: 0.4,
+		  };
+		
+		  var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+		  chart.draw(data, options);
+		}
     </script>
 </head>
 <body>
@@ -186,67 +186,62 @@
 					</div>
 					<div class="item_type6">
 						<div class="item_pagenavi">
-						
-						
-						<c:choose>
-							<c:when test="${ empty requestScope.searchValue }">
-								<button id="startPage"><<</button>
-								<c:if test="${ requestScope.doingPageInfo.pageNo <= 1 }">
-									<button disabled><</button>
-								</c:if>
-								<c:if test="${ requestScope.doingPageInfo.pageNo > 1 }">
-									<button id="prevPage"><</button>
-								</c:if>
-								
-								<c:forEach var="p" begin="${ requestScope.doingPageInfo.startPage }" end="${ requestScope.doingPageInfo.endPage }" step="1">
-									<c:if test="${ requestScope.doingPageInfo.pageNo eq p }">
-										<button disabled><c:out value="${ p }"/></button>
+							<c:choose>
+								<c:when test="${ empty requestScope.searchValue }">
+									<button id="startPage"><<</button>
+									<c:if test="${ requestScope.doingPageInfo.pageNo <= 1 }">
+										<button disabled><</button>
 									</c:if>
-									<c:if test="${ requestScope.doingPageInfo.pageNo ne p }">
-											<button class="pnbutton" onclick="movePage(${ p },this)"><c:out value="${ p }"/></button>
-											
+									<c:if test="${ requestScope.doingPageInfo.pageNo > 1 }">
+										<button id="prevPage"><</button>
 									</c:if>
-								</c:forEach>
-								
-								<c:if test="${ requestScope.doingPageInfo.pageNo >= requestScope.doingPageInfo.maxPage }">
-									<button disabled>></button>
-								</c:if>
-								<c:if test="${ requestScope.doingPageInfo.pageNo < requestScope.doingPageInfo.maxPage }">
-									<button id="nextPage">></button>
-								</c:if>
-								
-								<button id="maxPage">>></button>
-								
-							</c:when>
-							<c:otherwise>
-								<button id="searchStartPage"><<</button>
-								<c:if test="${ requestScope.doingPageInfo.pageNo <= 1 }">
-									<button disabled><</button>
-								</c:if>
-								<c:if test="${ requestScope.doingPageInfo.pageNo > 1 }">
-									<button id="searchPrevPage"><</button>
-								</c:if>
-								
-								<c:forEach var="p" begin="${ requestScope.doingPageInfo.startPage }" end="${ requestScope.doingPageInfo.endPage }" step="1">
-									<c:if test="${ requestScope.doingPageInfo.pageNo eq p }">
-										<button disabled><c:out value="${ p }"/></button>
+									
+									<c:forEach var="p" begin="${ requestScope.doingPageInfo.startPage }" end="${ requestScope.doingPageInfo.endPage }" step="1">
+										<c:if test="${ requestScope.doingPageInfo.pageNo eq p }">
+											<button disabled><c:out value="${ p }"/></button>
+										</c:if>
+										<c:if test="${ requestScope.doingPageInfo.pageNo ne p }">
+												<button class="pnbutton" onclick="movePage(${ p },this)"><c:out value="${ p }"/></button>
+										</c:if>
+									</c:forEach>
+									
+									<c:if test="${ requestScope.doingPageInfo.pageNo >= requestScope.doingPageInfo.maxPage }">
+										<button disabled>></button>
 									</c:if>
-									<c:if test="${ requestScope.doingPageInfo.pageNo ne p }">
-										<button class="pnbutton"><c:out value="${ p }"/></button>
+									<c:if test="${ requestScope.doingPageInfo.pageNo < requestScope.doingPageInfo.maxPage }">
+										<button id="nextPage">></button>
 									</c:if>
-								</c:forEach>
-								
-								<c:if test="${ requestScope.doingPageInfo.pageNo >= requestScope.doingPageInfo.maxPage }">
-									<button disabled>></button>
-								</c:if>
-								<c:if test="${ requestScope.doingPageInfo.pageNo < requestScope.doingPageInfo.maxPage }">
-									<button id="searchNextPage">></button>
-								</c:if>
-								<button id="searchMaxPage">>></button>
-							</c:otherwise>
-						</c:choose>
-						
-						
+									
+									<button id="maxPage">>></button>
+									
+								</c:when>
+								<c:otherwise>
+									<button id="searchStartPage"><<</button>
+									<c:if test="${ requestScope.doingPageInfo.pageNo <= 1 }">
+										<button disabled><</button>
+									</c:if>
+									<c:if test="${ requestScope.doingPageInfo.pageNo > 1 }">
+										<button id="searchPrevPage"><</button>
+									</c:if>
+									
+									<c:forEach var="p" begin="${ requestScope.doingPageInfo.startPage }" end="${ requestScope.doingPageInfo.endPage }" step="1">
+										<c:if test="${ requestScope.doingPageInfo.pageNo eq p }">
+											<button disabled><c:out value="${ p }"/></button>
+										</c:if>
+										<c:if test="${ requestScope.doingPageInfo.pageNo ne p }">
+											<button class="pnbutton"><c:out value="${ p }"/></button>
+										</c:if>
+									</c:forEach>
+									
+									<c:if test="${ requestScope.doingPageInfo.pageNo >= requestScope.doingPageInfo.maxPage }">
+										<button disabled>></button>
+									</c:if>
+									<c:if test="${ requestScope.doingPageInfo.pageNo < requestScope.doingPageInfo.maxPage }">
+										<button id="searchNextPage">></button>
+									</c:if>
+									<button id="searchMaxPage">>></button>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</div>
@@ -443,7 +438,7 @@
 				
 				</script>
 				<div>
-				<div class="item_type3">
+					<div class="item_type3">
 						<div class="item_name">
 							기간
 						</div>

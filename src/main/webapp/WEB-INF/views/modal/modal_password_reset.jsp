@@ -45,19 +45,19 @@
 		</div>
 	</div>
 
-<script type="text/javascript">
-	$(function() {
-
-		$(".modal_text_detail.type4").click(function(e) {
-			e.preventDefault();
-
+	<script type="text/javascript">
+		$(function() {
+	
+			$(".modal_text_detail.type4").click(function(e) {
+				e.preventDefault();
+	
+				
+				$('#password_reset').modal("hide");
+				$('#member_login').modal("toggle");
+			});
 			
-			$('#password_reset').modal("hide");
-			$('#member_login').modal("toggle");
-		});
-		
-	})
-
-</script>
+		})
+	
+	</script>
 </body>
 </html>

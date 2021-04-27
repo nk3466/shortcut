@@ -4,8 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- 파비콘 -->
-<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
+	<!-- 파비콘 -->
+	<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
@@ -15,12 +15,8 @@
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-
 	<!-- 폰트어썸 -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-
-	
-    
 
 
 	<title>Short Cut</title>
@@ -43,31 +39,31 @@
 			<div class="mypage_right_area">
 				<div class="mypage_right_header">비밀번호 변경</div>
 				<form action="${ pageContext.servletContext.contextPath }/changePassword" method="post">
-				<div class="mypage_info_area">
-					<div class="mypage_info_box">
-						<!-- <div class="info_item">
-							<div class="info_name">현재 비밀번호 입력</div>
-							<input class="input_detail" type="password" name="currentPwd">
-						</div> -->
-						<div class="info_item">
-							<div class="info_name">이메일</div>
-							<input class="input_detail" type="text" name="email" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}" readonly>
+					<div class="mypage_info_area">
+						<div class="mypage_info_box">
+							<!-- <div class="info_item">
+								<div class="info_name">현재 비밀번호 입력</div>
+								<input class="input_detail" type="password" name="currentPwd">
+							</div> -->
+							<div class="info_item">
+								<div class="info_name">이메일</div>
+								<input class="input_detail" type="text" name="email" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}" readonly>
+							</div>
+							<div class="info_item">
+								<div class="info_name">새 비밀번호 입력</div>
+								<input class="input_detail" type="password" name="password">
+							</div>
+							<!-- <div class="info_item">
+								<div class="info_name">새 비밀번호 확인</div>
+								<input class="input_detail" type="password" name="changePwdConfirm">
+							</div> -->
+						</div>	
+						<div class="mypage_right_btn">
+							<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+							<button class="mypage_btn_detail" type="submit">변경</button>
+							<button class="mypage_btn_detail">취소</button>
 						</div>
-						<div class="info_item">
-							<div class="info_name">새 비밀번호 입력</div>
-							<input class="input_detail" type="password" name="password">
-						</div>
-						<!-- <div class="info_item">
-							<div class="info_name">새 비밀번호 확인</div>
-							<input class="input_detail" type="password" name="changePwdConfirm">
-						</div> -->
-					</div>	
-					<div class="mypage_right_btn">
-					<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-						<button class="mypage_btn_detail" type="submit">변경</button>
-						<button class="mypage_btn_detail">취소</button>
 					</div>
-				</div>
 				</form>
 			</div>
 		</div>

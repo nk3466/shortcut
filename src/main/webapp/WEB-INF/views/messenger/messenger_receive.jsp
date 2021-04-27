@@ -4,28 +4,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- 파비콘 -->
-<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css"
-	href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
-<link rel="stylesheet" type="text/css"
-	href="${ pageContext.servletContext.contextPath }/resources/css/messenger.css">
+	<!-- 파비콘 -->
+	<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
+	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/messenger.css">
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
-<!-- 폰트어썸 -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-	rel="stylesheet">
+	<!-- 폰트어썸 -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"	rel="stylesheet">
 
 
 
-<title>Short Cut</title>
+	<title>Short Cut</title>
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"></jsp:include>
@@ -36,19 +32,13 @@
 				<div class="messenger_list">
 					<div class="row">
 						<div class="item_list">
-							<a class="item_detail"
-								href="${ pageContext.servletContext.contextPath }/messenger/messenger">쪽지
-								보내기</a>
+							<a class="item_detail" href="${ pageContext.servletContext.contextPath }/messenger/messenger">쪽지보내기</a>
 						</div>
 						<div class="item_list">
-							<a class="item_detail"
-								href="${ pageContext.servletContext.contextPath }/messenger/messenger_receive">받은
-								쪽지함</a>
+							<a class="item_detail" href="${ pageContext.servletContext.contextPath }/messenger/messenger_receive">받은 쪽지함</a>
 						</div>
 						<div class="item_list">
-							<a class="item_detail"
-								href="${ pageContext.servletContext.contextPath }/messenger/messenger_inbox_send">보낸
-								쪽지함</a>
+							<a class="item_detail" href="${ pageContext.servletContext.contextPath }/messenger/messenger_inbox_send">보낸	쪽지함</a>
 						</div>
 					</div><!-- 탭 영역 끝 -->
 					

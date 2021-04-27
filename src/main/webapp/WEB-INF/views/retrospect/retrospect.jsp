@@ -44,72 +44,61 @@
 		</div>
 		<div class="time_area">
 			<div class="row">
-				<!-- <div class="time_item">
-					<div class="start_time">
-						시작 시간 
-						<input type="time" name="">
-					</div>
-				</div>
-				<div class="time_item">
-					<div class="end_time">
-						종료 시간 
-						<input type="time" name="">
-					</div>
-				</div> -->
+				
 			</div>
 		</div>
 		<div class="retrospect_content">
-		<form method="post" id="myForm">
-			<input type="text" name="blgNo" id="blgNo" value="${ requestScope.blgNo }" style="display: none;">
-			<input type="text" name="pjtNo" id="pjtNo" value="${ requestScope.pjtNo }" style="display: none;">
-			<input type="text" name="pjtName" id="pjtName" value="${ requestScope.pjtName }" style="display: none;">
-			<table>
-				<tr>
-					<th></th>
-					<th>만족스러웠던 점</th>
-					<th>깨달았거나 배웠던 점</th>
-					<th>놓쳤거나 부족 햇던 점</th>
-				</tr>
+			<form method="post" id="myForm">
+				<input type="text" name="blgNo" id="blgNo" value="${ requestScope.blgNo }" style="display: none;">
+				<input type="text" name="pjtNo" id="pjtNo" value="${ requestScope.pjtNo }" style="display: none;">
+				<input type="text" name="pjtName" id="pjtName" value="${ requestScope.pjtName }" style="display: none;">
+				<table>
+					<tr>
+						<th></th>
+						<th>만족스러웠던 점</th>
+						<th>깨달았거나 배웠던 점</th>
+						<th>놓쳤거나 부족 햇던 점</th>
+					</tr>
+					<c:choose>
+						<c:when test="${ !empty requestScope.review }">
+							<c:forEach var="review" items="${ requestScope.review }">
+								<tr>
+									<td><input type="text" name="memName" value="${ review.memName }" style="border: 0; outline: 0; text-align: center;"></td>
+									<td><textarea name="reviewLikeTxt" class="text_detail">${ review.reviewLikeTxt }</textarea></td>
+									<td><textarea name="reviewLearnTxt" class="text_detail">${ review.reviewLearnTxt }</textarea></td>
+									<td><textarea name="reviewMissTxt" class="text_detail">${ review.reviewMissTxt }</textarea></td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="rpm" items="${ requestScope.reviewAndProjectMemberList }">
+								<tr>
+									<td><input type="text" name="memName" value="${ rpm.memberDTO.name }" style="border: 0; outline: 0; text-align: center;"></td>
+									<td><textarea name="reviewLikeTxt" class="text_detail"></textarea></td>
+									<td><textarea name="reviewLearnTxt" class="text_detail"></textarea></td>
+									<td><textarea name="reviewMissTxt" class="text_detail"></textarea></td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</table>
 				<c:choose>
 					<c:when test="${ !empty requestScope.review }">
-						<c:forEach var="review" items="${ requestScope.review }">
-							<tr>
-								<td><input type="text" name="memName" value="${ review.memName }" style="border: 0; outline: 0; text-align: center;"></td>
-								<td><textarea name="reviewLikeTxt" class="text_detail">${ review.reviewLikeTxt }</textarea></td>
-								<td><textarea name="reviewLearnTxt" class="text_detail">${ review.reviewLearnTxt }</textarea></td>
-								<td><textarea name="reviewMissTxt" class="text_detail">${ review.reviewMissTxt }</textarea></td>
-							</tr>
-						</c:forEach>
+						<div class="save_btn">
+							<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+							<button class="btn_detail" type="button" onclick="modifyReview();">수정</button>
+							<button class="btn_detail" type="button" onclick="removeReview();">삭제</button>
+							<input class="btn_detail" type="reset" value="초기화">
+						</div>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="rpm" items="${ requestScope.reviewAndProjectMemberList }">
-							<tr>
-								<td><input type="text" name="memName" value="${ rpm.memberDTO.name }" style="border: 0; outline: 0; text-align: center;"></td>
-								<td><textarea name="reviewLikeTxt" class="text_detail"></textarea></td>
-								<td><textarea name="reviewLearnTxt" class="text_detail"></textarea></td>
-								<td><textarea name="reviewMissTxt" class="text_detail"></textarea></td>
-							</tr>
-						</c:forEach>
+						<div class="save_btn">
+							<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+							<button class="btn_detail" type="button" onclick="registReview();">저장</button>
+							<input class="btn_detail" type="reset" value="초기화">
+						</div>
 					</c:otherwise>
 				</c:choose>
-			</table>
-			<c:choose>
-				<c:when test="${ !empty requestScope.review }">
-					<div class="save_btn">
-						<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-						<button class="btn_detail" type="button" onclick="modifyReview();">수정</button>
-						<button class="btn_detail" type="button" onclick="removeReview();">삭제</button>
-						<input class="btn_detail" type="reset" value="초기화">
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="save_btn">
-						<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-						<button class="btn_detail" type="button" onclick="registReview();">저장</button>
-						<input class="btn_detail" type="reset" value="초기화">
-					</div>
-				</c:otherwise>
-			</c:choose>
 			</form>
 			<script>
 				function modifyReview() {

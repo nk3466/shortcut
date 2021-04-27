@@ -6,8 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- 파비콘 -->
-<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
+	<!-- 파비콘 -->
+	<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
 	<meta name="_csrf" content="${_csrf.token}">
 	<meta name="_csrf_header" content="${_csrf.headerName}">
 
@@ -56,11 +56,11 @@
 			<div class="sprint_text_btn">
 				<span class="sprint_text">Sprint</span>		
 			</div>				
-				<div class="backlog_line"></div>		
-					<div class="sprint_box on"></div>
-					<div class="table_area">
-						<div class="table_item nk">
-						<table style="width: 100%;"  id="sprintViewList">
+			<div class="backlog_line"></div>		
+			<div class="sprint_box on"></div>
+			<div class="table_area">
+				<div class="table_item nk">
+					<table style="width: 100%;"  id="sprintViewList">
 						<thead>
 							<tr>
 								<th class="th_detail type1">번호</th>
@@ -74,192 +74,191 @@
 						</thead>
 						<tbody id="sprintBody">
 							<c:choose>
-									<c:when test="${fn:length(requestScope.sprintList) > 0 }">
-												
-									</c:when>
-									
-									<c:otherwise>
-											<tr>
-												<td colspan="8">조회된 결과가 없습니다.</td>
-											</tr>
-									</c:otherwise>
+								<c:when test="${fn:length(requestScope.sprintList) > 0 }">
+											
+								</c:when>
+								<c:otherwise>
+										<tr>
+											<td colspan="8">조회된 결과가 없습니다.</td>
+										</tr>
+								</c:otherwise>
 							</c:choose>
 						</tbody>
-						</table>
-						<div id="sprintPagingArea" class="paging_area type" align="center"></div>
-					
+					</table>
+					<div id="sprintPagingArea" class="paging_area type" align="center"></div>
+						
 				</div>
 			</div>
 		</div>
 			
 		<!-- 	<!-- =====================스프린트 페이징 처리 =======================-->
-			<script>
-			/* 페이지 로드 될 때 시작 */
-			$('document2').ready(function() {
-				
-				/* 프로젝트 번호 */
-				var pjtNo = ${requestScope.pjtNo};
-				/* 게시판 Body */
-				var $sprintBody = $("#sprintBody");
-				/* 페이징 버튼 */
-				var $sprintPagingArea = $("#sprintPagingArea");
-				/* 페이징 함수 호출 */
-				sprintPagingAjax(pjtNo, 1, $sprintBody, $sprintPagingArea);
-				
-			});
-			
-			/* 페이징 함수 */
-			function sprintPagingAjax(pjtNo, currentSprintPage, $sprintBody, $sprintPagingArea) {
-				
-				/* Body 영역 지우기 */
-				$sprintBody.empty();
-				/* ajax 호출 */
-				$.ajax({
-					url : "${pageContext.servletContext.contextPath}/board/sprint/sprintPaging",
-					method : "post",
-					data : {
-						pjtNo : pjtNo,
-						currentSprintPage : currentSprintPage
-					},
-					success : function(data, status, xhr) {
-						console.log(data);
-						if(0 == data.length) {
-
-						} else {
-							/* DTO에 담긴 시작페이지, 끝페이지, 마지막페이지 꺼내기 */
-							var startSprintPage = data[0].startPage;
-							var endSprintPage = data[0].endPage;
-							var maxSprintPage = data[0].maxPage;
-							for(let index in data) {
-								
-								/* 버튼 생성 */
-							 	var sprintBtnHtml = '<button class="btn_detail nk"  data-toggle="modal" data-target="#myModalSprintEdit" id="EditBackLog" onclick="btnSprintDetail(this)" value=' +data[index].sprNo +'>Edit Sprint</button>'   
-					                              + '<a href="${pageContext.servletContext.contextPath }/board/kanbanboard/?pjtNo= + ${ requestScope.pjtNo } + &sprNo='+ data[index].sprNo +'&projectName= + ${requestScope.projectName} + ">'
-					                              + '<button class="btn_detail nk" >Start sprint </button>';
-								
-								/* tr태그에 만들어 값 담기 */
-								$tr = $("<tr>");
-								$rnum = $("<td>").text(data[index].rnum);
-								$sprNo = $("<td>").text("SPRINT-" + data[index].sprNo);
-								$sprName = $("<td>").text(data[index].sprName);
-								$sprStardDate = $("<td>").text(data[index].sprStardDate);
-								$sprEndDate = $("<td>").text(data[index].sprEndDate);
-								$sprGoal = $("<td>").text(data[index].sprGoal);
-								$sprintBtnHtml = $("<td>").html(sprintBtnHtml);
-								
-								/* $tr.append($backlogCountNumber); */
-								$tr.append($rnum);
-								$tr.append($sprNo);
-								$tr.append($sprName);
-								$tr.append($sprStardDate);
-								$tr.append($sprEndDate);
-								$tr.append($sprGoal);
-								$tr.append($sprintBtnHtml);
-								
-								/* 테이블에 추가 */
-								$sprintBody.append($tr);
-							}
-							
-							/* 페이징 버튼 함수 호출 - 페이지 정보와 페이징영역 정보 인자로 전달 */
-							navisprint(startSprintPage, endSprintPage, maxSprintPage, $sprintPagingArea, currentSprintPage);
-						}
-						
-						console.log(data);
-						console.log(status);
-						console.log(xhr);
-					},
-					error : function(xhr, status, error) {
-						console.log(xhr);
-						console.log(status);
-						console.log(error);
-					}
-				});
-			}
-			
-			/* 페이징 버튼 함수 */
-			function navisprint(startSprintPage, endSprintPage, maxSprintPage, $sprintPagingArea, currentSprintPage) {
-				
-				/* 페이징영역 지우기 */
-				$sprintPagingArea.empty();
-				
-				/* 시작페이지가 1페이지일 때 disabled된 <<, < 버튼 추가
-				      아니라면, 활성화된 버튼 추가하고 startBacklogPage(), prevBacklogPage 함추 호출
-				*/
-				if(startPage <= 1) {
-					$sprintPagingArea.append('<button class="pageBtn" disabled><<</button>')
-					$sprintPagingArea.append('<button class="pageBtn" disabled><</button>');
-				} else {
-					$sprintPagingArea.append('<button class="pageBtn" onclick="startSprintPage();"><<</button>');
-					$sprintPagingArea.append('<button class="pageBtn" onclick="prevSprintPage(' + startSprintPage + ');"><</button>');
-				}
-				
-				/* 현재 페이지와 같지 않는 버튼은 moveBacklogPage()함수 호출 가능 */
-				for(let i = startSprintPage; i <= endSprintPage; i++) {
-					if(i == currentSprintPage) {
-						$sprintPagingArea.append('<button class="pageBtn on" disabled>' + i + '</button>');
-					} else {
-						$sprintPagingArea.append('<button class="pageBtn" onclick="moveSprintPage(' + i + ')">' + i + '</button>');
-					}
-				}
-				
-				if(endSprintPage == maxSprintPage) {
-					$sprintPagingArea.append('<button class="pageBtn" disabled>></button>');
-					$sprintPagingArea.append('<button class="pageBtn" disabled>>></button>');
-				} else {
-					$sprintPagingArea.append('<button class="pageBtn" onclick="nextSprintPage(' + endSprintPage + ')">></button>');
-					$sprintPagingArea.append('<button class="pageBtn" onclick="maxSprintPage(' + maxSprintPage + ')">>></button>');
-				}
-			}
-			
-			/* 페이징 버튼 함수들 */
-			function startPage1() {
-				
-				var pjtNo = ${requestScope.pjtNo};
-				var $sprintBody = $("#sprintBody");
-				var $sprintPagingArea = $("#sprintPagingArea");
-				
-				/* 다시 pagingAjax 함수 호출해서 정보 뿌려주기 */
-				new sprintPagingAjax(pjtNo, 1, $sprintBody, $sprintPagingArea);
-			}
-			
-			function prevSprintPage(currentSprintPage) {
-				
-				var pjtNo = ${requestScope.pjtNo};
-				var $sprintBody = $("#sprintBody");
-				var $sprintPagingArea = $("#sprintPagingArea");
-				
-				new sprintPagingAjax(pjtNo, currentSprintPage - 1, $sprintBody, $sprintPagingArea);
-			}
-			
-			function nextSprintPage(currentSprintPage) {
-				
-				var pjtNo = ${requestScope.pjtNo};
-				var $sprintBody = $("#sprintBody");
-				var $sprintPagingArea = $("#sprintPagingArea");
-				
-				new sprintPagingAjax(pjtNo, currentSprintPage + 1, $sprintBody, $sprintPagingArea);
-			}
-			
-			function maxSprintPage(maxSprintPage) {
-				
-				var pjtNo = ${requestScope.pjtNo};
-				var $sprintBody = $("#sprintBody");
-				var $sprintPagingArea = $("#sprintPagingArea");
-				
-				new sprintPagingAjax(pjtNo, maxSprintPage, $sprintBody, $sprintPagingArea);
-			}
-			
-			function moveSprintPage(chooseSprintPage) {
-				
-				var pjtNo = ${requestScope.pjtNo};
-				var $sprintBody = $("#sprintBody");
-				var $sprintPagingArea = $("#sprintPagingArea");
-				
-				new sprintPagingAjax(pjtNo, chooseSprintPage, $sprintBody, $sprintPagingArea);
-			}
-			
-			</script>
+	<script>
+	/* 페이지 로드 될 때 시작 */
+	$('document2').ready(function() {
+		
+		/* 프로젝트 번호 */
+		var pjtNo = ${requestScope.pjtNo};
+		/* 게시판 Body */
+		var $sprintBody = $("#sprintBody");
+		/* 페이징 버튼 */
+		var $sprintPagingArea = $("#sprintPagingArea");
+		/* 페이징 함수 호출 */
+		sprintPagingAjax(pjtNo, 1, $sprintBody, $sprintPagingArea);
+		
+	});
 	
+	/* 페이징 함수 */
+	function sprintPagingAjax(pjtNo, currentSprintPage, $sprintBody, $sprintPagingArea) {
+		
+		/* Body 영역 지우기 */
+		$sprintBody.empty();
+		/* ajax 호출 */
+		$.ajax({
+			url : "${pageContext.servletContext.contextPath}/board/sprint/sprintPaging",
+			method : "post",
+			data : {
+				pjtNo : pjtNo,
+				currentSprintPage : currentSprintPage
+			},
+			success : function(data, status, xhr) {
+				console.log(data);
+				if(0 == data.length) {
+
+				} else {
+					/* DTO에 담긴 시작페이지, 끝페이지, 마지막페이지 꺼내기 */
+					var startSprintPage = data[0].startPage;
+					var endSprintPage = data[0].endPage;
+					var maxSprintPage = data[0].maxPage;
+					for(let index in data) {
+						
+						/* 버튼 생성 */
+					 	var sprintBtnHtml = '<button class="btn_detail nk"  data-toggle="modal" data-target="#myModalSprintEdit" id="EditBackLog" onclick="btnSprintDetail(this)" value=' +data[index].sprNo +'>Edit Sprint</button>'   
+			                              + '<a href="${pageContext.servletContext.contextPath }/board/kanbanboard/?pjtNo= + ${ requestScope.pjtNo } + &sprNo='+ data[index].sprNo +'&projectName= + ${requestScope.projectName} + ">'
+			                              + '<button class="btn_detail nk" >Start sprint </button>';
+						
+						/* tr태그에 만들어 값 담기 */
+						$tr = $("<tr>");
+						$rnum = $("<td>").text(data[index].rnum);
+						$sprNo = $("<td>").text("SPRINT-" + data[index].sprNo);
+						$sprName = $("<td>").text(data[index].sprName);
+						$sprStardDate = $("<td>").text(data[index].sprStardDate);
+						$sprEndDate = $("<td>").text(data[index].sprEndDate);
+						$sprGoal = $("<td>").text(data[index].sprGoal);
+						$sprintBtnHtml = $("<td>").html(sprintBtnHtml);
+						
+						/* $tr.append($backlogCountNumber); */
+						$tr.append($rnum);
+						$tr.append($sprNo);
+						$tr.append($sprName);
+						$tr.append($sprStardDate);
+						$tr.append($sprEndDate);
+						$tr.append($sprGoal);
+						$tr.append($sprintBtnHtml);
+						
+						/* 테이블에 추가 */
+						$sprintBody.append($tr);
+					}
+					
+					/* 페이징 버튼 함수 호출 - 페이지 정보와 페이징영역 정보 인자로 전달 */
+					navisprint(startSprintPage, endSprintPage, maxSprintPage, $sprintPagingArea, currentSprintPage);
+				}
+				
+				console.log(data);
+				console.log(status);
+				console.log(xhr);
+			},
+			error : function(xhr, status, error) {
+				console.log(xhr);
+				console.log(status);
+				console.log(error);
+			}
+		});
+	}
+	
+	/* 페이징 버튼 함수 */
+	function navisprint(startSprintPage, endSprintPage, maxSprintPage, $sprintPagingArea, currentSprintPage) {
+		
+		/* 페이징영역 지우기 */
+		$sprintPagingArea.empty();
+		
+		/* 시작페이지가 1페이지일 때 disabled된 <<, < 버튼 추가
+		      아니라면, 활성화된 버튼 추가하고 startBacklogPage(), prevBacklogPage 함추 호출
+		*/
+		if(startPage <= 1) {
+			$sprintPagingArea.append('<button class="pageBtn" disabled><<</button>')
+			$sprintPagingArea.append('<button class="pageBtn" disabled><</button>');
+		} else {
+			$sprintPagingArea.append('<button class="pageBtn" onclick="startSprintPage();"><<</button>');
+			$sprintPagingArea.append('<button class="pageBtn" onclick="prevSprintPage(' + startSprintPage + ');"><</button>');
+		}
+		
+		/* 현재 페이지와 같지 않는 버튼은 moveBacklogPage()함수 호출 가능 */
+		for(let i = startSprintPage; i <= endSprintPage; i++) {
+			if(i == currentSprintPage) {
+				$sprintPagingArea.append('<button class="pageBtn on" disabled>' + i + '</button>');
+			} else {
+				$sprintPagingArea.append('<button class="pageBtn" onclick="moveSprintPage(' + i + ')">' + i + '</button>');
+			}
+		}
+		
+		if(endSprintPage == maxSprintPage) {
+			$sprintPagingArea.append('<button class="pageBtn" disabled>></button>');
+			$sprintPagingArea.append('<button class="pageBtn" disabled>>></button>');
+		} else {
+			$sprintPagingArea.append('<button class="pageBtn" onclick="nextSprintPage(' + endSprintPage + ')">></button>');
+			$sprintPagingArea.append('<button class="pageBtn" onclick="maxSprintPage(' + maxSprintPage + ')">>></button>');
+		}
+	}
+	
+	/* 페이징 버튼 함수들 */
+	function startPage1() {
+		
+		var pjtNo = ${requestScope.pjtNo};
+		var $sprintBody = $("#sprintBody");
+		var $sprintPagingArea = $("#sprintPagingArea");
+		
+		/* 다시 pagingAjax 함수 호출해서 정보 뿌려주기 */
+		new sprintPagingAjax(pjtNo, 1, $sprintBody, $sprintPagingArea);
+	}
+	
+	function prevSprintPage(currentSprintPage) {
+		
+		var pjtNo = ${requestScope.pjtNo};
+		var $sprintBody = $("#sprintBody");
+		var $sprintPagingArea = $("#sprintPagingArea");
+		
+		new sprintPagingAjax(pjtNo, currentSprintPage - 1, $sprintBody, $sprintPagingArea);
+	}
+	
+	function nextSprintPage(currentSprintPage) {
+		
+		var pjtNo = ${requestScope.pjtNo};
+		var $sprintBody = $("#sprintBody");
+		var $sprintPagingArea = $("#sprintPagingArea");
+		
+		new sprintPagingAjax(pjtNo, currentSprintPage + 1, $sprintBody, $sprintPagingArea);
+	}
+	
+	function maxSprintPage(maxSprintPage) {
+		
+		var pjtNo = ${requestScope.pjtNo};
+		var $sprintBody = $("#sprintBody");
+		var $sprintPagingArea = $("#sprintPagingArea");
+		
+		new sprintPagingAjax(pjtNo, maxSprintPage, $sprintBody, $sprintPagingArea);
+	}
+	
+	function moveSprintPage(chooseSprintPage) {
+		
+		var pjtNo = ${requestScope.pjtNo};
+		var $sprintBody = $("#sprintBody");
+		var $sprintPagingArea = $("#sprintPagingArea");
+		
+		new sprintPagingAjax(pjtNo, chooseSprintPage, $sprintBody, $sprintPagingArea);
+	}
+	
+	</script>
+
 	
 	<!-- 스프린트 수정 -->
 	<div class="modal fade" id="myModalSprintEdit">
@@ -741,16 +740,16 @@
 				 })
 			})
 		}
-		</script>
+	</script>
 	
 	
 	
-			<div class="create_backlog_btn">
-				<label>
-					<i class="fas fa-plus"></i>
-					<button class="backlog_btn_detail"  data-toggle="modal" data-target="#myModal">Create Backlog</button>	
-				</label>					
-			</div>
+		<div class="create_backlog_btn">
+			<label>
+				<i class="fas fa-plus"></i>
+				<button class="backlog_btn_detail"  data-toggle="modal" data-target="#myModal">Create Backlog</button>	
+			</label>					
+		</div>
 	</div>	
 
 

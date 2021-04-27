@@ -4,8 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- 파비콘 -->
-<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
+	<!-- 파비콘 -->
+	<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
@@ -43,27 +43,27 @@
 			<div class="mypage_right_area">
 				<div class="mypage_right_header">계정 정보</div>
 				<form action="${ pageContext.servletContext.contextPath }/update" method="post">
-				<div class="mypage_info_area">
-					<div class="mypage_info_box">
-						<div class="info_item">
-							<div class="info_name">사용자 이름</div>
-							<input class="input_detail" type="text" name="name" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}">
+					<div class="mypage_info_area">
+						<div class="mypage_info_box">
+							<div class="info_item">
+								<div class="info_name">사용자 이름</div>
+								<input class="input_detail" type="text" name="name" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}">
+							</div>
+							<div class="info_item">
+								<div class="info_name">이메일</div>
+								<input class="input_detail" type="text" name="email" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}" readonly>
+							</div>
+							<div class="info_item">
+								<div class="info_name">휴대폰 번호</div>
+								<input class="input_detail" type="text" name="phone" placeholder="휴대폰 번호를 입력해주세요!">
+							</div>
+						</div>	
+						<div class="mypage_right_btn">
+							<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
+							<button class="mypage_btn_detail" type="submit">변경</button>
+							<button class="mypage_btn_detail">취소</button>
 						</div>
-						<div class="info_item">
-							<div class="info_name">이메일</div>
-							<input class="input_detail" type="text" name="email" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}" readonly>
-						</div>
-						<div class="info_item">
-							<div class="info_name">휴대폰 번호</div>
-							<input class="input_detail" type="text" name="phone" placeholder="휴대폰 번호를 입력해주세요!">
-						</div>
-					</div>	
-					<div class="mypage_right_btn">
-						<input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-						<button class="mypage_btn_detail" type="submit">변경</button>
-						<button class="mypage_btn_detail">취소</button>
 					</div>
-				</div>
 				</form>
 				<div class="member_quit">
 					<div class="member_text">

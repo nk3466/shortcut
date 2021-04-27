@@ -58,21 +58,21 @@
 	</div>
 
 
-<script type="text/javascript">
-	$(function() {
-
-		
-		$(".modal_text_detail.type5").click(function(e) {
-			e.preventDefault();
-
+	<script type="text/javascript">
+		$(function() {
+	
 			
-			$('#member_regist').modal("hide");
-			$('#member_login').modal("toggle");
-		});
-		
-	})
-
-</script>
+			$(".modal_text_detail.type5").click(function(e) {
+				e.preventDefault();
+	
+				
+				$('#member_regist').modal("hide");
+				$('#member_login').modal("toggle");
+			});
+			
+		})
+	
+	</script>
 
 <!-- <script type="text/javascript">
 

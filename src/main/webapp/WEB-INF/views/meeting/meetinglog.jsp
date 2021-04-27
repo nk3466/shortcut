@@ -4,32 +4,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- 파비콘 -->
-<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
-<meta name="_csrf" content="${_csrf.token}">
-<meta name="_csrf_header" content="${_csrf.headerName}">
-<meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
-   <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/meetinglog.css">
+	<!-- 파비콘 -->
+	<link rel="shortcut icon" href="${ pageContext.servletContext.contextPath }/resources/img/logo1.png" type="image/x-icon">
+	<meta name="_csrf" content="${_csrf.token}">
+	<meta name="_csrf_header" content="${_csrf.headerName}">
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/index.css">
+    <link rel="stylesheet" type="text/css" href="${ pageContext.servletContext.contextPath }/resources/css/meetinglog.css">
 
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
    
 
-   <!-- 폰트어썸 -->
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <!-- 폰트어썸 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
    
-   
-    
 
-
-   <title>Short Cut</title>
-<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/main.js"></script>
-<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/data.js"></script>
+    <title>Short Cut</title>
+	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/main.js"></script>
+	<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/data.js"></script>
 </head>
 <body>
    <jsp:include page="../common/header.jsp"></jsp:include>
@@ -51,7 +48,6 @@
       		<div class="row">
       			<div class="issue_btn on">진행중</div>
       			<div class="issue_btn">완료</div>
-      			
       		</div> 
       	</div>
          <div class="main-wrap">
@@ -92,9 +88,9 @@
          <div class="modal-content">
             <form action="${pageContext.servletContext.contextPath}/meeting/meetinglog" method="post">
                <div class="modal-body">
-                     <input type="text" value="${pjtNo}" id="pjtNo" name="pjtNo" style="display: none;">
-                     <div class="conference_item">
-                        <div class="row">
+                   <input type="text" value="${pjtNo}" id="pjtNo" name="pjtNo" style="display: none;">
+                   <div class="conference_item">
+                       <div class="row">
                            <div class="item_type type">
                       		        회의날짜
                            </div>
@@ -125,9 +121,7 @@
                       		        참석자
                            </div>
                            <div class="item_type type3" id="meetingMember">
-                              
                            </div>
-                           
                         </div>
                         <div class="modal_line"></div>
                         <div class="row">
@@ -146,13 +140,9 @@
                            <div class="item_type type3">
                               <textarea id="meetingContent" class="textarea_detail" name="meetingText"></textarea>
                            </div>
-                           
                         </div>
-      
-                     </div>
-                  
+                    </div>
                </div>
-   
                <!-- Modal footer -->
                <div class="modal_footer">                        
                   <div class="btn_area">
@@ -163,15 +153,10 @@
             </form>
          </div>
       </div>
-
    </div>
-   
    <jsp:include page="../meeting/meeting_detail.jsp"></jsp:include>
    <jsp:include page="../meeting/meeting_modify.jsp"></jsp:include>
    <jsp:include page="../meeting/meeting_delete_modal.jsp"></jsp:include>
-   
-   
-   
 </body>
 
 

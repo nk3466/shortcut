@@ -47,30 +47,30 @@
 	</div>
 
 
-<script type="text/javascript">
-	$(function() {
-
-		
-		$(".modal_text_detail.type3").click(function(e) {
-			e.preventDefault();
-			
-			$('#password_find').modal("hide");
-			$('#member_login').modal("toggle");
-		});
-		
+	<script type="text/javascript">
+		$(function() {
 	
+			
+			$(".modal_text_detail.type3").click(function(e) {
+				e.preventDefault();
+				
+				$('#password_find').modal("hide");
+				$('#member_login').modal("toggle");
+			});
+			
 		
-
-		$(".modal_btn").click(function(e){
-			e.preventDefault();
-
-			$('#password_find').modal("hide");
-			$('##password_reset').modal("toggle");
+			
+	
+			$(".modal_btn").click(function(e){
+				e.preventDefault();
+	
+				$('#password_find').modal("hide");
+				$('##password_reset').modal("toggle");
+			})
 		})
-	})
-
-
-
-</script>
+	
+	
+	
+	</script>
 </body>
 </html>
