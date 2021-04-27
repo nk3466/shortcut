@@ -29,4 +29,6 @@ public interface RetrospectMapper {
 	int updateReview(ReviewDTO reviewDTO);
 
 	int removeReview(ReviewDTO reviewDTO);
+	
+	int selectSprintNo(int blgNo);
 }

@@ -288,5 +288,10 @@
 		   AND SPR_NO = #{sprNo}
 	</delete>
 	
+	<select id="selectSprintNo" parameterType="_int" resultType="_int">
+		SELECT SPR_NO
+          FROM SPRINT
+         WHERE BLG_NO = #{blgNo}
+	</select>
 	
 </mapper>

@@ -150,7 +150,7 @@ public class RetrospectController {
 			rv.setReviewLearnTxt(reviewLearnTxt[i]);
 			rv.setReviewMissTxt(reviewMissTxt[i]);
 			rv.setMemName(memName[i]);
-			rv.setSprNo(blgNo2);
+			rv.setSprNo(retrospectService.selectSprintNo(blgNo2));
 			
 			insertReviewList.add(rv);
 		}

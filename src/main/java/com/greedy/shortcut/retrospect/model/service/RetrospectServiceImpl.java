@@ -80,4 +80,9 @@ public class RetrospectServiceImpl implements RetrospectService {
 		return retrospectMapper.removeReview(reviewDTO);
 	}
 
+	@Override
+	public int selectSprintNo(int blgNo) {
+		return retrospectMapper.selectSprintNo(blgNo);
+	}
+
 }
