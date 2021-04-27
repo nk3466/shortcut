@@ -172,7 +172,6 @@
           JOIN MEMBER E ON(E.MEM_NO = A.MEM_NO)
          WHERE D.SPR_NO = #{sprNo}
            AND D.SPR_END_DATE > SYSDATE
-           AND B.CRD_TYPE = 2
 	</select>
 	
 	<select id="selectProjectNuber" parameterType="String" resultType="_int">
