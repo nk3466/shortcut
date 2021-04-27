@@ -303,7 +303,7 @@ console.log("boardList" +  "${requestScope.boardList}");
                   value="">  -->
                   <div id="choisemember"></div>
                   <!-- <input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회"> -->
-                  <div id="memberDetail"></div>
+                  <div id="memberDetail2"></div>
                   <div class="detailMemberInput"></div>
                   <input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
                </div>
@@ -370,7 +370,7 @@ console.log("boardList" +  "${requestScope.boardList}");
                <input type="hidden" name="projectName" value="${projectName}">
                <input name="sprNo" type="hidden" value="${sprNo}"> 
                <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-               <input type="submit" class="upload_btn" id="editCard" value="수정">
+               <input type="button" class="upload_btn" id="editCard" value="수정">
                <input type="button" class="upload_btn" id="deleteCard" value="삭제">
                <input type="reset" class="upload_btn" data-dismiss="modal" value="취소">
                   <!-- <input type="button" class="upload_btn" id="editCard" value="수정" >
@@ -388,7 +388,7 @@ console.log("boardList" +  "${requestScope.boardList}");
     <!-- 수정 페이지 -->
    <input type="text" value="${ requestScope.pjtNo }" name="" id="" style="display: none;">
    <!-- The Modal -->
-   <div class="modal fade" id="myModal5">
+   <div class="modal fade" id="myModal6">
       <div class="modal-dialog">
          <div class="modal-header type">Short Cut</div>
 
@@ -396,7 +396,6 @@ console.log("boardList" +  "${requestScope.boardList}");
          <form id="cardModyfyUpdate" method="post">
          <input type="text" value="" name="" id="crdNo" class="crdNo" style="display: none;">
          <input type="hidden" value="${ requestScope.pjtNo }" name="pjtNo">
-         <input type="text" value="" name="type" style="display: none;" id="pleaseType1">
             <div class="modal-content">
                <div class="modal-body">
                   <div class="row selectCardtype">
@@ -419,7 +418,7 @@ console.log("boardList" +  "${requestScope.boardList}");
                </div>
                      
                <div class="item_area">
-                  <input class="input_detail" type="text" name="title" id="detailCardTitle" value=""
+                  <input class="input_detail" type="text" name="title" id="md_fy_detailCardTitle" value=""
                      placeholder="" style="border: none; background: transparent;">
                </div>
                <!-- 업무 영역 -->
@@ -440,17 +439,17 @@ console.log("boardList" +  "${requestScope.boardList}");
                   <div id="choisemember"></div>
                   <!-- <input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회"> -->
                   <div id="memberDetail"></div>
-                  <input id="detailMemberInput" value="">
-                  <input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
+                  <input id="md_fy_detailMemberInput" value="">
+                  <input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" style="display: none;">
                </div>
                <div class="item_area work_btn on">
                <div style="display: inline-block;">시작일자</div>
-               <div style="display: inline-block;" id="startTaskDate"></div>
+               <div style="display: inline-block;" id="md_fy_startTaskDate"></div>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                
                <div style="display: inline-block;">종료일자</div>
-               <div style="display: inline-block;" id="endTaskDate"></div><br><br>
+               <div style="display: inline-block;" id="md_fy_endTaskDate"></div><br><br>
                   <i class="far fa-calendar-plus"></i>
                   <input class="input_detail type4" type="datetime-local" name="taskStartDate" id="detailTaskStartDate" value=""> &nbsp; -
                   &nbsp; <i class="far fa-calendar-minus"></i> <input
@@ -461,11 +460,11 @@ console.log("boardList" +  "${requestScope.boardList}");
                <!-- 일정 -->
                <div class="item_area calendar_btn on">
                <div style="display: inline-block;">시작일자</div>
-               <div style="display: inline-block;" id="startScheduleTaskDate"></div>
+               <div style="display: inline-block;" id="md_fy_startScheduleTaskDate"></div>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                <div style="display: inline-block;">종료일자</div>
-               <div style="display: inline-block;" id="endScheduleTaskDate"></div><br><br>
+               <div style="display: inline-block;" id="md_fy_endScheduleTaskDate"></div><br><br>
                   <i class="far fa-clock"></i> 
                   <input type='datetime-local' name="scheduleStartDate" id="detailScheduleStartDate" value=""> &nbsp; - &nbsp; 
                   <i class="far fa-calendar-minus"></i>
@@ -478,7 +477,7 @@ console.log("boardList" +  "${requestScope.boardList}");
                </div> -->
                <div class="item_area calendar_btn on">
                   <i class="fas fa-map-marker-alt"></i>
-                  <input class="input_detail type3" type="text" name="place" size="20px" id="placeDetail" value=""
+                  <input class="input_detail type3" type="text" name="place" size="20px" id="md_fy_placeDetail" value=""
                      placeholder="장소를 입력하세요"
                      style="border: none; background: transparent;">
                </div>
@@ -496,7 +495,7 @@ console.log("boardList" +  "${requestScope.boardList}");
                   value="">  -->
                   <div id="choisemember"></div>
                   <!-- <input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회"> -->
-                  <div id="memberDetail2"></div>
+                  <div id="memberDetail3"></div>
                   <input id="memberDetail" value="">
                   <input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
                </div>
@@ -504,7 +503,7 @@ console.log("boardList" +  "${requestScope.boardList}");
 
                <div class="item_area" id="detailTxt">
                   <i class="far fa-comment-alt" id="detailTxt"></i>
-                  <textarea name="txt" id="cardDetailTxt"></textarea>
+                  <textarea name="txt" id="md_fy_cardDetailTxt"></textarea>
                </div>
             </div>
 
@@ -521,7 +520,7 @@ console.log("boardList" +  "${requestScope.boardList}");
                <input type="hidden" name="projectName" value="${projectName}">
                <input name="sprNo" type="hidden" value="${sprNo}"> 
                <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}">
-               <input type="submit" class="upload_btn" id="editCard" value="수정">
+               <input type="submit" class="upload_btn" id="modfyCard" value="수정">
                <input type="button" class="upload_btn" id="deleteCard" value="삭제">
                <input type="reset" class="upload_btn" data-dismiss="modal" value="취소">
                   <!-- <input type="button" class="upload_btn" id="editCard" value="수정" >
@@ -702,24 +701,149 @@ console.log("boardList" +  "${requestScope.boardList}");
       
    }
    
+   
+   /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+    
+   
+     function ModifyCardDetail(crdNo) {
+    	console.log("crdNocrdNocrdNocrdNocrdNocrdNocrdNocrdNo : " + crdNo)
+      $.ajax({
+         url: "${pageContext.servletContext.contextPath}/select/cardInfo",
+         type: "get",
+         data: {crdNo: crdNo},
+         success: function(data, status, xhr) {
+            
+           console.table(data);
+            
+            var cardNo = data.no;
+            var cardName = data.cardMemberList.name;
+            var title = data.title;
+            var enrolldate = data.enrollDate;
+            var order = data.order;
+            var type = data.type;
+            console.log("type : "+ type);
+            var memNo = data.memNo;
+            var member   = data.member;
+            var place   = data.place;
+            var alert   = data.alert;
+            console.log("alert : "+ alert);
+            var cardTxt = data.txt;
+            var memberList = data.memberList;
+            var cardTaskStartDate = data.taskStartDate;
+            var cardTaskEndDate = data.taskEndDate;
+            var cardScheduleStartDate = data.scheduleStartDate;
+            var cardScheduleEndDate = data.scheduleEndDate;
+            
+                  var no = cardNo;
+                  console.log(no);
+                  
+                  var html = '<input type="hidden" name="no" value="'+ no +'">' + '<input type="hidden" name="type" value="'+ type +'">'; 
+                      $("#md_fy_cardDetailTxt").empty();
+                      $("#md_fy_startTaskDate").empty();
+                      $("#md_fy_endTaskDate").empty();
+                      $("#md_fy_startScheduleTaskDate").empty();
+                      $("#md_fy_endScheduleTaskDate").empty();
+                    $('#md_fy_placeDetail').text(place);
+                    $('#md_fy_detailCardTitle').attr('value', title);
+                    console.log("cardName : " +cardName);
+                    $('#md_fy_detailMemberInput').attr('value', cardName);
+                    $('#md_fy_pleaseType1').attr('value', type);
+                    $('#md_fy_crdNo').attr('value', cardNo);
+                    $('#md_fy_cardDetailTxt').append(cardTxt);
+                    $('#md_fy_startTaskDate').append(cardTaskStartDate);
+                    $('#md_fy_endTaskDate').append(cardTaskEndDate);
+                    $('#md_fy_startScheduleTaskDate').append(cardScheduleStartDate);
+                    $('#md_fy_endScheduleTaskDate').append(cardScheduleEndDate);
+                    $('#cardModyfyUpdate').append(html);
+                    
+                    if(alert==1){
+                    	 $('.detailAlert').text("30분 전 미리 알림");
+                    } else if(alert==2){
+                    	 $('.detailAlert').text("하루 전 미리 알림");
+                    } else if(alert==3){
+                    	 $('.detailAlert').text("알리지 않음");
+                    }
+                    
+                   $.ajax({
+                       type:"POST",
+                       url:"${pageContext.servletContext.contextPath}/card/member",
+                       data: {crdNo: crdNo},
+                       success:function(data, status, xhr)
+                       {
+                        console.log("asdf4as3df2a1sdf"+data)
+                        if(data !==0){
+                           
+                           let memberList = data; 
+                           let list="";
+                           $("#memberDetail3").empty();
+                           for(let i = 0; i < memberList.length; i++){
+                           
+                              var insertSpan="";
+                              insertSpan += '<span class="item_text on">' + memberList[i].name 
+                              + '<i id="delBtn" class="fas fa-times-circle"></i>' 
+                                + '<input class="item_num" name="memberList" type="hidden" value="' + memberList[i].no + '">' + '</span>';
+                              count++;
+                              $("#memberDetail3").append(insertSpan);
+                           }
+                        } 
+                       
+                   },
+                       error:function(data){
+                        console.log(error);
+                     }
+                     });
+                        
+            if(type === 2 ) {
+               $(".work_btn").show();
+            } else if ( type === 3) {
+               $(".calendar_btn").show();
+            } else if ( type === 4) {
+                $(".work_btn").show();
+                $(".calendar_btn").show();
+            } 
+            
+         },
+         error: function(xhr, status, error) {
+            console.log(error);
+            
+         }
+         
+      });
+      
+   } 
+   /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+   
    $(".board_item.card").click(function(e){
        
        	var crdNo = $(this).children("#crdNo").val();
+       	console.log("CACAAAAAAAAAAAAAAAAAAAAAAAAAAARD" + crdNo);
         e.preventDefault();                  
         $('#myModal2').modal("hide");
         $("#myModal5").modal();
         selectCardInfo(crdNo);
        
+        
+        
+        $('#editCard').click(function() {
+        	showModal6(crdNo);
+      	  
+     });
   });
    
+   function showModal6 (crdNo){
+	   $("#myModal5").modal("hide")
+       $("#myModal6").modal("show")
+        ModifyCardDetail(crdNo);
+   }
    
-      $('#editCard').click(function() {
-      
-         var url = '${pageContext.servletContext.contextPath}/card/modifyCard';
-      
-            $('#cardDetailUpdate').attr('action',url);
-            $('#cardDetailUpdate').submit();
+   $('#modfyCard').click(function() {
+   var url = '${pageContext.servletContext.contextPath}/card/modifyCard';
+   
+   $('#cardModyfyUpdate').attr('action',url);
+   $('#cardModyfyUpdate').submit();
+ 
    });
+     
       
       $('#deleteCard').click(function() {
           
@@ -730,29 +854,6 @@ console.log("boardList" +  "${requestScope.boardList}");
              $('#cardDetailUpdate').submit();
       });
       
-</script>
-
-<script type="text/javascript">
-
-   $(function(){
-      
-      $(".board_item.card").click(function(){
-          
-         $("#myModal2").modal();
-          
-      });
-      
-       $(".board_item.card").click(function(e){
-            
-              var crdNo = $(this).children("#crdNo").val();
-               e.preventDefault();                  
-               $('#myModal2').modal("hide");
-               $("#myModal5").modal();
-               selectCardInfo(crdNo);
-              
-         });
-       
-   })
 </script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

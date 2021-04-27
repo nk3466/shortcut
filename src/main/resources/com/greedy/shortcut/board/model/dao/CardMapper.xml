@@ -278,8 +278,8 @@
 	
 	<update id="updateCardTask" parameterType="RequestCardDTO">
         UPDATE CRD_TASK A
-           SET A.MEM_NO = #{member}
-             , A.TK_START_DATE = TO_DATE(#{taskStartDate}, 'YYYYMMDDHH24MISS')
+           SET 
+               A.TK_START_DATE = TO_DATE(#{taskStartDate}, 'YYYYMMDDHH24MISS')
              , A.TK_END_DATE = TO_DATE(#{taskEndDate}, 'YYYYMMDDHH24MISS')
          WHERE A.CRD_NO = #{no}
 	</update>
