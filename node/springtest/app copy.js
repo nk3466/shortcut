@@ -4,7 +4,7 @@ const connect = require('./schemas');
 const dotenv = require('dotenv');
 //const MongoClient = require('mongoose')
 dotenv.config();
-const loginID = {};
+
 const Chat = require('./schemas/chat');
 //app.use(cors());
 const http = require('http').Server(app);
@@ -23,23 +23,21 @@ connect();
 
 io.on('connection', function (socket) {
     const date = new Date;
-    
     console.log(`한명의 유저가 접속을 했습니다.${date}`);
 
 
 
 
-     socket.on("login",function(userNo){
-         console.log("서버가 login 이벤트를 받았습니다"); 
+    // socket.on("login",function(userNo){
+    //     console.log("서버가 login 이벤트를 받았습니다"); 
 	// 	console.log("접속한 소켓 id: " + socket.id); 
 	// 	// QR_qVIARIFJIEJF -> 이런 복잡한 숫자값이 나옴
 				
 	// 	//매핑정보를 담는 loginID에 login.id를 Key 값으로 하여, socket.id를 저장
-	 	loginID[userNo] = socket.id; 
+	// 	loginID[userNo] = socket.id; 
 		
-        console.log("loginID[userNo] " + loginID[userNo]);
 	// 	// 클라이언트에서 받은 데이터를 socket 객체에 속성으로 추가 -> 내가 고유값을 직접 설정하는 과정
-	 	socket.loginID = userNo;
+	// 	socket.loginID = userNo;
 		
 	// 	console.log("접속한 클라이언트 id 갯수: " + 
 	// 			Object.keys(loginID).length); 
@@ -47,7 +45,7 @@ io.on('connection', function (socket) {
 	// 	// Object.keys(loginID)를 이용하여 key들의 갯수를 추출할 수 있다		
 		
 		
-	});
+	// });
 
 
 
@@ -55,7 +53,7 @@ io.on('connection', function (socket) {
 
 
     socket.on('disconnect', function () {
-        delete loginID[socket.loginID];
+        delete loginID[logout.id];
         console.log(`한명의 유저가 접속해제를 했습니다.${date}`);
     });
  
@@ -67,23 +65,20 @@ io.on('connection', function (socket) {
         
     // });
 
-    socket.on('write_msg', function (toId, msg) {
+    socket.on('send_msg', function (toId, msg) {
         
         const chat = Chat.create({
             toUser: toId,
-            fromUser: socket.loginID,
+            fromUser: socket.id,
             msg: msg,
           });
 
 
-        io.to(loginID[toId]).emit("send_msg" ,msg,socket.loginID); 
-        //io.to(loginID[toId]).emit("send_msg" ,"chat"); 
-        //io.of('/chat').to(loginID[toId]).emit("send_msg", msg,socket.loginID);
+        socket.to(toId).emit("write_msg" ,chat); 
+        io.of('/chat').to(toId).emit('send_msg', chat);
         console.log("msg" + msg);
-        console.log("보낸이" + socket.loginID);
+        console.log("보낸이" + socket.id);
         console.log("받는이" + toId);
-
-        console.table(loginID);
         //다시, 소켓을 통해 이벤트를 전송한다.
         //io.emit('send_msg', msg);
 
@@ -93,7 +88,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on('send_user_Id', function (msg) {
-        //socket.id = msg;
+        socket.id = msg;
         console.log("UserID:" + msg);
         console.log("socket.id : " + socket.id);
     });

@@ -147,8 +147,8 @@
             </div>            
           </div>         
         </div>
-        <div class="modal-body type3">
-         <textarea class="modal_textarea_detail"></textarea>
+        <div class="modal-body chat-list">
+         <div id="chat-list"></div>
         </div>        
         <div class="input_area">
           <input id="msg" class="messagebox_detail" type="text" name="" placeholder="내용을 입력해주세요">
@@ -180,8 +180,10 @@
              transport: ['websocket']
          });
     	
+   		
     	//UserNo 전달 
-    	socket.emit("send_user_Id",userNo);
+    	socket.emit("login",userNo);
+    	
     	console.log("아이디를 전송하였음.")
     	
     	//UserNo에 따른 확인하지 않은 메세지 존재하는지 여부 확인
@@ -209,21 +211,74 @@
       /* 리스트를 접고, 대화창 오픈 */
       $("#messenger_show").modal("hide")
       $("#messenger_chatting").modal("show")
+      $("#chat-list").empty();
+      $("#messenger_chatting").find(".messengerto").empty();
       $("#messenger_chatting").find(".messengerto").append("<span>"+name+"</span>");
+      socket.emit("mgsList", toUserNo,userNo);
       
     });
+	 
+	
+	//전체 대화 내용 수신 데이터 수신 
+    socket.on("receiveMgsList", function (data) {
+    	 mkgchatList(data);
+    	 console.log(data);
+      });
     //msg_process를 클릭할 때
+    
+    //대화 수신
+      socket.on("send_msg", function (msg,loginId) {
+    	//  socket.id = userNo;
+       let chatting = {
+        	fromUser: loginId,
+        	msg: msg,
+        }
+    	  console.log("데이터가 왔다!!! ");
+    	  console.log(msg);
+    	  console.log(loginId);
+    	  mkgchatList(chatting);
+      });
+      
+      
     $("#msg_process").click(function(){
-        //소켓에 send_msg라는 이벤트로 input에 #msg의 벨류를 담고 보내준다.
-         socket.emit("send_msg", toUserNo,$("#msg").val());
+        let chatting = {
+        	toUser: toUserNo,
+        	fromUser: userNo,
+        	msg: $("#msg").val(),
+        }
+        
+    	//소켓에 send_msg라는 이벤트로 input에 #msg의 벨류를 담고 보내준다.
+         socket.emit("write_msg", toUserNo,$("#msg").val());
+        
+         mkgchatList(chatting);
         //#msg에 벨류값을 비워준다.
         $("#msg").val("");
     });
-    
-    
-    
+    function mkgchatList(data) {
+		 
+		const speechBubble = document.createElement('div');
+    	
+    	if(data.fromUser === userNo){
+    	 speechBubble.classList.add('mine');
+    	} else {
+    	 speechBubble.classList.add('other');
+    	}
+    	const name = document.createElement('div');
+    	name.textContent = data.fromUser;
+    	speechBubble.appendChild(name);
+    	
+    	const chat = document.createElement('div');
+        chat.textContent = data.msg;
+        speechBubble.appendChild(chat);
+        
+    	 document.querySelector('#chat-list').appendChild(speechBubble);
+   
+	}
+
+   
     
     }
+	  ///////
 	  
   });
   
