@@ -62,7 +62,7 @@ public interface BacklogMapper {
 	boolean insertEditBacklogHistory(BacklogDTO backlog);
 
 	/* 백로그 삭제 */
-	int RemoveBacklog(BacklogDTO backlogRemove);
+	boolean RemoveBacklog(BacklogDTO backlogRemove);
 	
 	/* 백로그 삭제 히스토리 등록 */
 	int insertRemoveBacklogHistory(BacklogDTO backlogRemove);

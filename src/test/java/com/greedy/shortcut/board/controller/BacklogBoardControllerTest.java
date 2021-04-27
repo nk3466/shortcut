@@ -1,6 +1,5 @@
 package com.greedy.shortcut.board.controller;
 
-import static org.junit.Assert.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -9,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,16 +38,12 @@ import com.greedy.shortcut.member.model.dto.MemberDTO;
 									"file:src/main/resources/spring/security-context.xml"})		
 public class BacklogBoardControllerTest {
 	
-//	@Test
-//	public void testBacklogBoardController() {
-//		fail("Not yet implemented"); // TODO
-//	}
-	private static final Logger logger = LoggerFactory.getLogger(BacklogBoardController.class);
+  	 private static final Logger logger = LoggerFactory.getLogger(BacklogBoardController.class);
 	
-	@Inject
-	private WebApplicationContext wac;
+	 @Inject
+	 private WebApplicationContext wac;
 	
-	private MockMvc mockMvc;
+	 private MockMvc mockMvc;
 	
 	 java.sql.Date projectStartDate=java.sql.Date.valueOf("2021-04-20");
 	 java.sql.Date projectEndDate=java.sql.Date.valueOf("2021-05-13");
@@ -90,11 +84,11 @@ public class BacklogBoardControllerTest {
 //		.param("projectRole", "1")
 	}
 	
-	@Ignore
+	@Test
 	public void testProject() throws Exception {
 		this.mockMvc.perform(get("/board/backlog")
 					.param("pjtNo","3")
-					.param("projectName","PJOJECT16")
+					.param("projectName","ShortCut")
 		)
 		.andDo(print())
 		//정상 처리 되는지 확인
@@ -131,6 +125,7 @@ public class BacklogBoardControllerTest {
 		}
 
 	@Test
+	@Ignore
 	public void testEditProject() throws Exception {
 		
 //		MultiValueMap<String, String> paramMap1 = new LinkedMultiValueMap<>();
