@@ -303,7 +303,7 @@ console.log("boardList" +  "${requestScope.boardList}");
                   value="">  -->
                   <div id="choisemember"></div>
                   <!-- <input class="input_detail type2" id="addMember" type="button" name="addMember" value="멤버조회"> -->
-                  <div id="memberDetail2"></div>
+                <!--  <div id="memberDetail2"></div> -->
                   <div class="detailMemberInput"></div>
                   <input type="text" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}" name="memNo" id="" style="display: none;">
                </div>
