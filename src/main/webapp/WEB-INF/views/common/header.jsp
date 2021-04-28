@@ -74,14 +74,19 @@
 					<span class="logo_text">Short Cut</span>	
 				</a>			
 			</div>
-			<div class="top_menu_area">			
+			<div class="top_menu_area">	
+			
+			<c:if test="${!empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username }">		
 				<a class="menu_list" href="${ pageContext.servletContext.contextPath }/mypage/mypage">
 					<i class="fas fa-cog"></i>
 				</a>
-				<div class="aab" id=""></div>
-				<a class="menu_list" id="">
+			</c:if>
+			<c:if test="${!empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
+				<div class="aab"></div>
+				<a class="menu_list" >
 					<i class="far fa-bell" id="allAlarmBtn"></i>
 				</a>	
+			</c:if>
 				<c:if test="${!empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username }">
 				<a class="menu_list" data-toggle="modal" data-target="#messenger_show" onclick="messengerShow(${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no})">
 					<i class="far fa-envelope"></i>	
@@ -98,10 +103,16 @@
 						<a class="menu_list" data-toggle="modal" data-target="#member_login">로그인</a>
 					</c:otherwise>
 				</c:choose>
+
 				<input type="text" id="ABC" style="display: none;" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}">
+				<c:if test="${!empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username }">
 				<a class="menu_list" href="${ pageContext.servletContext.contextPath }/board/project_board/${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.no}">프로젝트</a>
+				</c:if>
+				
+				<c:if test="${!empty sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username }">
 				<a class="menu_list" href="${ pageContext.servletContext.contextPath }/mywork/mywork">내업무</a>
-				<a class="menu_list" href="#">한국어</a>
+				</c:if>
+				<!-- <a class="menu_list" href="#">한국어</a> -->
 				<a class="menu_list">${requestScope.loginFailMsg}</a>
 				
 			</div>
